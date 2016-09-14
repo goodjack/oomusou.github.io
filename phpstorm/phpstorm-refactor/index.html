@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 PhpStorm 使用重構? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="加快重構速度，讓我們可以持續地重構">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="加快重構速度，讓我們可以持續地重構">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 PhpStorm 使用重構?">
+<meta property="og:url" content="http://oomusou.io/phpstorm/phpstorm-refactor/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="加快重構速度，讓我們可以持續地重構">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-08-23T05:23:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 PhpStorm 使用重構?">
+<meta name="twitter:description" content="加快重構速度，讓我們可以持續地重構">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 PhpStorm 使用重構?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 加快重構速度，讓我們可以持續地重構			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Variable"><span class="toc-article-text">Extract Variable</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Constant"><span class="toc-article-text">Extract Constant</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Parameter"><span class="toc-article-text">Extract Parameter</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Field"><span class="toc-article-text">Extract Field</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Method"><span class="toc-article-text">Extract Method</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Change_Signature"><span class="toc-article-text">Change Signature</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Extract_Interface"><span class="toc-article-text">Extract Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Move_Refactorings"><span class="toc-article-text">Move Refactorings</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Pull_Members_Up"><span class="toc-article-text">Pull Members Up</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Push_Members_Down"><span class="toc-article-text">Push Members Down</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Rename_Refactoring"><span class="toc-article-text">Rename Refactoring</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Safe_Delete"><span class="toc-article-text">Safe Delete</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>重構是 TDD 開發流程的重頭戲，當第一次 <span class="label label-success">綠燈</span> 之後，就是不斷的重構，一直維持 <span class="label label-success">綠燈</span>，讓程式碼架構更好，卻又不違背原來的需求，而PhpStorm 提供強悍的重構功能，讓我們在重構時不需要 copy and paste，可直接快速重構，提升開發效率。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>在<a href="/phpstorm/phpstorm-tdd-refactor/">如何使用 PhpStorm 實現 TDD、重構與偵錯?</a>，曾經以<a href="http://www.tenlong.com.tw/items/9861547533?item_id=45657" target="_blank" rel="external">重構–改善既有程式的設計</a>第一章的範例，實際以 TDD 與重構的方式，完全在 PhpStorm 執行，不過當時並沒有使用到 PhpStorm 所有的重構功能，本文則實際深入探討 PhpStorm 全部的重構功能。</p>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
+<h2 id="Extract_Variable">Extract Variable</h2><hr>
+<p>實務上我們可能會想將 hard code 的字串或數字，重構稱變數，方便其他程式碼使用。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor028.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Variable...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor029.png" alt=""></p>
+<p>PhpStorm 提供 3 種 extract variable 方式 :</p>
+<ul>
+<li>將<strong>值</strong>重構成變數，也就是將 <code>no title</code> 重構成變數。</li>
+<li>將 <strong>method call</strong> 重構成變數，也就是將 <code>$this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 重構成變數。</li>
+<li>將<strong>整行</strong>重構成變數，也就是將 <code>$data[&#39;title&#39;] = $this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 再重構成新的變數。</li>
+</ul>
+<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成變數，所以選擇 <code>no title</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor030.png" alt=""></p>
+<p>輸入欲重構的變數名稱 : <code>defaultTitle</code>。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor031.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>$defaultTitle</code> 變數，並在原 <code>showTitle()</code> 改用 <code>$defaultTitle</code>。</p>
+<h2 id="Extract_Constant">Extract Constant</h2><hr>
+<p>實務上不建議直接在程式碼裡 hard code 字串或數字，一來將來維護不方便，二來程式碼的語意也不清楚，應該將這類 magic number 重構成 constant。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor006.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Constant...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor007.png" alt=""></p>
+<p>輸入 constant 名稱。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor008.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>const DEFAULT_TITLE = &#39;no title&#39;</code>，並在使用端使用 <code>self::DEFAULT_TITLE</code>，如此程式碼語意將更為清楚。</p>
+<h2 id="Extract_Parameter">Extract Parameter</h2><hr>
+<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 parameter。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor023.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Parameter...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor024.png" alt=""></p>
+<p>輸入 parameter 名稱。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 parameter</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor025.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成參數 <code>$defaultParameter</code>，並在使用端使用參數 <code>$defaultParameter</code>。</p>
+<h2 id="Extract_Field">Extract Field</h2><hr>
+<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 field。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor009.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Field...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor010.png" alt=""></p>
+<p>PhpStorm 提供兩種重構 field 方式 :</p>
+<ul>
+<li>將<strong>值</strong>或<strong>變數</strong>重構成 field。</li>
+<li>將<strong>expression</strong>重構成 field。</li>
+</ul>
+<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成 field，而不是將 <code>$this-&gt;showTitle()</code> 重構成 field。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor011.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 輸入 field 名稱為 <code>defaultTitle</code>。</li>
+<li><strong>Initialize in</strong> : 選擇初始化 field 的方法，這裡選擇 <code>Field declaration</code>，</li>
+<li><strong>Visibility</strong> : 這裡選擇 <code>private</code>。</li>
+</ul>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 Field</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor012.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>private $defaultTitle = &#39;no title&#39;</code>，並在使用端使用 <code>$this-&gt;defaultTitle</code>。<span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>若要替 field 提供 getter 與 setter，詳細請參考<a href="/phpstorm/phpstorm-code-generation/#Getter/Setter">如何在 PhpStorm 使用 Code Generation?</a></span></span></span></p>
+<h2 id="Extract_Method">Extract Method</h2><hr>
+<p>在 TDD 第一個 <span class="label label-success">綠燈</span> 之後，為了，實務上我們會使用 Extract Method 重構，讓程式碼可讀性更高，語意更清楚。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>12</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">12</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">顯示所有有 Description 的 Title</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor019.png" alt=""></p>
+<p>為了顯示全部有 <code>description</code> 的 <code>title</code>，需要在 <code>foreach</code> 內對 <code>description</code> 做判斷，並新增至 <code>$titles</code> 陣列。</p>
+<p>其中 <code>if ()</code> 這段程式碼，包含了底層的 <code>if()</code> 判斷，還包含了新增至陣列的實作，看起來比較突兀，也就是我們應該 <code>把抽象出來的方法放在一起，而不要把底層程式碼和抽象出來的方法放在一起</code> 的概念。</p>
+<p>所謂 <code>抽象出來的方法</code>是指 Extract Method 後的產物，它代表著這段程式碼的意圖。</p>
+<p>每一階程式碼都有它放在這裡的意義，千萬不要將高階和低階的方法混雜在一起，這樣讀程式碼時會很突兀。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor020.png" alt=""></p>
+<p>選擇要 Extract Method 的程式碼，按熱鍵 &#8963; + T，選擇 <code>Method...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor021.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 輸入 Extract Method 後新的 method 名稱，輸入 <code>filterTitlesWithDescription</code>。</li>
+<li><strong>Visibility</strong> : 選擇 <code>Private</code>。</li>
+<li><strong>Return output variable(s) through</strong> : 選擇 <code>Return statement</code>。</li>
+</ul>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>13</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">13</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 filterTitlesWithDescription</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor022.png" alt=""></p>
+<p>PhpStorm 會自動幫我們建立了 <code>filterTitlesWithDescription()</code>，並且自動幫我們修改了呼叫 <code>filterTitlesWithDescription()</code> 的方式。</p>
+<p>對於 <code>showTitlesWithDescription()</code> 來說，其職責在於 <code>foreach()</code> 去<code>顯示資料</code>，而 <code>filterTitlesWithDescription()</code> 的職責在於<code>過濾資料</code>，如此程式碼的可讀性更高，語意也更明顯，也符合 SOLID 的<strong>單一職責</strong>原則。 </p>
+<p>Extract Method 是重構當中，最常用的手法，而 PhpStorm 的 Extract Method 功能非常強大。</p>
+<h2 id="Change_Signature">Change Signature</h2><hr>
+<p>包含了以下多項重構功能 :</p>
+<ul>
+<li>改變 method 名稱</li>
+<li>新增參數</li>
+<li>刪除參數</li>
+<li>更改參數的預設值</li>
+<li>調整參數順序</li>
+<li>修改參數名稱</li>
+<li>新增一系列 function call 的參數</li>
+</ul>
+<p>當使用 Change Signature 時，PhpStorm 會搜尋所有使用此 method 之處，並做相對應的修改。</p>
+<p><strong>PostRepository.php</strong><br><img src="/images/phpstorm/phpstorm-refactor/refactor000.png" alt=""></p>
+<p><code>PostRepository</code> 的 <code>getTitle()</code> 目前參數為 <code>$id</code> 與 <code>$default</code>，想新增一個參數為 <code>$content</code>。</p>
+<p>目前 <code>PostController</code> 呼叫 <code>PostSerive</code>，而 <code>PostService</code> 呼叫 <code>PostRepository</code>，若 <code>PostRepository</code> 的 <code>getTitle()</code> 增加參數，勢必 <code>PostService</code> 與 <code>PostController</code> 也必須修改。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor004.png" alt=""></p>
+<p>將滑鼠游標放在 <code>getTitle()</code>，按熱鍵 &#8963; + T，選擇 <code>Change Signature...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor001.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 重構成新的 method 名稱，若不改變可不修改。</li>
+<li><strong>新增參數</strong> : 按熱鍵 &#8984; + N 新增參數 <code>$content</code>，後面的 Default 表示其他相依的 method，該新增什麼變數名稱。</li>
+</ul>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor002.png" alt=""></p>
+<ul>
+<li><strong>Propagate 參數</strong> : 按熱鍵 &#8997; + G。</li>
+<li><strong>選擇 Method</strong> : 選擇要 propagate 參數的 method。</li>
+</ul>
+<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor003.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostRepository</code> 的 <code>getTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor026.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostService</code> 的 <code>showTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor027.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostController</code> 的 <code>index()</code> 重構加上新的參數 <code>$content</code>。</p>
+<h2 id="Extract_Interface">Extract Interface</h2><hr>
+<p>TDD 要求我們在設計階段，先根據當前的需求 <span class="label label-success">綠燈</span> 就好，避免因為 over design 而墊出一堆 interface，而讓架構提早複雜化，但真的需求來時，有必要墊 interface 還是要墊，此時我們可以使用 Extract Interface 將目前原有的 class 抽出 interface。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor013.png" alt=""></p>
+<p>原本 <code>PostRepository</code> 並沒有墊 interface，但因為有切換 MySQL 與 MongoDB 的需求，只好將 repository 加以抽象化，因此想定義 <code>PostRepositoryInterface</code>。 </p>
+<p>將滑鼠游標放在 <code>PostRepository</code>，按熱鍵 &#8963; + T，選擇 <code>Interface...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor014.png" alt=""></p>
+<ul>
+<li><strong>Interface Name</strong> : 輸入你想要使用的 interface 名稱，輸入 <code>PostRepositoryInterface</code>。</li>
+<li><strong>所有依賴注入都改成 Interface</strong> : 將 <code>Replace class references with interface where possible</code> 打勾。</li>
+<li><strong>Namespace</strong> : 若你想一併改變 interface 的 namespace，可在此修改，如有人可能會把所有 interface 專門放在一個 namespace 下。</li>
+<li><strong> Target destination directories</strong> : 為了符合 PSR-4，namespace 與 directories 會一致。</li>
+<li><strong>Members to form interface </strong> : 選擇你要抽出成為 interface 的 method。</li>
+</ul>
+<div class="alert alert-info"><i class="fa fa-info"></i>  實務上不建議將 class 的所有 method 原封不動抽成 interface，應該以需求的觀點去考量 interface，並遵守 SOLID 的 ISP 的介面隔離原則，如此才能符合 SRP 單一職責原則與 DIP 依賴反轉原則的要求，最後達成 OCP 開放封閉原則的目標。<span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>關於 SOLID 原則，詳細請參考大澤木小鐵的<a href="http://slides.com/jaceju/design-patterns-by-examples#/" target="_blank" rel="external">從實例學習設計模式 威力加強版 使用PHP</a></span></span></span></div>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor015.png" alt=""></p>
+<p>PhpStorm 會讓你預覽即將重構的變更，按 <code>Do Refactor</code> 繼續。</p>
+<p><strong>PostRepositoryInterface.php</strong><span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構新增 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor016.png" alt=""></p>
+<p>PhpStorm 會自動幫我們建立了 <code>PostRepositoryInterface.php</code>。</p>
+<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">實現 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor017.png" alt=""></p>
+<p><code>PostRepository</code> 也實現了 <code>PostRepositoryInterface</code>。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">依賴注入改成 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor018.png" alt=""></p>
+<p>PhpStorm 會自動幫我們將所有依賴注入都改成用 interface 方式。</p>
+<h2 id="Move_Refactorings">Move Refactorings</h2><hr>
+<h2 id="Pull_Members_Up">Pull Members Up</h2><hr>
+<h2 id="Push_Members_Down">Push Members Down</h2><hr>
+<h2 id="Rename_Refactoring">Rename Refactoring</h2><hr>
+<h2 id="Safe_Delete">Safe Delete</h2><hr>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/refactoring-source-code.html" target="_blank" rel="external">Refactoring Source Code</a><br>Mukund Chaudhary, Ankur Kumar, <a href="https://www.packtpub.com/web-development/phpstorm-cookbook" target="_blank" rel="external">PhpStorm Cookbook</a> </p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/azure-table-storage/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/azure/azure-blob-storage/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-08-28 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PhpStorm/">PhpStorm<span>36</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

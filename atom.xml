@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-08-16T07:08:26.000Z</updated>
+  <updated>2016-08-31T01:55:28.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,197 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[文章標題]]></title>
+    <link href="http://oomusou.io/azure-table-storage/"/>
+    <id>http://oomusou.io/azure-table-storage/</id>
+    <published>2016-12-05T12:23:43.000Z</published>
+    <updated>2016-08-31T01:55:28.000Z</updated>
+    <content type="html"><![CDATA[<p>引言</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.0<br>Laravel 5.2.22</p>
+<h2 id="實際案例">實際案例</h2><hr>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+]]></content>
+    <summary type="html">
+    <![CDATA[標題描述]]>
+    
+    </summary>
+    
+      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何在 PhpStorm 使用重構?]]></title>
+    <link href="http://oomusou.io/phpstorm/phpstorm-refactor/"/>
+    <id>http://oomusou.io/phpstorm/phpstorm-refactor/</id>
+    <published>2016-08-28T12:23:43.000Z</published>
+    <updated>2016-08-23T05:23:37.000Z</updated>
+    <content type="html"><![CDATA[<p>重構是 TDD 開發流程的重頭戲，當第一次 <span class="label label-success">綠燈</span> 之後，就是不斷的重構，一直維持 <span class="label label-success">綠燈</span>，讓程式碼架構更好，卻又不違背原來的需求，而PhpStorm 提供強悍的重構功能，讓我們在重構時不需要 copy and paste，可直接快速重構，提升開發效率。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>在<a href="/phpstorm/phpstorm-tdd-refactor/">如何使用 PhpStorm 實現 TDD、重構與偵錯?</a>，曾經以<a href="http://www.tenlong.com.tw/items/9861547533?item_id=45657" target="_blank" rel="external">重構–改善既有程式的設計</a>第一章的範例，實際以 TDD 與重構的方式，完全在 PhpStorm 執行，不過當時並沒有使用到 PhpStorm 所有的重構功能，本文則實際深入探討 PhpStorm 全部的重構功能。</p>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
+<h2 id="Extract_Variable">Extract Variable</h2><hr>
+<p>實務上我們可能會想將 hard code 的字串或數字，重構稱變數，方便其他程式碼使用。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor028.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Variable...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor029.png" alt=""></p>
+<p>PhpStorm 提供 3 種 extract variable 方式 :</p>
+<ul>
+<li>將<strong>值</strong>重構成變數，也就是將 <code>no title</code> 重構成變數。</li>
+<li>將 <strong>method call</strong> 重構成變數，也就是將 <code>$this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 重構成變數。</li>
+<li>將<strong>整行</strong>重構成變數，也就是將 <code>$data[&#39;title&#39;] = $this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 再重構成新的變數。</li>
+</ul>
+<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成變數，所以選擇 <code>no title</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor030.png" alt=""></p>
+<p>輸入欲重構的變數名稱 : <code>defaultTitle</code>。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor031.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>$defaultTitle</code> 變數，並在原 <code>showTitle()</code> 改用 <code>$defaultTitle</code>。</p>
+<h2 id="Extract_Constant">Extract Constant</h2><hr>
+<p>實務上不建議直接在程式碼裡 hard code 字串或數字，一來將來維護不方便，二來程式碼的語意也不清楚，應該將這類 magic number 重構成 constant。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor006.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Constant...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor007.png" alt=""></p>
+<p>輸入 constant 名稱。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor008.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>const DEFAULT_TITLE = &#39;no title&#39;</code>，並在使用端使用 <code>self::DEFAULT_TITLE</code>，如此程式碼語意將更為清楚。</p>
+<h2 id="Extract_Parameter">Extract Parameter</h2><hr>
+<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 parameter。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor023.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Parameter...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor024.png" alt=""></p>
+<p>輸入 parameter 名稱。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 parameter</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor025.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成參數 <code>$defaultParameter</code>，並在使用端使用參數 <code>$defaultParameter</code>。</p>
+<h2 id="Extract_Field">Extract Field</h2><hr>
+<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 field。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
+<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor009.png" alt=""></p>
+<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Field...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor010.png" alt=""></p>
+<p>PhpStorm 提供兩種重構 field 方式 :</p>
+<ul>
+<li>將<strong>值</strong>或<strong>變數</strong>重構成 field。</li>
+<li>將<strong>expression</strong>重構成 field。</li>
+</ul>
+<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成 field，而不是將 <code>$this-&gt;showTitle()</code> 重構成 field。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor011.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 輸入 field 名稱為 <code>defaultTitle</code>。</li>
+<li><strong>Initialize in</strong> : 選擇初始化 field 的方法，這裡選擇 <code>Field declaration</code>，</li>
+<li><strong>Visibility</strong> : 這裡選擇 <code>private</code>。</li>
+</ul>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 Field</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor012.png" alt=""></p>
+<p>PhpStorm 會自動幫我們重構成 <code>private $defaultTitle = &#39;no title&#39;</code>，並在使用端使用 <code>$this-&gt;defaultTitle</code>。<span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>若要替 field 提供 getter 與 setter，詳細請參考<a href="/phpstorm/phpstorm-code-generation/#Getter/Setter">如何在 PhpStorm 使用 Code Generation?</a></span></span></span></p>
+<h2 id="Extract_Method">Extract Method</h2><hr>
+<p>在 TDD 第一個 <span class="label label-success">綠燈</span> 之後，為了，實務上我們會使用 Extract Method 重構，讓程式碼可讀性更高，語意更清楚。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>12</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">12</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">顯示所有有 Description 的 Title</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor019.png" alt=""></p>
+<p>為了顯示全部有 <code>description</code> 的 <code>title</code>，需要在 <code>foreach</code> 內對 <code>description</code> 做判斷，並新增至 <code>$titles</code> 陣列。</p>
+<p>其中 <code>if ()</code> 這段程式碼，包含了底層的 <code>if()</code> 判斷，還包含了新增至陣列的實作，看起來比較突兀，也就是我們應該 <code>把抽象出來的方法放在一起，而不要把底層程式碼和抽象出來的方法放在一起</code> 的概念。</p>
+<p>所謂 <code>抽象出來的方法</code>是指 Extract Method 後的產物，它代表著這段程式碼的意圖。</p>
+<p>每一階程式碼都有它放在這裡的意義，千萬不要將高階和低階的方法混雜在一起，這樣讀程式碼時會很突兀。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor020.png" alt=""></p>
+<p>選擇要 Extract Method 的程式碼，按熱鍵 &#8963; + T，選擇 <code>Method...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor021.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 輸入 Extract Method 後新的 method 名稱，輸入 <code>filterTitlesWithDescription</code>。</li>
+<li><strong>Visibility</strong> : 選擇 <code>Private</code>。</li>
+<li><strong>Return output variable(s) through</strong> : 選擇 <code>Return statement</code>。</li>
+</ul>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>13</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">13</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 filterTitlesWithDescription</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor022.png" alt=""></p>
+<p>PhpStorm 會自動幫我們建立了 <code>filterTitlesWithDescription()</code>，並且自動幫我們修改了呼叫 <code>filterTitlesWithDescription()</code> 的方式。</p>
+<p>對於 <code>showTitlesWithDescription()</code> 來說，其職責在於 <code>foreach()</code> 去<code>顯示資料</code>，而 <code>filterTitlesWithDescription()</code> 的職責在於<code>過濾資料</code>，如此程式碼的可讀性更高，語意也更明顯，也符合 SOLID 的<strong>單一職責</strong>原則。 </p>
+<p>Extract Method 是重構當中，最常用的手法，而 PhpStorm 的 Extract Method 功能非常強大。</p>
+<h2 id="Change_Signature">Change Signature</h2><hr>
+<p>包含了以下多項重構功能 :</p>
+<ul>
+<li>改變 method 名稱</li>
+<li>新增參數</li>
+<li>刪除參數</li>
+<li>更改參數的預設值</li>
+<li>調整參數順序</li>
+<li>修改參數名稱</li>
+<li>新增一系列 function call 的參數</li>
+</ul>
+<p>當使用 Change Signature 時，PhpStorm 會搜尋所有使用此 method 之處，並做相對應的修改。</p>
+<p><strong>PostRepository.php</strong><br><img src="/images/phpstorm/phpstorm-refactor/refactor000.png" alt=""></p>
+<p><code>PostRepository</code> 的 <code>getTitle()</code> 目前參數為 <code>$id</code> 與 <code>$default</code>，想新增一個參數為 <code>$content</code>。</p>
+<p>目前 <code>PostController</code> 呼叫 <code>PostSerive</code>，而 <code>PostService</code> 呼叫 <code>PostRepository</code>，若 <code>PostRepository</code> 的 <code>getTitle()</code> 增加參數，勢必 <code>PostService</code> 與 <code>PostController</code> 也必須修改。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor004.png" alt=""></p>
+<p>將滑鼠游標放在 <code>getTitle()</code>，按熱鍵 &#8963; + T，選擇 <code>Change Signature...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor001.png" alt=""></p>
+<ul>
+<li><strong>Name</strong> : 重構成新的 method 名稱，若不改變可不修改。</li>
+<li><strong>新增參數</strong> : 按熱鍵 &#8984; + N 新增參數 <code>$content</code>，後面的 Default 表示其他相依的 method，該新增什麼變數名稱。</li>
+</ul>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor002.png" alt=""></p>
+<ul>
+<li><strong>Propagate 參數</strong> : 按熱鍵 &#8997; + G。</li>
+<li><strong>選擇 Method</strong> : 選擇要 propagate 參數的 method。</li>
+</ul>
+<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor003.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostRepository</code> 的 <code>getTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor026.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostService</code> 的 <code>showTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
+<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor027.png" alt=""></p>
+<p>PhpStorm 會自動幫我們在 <code>PostController</code> 的 <code>index()</code> 重構加上新的參數 <code>$content</code>。</p>
+<h2 id="Extract_Interface">Extract Interface</h2><hr>
+<p>TDD 要求我們在設計階段，先根據當前的需求 <span class="label label-success">綠燈</span> 就好，避免因為 over design 而墊出一堆 interface，而讓架構提早複雜化，但真的需求來時，有必要墊 interface 還是要墊，此時我們可以使用 Extract Interface 將目前原有的 class 抽出 interface。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor013.png" alt=""></p>
+<p>原本 <code>PostRepository</code> 並沒有墊 interface，但因為有切換 MySQL 與 MongoDB 的需求，只好將 repository 加以抽象化，因此想定義 <code>PostRepositoryInterface</code>。 </p>
+<p>將滑鼠游標放在 <code>PostRepository</code>，按熱鍵 &#8963; + T，選擇 <code>Interface...</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor014.png" alt=""></p>
+<ul>
+<li><strong>Interface Name</strong> : 輸入你想要使用的 interface 名稱，輸入 <code>PostRepositoryInterface</code>。</li>
+<li><strong>所有依賴注入都改成 Interface</strong> : 將 <code>Replace class references with interface where possible</code> 打勾。</li>
+<li><strong>Namespace</strong> : 若你想一併改變 interface 的 namespace，可在此修改，如有人可能會把所有 interface 專門放在一個 namespace 下。</li>
+<li><strong> Target destination directories</strong> : 為了符合 PSR-4，namespace 與 directories 會一致。</li>
+<li><strong>Members to form interface </strong> : 選擇你要抽出成為 interface 的 method。</li>
+</ul>
+<div class="alert alert-info"><i class="fa fa-info"></i>  實務上不建議將 class 的所有 method 原封不動抽成 interface，應該以需求的觀點去考量 interface，並遵守 SOLID 的 ISP 的介面隔離原則，如此才能符合 SRP 單一職責原則與 DIP 依賴反轉原則的要求，最後達成 OCP 開放封閉原則的目標。<span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>關於 SOLID 原則，詳細請參考大澤木小鐵的<a href="http://slides.com/jaceju/design-patterns-by-examples#/" target="_blank" rel="external">從實例學習設計模式 威力加強版 使用PHP</a></span></span></span></div>
+<p><img src="/images/phpstorm/phpstorm-refactor/refactor015.png" alt=""></p>
+<p>PhpStorm 會讓你預覽即將重構的變更，按 <code>Do Refactor</code> 繼續。</p>
+<p><strong>PostRepositoryInterface.php</strong><span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構新增 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor016.png" alt=""></p>
+<p>PhpStorm 會自動幫我們建立了 <code>PostRepositoryInterface.php</code>。</p>
+<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">實現 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor017.png" alt=""></p>
+<p><code>PostRepository</code> 也實現了 <code>PostRepositoryInterface</code>。</p>
+<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">依賴注入改成 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor018.png" alt=""></p>
+<p>PhpStorm 會自動幫我們將所有依賴注入都改成用 interface 方式。</p>
+<h2 id="Move_Refactorings">Move Refactorings</h2><hr>
+<h2 id="Pull_Members_Up">Pull Members Up</h2><hr>
+<h2 id="Push_Members_Down">Push Members Down</h2><hr>
+<h2 id="Rename_Refactoring">Rename Refactoring</h2><hr>
+<h2 id="Safe_Delete">Safe Delete</h2><hr>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/refactoring-source-code.html" target="_blank" rel="external">Refactoring Source Code</a><br>Mukund Chaudhary, Ankur Kumar, <a href="https://www.packtpub.com/web-development/phpstorm-cookbook" target="_blank" rel="external">PhpStorm Cookbook</a> </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[加快重構速度，讓我們可以持續地重構]]>
+    
+    </summary>
+    
+      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何在 Azure 使用 Laravel + Blob Storage?]]></title>
@@ -1511,530 +1702,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[實作模式筆記 (Motivation)]]></title>
-    <link href="http://oomusou.io/ip/ip-motivation/"/>
-    <id>http://oomusou.io/ip/ip-motivation/</id>
-    <published>2016-07-04T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
-    <content type="html"><![CDATA[<p>以軟體成本的角度，闡明使用模式除了可以增加程式可讀性，還可大幅降低維護成本。<br><a id="more"></a></p>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>本文為 Kent Beck 的 <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a> 一書的讀書筆記，主要是整理給自己複習用，並加上自己的腦補。</p>
-<h2 id="軟體整體成本">軟體整體成本</h2><hr>
-<p><img src="/images/ip/ip-motivation/mot000.png" alt=""></p>
-<p>軟體整體成本 = 開發成本 + 維護成本。</p>
-<blockquote><p>Once the industry gained experience with software development, it was a big surprise to many that the cost of maintenance is much higher than than the cost of initial development.</p>
-<p>當業界累積了軟體開發經驗後，才驚覺軟體的維護成本源遠高於它的開發成本。</p>
-</blockquote>
-<p>大部分人覺得軟體成本在於開發成本，只要開發完成後，維護成本很低，其實剛好相反，軟體最大的成本是在維護。</p>
-<blockquote><p>Maintenance is expensive because understanding existing code is time-cosuming and error-prone. Making changes is generally easy when you know what needs changing. Learning what the current code does is the expensive part. Once the changes are made, they need to be tested and deployed.</p>
-<p>軟體的昂貴維護成本在於理解既有的程式碼非常耗時，而且容易出錯。當你知道要在哪裡修改之後，維護反而是輕而易舉的事情。理解目前的程式碼是最昂貴的維護成本。修改之後，還必須進行測試與部署。</p>
-</blockquote>
-<p><img src="/images/ip/ip-motivation/mot001.png" alt=""></p>
-<p>軟體維護成本 = 理解程式碼 + 修改程式碼 + 測試程式碼 + 部署程式碼</p>
-<p>其中最昂貴的成本是<code>理解程式碼</code>。</p>
-<h2 id="降低軟體成本">降低軟體成本</h2><hr>
-<blockquote><p>One strategy for reducing overall cost is to invest more in initial development in hope of reducing or eliminating the need for maintenance. Such efforts have generally failed to reduce overall costs. When code needs to change in unanticipated ways, no amount of forethought can perfectly prepare the code for change.</p>
-<p>其中一種降低軟體整體成本的策略是「在開發初期花更多時間制定規格與瞭解需求，設計萬全的架構，減少將來維護的成本」，但這種方式往往會失敗。當「計畫趕不上變化時」，之前所做的萬全準備都派不上用場。</p>
-</blockquote>
-<p>硬體因為規格明確，常常使用大量的 over design 來應付未來變化；但軟體的規格常伴隨著需求而變動，因此即時 over design 也常常用不到。</p>
-<blockquote><p>The premature attemps to make the code general enough to meet future needs often interfere with unacticipated changes that turn out to be necessary.</p>
-<p>人們可能為了防備將來發生變化，而過早的考慮程式碼的通用性，但如果出現了沒有預料而又勢在必行的變化，先前的做法往往就會與現實發生衝突。</p>
-</blockquote>
-<p>假如 over design 而將來能用到還沒關係，就怕 over design 還是趕不上需求的變化。</p>
-<blockquote><p>My strategy for reducing overall costs is to ask all programmers to address the cost of understanding code during the maintenance phase by focusing on communicating, programmer-to-programmer. The immediate benefits of clear code are fewer defects, easier sharing of code, and smoother development.</p>
-<p>我用來減少整體成本的策略是注重程式可讀性，減少理解程式碼成本。其立即的收益是程式碼 bug 更少、程式碼更易於共用、開發曲線也更為平坦。</p>
-</blockquote>
-<p>軟體維護成本中最昂貴的就是理解程式碼，從程式可讀性下手，將可最快有效降低軟體維護成本。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>軟體最大的成本在於維護，而維護最大的成本就是理解程式碼，使用模式可幫助程式可讀性，可以立即有效降低軟體成本。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p>Kent Beck, <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Ch.4 Motivation]]>
-    
-    </summary>
-    
-      <category term="Implementation Pattern" scheme="http://oomusou.io/tags/Implementation-Pattern/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[實作模式筆記 (A Theory of Programming)]]></title>
-    <link href="http://oomusou.io/ip/ip-theory/"/>
-    <id>http://oomusou.io/ip/ip-theory/</id>
-    <published>2016-07-01T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
-    <content type="html"><![CDATA[<p>此章討論<code>程式設計理論</code>，提出了 3 條<code>程式設計價值觀</code>與 6 條<code>程式設計原則</code>，這些都是所有程式語言都能使用的普世價值觀與原則，當我們遇到一個全新的問題，沒有模式可以使用時，可以轉而思考這些價值觀與原則；當我們學習新的程式語言時，也可以藉由這些價值觀與原則為起點，一樣可以寫出優秀的程式碼。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>本文為 Kent Beck 的 <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a> 一書的讀書筆記，主要是整理給自己複習用，並加上自己的腦補。</p>
-<h2 id="程式設計理論">程式設計理論</h2><hr>
-<blockquote><p>No lists of patterns, no matter how exhaustive, can cover every situation that comes up while programming. Eventually (or even frequently) you’ll come upon a situation where none of the cookie cutters fits. This need for general approaches to unique problems is one reason to study the theory of programming. Another is the sense of mastery that comes of knowing both what to do and why.</p>
-<p>無論蒐集多麼完整的模式，也無法涵蓋所有的需求。最終你會遇到沒有任何模式適用的情況，因此你需要通用的解決問題方法，這也是我們為什麼要學習程式設計理論的原因，其次是「知其然，亦知其所以然」所帶來的成就感。</p>
-</blockquote>
-<blockquote><p>Each pattern carries with it a little bit of theory. There are larger and more pervasive forces at work in programming than covered in individual patterns. They are divided into two types : values and principles.</p>
-<p>每個模式都有一些理論基礎，在程式設計中有一些更基礎的理論，不是單一模式可以涵蓋的，那就是<code>程式設計價值觀</code>與<code>程式設計原則</code>。</p>
-</blockquote>
-<h2 id="程式設計價值觀">程式設計價值觀</h2><hr>
-<blockquote><p>Three values that are consistent with excellence in programming are communication, simplicity, and flexibility. While these three sometimes conflict, more often they are complement each other. The best programs offer many options for future extension, contain no extraneous elements, and are easy to read and understand.</p>
-<p>有三種價值觀與優秀程式設計是一脈相承的，他們分別是<code>程式可讀性</code>、<code>程式簡潔性</code>、<code>程式靈活性</code>，雖然他們有時候會有所衝突，但更多時候，他們是互補的。好的程式是容易閱讀與理解，不包含多餘的元素，且為將來擴充提供眾多選項。</p>
-</blockquote>
-<p>通常程式靈活性與程式簡潔性會有所衝突，這也是為什麼在設計模式中，常會發現很多 interface 存在，雖然成就了靈活性，卻讓架構比較複雜，所以才有 TDD 讓我們不 over design。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>稍後將以 AWS 與阿里雲的雲端服務為例解釋。</span></span></span></p>
-<h3 id="程式可讀性">程式可讀性</h3><hr>
-<blockquote><p>Code communicates well when a reader can understand it, modify it, or use it.</p>
-<p>當閱讀者能理解某段程式碼，並進一步修改它或使用它，那麼這段程式碼就是可讀性高的程式碼。</p>
-</blockquote>
-<p>程式的可讀性是可維護性的首要條件，要修改或新增功能，首先必須要讀懂原來的程式碼，才能在適當的地方修改或增加程式。</p>
-<blockquote><p>While programming it’s tempting to think only of the computer. However, good things happen when I think of others while I program. I get cleaner code that is easier to read, it is more cost-effective, my thinking is clearer, I give myself a fresh perspective, my stress level drops, and I meet some of my social needs.</p>
-<p>在設計程式時，我們很容易從電腦的角度進行思考，但只有一面進行程式設計，一面考慮其他閱讀者是否能讀懂我寫的程式，才能寫出容易閱讀的程式碼。在這種前提下寫出來的程式碼，將更容易閱讀、更有效率、更能清晰地展現出我的想法，它給了我全新的視野、減輕了我的壓力，且社會需求也得到滿足。</p>
-</blockquote>
-<ul>
-<li><strong>幫助思考</strong></li>
-</ul>
-<p>達成程式可讀性的另外一個法門，就是採用 TDD 方式開發，由於先寫測試，我們會以可測試性的角度去思考，而不是從電腦的角度去思考。</p>
-<p>可測試性高通常代表 3 件事情 :</p>
-<ul>
-<li>API 好用，所以好測試，符合需求且貼近現實。</li>
-<li>測試案例好寫，表示你的設計符合<strong>單一職責</strong>原則。</li>
-<li><p>容易隔離測試與 mock，表示你的程式耦合度低。</p>
-</li>
-<li><p><strong>容易閱讀</strong></p>
-</li>
-</ul>
-<p>當測試好寫，就代表你的 method 與 API 好用好理解，也就是程式可讀性高。</p>
-<ul>
-<li><strong>減輕壓力</strong></li>
-</ul>
-<p><img src="/images/ip/ip-theory/theory003.png" alt=""></p>
-<p><img src="/images/ip/ip-theory/theory000.png" alt=""></p>
-<p>傳統方式開發必須同時考慮眾多需求，腦筋容易打結，但 TDD 要你一次只專心一件事情 : <code>把紅燈變綠燈</code>，減輕開發時的壓力。</p>
-<ul>
-<li><strong>社會需求</strong></li>
-</ul>
-<p>人類是社會性的物種，明確的完成「其他人閱讀程式碼」的需求，而不是「悶著頭自己寫程式」，完成每個人的社會需求。</p>
-<blockquote><p>Every time a bit of logic was a little hard to explain, it was easier to rewrite the code than explain why the code was hard to understand.</p>
-<p>每次遇到難以解釋的邏輯，將程式重新改寫，會比去理解它容易。</p>
-</blockquote>
-<p>其實遇到難以解釋的邏輯，只要<code>重構</code>即可，不需重寫，只要我們有測試做保障，就能將原來難以解釋的邏輯重構成容易閱讀的程式碼。</p>
-<blockquote><p>The majority of the cost of software is incurred after the software has been first deployed.</p>
-<p>絕大部分的軟體成本，都是在軟體第一次部署後才產生。</p>
-</blockquote>
-<p>Kent Beck 在書中的程式可讀性與程式靈活性都提到這句話。</p>
-<p>軟體第一次部署後，使用者才開始使用，有使用才會有新的需求，才需要去維護程式。</p>
-<ul>
-<li>必須先閱讀程式</li>
-<li>然後才去修改程式</li>
-<li>最後確保是否會改A壞B</li>
-</ul>
-<p>這才是軟體絕大部分的成本。</p>
-<p>若程式可讀性不高，維護程式的第一步就卡關了，這也是最大的維護成本。</p>
-<h3 id="程式簡潔性">程式簡潔性</h3><hr>
-<blockquote><p>Eliminating excess complexity enables those reading, using, and modifying programs to understand them more quickly. It is this excess complexity that removes value from software, both by making the software less likely to run correctly and more difficult to change sucessfully in the future.</p>
-<p>去除多餘的複雜性可以讓那些閱讀、使用與修改程式碼的人更容易理解。多餘的複雜性降低了軟體的價值，一方面<br>降低了軟體正確執行的可能性，另一方面也增加了將來維護程式碼的難度。</p>
-</blockquote>
-<p>要去除程式碼的複雜度，可以跑測試的 coverage，若 coverage 沒有 100%，就有幾種可能 :</p>
-<ol>
-<li>有些程式碼永遠跑不到，也就是沒有任何需求，卻有這些程式碼，這就增加了複雜性。</li>
-<li>也有可能是測試案例不完全，導致程式碼沒有執行到。</li>
-</ol>
-<p>不論是哪一種，寫測試都可以幫著我們達成程式簡潔性。</p>
-<blockquote><p>Apply simplicity at all level.</p>
-<ul>
-<li>Format code so no code can be deleted without losing information.</li>
-<li>Design with no extraneous elements.</li>
-<li>Challenge requirements to find those that are essential.</li>
-</ul>
-<p>Eliminating excess complexity illuminates the remaining code.</p>
-<p>在程式碼的各個層次都要達到程式簡潔性。</p>
-<ul>
-<li>對程式碼重新排版與重構，刪除沒有必要的程式碼。</li>
-<li>不要沒有需求的部分做 over design。</li>
-<li>對需求提出質疑，找出真正不可或缺的需求。</li>
-</ul>
-<p>將程式碼中多餘的複雜度去除後，你的程式碼將會<code>閃亮亮</code>。</p>
-</blockquote>
-<blockquote><p>However, I find a simplication that would make a program harder to understand. I choose communication over simplicity in these case.</p>
-<p>有時候，當我發現程式簡潔性會造成程式碼難以理解時，我會選擇程式可讀性。</p>
-</blockquote>
-<p>重構的 <code>Inline Temp</code> 與 <code>Replace Temp with Query</code>，雖然會讓程式碼行數變少，但有時候用過頭，會讓程式過長，導致橫向發展，程式碼雖然看起來簡潔了，但卻變得難以閱讀，應以程式可讀性為優先考量。</p>
-<p><code>eval()</code> 的使用也要小心，有時雖然程式碼簡潔了，但卻很容易喪失可讀性。</p>
-<h3 id="程式靈活性">程式靈活性</h3><hr>
-<blockquote><p>Of the three values listed here, flexibility is the justification used for the most ineffective coding and design practices</p>
-<p>三種價值觀中，程式靈活性是最常用來判斷程式碼與設計好壞的指標。</p>
-</blockquote>
-<blockquote><p>Why all the complexibility? Flexibility. Programs should be flexible, but only in ways the change. If the constant never changes, all the complexibility is cost without benefit.</p>
-<p>為什麼要將程式變得這麼複雜呢? 常常是為了程式靈活性，但某些需求常常改變時，程式碼才需要這樣寫；假如某些需求從來沒改變過，為了程式靈活性而犧牲程式簡潔性，將沒有任何意義。</p>
-</blockquote>
-<p>如使用雲端服務，若需求只有 AWS，其實直接使用 AWS 亦未嘗不可，雖然耦合性較高，但畢竟<code>需求</code>就是這樣，若需求可能同一個網站會放在 AWS 與阿里雲，且分別使用各自的雲端服務，則應該使用 interface 切開，由使用者的需求觀點定義 interface，再以實踐該 interface 的 class 去使用 AWS 與 阿里雲的 API，而不是在 controller 內直接使用 AWS 或阿里雲的雲端服務，如此 controller 會使用相同的一份 code 去使用雲端服務，只要 service provider 一開使去 <code>app::bind()</code> AWS 或阿里雲的 class 即可。</p>
-<p>這種方式的程式靈活性雖高，但缺犧牲了程式簡潔性，多了 interface，還多了 service provider，因此物件導向才要搭配 TDD 與重構，一開始需求很單純時，只求 <span class="label label-success">綠燈</span> 即可，儘管耦合性較高，但符合程式簡潔性，將來需求出現，再重構成 interface，也要繼續 <span class="label label-success">綠燈</span>，達成程式靈活性，TDD 與重構使得程式在程式靈活性與程式簡潔性取得一個平衡點，而不必一開始就 over design 使用 interface，在沒有需求的前提下提早放棄<code>程式簡潔性</code>。</p>
-<p>程式靈活性與程式簡潔性雖然衝突，寫程式應該先考慮程式簡潔性，除非是有<code>需求</code>，才會考慮程式靈活性。</p>
-<blockquote><p>The majority of the cost of software is incurred after the software has been first deployed, programs should be easy to change.</p>
-<p>絕大部分的軟體成本，都是在軟體第一次部署後才產生。程式碼必須能容易被修改。</p>
-</blockquote>
-<p>除了在程式可讀性提到這句話外，在程式靈活性又再次提到這句話。</p>
-<p>軟體第一次部署後，使用者才開始使用，有使用才會有新的需求，才需要去維護程式。</p>
-<ul>
-<li>必須先閱讀程式</li>
-<li>然後才去修改程式</li>
-<li>最後確保是否會改A壞B</li>
-</ul>
-<p>這才是軟體絕大部分的成本。</p>
-<p>若<code>程式可讀性</code>很高，第一關過了。</p>
-<p>但有於設計的耦合度太高，可能造成程式碼很難修改，或者只要修改就要改很多地方，而造成到處改A壞B，這就會造成很嚴重的維護成本。</p>
-<p>所以程式碼必須要設計的容易被修改來降低維護成本。</p>
-<blockquote><p>The flexibility I imagine will be needed tomorrow, though, is likely to be not what I need when I change the code. That’s why the flexibility of simplicity and extensive tests is more effective than the flexibility offered by speculative design. </p>
-<p>「憑空想像而非真正需求」的 over design，與「為了程式好修改」的程式靈活性是兩碼子事。這也就是為什麼「程式簡潔導致程式好修改與完整的測試」比「為了憑空想像的需求所設計的靈活性」更為有效的原因。</p>
-</blockquote>
-<p>很多人會以「若將來有這個需求」為前提，提早使用某個模式，開始大量使用 interface，問題連<code>需求</code>都沒有，也無從寫測試案例作測試，這種就是 over design，提早增加複雜度，這就是「憑空想像的需求所設計的靈活性」。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>中譯本是翻譯成 : 這就是「簡單性和大規模測試所帶來的靈活性」比「專門設計出來的靈活性」更為有效的原因。我個人認為 flexibility of simplicity 是由<code>簡單所導致的靈活</code>，而非由<code>測試所帶來的靈活</code>。</span></span></span></p>
-<blockquote><p>Choose patterns that encourage flexibility and bring immediate benefites. For patterns with immediate costs and only deferred benefits, often patience is the best strategy. Put theme back in the bag until they are needed. Then you can apply them in precisely the way they are needed.</p>
-<p>先選擇那些能增加<code>程式靈活性</code>與立即幫助的模式。有些模式複雜度較高，可能需大規模更改架構而增加成本，而其收益卻要一段時間才能看的到，對於這類模式，可能需要些耐心<code>讓子彈飛一下</code>，將這些模式以學習的角度先放在自己的工具箱裡，等到真正有<code>需求</code>，或你能精確地駕馭這些模式時再拿出來用。</p>
-</blockquote>
-<div class="alert alert-info"><i class="fa fa-info"></i>  程式可讀性 > 程式簡潔性 > 程式靈活性</div>
-<p>若三個價值觀相衝突 :</p>
-<ul>
-<li>優先考慮程式可讀性，不能因為程式簡潔性而喪失程式可讀性。</li>
-<li>若無<code>需求</code>，優先考慮程式簡潔性，若有<code>需求</code>，則允許喪失些程式簡潔性換取程式靈活性，但程式可讀性則無從妥協。</li>
-</ul>
-<h2 id="程式設計原則">程式設計原則</h2><hr>
-<blockquote><p>The principles described here aren’t as far-reaching or pervasive as the values, but each one is expressed by many of the patterns. The principles bridged the values, which are universal but often difficult to apply directly, and the patterns, which are clear to apply but specific.</p>
-<p><code>程式設計原則</code>不像<code>程式設計價值觀</code>那般意義深遠與遙不可及，但每個原則都在許多模式中都可以看得到。程式價值觀具有普世價值，但卻往往難以實現；模式雖然可以直接應用，但卻是只能針對某些需求。程式設計原則剛好介於價值觀與模式之間，扮演橋樑的角色。</p>
-</blockquote>
-<p> 每一個模式都在某種程度實現了程式可讀性、程式簡潔性與程式靈活性的價值觀，但價值觀較偏人的角度思考，但程式設計原則則是以程式碼的角度思考。</p>
-<blockquote><p>I have found it valuable to make the principles explicit for those situations where no patterns applies, or when two mutually exclusive patterns apply equally.</p>
-<p>我發現程式設計原則的可貴之處在於那些「沒有模式可用」或「模式之間互相矛盾」的場合，如果把程式設計原則弄清楚，對解決疑難雜症很有幫助。</p>
-</blockquote>
-<p>當模式之間互相矛盾時，最好的方式就是讓程式設計原則說話，而不是讓模式之間爭來爭去。</p>
-<p>如果遇到獨一無二的新需求，因而沒有模式可用時，可以轉而思考程式設計原則，甚至可以因此想出新的模式。</p>
-<blockquote><p>When I encounter a new programming language I use my understanding of principles to develop an effective style of programming. I don’t have to ap existing style or, worse, cling to my style in some other programming language. Understanding principles give me a chance to learn quickly and act with integrity in novel situations.</p>
-<p>當我使用新的程式語言時，我可以根據自己對程式設計原則的理解發展出有效的程式設計風格，不必盲目模仿現有的程式語言風格，更不用拘泥於將其他語言風格帶入新的程式語言，對於程式設計原則的徹底理解，能快速地學習新語言，即時在全新的語言也能寫出符合程式設計原則的好程式。</p>
-</blockquote>
-<p><img src="/images/ip/ip-theory/theory001.png" alt=""></p>
-<p><img src="/images/ip/ip-theory/theory002.png" alt=""></p>
-<p>程式設計原則講的是程式設計中，普世的原則，一個程式語言可能有盛有衰，你也可能因為換了工作而換了其他程式語言，無論你使用任何程式語言，最後都會用到這些原則。</p>
-<h3 id="避免_Side_Effect">避免 Side Effect</h3><blockquote><p>Structure the code so changes have local consequences. If a change here can cause a problem there, then the cost of the changes rises dramatically.</p>
-<p>設計程式架構時，要使得修改程式碼所產生的影響不至於改A壞B。如果這裡修改，會造其他地方出問題，如此將造成巨大的維護成本。</p>
-</blockquote>
-<p>有幾個具體方法，可以避免改 A 壞 B 所造成的 side effect:</p>
-<ul>
-<li>減少使用全域變數。</li>
-<li>減少使用 pass by reference，盡量使用 pass by value。</li>
-<li>符合 SOLID 的<code>單一職責原則</code>，不會什麼修改都會影響到我。</li>
-<li>符合 SOLID 的<code>開放封閉原則</code>，原來的程式不再修改，確保原來的程式不再出錯。</li>
-<li>符合 SOLID 的<code>最小知識原則</code>，盡量減少 public method。</li>
-<li>符合 SOLID 的<code>依賴反轉原則</code>，將低耦合度。</li>
-<li>寫測試，若真的還是改 A 壞 B，可以馬上發現。</li>
-</ul>
-<h3 id="避免程式碼重複">避免程式碼重複</h3><blockquote><p>A principle that contribute to keeping consequences local is to minimize repetition.</p>
-<p>避免程式碼重複亦有助於避免改A壞B。</p>
-</blockquote>
-<p>當你有相同的程式碼散落在專案各處，當需求改變，需要變更邏輯時，就必須每個地方去改，但維護的人可能不知道這段邏輯也出現在其他地方，因此而沒改到。</p>
-<blockquote><p>Copied code is only one form of repetition. Parallel class hierarchies are also repetitive.</p>
-<p>複製貼上的程式碼只是其中一種的程式碼重複，平行的 class 架構也是程式碼重複。</p>
-</blockquote>
-<p><img src="/images/ip/ip-theory/theory004.png" alt=""></p>
-<p>當你在某一個 class 繼承架構下新增 class 時，你發現還必須手動在另外一個 class 繼承架構下新增 class，但問題維護的人可能並不知道，因此而造成修改後的程式錯誤。</p>
-<p>由於這兩個 class 繼承架構的相似度很高，才會導致平行 class 架構，應該使用重構的 <code>Move Field</code> 與 <code>Move Method</code> 整合成一個 class 繼承架構，或使用設計模式的 <code>Bridge</code> 模式，讓實作與抽象可以各自擴展。</p>
-<blockquote><p>Duplication is not always abvious until after it has been created, and sometimes not for a while even then. Having seen it I can’t always think of a good way to eliminate it. Dupilcation isn’t evil, it just raises the cost of making changes.</p>
-<p>程式碼重複在開發時不太容易被發現，有時候要在一段時間後才會被察覺。即使發現了程式碼有重複之處，我也不見得每次都能將重複程式碼拿掉。程式碼重複並不是罪過，只是會增加程式碼維護時的成本。</p>
-</blockquote>
-<p>儘管使用了 TDD 開發方式，有時可能還是會遇到程式碼重複，此時只要使用<code>重構</code>將重複的程式碼萃取出來即可。<span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>中譯本並沒有將 <code>Having seen it I can&#39;t always think of a good way to eliminate it.</code> 這句加以翻譯。</span></span></span></p>
-<blockquote><p>One of the ways to remove duplication is to break programs up into many small pieces – small statements, small methods, small objects, small packages. Large peices of logic tend to duplicate parts of other large pieces of logic.</p>
-<p>其中一個避免程式碼重複的手段，就是將程式拆成更多更小部分 : <code>更短的敘述、更小的方法、更小的物件、更小的套件</code>，一大段的程式碼邏輯很容易與其他程式碼邏輯重複。</p>
-</blockquote>
-<p>一個很長的 method，很難看出重複的部分，但是短短的 method，就很容易看出重複的部分。</p>
-<p>重構也是鼓勵大家使用 <code>Extract Method</code> 將程式拆成眾多短短的 method，除了可讀性高外，也更能避免程式碼重複。</p>
-<p>使用 TDD 開發也可以避免程式碼重複，為了測試案例明確，為了好測試，所寫出的 method 都是短短的，因為一個 method 太長，就會很難寫測試案例，也會違反 SOLID 的 <code>單一職責原則</code>。</p>
-<p>有幾個具體方法，可以避免程式碼重複</p>
-<ul>
-<li>符合 SOLID 的<code>單一職責原則</code>，避免在單一 method 內寫很長的邏輯。</li>
-<li>符合 SOLID 的<code>介面隔離原則</code>，職責明確的 interface 有助於寫出<code>單一職責</code>的 class。</li>
-</ul>
-<p>在使用MVC架構時，以下為初學者常犯的錯 :</p>
-<ul>
-<li><p><strong>重複的資料庫邏輯</strong><br>將資料庫邏輯寫在 controller 內，若其他 controller 也使用相同的邏輯，直接將資料庫邏輯複製貼上到其他 controller 內，導致相同的資料庫邏輯散佈在不同 controller。建議改用 Repository 模式，將資料庫邏輯統一寫在 repository 內，當需要使用相同的資料庫邏輯時，只要使用依賴注入到 controller 即可。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>關於 Repository 模式，詳細請參考<a href="/laravel/laravel-repository/">如何使用 Repository 模式?</a></span></span></span></p>
-</li>
-<li><p><strong>重複的商業邏輯</strong><br>將商業邏輯寫在 controller 內，若其他 controller 也使用相同的邏輯，由於無法 A controller 呼叫 B controller，因此直接將商業邏輯複製貼上到其他 controller 內，導致相同的商業邏輯散佈在不同 controller。建議改用 Service 模式，將商業邏輯統一寫在 service 內，當需要使用相同的商業邏輯時，只要使用依賴注入到 controller 即可。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>關於 Service 模式，詳細請參考<a href="/laravel/laravel-service/">如何使用 Service 模式?</a></span></span></span></p>
-</li>
-<li><p><strong>重複的顯示邏輯</strong><br>講顯示邏輯寫在 blade 內，若其他 blade 也使用相同的邏輯，直接將顯示邏輯複製貼上到其他 blade 內，導致相同的顯示邏輯散佈在不同 blade。建議改用 Presenter 模式，將顯示邏輯統一寫在 presenter 內，當需使用相同的顯示邏輯時，只要使用依賴注入到 blade 即可。<span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>關於 Presenter 模式，詳細請參考<a href="/laravel/laravel-presenter/">如何使用 Presenter 模式?</a></span></span></span></p>
-</li>
-</ul>
-<h3 id="將資料與邏輯封裝在一起">將資料與邏輯封裝在一起</h3><blockquote><p>Another principle corollary to the principle of local consequence is keeping logic and data together. Put logic and the data it operates on near each other, in the same method if posible, or the same object, or at least the same package.</p>
-<p>為了避免 Side Effect 的另一個方法就是將資料與邏輯封裝在一起，盡量放在同一個 method 中，或者退而求其次，在同一物件內，最少也要是同一 package 裡。</p>
-</blockquote>
-<p>將資料與行為封裝在一起，也是物件導向的<code>繼承</code>、 <code>封裝</code>、<code>多型</code>中最基本的特性之一的<code>封裝</code>，通常需求發生變化時，資料與邏輯行為都是一起變化，將其封裝在一起，可將程式碼修改所產生的副作用侷限在 method 中，或者在同一個物件內。<span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>這裡的 package，並不是 PHP 所認知的 package，而是如 C# 的 Dll 與 Assembly，有特別提供 <code>internal</code> 作用域，其 scope 只侷限在此 Dll 與 Assembly，只有該 Dll 與 Assembly 可以存取。</span></span></span></p>
-<blockquote><p>It’s not always obvious at first where logic or data should go to satisfy this principle. I may be writing code in A and realize I need data from B. It’s only after I have the code working that I notice that it is too far from the data.</p>
-<p>在一開始寫程式時，我們往往不太清楚資料與邏輯該放在哪裡。我可能在 A 寫邏輯，才意識到需要 B 的資料。直到程式碼真正執行一段時間之後，我才意識到資料與邏輯太遠了，應該將他們封裝在一起。</p>
-</blockquote>
-<p>連 Kent Beck 都不太確定資料與邏輯一開始要寫在哪裡，所以一開始寫程式時，不用太拘泥於資料與邏輯該放在哪個 class 才適當，只要當下思考過放在哪個 class 最適合、TDD 能 <span class="label label-success">綠燈</span> 即可，之後再不斷的重構，靠 <code>Move Field</code> 與  <code>Move Method</code> 將資料與邏輯慢慢的搬到最適合的 class 即可。</p>
-<p>此外，原來資料與邏輯放在 A class 適合，也可能隨著<code>需求</code>的改變，變成放在 B class 更適合，此時只要繼續地靠 <code>Move Field</code> 與 <code>Move Method</code> 將資料與邏輯從 A class 重構到 B class 即可，也就是<code>持續重構</code>的概念。</p>
-<h3 id="程式碼一致性">程式碼一致性</h3><blockquote><p>Symmetry in code is where the same idea is expressed the same way everywhere it appears in the code.</p>
-<p>無論在什麼地方，相同的概念都應該以相同的形式呈現。</p>
-</blockquote>
-<p>如此閱讀者只需理解一部份的程式碼，就能以推理的方式去理解其他部份的程式碼。<span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>中譯本將 Symmetry 翻譯成<code>對稱性</code>，個人覺得不妥，翻譯成<code>一致性</code>比較符合程式設計師的用語。</span></span></span></p>
-<ul>
-<li><strong>以一致性的參數使用類似的方法</strong></li>
-</ul>
-<p>在 Laravel 的 Collection 中，絕大部分 method 的參數都是以 <code>$value</code>, <code>$key</code> 的順序</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$collection</span>-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$value</span>, <span class="variable">$key</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="comment">/* some condition */</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$collection</span>-&gt;map(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$value</span>, <span class="variable">$key</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$value</span> * <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$collection</span>-&gt;filter(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$value</span>, <span class="variable">$key</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$value</span> &gt; <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>但有些卻是 <code>$key</code>, <code>$value</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$collection</span>-&gt;contains(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$key</span>, <span class="variable">$value</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$value</span> &gt; <span class="number">5</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$collection</span>-&gt;first(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$key</span>, <span class="variable">$value</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$value</span> &gt; <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>這種 API 設計就違反了程式碼一致性。<span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>關於 Laravel 的 Collection 問題，我私下已經透過 Twitter 與 Taylor Otwell 確認，Taylor 說 Laravel 5.3 將會統一 Collection 的 API，不再有 <code>$value</code> 與 <code>$key</code> 不一致的問題。</span></span></span></p>
-<ul>
-<li><strong>以一致性的觀點替方法命名</strong></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    input();</span><br><span class="line">    count++;</span><br><span class="line">    output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>input()</code> 與 <code>output()</code> 都是以<code>需求</code>角度命名，但 <code>count++</code> 卻是實作，程式可讀性也不高，需加以重構。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    input();</span><br><span class="line">    incrementCount();</span><br><span class="line">    output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>將 <code>count++</code> 重構成 <code>incrementCount()</code> 之後，程式可讀性提高，但卻是以<code>實作</code>角度命名，與 <code>input()</code> 與 <code>output()</code> 以<code>需求</code>角度命名不一樣，違反程式碼一致性。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    input();</span><br><span class="line">    tally();</span><br><span class="line">    output();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>tally()</code> 為計算，是以<code>需求</code>角度命名，程式可讀性更高，且符合程式碼一致性要求。</p>
-<p>此外，這個範例還告訴我們另外一個重要的觀念 :</p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  把抽象出來的方法放在一起，而不要把底層程式碼和抽象出來的方法放在一起</div>
-<p>所謂<code>抽象出來的方法</code>是指 <code>extract method</code> 後的產物，它代表著這段程式碼的意圖。<br>每一階都有它放在這裡的意義，千萬不要將高階和低階的方法混雜在一起，這樣讀 code 時會很突兀。<span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>謝謝大澤木小鐵幫我們補充這個重要的觀念。</span></span></span></p>
-<h3 id="使用宣告式編程">使用宣告式編程</h3><blockquote><p>Express as much of my intention as possible declaratively. Imperative programming is powerful and flexible, but to read it requires that you follow the thread of execution. For those parts of a program that are more like simple facts, without sequence or conditionals, it is easier to read code that is simply declarative.</p>
-<p>盡可能以<code>宣告式編程</code>方式表達你的需求，<code>命令式編程</code>功能強大且靈活，但是閱讀時你必須以電腦的思維，跟著執行的流程去思考，程式碼較不易閱讀；宣告式編程只是陳述簡單的需求，並沒有考慮程式流程與程式判斷，完全是以需求的角度去思考，程式碼就容易閱讀。</p>
-</blockquote>
-<p>假如我們的需求是 : <code>計算今天全部訂單金額</code>。</p>
-<p>若使用傳統命令式編程 (Imperative Programming)，我們會這樣寫 :</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$totalAmount</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$orders</span> <span class="keyword">as</span> <span class="variable">$order</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$order</span>-&gt;order_date == Carbon::now()) &#123;</span><br><span class="line">        <span class="variable">$totalAmount</span> = <span class="variable">$totalAmount</span> + <span class="variable">$order</span>-&gt;quantity * <span class="variable">$order</span>-&gt;price;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="variable">$totalAmount</span>;</span><br></pre></td></tr></table></figure>
-<p>我們會使用 <code>foreach</code> 繞迴圈，使用 <code>if</code> 做判斷，使用暫存變數 <code>$totalAmount</code>，這種是典型以電腦思考為角度去寫程式，而不是以<code>需求</code>的角度去寫程式。</p>
-<p>若以宣告式編程 (Declarative Programming) 方式思考 :</p>
-<ul>
-<li><strong>找出今天的訂單</strong> : <code>filter()</code>。</li>
-<li><strong>計算每一筆訂單金額</strong> : <code>map()</code>。</li>
-<li><strong>加總訂單金額</strong> : <code>sum()</code>。</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="variable">$orders</span>-&gt;filter(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$value</span>)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable">$value</span>-&gt;order_date == Carbon::now();</span><br><span class="line">            &#125;)-&gt;map(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$value</span>)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable">$value</span>-&gt;quantity * <span class="variable">$value</span>-&gt;price;</span><br><span class="line">            &#125;)-&gt;sum();</span><br></pre></td></tr></table></figure>
-<p>宣告式編程將不再以電腦思考角度使用 <code>foreach</code>、<code>if</code> 與暫存變數，完全以<code>需求</code>的角度去寫程式，程式碼的可讀性更高。<span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>關於宣告式編程，請參考 <a href="http://adamwathan.me/refactoring-to-collections/" target="_blank" rel="external">Refactoring to Collections</a></span></span></span></p>
-<h3 id="將相同變化頻率的資料與邏輯封裝在一起">將相同變化頻率的資料與邏輯封裝在一起</h3><blockquote><p>Put logic or data that changes at the same rate together and seperate logic or data that changes at difference rate. These rates of change are a form of temporal symmetry.</p>
-<p>將具有相同變化頻率的資料與邏輯封裝在同一個 class 或 method，將不同變化頻率的資料與邏輯抽離出不同 class 或 method。這符合相同變化頻率的程式碼一致性。</p>
-</blockquote>
-<ul>
-<li><strong>分離不同變化頻率的邏輯</strong></li>
-</ul>
-<p>Kent Beck 在書中舉的例子是，如果開發一套稅務軟體，他會將計算<strong>通用稅金</strong>的程式碼，與計算<strong>每年特定稅金</strong>的程式碼拆成不同 class，因為通用稅金不會變，但每年特定稅金會因為每年的稅務計算公式而改變，分離這兩類程式碼，可以確保每年特定稅金程式碼修改，絕對不會影響到通用稅金，可以避免 side effect 發生。</p>
-<ul>
-<li><strong>封裝相同變化頻率的資料</strong></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$price</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$currency</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setAmount</span><span class="params">(int <span class="variable">$price</span>, int <span class="variable">$currency</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;price = <span class="variable">$price</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;currency = <span class="variable">$currency</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>Order class</code> 有 <code>$price</code> (產品定價) 與 <code>$currency</code> (匯率) 資料，但實際上這兩個資料的變化頻率是一致的，也就是匯率一改變，產品定價就會跟著改變。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> Money */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$money</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setAmount</span><span class="params">(int <span class="variable">$price</span>, int <span class="variable">$currency</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">    	<span class="variable">$this</span>-&gt;money = <span class="keyword">new</span> Money(<span class="variable">$price</span>, <span class="variable">$currency</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>建議將 <code>$price</code> 與 <code>$currency</code> 封裝成 <code>Money</code> class。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> Money */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$money</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setAmount</span><span class="params">(Money <span class="variable">$money</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">    	<span class="variable">$this</span>-&gt;money = <span class="variable">$money</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以進一步重構成直接以 <code>$money</code> 物件傳入。</p>
-<p>如此相同變化頻率的 <code>$price</code> 與 <code>$currency</code> 都會被封裝在 <code>Money</code>，而不是在 <code>Order</code>，符合程式碼一致性的要求。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>程式設計價值觀與程式設計理論是所有程式語言都成立的，只要能打通此任督二脈，將來學什麼新程式語言都很快。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p>Kent Beck, <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Ch.3 A Theory of Programming]]>
-    
-    </summary>
-    
-      <category term="Implementation Pattern" scheme="http://oomusou.io/tags/Implementation-Pattern/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[實作模式筆記 (Patterns)]]></title>
-    <link href="http://oomusou.io/ip/ip-patterns/"/>
-    <id>http://oomusou.io/ip/ip-patterns/</id>
-    <published>2016-06-30T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
-    <content type="html"><![CDATA[<p>將<strong>模式</strong>做更深入的探討，包含其起源、特性與影響，讓我們更能接受模式這個概念。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>本文為 Kent Beck 的 <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a> 一書的讀書筆記，主要是整理給自己複習用，並加上自己的腦補。</p>
-<h2 id="模式的起源">模式的起源</h2><hr>
-<blockquote><p>Many decisions in programming are unique. However, as the decisions become more and more purely technical, a sense of familiarity sets in.</p>
-<p>程式設計中，有許多決策是獨一無二的。然而，當決策內容越接近技術層面，其相似性會越多。</p>
-</blockquote>
-<p>以程式設計師天天要面對的<code>迴圈</code>為例，天天都要思考該用 <code>for</code>寫呢? 還是該用 <code>while</code> 寫呢？或者該用多執行緒的 <code>foreach</code>? 還是該使用 <code>collection</code>呢? 當思考寫迴圈時，大部分與 domain knowledge 有關的東西都已經拋諸腦後，只留下純粹技術問題。</p>
-<blockquote><p>Each pattern illustrates a point of view about the relative priorities of the forces.</p>
-<p>每個模式都代表一種「對於需求的相對的優先順序排序」的觀點。</p>
-</blockquote>
-<p>而需求可能有以下幾點 :</p>
-<ul>
-<li><strong>忠實呈現演算法</strong>。</li>
-<li><strong>效能優先</strong>。</li>
-<li><strong>容易閱讀</strong>。</li>
-</ul>
-<p>若需求是<code>忠實呈現演算法</code>，則可使用 <code>for</code> 或 <code>while</code> 的模式，會比較能夠忠實呈現原本演算法特性。</p>
-<p>若需求是<code>效能優先</code>，則可使用多執行緒的<code>Parallel.Foreach()</code> 的模式，每個 closure 都會有在自己的執行緒執行，可充分發揮多核心硬體威力。</p>
-<p>若需求是<code>容易閱讀</code>，則可使用 <code>Collection</code> 的模式，使用 <code>map().filter().reduce()</code> 寫法可讀性較佳。</p>
-<blockquote><p>Most patterns come with a little essay about the alternatives for solving the problem and why the recommended solution is superior. Revealing the reasoning behind the advice in a pattern invites readers to decide for themselves how they want to approach a recurring problem.</p>
-<p>大部分模式都會有一小段敘述，描述解決問題的各種方法，以及解釋此模式的優點在哪裡。探討模式背後的理論，有助於幫助讀者自行判斷應該如何解決這類一再出現的問題。</p>
-</blockquote>
-<p>以設計模式這本書為例 :</p>
-<ul>
-<li><strong>Motivation</strong> : 列出解決問題的各種方法。</li>
-<li><strong>Applicability</strong> : 列出此模式適合的情境。</li>
-<li><strong>Consequences</strong> : 列出此模式的優點與缺點。</li>
-<li><strong>Implementation</strong> : 探討其背後的實作方法。</li>
-</ul>
-<p>如此可幫助讀者判斷此模式是否能解決需求。</p>
-<blockquote><p>Patterns bridge from abstract principles to practice. Patterns help you write code.</p>
-<p>模式是抽象原則與具體實踐間的橋樑，模式可幫助你寫出符合物件導向原則的程式碼。</p>
-</blockquote>
-<p>如降龍十八掌的心法是剛柔並濟，但就算你參悟了的心法，你還是很難打出降龍十八掌，因此才有了招式，如亢龍有悔、飛龍在天、神龍擺尾..，讓你可以一招一式去學習。</p>
-<p>模式就類似<code>招式</code>一樣，在模式之前，談的大都是物件導向原則，如繼承、封裝、多型，就算你參悟了這些原則，你還是很難寫出物件導向程式，因此才有了模式，讓你可以一招一式去學習。</p>
-<h2 id="模式的特性">模式的特性</h2><hr>
-<h3 id="模式可彼此合作">模式可彼此合作</h3><blockquote><p>Patterns work together.</p>
-<p>並不是一次只能使用一個模式，而是多個模式一起使用。</p>
-</blockquote>
-<p>如根據需求選擇了 <code>for 迴圈</code> 模式，又可能必須搭配 <code>替迴圈變數命名</code> 模式，而不是單一模式包山包海，將所有議題都放在單一模式中。</p>
-<h3 id="實作抽象化">實作抽象化</h3><blockquote><p>As a pattern becomes habit I find I appreciate not having to raise a debate just to write a loop. If the whole team becomes dissatisfied with a pattern, they can discuss their options for introducing a new pattern.</p>
-<p>當使用模式成為習慣之後，我很開心團隊不必再為「如何撰寫一個迴圈」的細節而討論，大家對 for 迴圈模式已經有共識，大家如果對 for 迴圈不滿意，也可以整個模式替換掉，如換成 Collection 模式。</p>
-</blockquote>
-<p>模式俗稱程式設計師的<code>黑話</code>，如當你說<code>工廠模式</code>，大家都知道你在講什麼，就不需再細部討論要有什麼 class，各 class 該怎麼互動，這就是將實作抽象化，讓大家的討論層級可以拉高，將重心放在如何解決問題，完成需求，而不是在細部的實作。</p>
-<h3 id="沒有萬能模式">沒有萬能模式</h3><blockquote><p>No one set of patterns will work in all programming situations.</p>
-<p>沒有任何一個模式可以適用於所有的需求。</p>
-</blockquote>
-<p>模式是解決特定問題的方法，只有在某些特定需求下適用，因此慎選模式很重要，沒有一個模式能解決所有需求，也不要為了要為了使用模式而硬套模式。</p>
-<h3 id="協助人們做決定">協助人們做決定</h3><blockquote><p>Patterns work best as aids to human decision making.</p>
-<p>模式最大的作用是幫助人們做決定。</p>
-</blockquote>
-<p>模式是前人與大師們經驗與智慧的結晶，因此很多時候我們不必每次都重新思考與踩雷，可以站在巨人的肩膀上。</p>
-<h3 id="模式可能成為語言新功能">模式可能成為語言新功能</h3><blockquote><p>Some of the implementation patterns will eventually make their way into programming languages.</p>
-<p>有些實作模式最後可能成為語言的一部份。</p>
-</blockquote>
-<p>有人說模式就是幫程式語言擦屁股用，就是因為程式語言沒有這些機制，因此我們必須使用模式來彌補，若最終成為程式語言或 framework 的一部份，就該改用程式語言或 framework 的新功能，不必太執著於一定要使用模式，因為通常程式語言或 framework 的方法都比模式更漂亮更乾淨。</p>
-<h2 id="模式的影響">模式的影響</h2><hr>
-<blockquote><p>Using patterns helps programmers write reasonable solutions to common problems, leaving more time, energy, and creativity to apply to the truly unique problems.</p>
-<p>使用模式能幫助程式設計師使用更合理的方式解決常見問題，將更多時間、更多精力與創造力用於解決真正獨一無二的問題。</p>
-</blockquote>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>模式是具體的招式法門，也是前人留下的經驗與智慧結晶，讓我們可以站在巨人的肩膀上，使用模式來處理常見的問題，將更多時間與精力用來解決真正的問題。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p>Kent Beck, <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Ch.2 Patterns]]>
-    
-    </summary>
-    
-      <category term="Implementation Pattern" scheme="http://oomusou.io/tags/Implementation-Pattern/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[實作模式筆記 (Introduction)]]></title>
-    <link href="http://oomusou.io/ip/ip-intro/"/>
-    <id>http://oomusou.io/ip/ip-intro/</id>
-    <published>2016-06-29T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
-    <content type="html"><![CDATA[<p>介紹本書主要的目標、章節安排，心法與學習方式，並對<strong>模式</strong>一詞下了定義，也針對實作模式與設計模式的差異加以討論。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>本文為 Kent Beck 的 <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a> 一書的讀書筆記，主要是整理給自己複習用，並加上自己的腦補。</p>
-<h2 id="本書目標">本書目標</h2><blockquote><p>The goal of the book is to help you communicate your intentions through your code.</p>
-<p>本書是教你寫容易閱讀、容易維護的程式碼。</p>
-</blockquote>
-<h2 id="本書架構">本書架構</h2><hr>
-<ul>
-<li><strong>程式設計與模式概論</strong> : Ch.2 ~ Ch.4。</li>
-<li><strong>實作模式</strong> : Ch.5 ~ Ch.8</li>
-<li><strong>Collection</strong> : Ch.9</li>
-<li><strong>Framework</strong> : Ch.10</li>
-</ul>
-<p>整本書以 <strong>Communication</strong> 貫穿，也就是寫出<code>容易閱讀</code>、<code>容易維護</code>的程式碼。</p>
-<h2 id="實作模式心法">實作模式心法</h2><hr>
-<h3 id="保持頭腦清醒並放慢腳步">保持頭腦清醒並放慢腳步</h3><blockquote><p>Even though programming decisions came smoothly and quickly to me, I couldn’t explain why I was so sure a method should be called such-and-so, or that a bit of logic belonged in this object over here.</p>
-<p>儘管我能在程式設計中快速的做決定，但我仍無法解釋一些我很確定的東西，如「這個 method 為什麼該這樣被呼叫?」或 「這段邏輯為什麼屬於這個物件?」這種基本問題。</p>
-</blockquote>
-<p>這是連 Kent Beck 也會犯的錯，也是我們常常忽略的點，只求會用其他 class，卻沒認真去想過為什麼要這樣設計。</p>
-<blockquote><p>The first step towards communicating was slowing down long enough to become aware of what I was thinking, to stop pretending that I coded by instinct.</p>
-<p>寫出容易閱讀的程式碼的第一步，就是將腳步慢下來，搞清楚自己在寫什麼，而不是一切都是理所當然。</p>
-</blockquote>
-<p>寫程式並不是寫的快就是好，Kent Beck 教我們將腳步放慢，細細去品味其他 class 為什麼要這樣設計。</p>
-<h3 id="程式碼是要給其他人閱讀的">程式碼是要給其他人閱讀的</h3><blockquote><p>Before I could write communicative code I needed to believe that other people was as important as I was. Programming is hardly ever a solitary communication between one man and one machine.</p>
-<p>程式並不是只寫給電腦看而已，你必須先相信程式碼是用來給其他人閱讀的。</p>
-</blockquote>
-<p>程式並不是讓電腦看得懂會動就好，重點是要讓自己與其他人看得懂，寫出容易閱讀的程式碼，才能進一步容易維護。</p>
-<h3 id="使用實作模式">使用實作模式</h3><blockquote><p>I use the implementation patterns here to program consciously and for others as well as myself.</p>
-<p>在此我介紹實作模式，寫出更容易閱讀的程式碼，不只是給其他人閱讀，也是給自己閱讀。</p>
-</blockquote>
-<h2 id="學習方式">學習方式</h2><hr>
-<h3 id="需求學習法">需求學習法</h3><blockquote><p>I suggest skipping right to chapter 5 and skimming through to the end, then keeping the book by you as you program. After you’ve used many of the patterns, you can come back to the introductory material for the philosophical background behind the ideas you’ve been using.</p>
-<p>我建議直接跳到 Ch.5 ~ Ch.8，快速地掃過後續章節，然後將本書放在手邊，有需要時隨時翻閱。當你使用過許多實作模式之後，可以再回到 Ch.2 ~ Ch.4，了解實作模式背後的設計理論。</p>
-</blockquote>
-<h3 id="理論學習法">理論學習法</h3><blockquote><p>If you are interested in a through understanding of the material here, you can read straight through from the beginning.</p>
-<p>如果你想對實作模式徹底了解，可依本書章節從頭讀到尾，先從 Ch.2 ~ Ch.4 學習實作模式背後的理論，再由 Ch.5 ~ Ch.8 學習實作模式。</p>
-</blockquote>
-<p>這兩種方法沒有好壞與對錯，有的人習慣先學理論，再學實作；也有人習慣先學實作，回來悟得理論。</p>
-<p>也可以是兩種學習方法的綜合體 : 先學理論，再學實作，再由不斷的實作，驗證理論，不斷地調整實作，讓實作符合需求，卻又不違背理論。</p>
-<h2 id="模式定義">模式定義</h2><hr>
-<blockquote><p>Most decisions in programming are similar to decisions that have come before. … The decision and its constraints repeat even though you might create different name each time.</p>
-<p>在程式設計時，大部分的思考決策都很類似，而且曾經出現過 … 儘管每次實作結果不相同，但相同的決策與情境總是一再地出現。</p>
-</blockquote>
-<p>而這些一再重複出現的思考決策與情境，而且被證明是有效的處裡方式，就會被高手歸納成為<strong>模式</strong>，讓初學者可以遵循前人所留下來的智慧結晶，來處理這些一再重複出現的需求。</p>
-<blockquote><p>This book contains 77 explicitly named patterns, each covering some aspect of writing readable code. In addition, there are many smaller patterns or variants of patterns that I mention in passing. My goal with this book is to offer advice for how to approach most common, daily coding tasks so as to help futuer readers understand what the code is supposed to do.</p>
-<p>本書包含 77 個有命名的實作模式，每一個實作模式都在某種程度實現容易閱讀程式碼的目標。此外，還有一些較小的無名模式或者模式的變形。本書的目的是給程式設計師一些建議，告訴他們在每天的開發程式過程中，能寫出容易閱讀的程式碼。</p>
-</blockquote>
-<h2 id="實作模式與設計模式的差異">實作模式與設計模式的差異</h2><hr>
-<blockquote><p>This book fits somewhere between Design Patterns and a Java language manual. Design Patterns talks about decisions you might make a few times a day while developing, typically decisions that regulate the interaction between objects. You apply an implementation pattern every few seconds while programming.</p>
-<p>本書是介於設計模式與 Java 手冊之間的書籍。設計模式討論的是開發過程中，每天要做個幾次的決策，通常是物件之間的互動。但實作模式則關心更細微的實作部分，可能每幾秒鐘就會用到一個實作模式。</p>
-</blockquote>
-<p>設計模式是教你特定需求下的物件導向解決方式，而實作模式教你的是實現物件導向的基本功。</p>
-<blockquote><p>While language manuals are good at describing what you can do with Java, they don’t talk much about why you would use a certain construct or what someone reading your code is likely to conclude form it.</p>
-<p>Java 語言手冊會教你 Java 能做些什麼，但不會教你「這個 method 為什麼該這樣被呼叫?」或 「這段邏輯為什麼屬於這個物件?」，也不會教你如何寫出容易閱讀的程式碼，而這正是實作模式的重點所在。</p>
-</blockquote>
-<p>程式語言手冊教你的是程式語言的語法及功能，而實作模式教你的是駕馭這個語言並寫出容易閱讀的程式碼。</p>
-<h2 id="本書不包含的主題">本書不包含的主題</h2><hr>
-<ul>
-<li>Concurrency。</li>
-<li>Software Process。</li>
-<li>Java 的新功能。</li>
-</ul>
-<h2 id="本書章節概述">本書章節概述</h2><hr>
-<ul>
-<li><strong>Introduction</strong> : Ch.2 ~ Ch.4，探討容易閱讀程式碼的重要性與價值，以及實作模式背後的設計理論。</li>
-<li><strong>Class</strong> : Ch.5，與 class 先關的實作模式，如「如何設計 class?」、「如何將邏輯封裝在 class?」。</li>
-<li><strong>State</strong> : Ch.6，與 state 存取相關的實作模式</li>
-<li><strong>Behavior</strong> : Ch.7，與邏輯相關的實作模式，如「當你有很多方式實現相同邏輯時」。</li>
-<li><strong>Methods</strong> : Ch.8，與 metohd 相關的實作模式，如「解耦合與命名方面」。</li>
-<li><strong>Collections</strong> : Ch.9，與 collection 使用相關的實作模式。</li>
-<li><strong>Frameworks</strong> : Ch.10，開發 framework 時，該如何使用實作模式。</li>
-</ul>
-<p><img src="/images/ip/ip-intro/intro000.png" alt=""></p>
-<ul>
-<li>Patterns / Values / Principles / Motivation (實作模式理論)</li>
-<li>class (以 class 為中心設計)。</li>
-<li>Behavior (相似邏輯) -&gt; Methods (解耦合)。</li>
-<li>State (不同資料) -&gt; Collections (同類型資料)</li>
-<li>Frameworks (全部統整)。</li>
-</ul>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>語言手冊只會教你語法與功能，無法教你寫出容易閱讀的程式碼。</li>
-<li>設計模式只有在特定需求才用得到，但實作模式是隨時都在用。</li>
-<li>不用解釋的程式，就是好程式。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p>Kent Beck, <a href="https://www.amazon.com/Implementation-Patterns-Kent-Beck/dp/0321413091" target="_blank" rel="external">Implementation Patterns</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Ch.1 Introduction]]>
-    
-    </summary>
-    
-      <category term="Implementation Pattern" scheme="http://oomusou.io/tags/Implementation-Pattern/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何使用 PhpStorm 將專案發佈到 GitHub?]]></title>
     <link href="http://oomusou.io/phpstorm/phpstorm-github/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-github/</id>
@@ -2420,6 +2087,202 @@
       <category term="Refactoring" scheme="http://oomusou.io/tags/Refactoring/"/>
     
       <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何使用 PhpStorm 對 Laravel 除錯?]]></title>
+    <link href="http://oomusou.io/phpstorm/phpstorm-xdebug/"/>
+    <id>http://oomusou.io/phpstorm/phpstorm-xdebug/</id>
+    <published>2016-06-11T12:23:43.000Z</published>
+    <updated>2016-06-12T02:45:15.000Z</updated>
+    <content type="html"><![CDATA[<p>傳統 PHP 大都使用 <code>echo()</code>、<code>var_dump()</code> 或 <code>dd()</code> 除錯，此種方式必須破壞原本程式碼，而且所能觀察的變數有限，也無法明確得知程式執行的流程。PhpStorm 支援 Xdebug，允許我們設定中斷點，程式將停在中斷點設定之處，讓我們透過 Step Into、Step Over、Step Out 的方式除錯，非常方便。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.0<br>Laravel 5.2.37<br>MAMP PRO 3.5<br>PhpStorm 2016.1.2</p>
+<h2 id="設定_Xdebug">設定 Xdebug</h2><hr>
+<p>MAMP PRO 預設已經有安裝 Xdebug，只是在 <code>php.ini</code> 並沒有啟動，必須手動啟動後，再加上一些設定。</p>
+<figure class="highlight php"><figcaption><span>/Applications/MAMP/bin/php/php7.0.0/conf/php.ini</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[xdebug]</span><br><span class="line">zend_extension=<span class="string">"/Applications/MAMP/bin/php/php7.0.0/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so"</span></span><br><span class="line">xdebug.remote_enable=<span class="number">1</span></span><br><span class="line">xdebug.remote_port=<span class="number">9000</span></span><br><span class="line">xdebug.profiler_enable=<span class="number">1</span></span><br><span class="line">xdebug.profiler_output_dir=<span class="string">"/Applications/MAMP/tmp"</span></span><br></pre></td></tr></table></figure>
+<p>MAMP PRO 預設將 PHP 安裝在<code>/Applications/MAMP/bin/php/phpX.X.XX/conf/php.ini</code>，選擇版本加以修改<code>php.ini</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若不知道該改哪一個<code>php.ini</code>，可下<code>php --ini</code>指令，看看目前系統正在使用哪一個<code>php.ini</code>。</span></span></span></p>
+<p>其中 <code>[xdebug]</code> 位於 <code>php.ini</code> 的最後一行，預設使用 <code>;</code> 註解，將 <code>;</code> 拿掉，並加上以上的 Xdebug 設定。</p>
+<p>存檔後須重新啟動MAMP。</p>
+<h2 id="設定_Hosts">設定 Hosts</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug007.png" alt=""></p>
+<p>在 MAMP PRO 設定新 host。</p>
+<ul>
+<li><strong>PHP version</strong> : 7.0.0。</li>
+<li><strong>Document root</strong> : <code>/Users/oomusou/Code/Demo/Laravel52Xdebug_demo/public</code>。</li>
+</ul>
+<p>存檔後須重新啟動MAMP。</p>
+<h2 id="啟動_PHP_外掛">啟動 PHP 外掛</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug000.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<ul>
+<li>PhpStorm 預設已經安裝並啟動 PHP 外掛，確認此外掛已經啟動。</li>
+</ul>
+<h2 id="設定_Interpreter">設定 Interpreter</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug001.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP</em></strong></p>
+<ul>
+<li><strong>PHP language level</strong> : <code>7</code>。</li>
+<li><strong>Interpreter</strong> : 按 <code>...</code> 設定PHP interpreter。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>PHP Interpreter 每個專案都要重新設定一遍。</span></span></span></li>
+</ul>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug002.png" alt=""></p>
+<p>選擇 <code>PHP 7.0.0</code> 的路徑 : <code>/Applications/MAMP/bin/php/php7.0.0/bin/php</code>。</p>
+<p>若路徑正確，PhpStorm 會抓到 PHP 與 Xdebug 的版本。</p>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug003.png" alt=""></p>
+<p>從原本的 <code>&lt;no interpreter&gt;</code> 變成明確的 <code>PHP7 (7.0.0)</code>。</p>
+<h2 id="產生_Bookmarklets">產生 Bookmarklets</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug004.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP -&gt; Debug</em></strong></p>
+<ul>
+<li>按下 <code>Use debugger bookmarklets to initiate debugging form your favorite browser</code>，將會使用你預設的瀏覽器開啟 <code>https://www.jetbrains.com/phpstorm/marklets/</code>。</li>
+</ul>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug005.png" alt=""></p>
+<p>在左側的 Xdebug 部分，按下 <code>Generate</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug006.png" alt=""></p>
+<p>將產生 <code>Start debugger</code>，<code>Stop Debugger</code> 與 <code>Debug this page</code>。</p>
+<p>將這 3 個連結拖拉到上方的 Bookmarks Bar。</p>
+<ul>
+<li><strong>Start debugger</strong> : 啟動 Xdebug 除錯。</li>
+<li><strong>Stop debugger</strong> : 停止 Xdebug 除錯。</li>
+<li><strong>Debug this page</strong> : 啟動 Xdebug，並重新載入目前網頁。</li>
+</ul>
+<h2 id="設定中斷點">設定中斷點</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug008.png" alt=""></p>
+<p>在 <code>app/Http/routes.php</code> 的 14 行的最左側點一下，設定中斷點。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>實務上你可以在任何你想要除錯的 PHP 程式碼中設定中斷點，本範例是以 Laravel 預設專案的 <code>routes.php</code> 為例。</span></span></span></p>
+<h2 id="傾聽_Xdebug">傾聽 Xdebug</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug009.png" alt=""></p>
+<p>按下上方的 <code>電話筒</code> 圖示，綠色表示開始傾聽 Xdebug，可在所設定的中斷點停止。</p>
+<h2 id="啟動_Xdebug">啟動 Xdebug</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug010.png" alt=""></p>
+<p>開啟瀏覽器，按下 <code>Start debugger</code>，在網址列輸入 <code>http://laravel52xdebug:8888</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug011.png" alt=""></p>
+<p>PhpStorm 會跳出 <code>Incoming Connection From Xdebug</code> 視窗，按 <code>Accept</code> 繼續。</p>
+<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug012.png" alt=""></p>
+<p>程式執行將停在剛剛設定的中斷點。</p>
+<p>下方會出現 Debugger 視窗，提供除錯的詳細資訊。</p>
+<ul>
+<li>左側綠色三角形為 <code>Resume Program</code>，表示將繼續執行，直到下一個中斷點停止。</li>
+<li>左側紅色方形為 <code>Stop</code>，表示停止目前程式執行。</li>
+<li>上方第一個圖示為 <code>Step Over</code>，表示將跳過目前函式。</li>
+<li>上方第二個圖示為 <code>Step Into</code>，表示將執行目前函式內部的程式碼。</li>
+<li>上方第三個圖示為 <code>Force Step Into</code>，表示將強制執行目前函式內部的程式碼。</li>
+<li>上方第四個圖示為 <code>Step Out</code>，表示將跳出目前函式內部的程式碼。</li>
+<li>上方第五個圖示為 <code>Run to Cursor</code>，表示將快速執行到目前游標處停止。</li>
+<li><code>Variables</code> 為目前 scope 所有的變數值。</li>
+<li><code>Watches</code> 可自行新增想觀察的變數。</li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>使用這種方式之後，我再也沒用過 <code>echo()</code>、<code>var_dump()</code> 或 <code>dd()</code> 來除錯，只要在認為有問題的程式碼之處，設定中斷點，就可以觀察當時所有變數的值，並且觀察程式實際執行的流程。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[以中斷點方式替 Laravel 除錯]]>
+    
+    </summary>
+    
+      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
+    
+      <category term="MAMP" scheme="http://oomusou.io/tags/MAMP/"/>
+    
+      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
+    
+      <category term="Xdebug" scheme="http://oomusou.io/tags/Xdebug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何設定 PhpStorm 的 Directories?]]></title>
+    <link href="http://oomusou.io/phpstorm/phpstorm-directories/"/>
+    <id>http://oomusou.io/phpstorm/phpstorm-directories/</id>
+    <published>2016-06-10T12:23:43.000Z</published>
+    <updated>2016-06-17T07:30:40.000Z</updated>
+    <content type="html"><![CDATA[<p>PhpStorm 最強的三個功能為 : Refactoring、Debugging、與 Inspection，但由於 PHP 生態是眾多 framework，而每個 framework 的目錄架構也不太一樣，因此必須先在 PhpStorm 設定 directories，才能發揮 PhpStorm 的強悍功能，而不只是文字編輯器而已。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Laravel 5.2.36</p>
+<h2 id="提示設定_Directories">提示設定 Directories</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-directories/dir000.png" alt=""></p>
+<p>當使用 PhpStorm 開啟 Laravel 專案時，一開始會對專案做 indexing，之後就會出現 <code>Detect PSR-0 namespace roots</code> 的提示，要求你設定 Directories。</p>
+<p>很多初學者因為不知道設定 Directories 的重要性，就直接將對話框關閉，這是非常可惜的，這將喪失很多 PhpStorm 重要的功能。</p>
+<h2 id="手動設定_Directories">手動設定 Directories</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-directories/dir001.png" alt=""></p>
+<p>按 <code>Settings | Directories</code> 手動設定 <code>Directories</code>。</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  不建議使用 <strong>automatically</strong> 由 PhpStorm 自動設定 directories，這將導致 <strong>vendor</strong> 目錄被設定在 <strong>Excluded</strong> 下，導致 Laravel 與其他 package 的語法提示不正常。</div>
+<p><img src="/images/phpstorm/phpstorm-directories/dir002.png" alt=""></p>
+<p>進入設定 Directories 視窗，若第一次沒由 <code>Detect PSR-0 namespaces roots</code> 設定也沒關係，日後只要在此設定即可。</p>
+<p><strong><em> PhpStorm -&gt; Preferences -&gt; Directories </em></strong></p>
+<p>接下來要設定 <code>Tests</code>、<code>Sources</code>、<code>Excluded</code> 與 <code>Resource Root</code> 4 個目錄。</p>
+<h2 id="Sources">Sources</h2><hr>
+<p>設定 <code>PSR-0 namespace roots</code> 的主目錄，也就是 Laravel 的 <code>app</code> 目錄。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir003.png" alt=""></p>
+<p>選擇 <code>app</code> 目錄，按上方的 <code>Sources</code>，會在右側出現 <code>Source Folders app</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir004.png" alt=""></p>
+<p>按 <code>P</code> 設定該目錄的 property。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir005.png" alt=""></p>
+<p>在 <code>Package prefix</code> 輸入 <code>App</code>，因為 <code>app</code> 目錄對應的正是 Laravel 的 namespace <code>App</code>。</p>
+<p>這是所有 directories 設定中最重要的一個，在 Laravel 5 之後，全面使用 namespace，管理 namespace 成為很多人的惡夢，但只要設定了 <code>Sources</code> 之後，將來 PhpStorm 會幫我們管理 namespace。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir006.png" alt=""></p>
+<p>設定了 <code>Sources</code> 之後，在 project windows 的 <code>app</code> 會顯示藍色。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir007.png" alt=""></p>
+<p>假如我們想在自己建立的 <code>Services</code> 目錄下，建立其他 class 寫商業邏輯。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 Service 模式，詳細請參考<a href="/laravel/laravel-service/">如何使用 Service 模式?</a></span></span></span></p>
+<p>選擇 <code>Services</code> 目錄，按熱鍵 &#8984; + N，顯示 <code>New</code> 視窗，選擇 <code>PHP Class</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir008.png" alt=""></p>
+<p>自行輸入 class 名稱，值得注意的是，PhpStorm 已經自動幫我們準備好 namespace，不必我們操心。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir009.png" alt=""></p>
+<p>程式碼也幫我們管理好 namespace 了。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/81257eedf3819dd685911dd90f04ce7207b3ea34" target="_blank" rel="external">建立 OrderService</a></span></span></span></p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir010.png" alt=""></p>
+<p>若想要注入其他物件，可在 constructor 的參數以 type hint 方式注入。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>關於依賴注入，詳細請參考<a href="/tdd/tdd-di/">深入探討依賴注入</a></span></span></span></p>
+<p>如我們想注入 <code>User</code>，但 PhpStorm 已經反白警告找不到 <code>User</code> class。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir011.png" alt=""></p>
+<p>選擇反白的 <code>User</code>，按熱鍵 &#8997; + &#8617;，選擇 <code>Import class</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir012.png" alt=""></p>
+<p>若整個專案只有一個同名的 class，PhpStorm 會自動 import，否則會出現視窗讓你決定要 import 哪一個 class。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir013.png" alt=""></p>
+<p>PhpStorm 自動幫我們 use 了 <code>App\User</code>。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/8a4d3267723e5b9d3be63767503d1f399a85c6a9" target="_blank" rel="external">注入 User</a></span></span></span></p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  無論是建立 namespace，或者引用 namespace，完全由 PhpStorm 自動幫我們處理，不用擔心 namespace 大小寫寫錯，也不用擔心 namespace 的完整路徑為何。</div>
+<h2 id="Tests">Tests</h2><hr>
+<p>設定測試程式的主目錄，也就是 Laravel 的 <code>tests</code> 目錄。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir014.png" alt=""></p>
+<p>選擇 <code>tests</code> 目錄，按上方的 <code>Tests</code>，會在右側出現 <code>Test Source Folders tests</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir015.png" alt=""></p>
+<p>設定了 <code>Tests</code> 之後，在 project windows 的 <code>tests</code> 會顯示綠色。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir016.png" alt=""></p>
+<p>可在 project windows 選擇 <code>Tests</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir017.png" alt=""></p>
+<p>將只顯示所有測試程式，方便測試時使用。</p>
+<h2 id="Resource_Root">Resource Root</h2><hr>
+<p>設定前端資源的主目錄，也就是 Laravel 的 <code>public</code> 目錄。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir018.png" alt=""></p>
+<p>選擇 <code>public</code> 目錄，按上方的 <code>Resource Root</code>，會在右側出現 <code>Resource roots public</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir019.png" alt=""></p>
+<p>設定了 <code>Resource roots</code> 之後，在 project windows 的 <code>public</code> 會顯示紫色。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir020.png" alt=""></p>
+<p>在 <code>resources/views/welcome.blade.php</code> 加上 Vue.js 後，在 <code>js/app.js</code> 出現反白。<span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/b5e0b68d2677e96e77117eb1d9f17ea316af7d1f" target="_blank" rel="external">修改 welcome.blade.php</a></span></span></span></p>
+<p>PhpStorm 抱怨找不到 <code>js/app.js</code>，的確我們在 <code>public</code> 目錄下還沒有建立 <code>js/app.js</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-directories/dir021.png" alt=""></p>
+<p>在 <code>public</code> 目錄下新增 <code>js/app.js</code> 之後，PhpStorm 就不在警告了。<span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/4418c29aa7d0913388911dee8ad5411414adbb25" target="_blank" rel="external">新增 js/app.js</a></span></span></span></p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  <strong>Resource roots</strong> 不是設定在 Laravel 的 <strong>resources</strong> 目錄，而是設定在 <strong>public</strong> 目錄。藉由此設定，PhpStorm 可以幫你檢查 Blade 或 HTML 的 JavaScript 與 CSS 路徑是否合法。</div>
+<h2 id="Excluded">Excluded</h2><hr>
+<p>不由 PhpStorm 管理，或不想由 PhpStorm 建立 index 的目錄。</p>
+<p>實務上若你在專案目錄下，會自己建立一個目錄放 Spec 或相關文件，如 pdf, docx, xlsx 格式，這個目錄交給 PhpStorm 管理並沒有任何意義，只會增加建立 index 時間而已，就可以將該目錄設定為 <code>Excluded</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>這些都是很重要的設定，可惜 PhpStorm 文件並沒有仔細介紹，以上都是實際使用 PhpStorm 一段時間之後摸索出來的心得，將這些目錄設定之後，才能發揮 PhpStorm 強悍功能。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52Directories_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[正確設定 Directories 才能發揮 PhpStorm 的威力]]>
+    
+    </summary>
+    
+      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
+    
+      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
   </entry>
   

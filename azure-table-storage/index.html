@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何使PhpStorm不要對變數做Spell Check? | 點燈坊</title>
+  <title>文章標題 | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="讓PhpStorm的每個Warning都有意義">
+  <meta name="description" content="標題描述">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="讓PhpStorm的每個Warning都有意義">
+ <meta name="description" content="標題描述">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何使PhpStorm不要對變數做Spell Check?">
-<meta property="og:url" content="http://oomusou.io/phpstorm/phpstorm-spellcheck/index.html">
+<meta property="og:title" content="文章標題">
+<meta property="og:url" content="http://oomusou.io/azure-table-storage/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="讓PhpStorm的每個Warning都有意義">
+<meta property="og:description" content="標題描述">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-03-22T14:03:51.000Z">
+<meta property="og:updated_time" content="2016-08-31T01:55:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何使PhpStorm不要對變數做Spell Check?">
-<meta name="twitter:description" content="讓PhpStorm的每個Warning都有意義">
+<meta name="twitter:title" content="文章標題">
+<meta name="twitter:description" content="標題描述">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 如何使PhpStorm不要對變數做Spell Check?</h1>
+			<h1> 文章標題</h1>
 		</div>		
 	
 
@@ -95,31 +95,28 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 讓PhpStorm的每個Warning都有意義			
+			<i class="fa fa-info-circle"></i> 標題描述			
 		</div> <!-- alert -->
 		
 
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Problem"><span class="toc-article-text">Problem</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Solution"><span class="toc-article-text">Solution</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#實際案例"><span class="toc-article-text">實際案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>一般我們取<code>變數名稱</code>時，可能會使用<code>英文縮寫</code>，但此時PhpStorm會很<code>盡責</code>的幫我們做<code>Spell Check</code>，若變數的英文拼字錯誤，會在變數下方加上<code>波浪底線</code>，由於PhpStorm有很強悍的warning功能，每個warning都值得我們特別注意，但若因為<code>Spell Check</code>的warning而造成大家神經緊張，那就太不值得了，所以我個人是將此功能關閉。</p>
+	    <p>引言</p>
 <a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
 <h2 id="Version">Version</h2><hr>
-<p>PhpStorm 10.0.1</p>
-<h2 id="Problem">Problem</h2><hr>
-<p>如下圖所示，PhpStorm對<code>$fillable</code>產生warning，理由是<code>Spell Check</code>認為<code>fillable</code>拼字有問題 XD。<br><img src="/images/phpstorm/phpstorm-spellcheck/spellcheck000.png" alt=""></p>
-<h2 id="Solution">Solution</h2><hr>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; Inspection</em></strong><br>將<code>Spelling</code>與<code>Type</code>都不要打勾。<br><img src="/images/phpstorm/phpstorm-spellcheck/spellcheck001.png" alt=""></p>
-<p>之後就再也不會在<code>$fillable</code>變數產生warning了。<br><img src="/images/phpstorm/phpstorm-spellcheck/spellcheck002.png" alt=""></p>
+<p>PHP 7.0.0<br>Laravel 5.2.22</p>
+<h2 id="實際案例">實際案例</h2><hr>
 <h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>由於PHP並不是強型別語言，無法由compiler幫我們檢查語法，只有執行才知道是否錯誤，所以任何PhpStorm的warning對我們都非常重要，除非確定某個warning對我們沒有影響，否則一定要想辦法將warning清除。</li>
-</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
 	  
 	</div>
 
@@ -128,14 +125,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/hexo/hexo-uri-category/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/tdd/tdd-solid/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/phpstorm/phpstorm-refactor/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -156,7 +153,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2015-11-30 
+	2016-12-05 
 	</div>
 	
 
@@ -166,7 +163,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/PhpStorm/">PhpStorm<span>36</span></a></li>
+  <li><a href="/tags/Laravel/">Laravel<span>45</span></a></li>
     </ul>
 	</div>
 		
