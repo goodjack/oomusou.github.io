@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-08-23T05:23:37.000Z</updated>
+  <updated>2016-08-16T07:08:26.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,171 +13,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title><![CDATA[如何在 PhpStorm 使用重構?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-refactor/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-refactor/</id>
-    <published>2016-08-28T12:23:43.000Z</published>
-    <updated>2016-08-23T05:23:37.000Z</updated>
-    <content type="html"><![CDATA[<p>重構是 TDD 開發流程的重頭戲，當第一次 <span class="label label-success">綠燈</span> 之後，就是不斷的重構，一直維持 <span class="label label-success">綠燈</span>，讓程式碼架構更好，卻又不違背原來的需求，而PhpStorm 提供強悍的重構功能，讓我們在重構時不需要 copy and paste，可直接快速重構，提升開發效率。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>在<a href="/phpstorm/phpstorm-tdd-refactor/">如何使用 PhpStorm 實現 TDD、重構與偵錯?</a>，曾經以<a href="http://www.tenlong.com.tw/items/9861547533?item_id=45657" target="_blank" rel="external">重構–改善既有程式的設計</a>第一章的範例，實際以 TDD 與重構的方式，完全在 PhpStorm 執行，不過當時並沒有使用到 PhpStorm 所有的重構功能，本文則實際深入探討 PhpStorm 全部的重構功能。</p>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="Extract_Variable">Extract Variable</h2><hr>
-<p>實務上我們可能會想將 hard code 的字串或數字，重構稱變數，方便其他程式碼使用。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
-<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor028.png" alt=""></p>
-<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Variable...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor029.png" alt=""></p>
-<p>PhpStorm 提供 3 種 extract variable 方式 :</p>
-<ul>
-<li>將<strong>值</strong>重構成變數，也就是將 <code>no title</code> 重構成變數。</li>
-<li>將 <strong>method call</strong> 重構成變數，也就是將 <code>$this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 重構成變數。</li>
-<li>將<strong>整行</strong>重構成變數，也就是將 <code>$data[&#39;title&#39;] = $this-&gt;postService-&gt;showTitle($id, &#39;no title&#39;)</code> 再重構成新的變數。</li>
-</ul>
-<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成變數，所以選擇 <code>no title</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor030.png" alt=""></p>
-<p>輸入欲重構的變數名稱 : <code>defaultTitle</code>。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor031.png" alt=""></p>
-<p>PhpStorm 會自動幫我們重構成 <code>$defaultTitle</code> 變數，並在原 <code>showTitle()</code> 改用 <code>$defaultTitle</code>。</p>
-<h2 id="Extract_Constant">Extract Constant</h2><hr>
-<p>實務上不建議直接在程式碼裡 hard code 字串或數字，一來將來維護不方便，二來程式碼的語意也不清楚，應該將這類 magic number 重構成 constant。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
-<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor006.png" alt=""></p>
-<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Constant...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor007.png" alt=""></p>
-<p>輸入 constant 名稱。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 constant</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor008.png" alt=""></p>
-<p>PhpStorm 會自動幫我們重構成 <code>const DEFAULT_TITLE = &#39;no title&#39;</code>，並在使用端使用 <code>self::DEFAULT_TITLE</code>，如此程式碼語意將更為清楚。</p>
-<h2 id="Extract_Parameter">Extract Parameter</h2><hr>
-<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 parameter。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
-<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor023.png" alt=""></p>
-<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Parameter...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor024.png" alt=""></p>
-<p>輸入 parameter 名稱。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 parameter</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor025.png" alt=""></p>
-<p>PhpStorm 會自動幫我們重構成參數 <code>$defaultParameter</code>，並在使用端使用參數 <code>$defaultParameter</code>。</p>
-<h2 id="Extract_Field">Extract Field</h2><hr>
-<p>除了將 hard code 字串或數字重構成 constant 外，若這些數值可能會變動，也可以考慮重構成 field。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">使用 Magic Number</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor005.png" alt=""></p>
-<p>直接將 <code>no title</code> hard code 在程式碼內。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor009.png" alt=""></p>
-<p>將滑鼠游標放在 <code>no title</code>，按熱鍵 &#8963; + T，選擇 <code>Field...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor010.png" alt=""></p>
-<p>PhpStorm 提供兩種重構 field 方式 :</p>
-<ul>
-<li>將<strong>值</strong>或<strong>變數</strong>重構成 field。</li>
-<li>將<strong>expression</strong>重構成 field。</li>
-</ul>
-<p>這裡我們是想將 <code>no title</code> 這個<strong>值</strong>重構成 field，而不是將 <code>$this-&gt;showTitle()</code> 重構成 field。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor011.png" alt=""></p>
-<ul>
-<li><strong>Name</strong> : 輸入 field 名稱為 <code>defaultTitle</code>。</li>
-<li><strong>Initialize in</strong> : 選擇初始化 field 的方法，這裡選擇 <code>Field declaration</code>，</li>
-<li><strong>Visibility</strong> : 這裡選擇 <code>private</code>。</li>
-</ul>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 Field</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor012.png" alt=""></p>
-<p>PhpStorm 會自動幫我們重構成 <code>private $defaultTitle = &#39;no title&#39;</code>，並在使用端使用 <code>$this-&gt;defaultTitle</code>。<span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>若要替 field 提供 getter 與 setter，詳細請參考<a href="/phpstorm/phpstorm-code-generation/#Getter/Setter">如何在 PhpStorm 使用 Code Generation?</a></span></span></span></p>
-<h2 id="Extract_Method">Extract Method</h2><hr>
-<p>在 TDD 第一個 <span class="label label-success">綠燈</span> 之後，為了，實務上我們會使用 Extract Method 重構，讓程式碼可讀性更高，語意更清楚。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>12</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">12</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">顯示所有有 Description 的 Title</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor019.png" alt=""></p>
-<p>為了顯示全部有 <code>description</code> 的 <code>title</code>，需要在 <code>foreach</code> 內對 <code>description</code> 做判斷，並新增至 <code>$titles</code> 陣列。</p>
-<p>其中 <code>if ()</code> 這段程式碼，包含了底層的 <code>if()</code> 判斷，還包含了新增至陣列的實作，看起來比較突兀，也就是我們應該 <code>把抽象出來的方法放在一起，而不要把底層程式碼和抽象出來的方法放在一起</code> 的概念。</p>
-<p>所謂 <code>抽象出來的方法</code>是指 Extract Method 後的產物，它代表著這段程式碼的意圖。</p>
-<p>每一階程式碼都有它放在這裡的意義，千萬不要將高階和低階的方法混雜在一起，這樣讀程式碼時會很突兀。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor020.png" alt=""></p>
-<p>選擇要 Extract Method 的程式碼，按熱鍵 &#8963; + T，選擇 <code>Method...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor021.png" alt=""></p>
-<ul>
-<li><strong>Name</strong> : 輸入 Extract Method 後新的 method 名稱，輸入 <code>filterTitlesWithDescription</code>。</li>
-<li><strong>Visibility</strong> : 選擇 <code>Private</code>。</li>
-<li><strong>Return output variable(s) through</strong> : 選擇 <code>Return statement</code>。</li>
-</ul>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>13</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">13</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構成 filterTitlesWithDescription</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor022.png" alt=""></p>
-<p>PhpStorm 會自動幫我們建立了 <code>filterTitlesWithDescription()</code>，並且自動幫我們修改了呼叫 <code>filterTitlesWithDescription()</code> 的方式。</p>
-<p>對於 <code>showTitlesWithDescription()</code> 來說，其職責在於 <code>foreach()</code> 去<code>顯示資料</code>，而 <code>filterTitlesWithDescription()</code> 的職責在於<code>過濾資料</code>，如此程式碼的可讀性更高，語意也更明顯，也符合 SOLID 的<strong>單一職責</strong>原則。 </p>
-<p>Extract Method 是重構當中，最常用的手法，而 PhpStorm 的 Extract Method 功能非常強大。</p>
-<h2 id="Change_Signature">Change Signature</h2><hr>
-<p>包含了以下多項重構功能 :</p>
-<ul>
-<li>改變 method 名稱</li>
-<li>新增參數</li>
-<li>刪除參數</li>
-<li>更改參數的預設值</li>
-<li>調整參數順序</li>
-<li>修改參數名稱</li>
-<li>新增一系列 function call 的參數</li>
-</ul>
-<p>當使用 Change Signature 時，PhpStorm 會搜尋所有使用此 method 之處，並做相對應的修改。</p>
-<p><strong>PostRepository.php</strong><br><img src="/images/phpstorm/phpstorm-refactor/refactor000.png" alt=""></p>
-<p><code>PostRepository</code> 的 <code>getTitle()</code> 目前參數為 <code>$id</code> 與 <code>$default</code>，想新增一個參數為 <code>$content</code>。</p>
-<p>目前 <code>PostController</code> 呼叫 <code>PostSerive</code>，而 <code>PostService</code> 呼叫 <code>PostRepository</code>，若 <code>PostRepository</code> 的 <code>getTitle()</code> 增加參數，勢必 <code>PostService</code> 與 <code>PostController</code> 也必須修改。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor004.png" alt=""></p>
-<p>將滑鼠游標放在 <code>getTitle()</code>，按熱鍵 &#8963; + T，選擇 <code>Change Signature...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor001.png" alt=""></p>
-<ul>
-<li><strong>Name</strong> : 重構成新的 method 名稱，若不改變可不修改。</li>
-<li><strong>新增參數</strong> : 按熱鍵 &#8984; + N 新增參數 <code>$content</code>，後面的 Default 表示其他相依的 method，該新增什麼變數名稱。</li>
-</ul>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor002.png" alt=""></p>
-<ul>
-<li><strong>Propagate 參數</strong> : 按熱鍵 &#8997; + G。</li>
-<li><strong>選擇 Method</strong> : 選擇要 propagate 參數的 method。</li>
-</ul>
-<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor003.png" alt=""></p>
-<p>PhpStorm 會自動幫我們在 <code>PostRepository</code> 的 <code>getTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor026.png" alt=""></p>
-<p>PhpStorm 會自動幫我們在 <code>PostService</code> 的 <code>showTitle()</code> 重構加上新的參數 <code>$content</code>。</p>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">新增 $content 參數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor027.png" alt=""></p>
-<p>PhpStorm 會自動幫我們在 <code>PostController</code> 的 <code>index()</code> 重構加上新的參數 <code>$content</code>。</p>
-<h2 id="Extract_Interface">Extract Interface</h2><hr>
-<p>TDD 要求我們在設計階段，先根據當前的需求 <span class="label label-success">綠燈</span> 就好，避免因為 over design 而墊出一堆 interface，而讓架構提早複雜化，但真的需求來時，有必要墊 interface 還是要墊，此時我們可以使用 Extract Interface 將目前原有的 class 抽出 interface。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor013.png" alt=""></p>
-<p>原本 <code>PostRepository</code> 並沒有墊 interface，但因為有切換 MySQL 與 MongoDB 的需求，只好將 repository 加以抽象化，因此想定義 <code>PostRepositoryInterface</code>。 </p>
-<p>將滑鼠游標放在 <code>PostRepository</code>，按熱鍵 &#8963; + T，選擇 <code>Interface...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor014.png" alt=""></p>
-<ul>
-<li><strong>Interface Name</strong> : 輸入你想要使用的 interface 名稱，輸入 <code>PostRepositoryInterface</code>。</li>
-<li><strong>所有依賴注入都改成 Interface</strong> : 將 <code>Replace class references with interface where possible</code> 打勾。</li>
-<li><strong>Namespace</strong> : 若你想一併改變 interface 的 namespace，可在此修改，如有人可能會把所有 interface 專門放在一個 namespace 下。</li>
-<li><strong> Target destination directories</strong> : 為了符合 PSR-4，namespace 與 directories 會一致。</li>
-<li><strong>Members to form interface </strong> : 選擇你要抽出成為 interface 的 method。</li>
-</ul>
-<div class="alert alert-info"><i class="fa fa-info"></i>  實務上不建議將 class 的所有 method 原封不動抽成 interface，應該以需求的觀點去考量 interface，並遵守 SOLID 的 ISP 的介面隔離原則，如此才能符合 SRP 單一職責原則與 DIP 依賴反轉原則的要求，最後達成 OCP 開放封閉原則的目標。<span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>關於 SOLID 原則，詳細請參考大澤木小鐵的<a href="http://slides.com/jaceju/design-patterns-by-examples#/" target="_blank" rel="external">從實例學習設計模式 威力加強版 使用PHP</a></span></span></span></div>
-<p><img src="/images/phpstorm/phpstorm-refactor/refactor015.png" alt=""></p>
-<p>PhpStorm 會讓你預覽即將重構的變更，按 <code>Do Refactor</code> 繼續。</p>
-<p><strong>PostRepositoryInterface.php</strong><span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">重構新增 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor016.png" alt=""></p>
-<p>PhpStorm 會自動幫我們建立了 <code>PostRepositoryInterface.php</code>。</p>
-<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">實現 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor017.png" alt=""></p>
-<p><code>PostRepository</code> 也實現了 <code>PostRepositoryInterface</code>。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external">依賴注入改成 PostRepositoryInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-refactor/refactor018.png" alt=""></p>
-<p>PhpStorm 會自動幫我們將所有依賴注入都改成用 interface 方式。</p>
-<h2 id="Move_Refactorings">Move Refactorings</h2><hr>
-<h2 id="Pull_Members_Up">Pull Members Up</h2><hr>
-<h2 id="Push_Members_Down">Push Members Down</h2><hr>
-<h2 id="Rename_Refactoring">Rename Refactoring</h2><hr>
-<h2 id="Safe_Delete">Safe Delete</h2><hr>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/refactoring-source-code.html" target="_blank" rel="external">Refactoring Source Code</a><br>Mukund Chaudhary, Ankur Kumar, <a href="https://www.packtpub.com/web-development/phpstorm-cookbook" target="_blank" rel="external">PhpStorm Cookbook</a> </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[加快重構速度，讓我們可以持續地重構]]>
-    
-    </summary>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
   
   <entry>
     <title><![CDATA[如何在 Azure 使用 Laravel + Blob Storage?]]></title>
@@ -2364,6 +2199,62 @@
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
       <category term="Vue.js" scheme="http://oomusou.io/tags/Vue-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何使用變數讀取 property?]]></title>
+    <link href="http://oomusou.io/javascript/javascript-variable-property/"/>
+    <id>http://oomusou.io/javascript/javascript-variable-property/</id>
+    <published>2016-06-07T12:23:43.000Z</published>
+    <updated>2016-06-07T03:27:04.000Z</updated>
+    <content type="html"><![CDATA[<p>傳統我們會使用 <code>if else</code> 判斷，讀取不同的 property，但由於 JavaScript 與 PHP 動態語言的特性，我們可以將要讀取的 property 名稱以<strong>變數</strong>表示，直接以該變數讀取 property。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>ECMAScript 5<br>PHP 7.0</p>
+<h2 id="JavaScript">JavaScript</h2><hr>
+<h3 id="if_else">if else</h3><p>傳統若要根據不同的條件，讀取不同 property，我們會使用 <code>if else</code>方式 :<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/VariableProperty/commit/b84e31b15722571402a379bd040090bfaf7c41f1" target="_blank" rel="external">JavaScript : 傳統使用 if else 切換讀取 property</a></span></span></span></p>
+<figure class="highlight javascript"><figcaption><span>JavaScript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">firstName, lastName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.firstName = firstName;</span><br><span class="line">    <span class="keyword">this</span>.lastName = lastName;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> type = <span class="string">'first'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"><span class="keyword">if</span> (type === <span class="string">'first'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.firstName);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (type === <span class="string">'first'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.firstName);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>if else</code> 去判斷變數值，讀取不同 property。</p>
+<h3 id="Variable">Variable</h3><p>若將 property 名稱使用變數表示，則不需使用 <code>if else</code> 判斷 :<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/VariableProperty/commit/9e4288fc847a12f9aeef2d1af9240f0dee01a098" target="_blank" rel="external">JavaScript : 動態使用變數切換讀取 property</a></span></span></span></p>
+<figure class="highlight javascript"><figcaption><span>JavaScript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">firstName, lastName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.firstName = firstName;</span><br><span class="line">    <span class="keyword">this</span>.lastName = lastName;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> type = <span class="string">'first'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> user = <span class="keyword">new</span> User(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line">propName = (type === <span class="string">'first'</span>) ? <span class="string">'firstName'</span> : <span class="string">'lastName'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(user[propName]);</span><br></pre></td></tr></table></figure>
+<p>第 9 行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">propName = (type === <span class="string">'first'</span>) ? <span class="string">'firstName'</span> : <span class="string">'lastName'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(user[propName]);</span><br></pre></td></tr></table></figure></p>
+<p>判斷 <code>type</code>，並將要讀取的 property 名稱存入 <code>propName</code> 變數。</p>
+<p>在 JavaScript，若要執行物件的 method，有以下3種方式 :</p>
+<ol>
+<li>object.property </li>
+<li>object[‘property’] : 其中 ‘property’ 是<strong>字串</strong>。</li>
+<li>object[property] : 其中 property 是<strong>變數</strong>。</li>
+</ol>
+<p>因為第 3 種方式，我們可以將 property 名稱以變數方式傳入 <code>[]</code>。</p>
+<h2 id="PHP">PHP</h2><hr>
+<p>PHP 也可以達到類似 JavaScript 的功能。</p>
+<h3 id="if_else-1">if else</h3><p>傳統若要根據不同的條件，讀取不同 property，我們會使用 <code>if else</code>方式 :<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/VariableProperty/commit/df7bb5fd3c633902f0fe2b86a53700ab7e5e5f2d" target="_blank" rel="external">PHP : 傳統使用 if else 切換讀取 property</a></span></span></span></p>
+<figure class="highlight php"><figcaption><span>PHP</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$firstName</span>;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$lastName</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * User constructor.</span><br><span class="line">     * <span class="doctag">@param</span> string $firstName</span><br><span class="line">     * <span class="doctag">@param</span> string $lastName</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(string <span class="variable">$firstName</span>, string <span class="variable">$lastName</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;firstName = <span class="variable">$firstName</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;lastName = <span class="variable">$lastName</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$type</span> = <span class="string">'first'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="keyword">new</span> User(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$type</span> === <span class="string">'first'</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;firstName);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 23 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$type</span> === <span class="string">'first'</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;firstName);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>if else</code> 去判斷變數值，讀取不同 property。</p>
+<h3 id="Variable-1">Variable</h3><p>若將 property 名稱使用變數表示，則不需使用 <code>if else</code>判斷 :<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/VariableProperty/commit/4d69a38b81ce41e654b3041c66c9005bddea3492" target="_blank" rel="external">PHP : 動態使用變數切換讀取 property</a></span></span></span></p>
+<figure class="highlight php"><figcaption><span>PHP</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$firstName</span>;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$lastName</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * User constructor.</span><br><span class="line">     * <span class="doctag">@param</span> string $firstName</span><br><span class="line">     * <span class="doctag">@param</span> string $lastName</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(string <span class="variable">$firstName</span>, string <span class="variable">$lastName</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;firstName = <span class="variable">$firstName</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;lastName = <span class="variable">$lastName</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$type</span> = <span class="string">'first'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="keyword">new</span> User(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"><span class="variable">$propName</span> = (<span class="variable">$type</span> === <span class="string">'first'</span>) ? <span class="string">'firstName'</span> : <span class="string">'lastName'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;<span class="variable">$propName</span>);</span><br></pre></td></tr></table></figure>
+<p>第 23 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$propName</span> = (<span class="variable">$type</span> === <span class="string">'first'</span>) ? <span class="string">'firstName'</span> : <span class="string">'lastName'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span>(<span class="variable">$user</span>-&gt;<span class="variable">$propName</span>);</span><br></pre></td></tr></table></figure></p>
+<p>判斷 <code>$type</code>，並將要讀取的 property 名稱存入 <code>$propName</code> 變數。</p>
+<p>在 PHP，允許我們在 <code>-&gt;</code> 之後直接加上<strong>變數</strong>，代表要執行的 property。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>JavaScript 與 PHP 都允許我們將欲讀取的 propety 名稱以變數表示。</li>
+<li>因為 property 名稱是<strong>字串</strong>，所以我們可以將 property 名稱存在<strong>設定檔</strong>內，如 <code>config/app.php</code>，將來若因為需求改變，須改變讀取的 property 時，只需修改設定檔即可，並透過 <code>config::get()</code> 讀取 property 名稱，原來程式碼完全不用修改，達到<strong>開放封閉原則</strong>的要求。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/VariableProperty" target="_blank" rel="external">GitHub</a> 上找到。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[使用變數讀取 property 取代 if else]]>
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://oomusou.io/tags/JavaScript/"/>
+    
+      <category term="PHP" scheme="http://oomusou.io/tags/PHP/"/>
     
   </entry>
   
