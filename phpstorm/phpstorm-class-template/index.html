@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何修改 PhpStorm 預設的 Class Template? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何修改 PhpStorm 預設的 Class Template?">
+<meta property="og:url" content="http://oomusou.io/phpstorm/phpstorm-class-template/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-10-05T03:45:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何修改 PhpStorm 預設的 Class Template?">
+<meta name="twitter:description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何修改 PhpStorm 預設的 Class Template?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#移除註解"><span class="toc-article-text">移除註解</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#宣告_Strict_Type"><span class="toc-article-text">宣告 Strict Type</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>當使用 PhpStorm 建立 class 時，預設會產生 <code>Created by PhpStorm</code> 的註解，並包含<strong>作者</strong>、<strong>日期</strong>、<strong>時間</strong>等資訊，有的人喜歡，有的人不喜歡，若你不希望每次建立 class 時都有這個檔頭，可以自行修改；除此之外，在 PHP 7 為了讓強行別檢查發揮作用，我們會在一開始 <code>declare(strict_types = 1);</code>，這也可以直接設定在 class template，以後只要建立新的 class，都會自動加上宣告。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-class-template/template000.png" alt=""></p>
+<p>預設在 PhpStorm 建立 class 時，都會在檔頭加上 <code>Created by PhpStorm</code> 的註解，很多人建立 class 後的第一件事情，就是去刪除這些註解，事實上我們可以透過修改 PhpStorm 的 class template，移除這些設定。</p>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.8<br>PhpStorm 2016.2.1</p>
+<h2 id="移除註解">移除註解</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-class-template/template001.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; PHP Class</em></strong></p>
+<p>我們發現每個 class template 都有 <code>#parse(&quot;PHP File Header.php&quot;)</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-class-template/template002.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
+<p>切換到 <code>includes</code> 的 <code>PHP File Header</code>，我們可以看到預設的註解就是在此，若你不喜歡這些註解，可以全部刪除後存檔。</p>
+<h2 id="宣告_Strict_Type">宣告 Strict Type</h2><hr>
+<p>PHP 7 增加了 scalar type hint 與 return type，不過為了相容於過去 PHP 弱型別傳統，預設並沒有啟動型別檢查，必須自己加上 <code>declare(strict_type = 1)</code> 之後，PHP 與 PhpStorm 的 Code Inspection 才會根據 type hint 與 return type 檢查型別。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 PhpStorm 的 Code Inspection，詳細請參考<a href="/phpstorm/phpstorm-code-inspection/">如何在 PhpStorm 使用 Code Inspection?</a></span></span></span></p>
+<p>目前 PHP 7 並沒有提供全域的 <code>php.ini</code> 設定，必須自己在每個 <code>.php</code> 加上設定，很麻煩也容易忘記，若能設定在 class template 內，則以後新增 class 都會有 <code>declare(strict_type = 1)</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-class-template/template003.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
+<p>刪除預設註解後，改加上 <code>declare(strict_type = 1)</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-class-template/template004.png" alt=""></p>
+<p>以後新增 class，預設註解不見了，且自動加上 <code>declare(strict_type = 1)</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>除了移除預設註解與宣告 <code>strict types</code> 外，如一些需靠 <code>Laravel artisan</code> 建立的 controller、unit test …，事實上也可以新增一個 template，直接使用 PhpStorm 來新增。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/file-and-code-templates.html" target="_blank" rel="external">File and Code Templates</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/azure/azure-blob-storage/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-10-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PhpStorm/">PhpStorm<span>36</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

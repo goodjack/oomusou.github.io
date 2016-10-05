@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-class-template/</loc>
+    <lastmod>2016-10-05T03:45:04.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
     <lastmod>2016-08-23T01:08:48.000Z</lastmod>
   </url>
@@ -47,17 +52,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/laravel-service/</loc>
+    <loc>http://oomusou.io/hexo/freemind-tag-overview/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -72,27 +67,27 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-generation/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
+    <loc>http://oomusou.io/laravel/laravel-service/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -107,12 +102,17 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/hexo/freemind-tag-overview/</loc>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -122,12 +122,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-generation/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -137,12 +137,17 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
+    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -277,7 +282,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-git-rm-idea/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-new-laravel-project/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -287,12 +292,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel42/laravel-42-presenter/</loc>
+    <loc>http://oomusou.io/php/php-psr2/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/mamp/mamp-setup/</loc>
+    <loc>http://oomusou.io/php/php-interface/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -307,7 +312,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/osx/iterm2-setup/</loc>
+    <loc>http://oomusou.io/php/php-trait/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -322,46 +327,6 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/osx/osx-symbol-html/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-cs/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/homestead/homestead-osx/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-generator/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-interface/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-namespace/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-psr2/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/php/php-trait/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-exception-inspection/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
@@ -372,7 +337,27 @@
   </url>
   
   <url>
+    <loc>http://oomusou.io/laravel/homestead/homestead-osx/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-git-rm-idea/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/laravel/laravel42/laravel-42-phpunit/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/laravel42/laravel-42-presenter/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/mamp/mamp-setup/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -382,7 +367,27 @@
   </url>
   
   <url>
+    <loc>http://oomusou.io/osx/iterm2-setup/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-navigate-method/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/php/php-namespace/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-phpdoc/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-spellcheck/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -412,7 +417,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-new-laravel-project/</loc>
+    <loc>http://oomusou.io/refactor/refactor-remove-assignments-to-parameters/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -422,7 +427,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-phpdoc/</loc>
+    <loc>http://oomusou.io/tdd/tdd-91/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -437,21 +442,6 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-spellcheck/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/refactor/refactor-remove-assignments-to-parameters/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/tdd/tdd-91/</loc>
-    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://oomusou.io/tdd/tdd-jaceju/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
@@ -462,12 +452,27 @@
   </url>
   
   <url>
+    <loc>http://oomusou.io/osx/osx-symbol-html/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/tdd/tdd-solid/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/php/php-bindTo/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/php/php-generator/</loc>
+    <lastmod>2016-03-22T14:03:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/php/php-cs/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
