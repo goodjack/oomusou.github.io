@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/selenium/selenium-phpunit/</loc>
+    <lastmod>2016-10-08T13:08:46.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-class-template/</loc>
     <lastmod>2016-10-05T03:45:04.000Z</lastmod>
   </url>
@@ -77,17 +82,17 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/laravel/laravel-service/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -102,12 +107,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
+    <loc>http://oomusou.io/tdd/tdd-di/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -117,7 +122,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-di/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-inspection/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -132,7 +137,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-inspection/</loc>
+    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -142,12 +147,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   

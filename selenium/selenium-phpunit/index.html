@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何對 Laravel 進行驗收測試? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="PHPUnit 搭配 Selenium 之後，就能實際對 GUI 做驗收測試，也能測試 JavaScript。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="PHPUnit 搭配 Selenium 之後，就能實際對 GUI 做驗收測試，也能測試 JavaScript。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何對 Laravel 進行驗收測試?">
+<meta property="og:url" content="http://oomusou.io/selenium/selenium-phpunit/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="PHPUnit 搭配 Selenium 之後，就能實際對 GUI 做驗收測試，也能測試 JavaScript。">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-10-08T13:08:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何對 Laravel 進行驗收測試?">
+<meta name="twitter:description" content="PHPUnit 搭配 Selenium 之後，就能實際對 GUI 做驗收測試，也能測試 JavaScript。">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何對 Laravel 進行驗收測試?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> PHPUnit 搭配 Selenium 之後，就能實際對 GUI 做驗收測試，也能測試 JavaScript。			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試種類簡介"><span class="toc-article-text">測試種類簡介</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#驗收測試"><span class="toc-article-text">驗收測試</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#應用程式測試"><span class="toc-article-text">應用程式測試</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Selenium_測試"><span class="toc-article-text">Selenium 測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#PHPUnit"><span class="toc-article-text">PHPUnit</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Selenium"><span class="toc-article-text">Selenium</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#應用程式測試環境"><span class="toc-article-text">應用程式測試環境</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#終端機模式"><span class="toc-article-text">終端機模式</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PhpStorm"><span class="toc-article-text">PhpStorm</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Selenium測試環境"><span class="toc-article-text">Selenium測試環境</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#phpunit-selenium"><span class="toc-article-text">phpunit-selenium</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Selenium_Server"><span class="toc-article-text">Selenium Server</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ChromeDriver"><span class="toc-article-text">ChromeDriver</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#環境測試"><span class="toc-article-text">環境測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立_ToDo_專案"><span class="toc-article-text">建立 ToDo 專案</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#驗收測試案例"><span class="toc-article-text">驗收測試案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用應用程式測試"><span class="toc-article-text">使用應用程式測試</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Laravel 在 5.1 之後，提供了<strong>應用程式測試</strong> (<a href="https://laravel.com/docs/master/application-testing" target="_blank" rel="external">Application Testing</a>)，讓我們不用開啟瀏覽器，就可以直接對 route、controller 與 blade 進行驗收測試，且執行速度非常快，但也因為沒有開啟瀏覽器，所以無法對 JavaScript 進行測試，若搭配了 Selenium，配合我們熟悉的 PHPUnit，就能對驗收測試加以自動化。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>Laravel 的 Application Testing 非常好用，API 語意清楚，且提供 fluent 方式串接，不過 Seleinum 提供的又是另外一套 API 方式，若能將 Application Testing 與 Selenium 整合成相同的 API，那就太棒了。</p>
+<h2 id="Version">Version</h2><hr>
+<p>macOS Sierra 10.12<br>Java 1.8.0_91-b14<br>PHP 7.0.8<br>Laravel 5.3.18<br>PhpStorm 2016.2.1<br>PHPUnit 5.5.5<br>phpunit-selenium 3.0.2<br>Selenium Standalone Server 2.53.1<br>ChromeDriver 2.24<br>Chrome 53.0.2785.143 (64-bit)</p>
+<h2 id="測試種類簡介">測試種類簡介</h2><hr>
+<h2 id="驗收測試">驗收測試</h2><hr>
+<h3 id="應用程式測試">應用程式測試</h3><h3 id="Selenium_測試">Selenium 測試</h3><h2 id="PHPUnit">PHPUnit</h2><hr>
+<h2 id="Selenium">Selenium</h2><hr>
+<h2 id="應用程式測試環境">應用程式測試環境</h2><hr>
+<h3 id="終端機模式">終端機模式</h3><p>Laravel 已經安裝好 PHPUnit，並提供捷徑在 <code>vendor/bin</code> 目錄下。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ vendor/bin/phpunit</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下 <code>vendor/bin/phpunit</code>，執行 Laravel 預設的應用程式測試。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium009.png" alt=""></p>
+<p>若能看到 <span class="label label-success">綠燈</span>，表示應用程式環境已經安裝成功。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>通常只要 PHP CLI 路徑有設定好，Laravel 正確安裝，應用程式測試就可以正常執行。</span></span></span></p>
+<h3 id="PhpStorm">PhpStorm</h3><p>PhpStorm 內建支援 PHPUnit，我們可以直接在 PhpStorm 內直接執行 PHPUnit。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium010.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP</em></strong></p>
+<ul>
+<li><strong>PHP language level</strong> : <code>7 (return types, scalar type hints, etc.)</code></li>
+</ul>
+<p>將 language level 調整為 <code>7</code>，讓 PhpStorm Code Inspection 自動針對 PHP 7 語法加以檢查。</p>
+<p>按 <code>...</code> 設定 PHP CLI 路徑。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium011.png" alt=""></p>
+<p>PhpStorm 允許我們設定多組 PHP CLI 版本供切換。</p>
+<ul>
+<li><strong>PHP executable</strong> : <code>/Applications/MAMP/bin/php/php7.0.8/bin/php</code></li>
+<li><strong>Debugger extension</strong> : <code>/Applications/MAMP/bin/php/php7.0.8/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so</code></li>
+</ul>
+<p>從 PhpStorm 2016.2 開始，提供了 Xdebug On Demand 功能，不必事先在 <code>php.ini</code> 啟動 Xdebug 影響 Composer 速度，只要事先設定好 <code>xdebug.so</code> 路徑，PhpStorm 會在設定中斷點除錯時，自動啟動 Xdebug。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium012.png" alt=""></p>
+<ul>
+<li><strong>Interpreter</strong> : <code>PHP7(7.0.8)</code></li>
+</ul>
+<p>將 interpreter 設定為剛剛設定的 PHP CLI。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium013.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP -&gt; PHPUnit</em></strong></p>
+<p>選擇 <code>Use Composer autoloader</code> :</p>
+<ul>
+<li><p><strong>Path to script</strong> : <code>/Users/oomusou/Code/PHPConf/Laravel53SeleniumPHPUnit_demo/vendor/autoload.php</code></p>
+</li>
+<li><p><strong>Default configuration file</strong> : <code>/Users/oomusou/Code/PHPConf/Laravel53SeleniumPHPUnit_demo/phpunit.xml</code></p>
+</li>
+</ul>
+<p><code>Path to script</code> 指定到專案目錄下的 <code>vendor/autoload.php</code>，告訴 PhpStorm 在執行 PHPUnit 時，先執行此路徑的 autoload。</p>
+<p><code>Default configuration file</code> 指定到專案根目錄下的 <code>phpunit.xml</code>，此為 PHPUnit 的設定檔，Laravel 已經在此檔設定好很多預設值。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium017.png" alt=""></p>
+<p>選擇在專案總管的 <code>tests/ExampleTest.php</code>，這是 Laravel 預設所提供對 Laravel 首頁的應用程式測試範例，按滑鼠右鍵選擇 <code>Run ExampleTest</code> 或按熱鍵 &#8963; + &#8679; + R 執行測試。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium016.png" alt=""></p>
+<p>測試結果會顯示在下方，若看到 <span class="label label-success">綠燈</span>，則表示 PhpStorm 的 PHPUnit 執行環境已經設定完成。</p>
+<h2 id="Selenium測試環境">Selenium測試環境</h2><hr>
+<h3 id="phpunit-selenium">phpunit-selenium</h3><p><a href="https://packagist.org/packages/phpunit/phpunit-selenium" target="_blank" rel="external">phpunit/phpunit-selenium</a> 是由 <a href="https://github.com/sebastianbergmann/phpunit" target="_blank" rel="external">PHPUnit</a> 官方所提供，讓我們可以在 PHP 與 Selenium Server 溝通，直接對瀏覽器做控制，並使用 PHPUnit 做 assertion，目前僅支援 Selenium Server 2.x。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormAzureBlobStorage_demo/commit/325d35d15c8f6b0c31d0a6eb46f7ba24bacdc0dd" target="_blank" rel="external">安裝 phpunit-selenium</a></span></span></span></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ composer require phpunit/phpunit-selenium --dev</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下由 Composer 安裝 <code>phpunit/phpunit-selenium</code>，由於這是開發用的套件，請加上 <code>--dev</code> 參數。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium005.png" alt=""></p>
+<h3 id="Selenium_Server">Selenium Server</h3><p>我們必須透過 Selenium 幫我們對瀏覽器下指令，因此必須先安裝 <a href="http://www.seleniumhq.org/download/" target="_blank" rel="external">Selenium Server</a>。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium000.png" alt=""></p>
+<p>目前 3.0 尚在 beta，且 <code>phpunit/phpunit-selenium</code> 目前僅支援 Selenium 2.x，所以選擇 <a href="http://selenium-release.storage.googleapis.com/index.html" target="_blank" rel="external">previous release</a> 安裝以前的版本。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium001.png" alt=""></p>
+<p>選擇 <code>2.53</code>，這是 Selenium 2.x 的最後版本。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium002.png" alt=""></p>
+<p>下載 <code>selenium-server-standalone-2.53.1.jar</code>，這是 <code>2.53</code> 的最後一個版本。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium003.png" alt=""></p>
+<p>將 <code>selenium-server-standalone-2.53.1.jar</code> 複製到 Laravel 專案的根目錄下。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ java -jar selenium-server-standalone-2.53.1.jar</span><br></pre></td></tr></table></figure>
+<p>Selenium 由 Java 所開發，必須由 Java 啟動。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium004.png" alt=""></p>
+<p>啟動 Selenium  Server，若看到 <code>Selenium Server is up and running</code>，則表示 Selenium 已經正常啟動。</p>
+<h3 id="ChromeDriver">ChromeDriver</h3><p>Selenium 預設只支援 Firefox，若要使用 Chrome，需另外安裝 <a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="external">ChromeDriver</a>。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium006.png" alt=""></p>
+<p>選擇目前最新版本下載。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium007.png" alt=""></p>
+<p>根據平台下載不同的 ChromeDriver 版本。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium008.png" alt=""></p>
+<p>將 <code>zip</code> 解開後，將 <code>chromedriver</code> 複製到 Laravel 專案的根目錄下。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormAzureBlobStorage_demo/commit/325d35d15c8f6b0c31d0a6eb46f7ba24bacdc0dd" target="_blank" rel="external">安裝 ChromeDriver</a></span></span></span></p>
+<h3 id="環境測試">環境測試</h3><p>當 phpunit-selenium、Selenium Server 與 ChromeDriver 都裝好後，我們就可以來對 Laravel 的預設首頁做驗收測試，確認 Selenium 環境是否設定成功。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ php artisan serve</span><br></pre></td></tr></table></figure>
+<p>啟動 PHP 內建的 web server。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium014.png" alt=""></p>
+<p>會將 Laravel 預設首頁開在 <code>http://localhost:8000/</code>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ php artisan make:test ExampleSeleniumTest</span><br></pre></td></tr></table></figure>
+<p>由 Laravel artisan 建立 test。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium018.png" alt=""></p>
+<p><strong>SeleniumTest.php</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormAzureBlobStorage_demo/commit/325d35d15c8f6b0c31d0a6eb46f7ba24bacdc0dd" target="_blank" rel="external">Selenium 環境測試</a></span></span></span><br><figure class="highlight php"><figcaption><span>tests/SeleniumTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SeleniumTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Extensions_Selenium2TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">setUp</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;setBrowser(<span class="string">'chrome'</span>);</span><br><span class="line">        <span class="variable">$this</span>-&gt;setBrowserUrl(<span class="string">'http://localhost:8000'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testTitle</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;url(<span class="string">'http://localhost:8000'</span>);</span><br><span class="line">        <span class="variable">$this</span>-&gt;assertEquals(<span class="string">'Laravel'</span>, <span class="variable">$this</span>-&gt;title());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>這是 <a href="https://phpunit.de/manual/3.7/en/selenium.html" target="_blank" rel="external">Chapter 17.PHPUnit and Selenium</a> 所提供的範例程式，用來對網頁做最簡單的驗收測試。</p>
+<p>第 1 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SeleniumTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Extensions_Selenium2TestCase</span></span></span><br></pre></td></tr></table></figure></p>
+<p>並不是繼承 Laravel 所提供的 <code>TestCase</code>，而是改繼承 <code>phpunit/phpunit-selenium</code> 所提供的 <code>PHPUnit_Extensions_Selenium2TestCase</code>。</p>
+<p>第 3 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">setUp</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$this</span>-&gt;setBrowser(<span class="string">'chrome'</span>);</span><br><span class="line">    <span class="variable">$this</span>-&gt;setBrowserUrl(<span class="string">'http://localhost:8000'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在每一次測試都會執行的 <code>setUp()</code>，將每次測試都要執行的設定寫在這裡。</p>
+<ul>
+<li>使用 <code>setBrowser()</code> 設定要啟動的瀏覽器，</li>
+<li>使用 <code>setBrowserUrl()</code> 設定要測試網站首頁 url。</li>
+</ul>
+<p>第 9 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testTitle</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$this</span>-&gt;url(<span class="string">'http://localhost:8000'</span>);</span><br><span class="line">    <span class="variable">$this</span>-&gt;assertEquals(<span class="string">'Laravel'</span>, <span class="variable">$this</span>-&gt;title());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Laravel 預設首頁的 title 為 <code>Laravel</code>，我們想測試 title 是否正確。</p>
+<ul>
+<li>使用 <code>url()</code> 設定要測試的 url。</li>
+<li>使用 PHPUnit 的 <code>assertEquals()</code> 測試網頁的 title 是否為 <code>Laravel</code>。</li>
+</ul>
+<p><img src="/images/selenium/selenium-phpunit/selenium015.png" alt=""></p>
+<p>在 PhpStorm 內執行 <code>SeleniumTest.php</code>，會發現 Chrome 開啟後立即結束，若能看到 <span class="label label-success">綠燈</span>，表示 phpunit-selenium、Selenium Server 與 ChromeDriver 都已經安裝成功。</p>
+<h2 id="建立_ToDo_專案">建立 ToDo 專案</h2><hr>
+<p>以 Laravel 官方的 <a href="https://laravel.com/docs/5.2/quickstart" target="_blank" rel="external">Basic Task List</a> 為範例，建立一個簡單的 ToDo 專案，將以此專案建立驗收測試 : 分別使用<strong>應用程式測試</strong>與<strong>Selenium測試</strong>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormAzureBlobStorage_demo/commit/325d35d15c8f6b0c31d0a6eb46f7ba24bacdc0dd" target="_blank" rel="external">建立 ToDo 專案</a></span></span></span></p>
+<p><img src="/images/selenium/selenium-phpunit/selenium019.png" alt=""></p>
+<p>一開始顯示目前所有的 task，因為還沒建立任何 task，所以是空的。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium020.png" alt=""></p>
+<p>輸入 <code>Study</code>，按 <code>Add Task</code> 新增。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium021.png" alt=""></p>
+<p><code>Study</code> 被新增到資料庫，並顯示在下方的 <code>Current Tasks</code>。</p>
+<p>按下 <code>Delete</code> 刪除 <code>Study</code>。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium019.png" alt=""></p>
+<p><code>Study</code> 從資料庫被刪除，不顯示任何 task。</p>
+<h2 id="驗收測試案例">驗收測試案例</h2><hr>
+<p>目前 Todo 專案非常簡單，我們想為此專案建立 3 個測試案例。</p>
+<ul>
+<li>Todo 一啟動時，顯示目前資料庫的 3 筆 task。</li>
+<li>新增一筆 task，並顯示在下方的 <code>Current Tasks</code>。</li>
+<li>新增一筆 task，並立即刪除 task。</li>
+</ul>
+<h2 id="使用應用程式測試">使用應用程式測試</h2><hr>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p>Taylor Otwell, <a href="https://laravel.com/docs/master/application-testing" target="_blank" rel="external">Laravel Application Testing</a><br>Sebastian Bergmann, <a href="https://github.com/sebastianbergmann/phpunit" target="_blank" rel="external">PHPUnit</a><br>Sebastian Bergmann, <a href="https://packagist.org/packages/phpunit/phpunit-selenium" target="_blank" rel="external">phpunit/phpunit-selenium</a><br><a href="http://www.seleniumhq.org/download/" target="_blank" rel="external">Selenium Server</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/phpstorm/phpstorm-markdown/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/laravel/laravel42/laravel-42-phpunit/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-10-10 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>45</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>13</span></a></li> <li><a href="/tags/PhpStorm/">PhpStorm<span>37</span></a></li> <li><a href="/tags/Selenium/">Selenium<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
