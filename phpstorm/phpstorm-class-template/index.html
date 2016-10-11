@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-10-05T03:45:04.000Z">
+<meta property="og:updated_time" content="2016-10-11T13:27:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何修改 PhpStorm 預設的 Class Template?">
 <meta name="twitter:description" content="將惱人的預設檔頭拿掉，並加上 PHP 7 所需要 strict types 宣告">
@@ -122,13 +122,13 @@
 <p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
 <p>切換到 <code>includes</code> 的 <code>PHP File Header</code>，我們可以看到預設的註解就是在此，若你不喜歡這些註解，可以全部刪除後存檔。</p>
 <h2 id="宣告_Strict_Type">宣告 Strict Type</h2><hr>
-<p>PHP 7 增加了 scalar type hint 與 return type，不過為了相容於過去 PHP 弱型別傳統，預設並沒有啟動型別檢查，必須自己加上 <code>declare(strict_type = 1)</code> 之後，PHP 與 PhpStorm 的 Code Inspection 才會根據 type hint 與 return type 檢查型別。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 PhpStorm 的 Code Inspection，詳細請參考<a href="/phpstorm/phpstorm-code-inspection/">如何在 PhpStorm 使用 Code Inspection?</a></span></span></span></p>
-<p>目前 PHP 7 並沒有提供全域的 <code>php.ini</code> 設定，必須自己在每個 <code>.php</code> 加上設定，很麻煩也容易忘記，若能設定在 class template 內，則以後新增 class 都會有 <code>declare(strict_type = 1)</code>。</p>
+<p>PHP 7 增加了 scalar type hint 與 return type，不過為了相容於過去 PHP 弱型別傳統，預設並沒有啟動型別檢查，必須自己加上 <code>declare(strict_types = 1)</code> 之後，PHP 與 PhpStorm 的 Code Inspection 才會根據 type hint 與 return type 檢查型別。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 PhpStorm 的 Code Inspection，詳細請參考<a href="/phpstorm/phpstorm-code-inspection/">如何在 PhpStorm 使用 Code Inspection?</a></span></span></span></p>
+<p>目前 PHP 7 並沒有提供全域的 <code>php.ini</code> 設定，必須自己在每個 <code>.php</code> 加上設定，很麻煩也容易忘記，若能設定在 class template 內，則以後新增 class 都會有 <code>declare(strict_types = 1)</code>。</p>
 <p><img src="/images/phpstorm/phpstorm-class-template/template003.png" alt=""></p>
 <p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
-<p>刪除預設註解後，改加上 <code>declare(strict_type = 1)</code>。</p>
+<p>刪除預設註解後，改加上 <code>declare(strict_types = 1)</code>。</p>
 <p><img src="/images/phpstorm/phpstorm-class-template/template004.png" alt=""></p>
-<p>以後新增 class，預設註解不見了，且自動加上 <code>declare(strict_type = 1)</code>。</p>
+<p>以後新增 class，預設註解不見了，且自動加上 <code>declare(strict_types = 1)</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>除了移除預設註解與宣告 <code>strict types</code> 外，如一些需靠 <code>Laravel artisan</code> 建立的 controller、unit test …，事實上也可以新增一個 template，直接使用 PhpStorm 來新增。</li>

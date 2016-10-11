@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-10-05T03:45:04.000Z</updated>
+  <updated>2016-10-11T13:27:31.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-class-template/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-class-template/</id>
     <published>2016-10-05T12:23:43.000Z</published>
-    <updated>2016-10-05T03:45:04.000Z</updated>
+    <updated>2016-10-11T13:27:31.000Z</updated>
     <content type="html"><![CDATA[<p>當使用 PhpStorm 建立 class 時，預設會產生 <code>Created by PhpStorm</code> 的註解，並包含<strong>作者</strong>、<strong>日期</strong>、<strong>時間</strong>等資訊，有的人喜歡，有的人不喜歡，若你不希望每次建立 class 時都有這個檔頭，可以自行修改；除此之外，在 PHP 7 為了讓強行別檢查發揮作用，我們會在一開始 <code>declare(strict_types = 1);</code>，這也可以直接設定在 class template，以後只要建立新的 class，都會自動加上宣告。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -35,13 +35,13 @@
 <p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
 <p>切換到 <code>includes</code> 的 <code>PHP File Header</code>，我們可以看到預設的註解就是在此，若你不喜歡這些註解，可以全部刪除後存檔。</p>
 <h2 id="宣告_Strict_Type">宣告 Strict Type</h2><hr>
-<p>PHP 7 增加了 scalar type hint 與 return type，不過為了相容於過去 PHP 弱型別傳統，預設並沒有啟動型別檢查，必須自己加上 <code>declare(strict_type = 1)</code> 之後，PHP 與 PhpStorm 的 Code Inspection 才會根據 type hint 與 return type 檢查型別。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 PhpStorm 的 Code Inspection，詳細請參考<a href="/phpstorm/phpstorm-code-inspection/">如何在 PhpStorm 使用 Code Inspection?</a></span></span></span></p>
-<p>目前 PHP 7 並沒有提供全域的 <code>php.ini</code> 設定，必須自己在每個 <code>.php</code> 加上設定，很麻煩也容易忘記，若能設定在 class template 內，則以後新增 class 都會有 <code>declare(strict_type = 1)</code>。</p>
+<p>PHP 7 增加了 scalar type hint 與 return type，不過為了相容於過去 PHP 弱型別傳統，預設並沒有啟動型別檢查，必須自己加上 <code>declare(strict_types = 1)</code> 之後，PHP 與 PhpStorm 的 Code Inspection 才會根據 type hint 與 return type 檢查型別。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 PhpStorm 的 Code Inspection，詳細請參考<a href="/phpstorm/phpstorm-code-inspection/">如何在 PhpStorm 使用 Code Inspection?</a></span></span></span></p>
+<p>目前 PHP 7 並沒有提供全域的 <code>php.ini</code> 設定，必須自己在每個 <code>.php</code> 加上設定，很麻煩也容易忘記，若能設定在 class template 內，則以後新增 class 都會有 <code>declare(strict_types = 1)</code>。</p>
 <p><img src="/images/phpstorm/phpstorm-class-template/template003.png" alt=""></p>
 <p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; File and Code Templates -&gt; includes -&gt; PHP File Header</em></strong></p>
-<p>刪除預設註解後，改加上 <code>declare(strict_type = 1)</code>。</p>
+<p>刪除預設註解後，改加上 <code>declare(strict_types = 1)</code>。</p>
 <p><img src="/images/phpstorm/phpstorm-class-template/template004.png" alt=""></p>
-<p>以後新增 class，預設註解不見了，且自動加上 <code>declare(strict_type = 1)</code>。</p>
+<p>以後新增 class，預設註解不見了，且自動加上 <code>declare(strict_types = 1)</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>除了移除預設註解與宣告 <code>strict types</code> 外，如一些需靠 <code>Laravel artisan</code> 建立的 controller、unit test …，事實上也可以新增一個 template，直接使用 PhpStorm 來新增。</li>
