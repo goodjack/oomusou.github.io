@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-10-11T13:27:31.000Z</updated>
+  <updated>2016-10-18T06:13:35.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-class-template/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-class-template/</id>
     <published>2016-10-05T12:23:43.000Z</published>
-    <updated>2016-10-11T13:27:31.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>當使用 PhpStorm 建立 class 時，預設會產生 <code>Created by PhpStorm</code> 的註解，並包含<strong>作者</strong>、<strong>日期</strong>、<strong>時間</strong>等資訊，有的人喜歡，有的人不喜歡，若你不希望每次建立 class 時都有這個檔頭，可以自行修改；除此之外，在 PHP 7 為了讓強行別檢查發揮作用，我們會在一開始 <code>declare(strict_types = 1);</code>，這也可以直接設定在 class template，以後只要建立新的 class，都會自動加上宣告。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -63,7 +63,7 @@
     <link href="http://oomusou.io/azure/azure-blob-storage/"/>
     <id>http://oomusou.io/azure/azure-blob-storage/</id>
     <published>2016-08-13T12:23:43.000Z</published>
-    <updated>2016-08-16T07:08:26.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>除了關聯式資料庫外，實務上我們常需要將<strong>文字檔</strong>或<strong>二進位檔</strong> (圖片檔或影音檔) 上傳到雲端，並提供下載，此時我們可以使用 Azure 的 Blob Storage 儲存這類型的檔案。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -330,7 +330,7 @@
     <link href="http://oomusou.io/azure/azure-ide-helper/"/>
     <id>http://oomusou.io/azure/azure-ide-helper/</id>
     <published>2016-08-06T12:23:43.000Z</published>
-    <updated>2016-08-06T14:24:27.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p><a href="https://github.com/barryvdh/laravel-ide-helper" target="_blank" rel="external">Laravel IDE Helper</a> 解決了 PhpStorm 無法對 Facade 做 code completion 的問題，，為使用 Laravel 與 PhpStorm 必裝的套件，但安裝方式的差異，可能造成 Laravel 在 Azure 無法部署成功。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -404,7 +404,7 @@
     <link href="http://oomusou.io/azure/azure-phpstorm-mysql/"/>
     <id>http://oomusou.io/azure/azure-phpstorm-mysql/</id>
     <published>2016-08-02T12:23:43.000Z</published>
-    <updated>2016-08-14T02:09:50.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>Azure 除了可以跑 PHP 與 Laravel 外，更可以跑我們喜愛的 MySQL 資料庫。本文將實際在 Azure 建立 MySQL 資料庫，透過 <code>.env</code> 的設定，讓 Laravel 可以連上 MySQL，並透過 PhpStorm 直接管理 Azure 雲端的 MySQL 資料庫。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -511,7 +511,7 @@
     <link href="http://oomusou.io/azure/azure-phpstorm-deploy/"/>
     <id>http://oomusou.io/azure/azure-phpstorm-deploy/</id>
     <published>2016-08-01T12:23:43.000Z</published>
-    <updated>2016-08-14T15:56:29.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>Azure 是微軟的雲端平台，也可以跑 PHP 與 Laravel，本文將以 PhpStorm 為工具，與 GitHub 結合，將來程式有任何變更，只要 push 到 GitHub，就會自動更新到 Azure，還可透過 PhpStorm 內建的工具管理 Azure。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -741,7 +741,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-code-generation/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-code-generation/</id>
     <published>2016-07-28T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>實務上開發專案時，有一些程式碼會不斷的出現，這時可靠 PhpStorm 的 Code Generation 幫我們產生這些 code snippet，除此之外，我們也可以將自己的 code snippet 加入 Live Template，可加快發開速度，並減少 typo。<br><a id="more"></a></p>
 <h2 id="Version">Version</h2><hr>
 <p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
@@ -924,7 +924,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-code-completion/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-code-completion/</id>
     <published>2016-07-25T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>PHP 進入了物件導向與 framework 時代之後，出現了大量的 namespace、class、interface 與 method，基本上這些東西已經很難用記憶的方式來寫程式，必須靠工具輔助。PhpStorm 的 Code Completion 幫我們處理了大部分的東西，讓我們只要用選的就可以開發程式，一來開發速度變快，二來也可以減少 typo，是 modern PHP 的關鍵。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1007,7 +1007,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-code-inspection/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-code-inspection/</id>
     <published>2016-07-24T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>PHP 不需編譯，只要存檔就可執行，優點是很方便，缺點是很多程式語法上的錯誤必須在瀏覽器執行才能發現。PhpStorm 的 Code Inspection 就相當於編譯器，在程式開發階段就可檢查語法上的錯誤，再搭配單元測試檢查邏輯上的錯誤，如此雙重保障，就能提早發現錯誤加以解決，降低除錯成本。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1112,7 +1112,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-project-template/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-project-template/</id>
     <published>2016-07-23T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>PhpStorm 2016.2 提供一個新功能，可以將專案打包成 project template，以後新建專案時，可以選擇此 template 直接重建專案，如常用的 package 與 codebase 可以先打包好，將來要建立新專案就很方便。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -1188,7 +1188,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</id>
     <published>2016-07-18T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>Xdebug 是 PhpStorm debug 的必備工具，但是啟動 Xdebug 又會使 Composer 變慢，實務上很兩難，這個問題在 PhpStorm 2016.2 得到完美解決，平時不用開啟 Xdebug，PhpStorm 會在需要 debug 時才自動啟動 Xdebug，不會影響 Composer 執行速度。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -1251,7 +1251,7 @@
     <link href="http://oomusou.io/dp/dp-nullobject/"/>
     <id>http://oomusou.io/dp/dp-nullobject/</id>
     <published>2016-07-15T12:23:43.000Z</published>
-    <updated>2016-08-06T03:11:22.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>當我們透過 Eloquent 對資料庫抓資料時，由於 <code>where()</code> 的條件可能撈不到資料，導致 <code>first()</code> 傳會 <code>null</code>，若再對 <code>null</code> 物件的欄位屬性做存取，會出現 <code>Trying to get property of non-object</code> 的錯誤訊息，當然有各種方法避開這個錯誤，但比較理想的方式是引入 <code>Null Object</code> 模式。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1329,7 +1329,7 @@
     <link href="http://oomusou.io/tdd/tdd-collection-assertion/"/>
     <id>http://oomusou.io/tdd/tdd-collection-assertion/</id>
     <published>2016-07-09T12:23:43.000Z</published>
-    <updated>2016-08-23T01:08:48.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p><code>Collection</code> 並非 PHP 原生的型別，是 Laravel 所擴充，因此 PHPUnit 並無法直接對其做 assertion，本文介紹兩種方式，一種是使用 PHPUnit 的 <code>assertArraySubset()</code>，一種是自己寫 collection macro，各有其優缺點，可視需求決定要使用哪種方法。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -1559,7 +1559,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-github/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-github/</id>
     <published>2016-06-29T04:23:43.000Z</published>
-    <updated>2016-08-06T03:14:31.000Z</updated>
+    <updated>2016-10-18T06:13:35.000Z</updated>
     <content type="html"><![CDATA[<p>若要將專案發佈到 GitHub，實務上除了先在本機建立 local git repository 外，還要在 GitHub 建立 remote git repository，然後建立 remote branch，最後才能 push 到 GitHub，這些動作都可以在 PhpStorm 內簡單的完成。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
