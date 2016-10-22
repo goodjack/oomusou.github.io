@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何設定 Laravel 自動化驗收測試環境? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何設定 Laravel 自動化驗收測試環境?">
+<meta property="og:url" content="http://oomusou.io/phpconf/phpconf-workshop1/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-10-22T15:55:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何設定 Laravel 自動化驗收測試環境?">
+<meta name="twitter:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何設定 Laravel 自動化驗收測試環境?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載範例"><span class="toc-article-text">下載範例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#PHP_7"><span class="toc-article-text">PHP 7</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_JDK"><span class="toc-article-text">安裝 JDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_PhpStorm"><span class="toc-article-text">安裝 PhpStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_Workshop_環境"><span class="toc-article-text">測試 Workshop 環境</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_PHP_Web_Server"><span class="toc-article-text">啟動 PHP Web Server</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_Selenium"><span class="toc-article-text">啟動 Selenium</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#執行測試"><span class="toc-article-text">執行測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Laravel 在 5.1 之後，提供了<strong>應用程式測試</strong> (<a href="https://laravel.com/docs/master/application-testing" target="_blank" rel="external">Application Testing</a>)，讓我們不用開啟瀏覽器，就可以直接對 route、controller 與 blade 進行驗收測試，且執行速度非常快，但也因為沒有開啟瀏覽器，所以無法對 JavaScript 與 AJAX 進行測試，若搭配了 Selenium，配合我們熟悉的 PHPUnit，就能對驗收測試加以自動化。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>由於安裝環境需要不少時間，而 PHPConf 的 workshop 時間只有 110 分鐘，為了讓大家在現場能有更充分的時間學習 PhpStorm 與實際練寫測試，因此特別將耗時的環境安裝改為事前準備。</p>
+<h2 id="Version">Version</h2><hr>
+<p>macOS Sierra 10.12<br>Java 1.8.0_102<br>PHP 7.0.8<br>Laravel 5.3.18<br>PhpStorm 2016.2.1<br>PHPUnit 5.5.5<br>phpunit-selenium 3.0.2<br>Selenium Standalone Server 2.53.1<br>ChromeDriver 2.24<br>Chrome 53.0.2785.143 (64-bit)</p>
+<h2 id="下載範例">下載範例</h2><hr>
+<p>本次 workshop 的範例放在 <a href="https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed" target="_blank" rel="external">GitHub</a>，請先下載。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ git clone https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed</span><br></pre></td></tr></table></figure>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop000.png" alt=""></p>
+<h2 id="PHP_7">PHP 7</h2><hr>
+<p>請先準備好 PHP 7 環境，本次 workshop 範例無法在 PHP 5.6 執行。</p>
+<h2 id="安裝_JDK">安裝 JDK</h2><hr>
+<p>本次 workshop 所使用的 Selenium，是由 Java 所開發，必須先安裝 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">JDK</a>。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop001.png" alt=""></p>
+<p>選擇 <code>Java SE Development Kit 8u102</code>，根據平台下載不同的 JDK 版本。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop002.png" alt=""></p>
+<p>執行剛下載的 <code>jdk-8u102-macosx-x64.dmg</code>，安裝 <code>JDK 8 Update 102.pkg</code>。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop003.png" alt=""></p>
+<p>按 <code>Continue</code> 繼續。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop004.png" alt=""></p>
+<p>按 <code>Install</code> 開始安裝。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop005.png" alt=""></p>
+<p>安裝完成。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/$ java -version</span><br></pre></td></tr></table></figure>
+<p>檢查所安裝的 Java 版本。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop006.png" alt=""></p>
+<p>若看到 <code>1.8.0_102</code>，則 JDK 安裝成功。</p>
+<h2 id="安裝_PhpStorm">安裝 PhpStorm</h2><hr>
+<p>本次 workshop 會使用 PhpStorm 完成自動化測試，請先下載 <a href="https://www.jetbrains.com/phpstorm/download/" target="_blank" rel="external">PhpStorm</a> 安裝檔，現場會教大家安裝。</p>
+<h2 id="測試_Workshop_環境">測試 Workshop 環境</h2><hr>
+<p>最後要測試整個 Selenium 測試環境是否能正常啟動。</p>
+<h3 id="啟動_PHP_Web_Server">啟動 PHP Web Server</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ php artisan serve</span><br></pre></td></tr></table></figure>
+<p>啟動 PHP 內建的 Web Server。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop007.png" alt=""></p>
+<p>將啟動在 <code>http://localhost:8000</code>。</p>
+<h3 id="啟動_Selenium">啟動 Selenium</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ java -jar selenium-server-standalone-2.53.1.jar</span><br></pre></td></tr></table></figure>
+<p>原來的 Web Server 必須保持啟動，另外開一個 process 啟動 Selenium Server。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop008.png" alt=""></p>
+<h3 id="執行測試">執行測試</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ vendor/bin/phpunit</span><br></pre></td></tr></table></figure>
+<p>原來的 Web Server 與 Selenium Server 必須保持啟動，再另外開一個 process 執行測試。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop009.png" alt=""></p>
+<p>若能看到 2 個測試都是 <span class="label label-success">綠燈</span>，表示整個 Selenium 測試環境已經設定完成。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>本教學以 macOS Sierra 為示範，其他作業系統也可以依照此方式安裝 JDK 與下載 PhpStorm，至於命令列的指令，在各平台都一樣。</li>
+<li>若有任何安裝上的問題，請到 FB 的 <a href="https://www.facebook.com/groups/525259251003816/" target="_blank" rel="external">PHPConf Workshop:自動化驗收測試</a> 社團留言，我與助教們會幫大家解答。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed" target="_blank" rel="external">GitHub</a> 上找到。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/phpstorm/phpstorm-markdown/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/selenium/selenium-phpunit/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-10-11 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PHPConf/">PHPConf<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
