@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-10-22T15:55:30.000Z">
+<meta property="og:updated_time" content="2016-10-22T16:04:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何設定 Laravel 自動化驗收測試環境?">
 <meta name="twitter:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
@@ -146,6 +146,7 @@
 <h3 id="啟動_Selenium">啟動 Selenium</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ java -jar selenium-server-standalone-2.53.1.jar</span><br></pre></td></tr></table></figure>
 <p>原來的 Web Server 必須保持啟動，另外開一個 process 啟動 Selenium Server。</p>
 <p><img src="/images/phpconf/phpconf-workshop1/workshop008.png" alt=""></p>
+<p>若能看到 <code>Selenium Server is up and running</code>，則 Selenium 已經正常啟動。</p>
 <h3 id="執行測試">執行測試</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ vendor/bin/phpunit</span><br></pre></td></tr></table></figure>
 <p>原來的 Web Server 與 Selenium Server 必須保持啟動，再另外開一個 process 執行測試。</p>
 <p><img src="/images/phpconf/phpconf-workshop1/workshop009.png" alt=""></p>
