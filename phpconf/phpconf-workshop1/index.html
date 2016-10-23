@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-10-23T01:49:34.000Z">
+<meta property="og:updated_time" content="2016-10-23T02:55:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何安裝 Laravel 自動化驗收測試環境?">
 <meta name="twitter:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載範例"><span class="toc-article-text">下載範例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#PHP_7"><span class="toc-article-text">PHP 7</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_JDK"><span class="toc-article-text">安裝 JDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_PhpStorm"><span class="toc-article-text">安裝 PhpStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_Workshop_環境"><span class="toc-article-text">測試 Workshop 環境</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_PHP_Web_Server"><span class="toc-article-text">啟動 PHP Web Server</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_Selenium"><span class="toc-article-text">啟動 Selenium</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#執行測試"><span class="toc-article-text">執行測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載範例"><span class="toc-article-text">下載範例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#PHP_7"><span class="toc-article-text">PHP 7</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Composer"><span class="toc-article-text">Composer</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_JDK"><span class="toc-article-text">安裝 JDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_PhpStorm"><span class="toc-article-text">安裝 PhpStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_Workshop_環境"><span class="toc-article-text">測試 Workshop 環境</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_PHP_Web_Server"><span class="toc-article-text">啟動 PHP Web Server</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_Selenium"><span class="toc-article-text">啟動 Selenium</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#執行測試"><span class="toc-article-text">執行測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -119,6 +119,8 @@
 <p><img src="/images/phpconf/phpconf-workshop1/workshop000.png" alt=""></p>
 <h2 id="PHP_7">PHP 7</h2><hr>
 <p>請先準備好 PHP 7 環境，本次 workshop 範例無法在 PHP 5.6 執行。</p>
+<h2 id="Composer">Composer</h2><hr>
+<p>請先準備好 Composer。</p>
 <h2 id="安裝_JDK">安裝 JDK</h2><hr>
 <p>本次 workshop 所使用的 Selenium，是由 Java 所開發，必須先安裝 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">JDK</a>。</p>
 <p><img src="/images/phpconf/phpconf-workshop1/workshop001.png" alt=""></p>
