@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-10-24T14:32:48.000Z">
+<meta property="og:updated_time" content="2016-10-25T13:11:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何安裝 Laravel 自動化驗收測試環境?">
 <meta name="twitter:description" content="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">
@@ -112,7 +112,7 @@
 <h2 id="Motivation">Motivation</h2><hr>
 <p>由於安裝環境需要不少時間，而 PHPConf 的 workshop 時間只有 110 分鐘，為了讓大家在現場能有更充分的時間學習 PhpStorm 與實際練寫測試，因此特別將耗時的環境安裝改為事前準備。</p>
 <h2 id="Version">Version</h2><hr>
-<p>macOS Sierra 10.12<br>Java 1.8.0_102<br>PHP 7.0.8<br>Laravel 5.3.18<br>PhpStorm 2016.2.1<br>PHPUnit 5.5.5<br>phpunit-selenium 3.0.2<br>Selenium Standalone Server 2.53.1<br>ChromeDriver 2.24<br>Chrome 53.0.2785.143 (64-bit)</p>
+<p>macOS Sierra 10.12<br>Java 1.8.0_102<br>PHP 7.0.8<br>Laravel 5.3.18<br>PhpStorm 2016.2.2<br>PHPUnit 5.5.5<br>phpunit-selenium 3.0.2<br>Selenium Standalone Server 2.53.1<br>ChromeDriver 2.24<br>Chrome 53.0.2785.143 (64-bit)</p>
 <h2 id="安裝_PHP_7">安裝 PHP 7</h2><hr>
 <p>請先準備好 PHP 7 環境，本次 workshop 範例無法在 PHP 5.6 執行。</p>
 <h2 id="安裝_Composer">安裝 Composer</h2><hr>
@@ -148,7 +148,7 @@
 <p><img src="/images/selenium/selenium-phpunit/selenium008.png" alt=""></p>
 <p>將 <code>zip</code> 解開後，將 <code>chromedriver</code> 複製到 <code>Laravel53SeleniumPHPUnit_seed</code> 專案的根目錄下。</p>
 <h2 id="安裝_PhpStorm">安裝 PhpStorm</h2><hr>
-<p>本次 workshop 會使用 PhpStorm 完成自動化測試，請先下載 <a href="https://www.jetbrains.com/phpstorm/download/" target="_blank" rel="external">PhpStorm</a> 安裝檔，現場會教大家安裝。</p>
+<p>本次 workshop 會使用 PhpStorm 完成自動化測試，請先下載 <a href="https://www.jetbrains.com/phpstorm/download/" target="_blank" rel="external">PhpStorm</a> 安裝檔，安裝只要下一步下一步即可，當場會教大家設定 PhpStorm。</p>
 <h2 id="測試_Workshop_環境">測試 Workshop 環境</h2><hr>
 <p>最後要測試整個 Selenium 測試環境是否能正常啟動。</p>
 <h3 id="啟動_PHP_Web_Server">啟動 PHP Web Server</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ php artisan serve</span><br></pre></td></tr></table></figure>
