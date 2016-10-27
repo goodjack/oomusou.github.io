@@ -99,6 +99,40 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/tdd/tdd-isolated-test/" title="幾個解決內含相依物件而無法隔離測試的方法">如何測試內含相依物件的函式?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/tdd/tdd-isolated-test/"><img src="/images/feature/tdd.png" alt="如何測試內含相依物件的函式?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>談到unit test，就不能不談到isolated test，但實務上常常因為函式內有相依物件而無法做到isolated ，若是依照TDD的方式寫unit test，因為測試先寫，會一開始就考慮到<code>可測試性</code>，自然會將相依物件改用DI與service container的方式，但若是<code>事後補測試</code>，就常常會有因為相依物件而造成測試加不上去的問題。<br>本文歸納出幾個方法，有<code>依賴注入方法</code>，有<code>OOP反璞歸真方法</code>，最後還有<code>PHP邪惡方法</code>。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/tdd/tdd-isolated-test/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/laravel/laravel-package-hello-world/" title="建立一個Hello World Package並送上Packagist">如何開發自己的Package?</a></div>						
 		</h3>
 	
@@ -260,40 +294,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/phpstorm/phpstorm-markdown/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/phpconf/phpconf-workshop1/" title="PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。">如何安裝 Laravel 自動化驗收測試環境?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/phpconf/phpconf-workshop1/"><img src="/images/feature/selenium.png" alt="如何安裝 Laravel 自動化驗收測試環境?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>Laravel 在 5.1 之後，提供了<strong>應用程式測試</strong> (<a href="https://laravel.com/docs/master/application-testing">Application Testing</a>)，讓我們不用開啟瀏覽器，就可以直接對 route、controller 與 blade 進行驗收測試，且執行速度非常快，但也因為沒有開啟瀏覽器，所以無法對 JavaScript 與 AJAX 進行測試，若搭配了 Selenium，配合我們熟悉的 PHPUnit，就能對驗收測試加以自動化。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/phpconf/phpconf-workshop1/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>

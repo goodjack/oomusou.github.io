@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-10-18T06:13:35.000Z</updated>
+  <updated>2016-10-27T01:17:48.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何安裝 Laravel 自動化驗收測試環境?]]></title>
+    <link href="http://oomusou.io/phpconf/phpconf-workshop1/"/>
+    <id>http://oomusou.io/phpconf/phpconf-workshop1/</id>
+    <published>2016-10-27T12:23:43.000Z</published>
+    <updated>2016-10-27T01:17:48.000Z</updated>
+    <content type="html"><![CDATA[<p>Laravel 在 5.1 之後，提供了<strong>應用程式測試</strong> (<a href="https://laravel.com/docs/master/application-testing" target="_blank" rel="external">Application Testing</a>)，讓我們不用開啟瀏覽器，就可以直接對 route、controller 與 blade 進行驗收測試，且執行速度非常快，但也因為沒有開啟瀏覽器，所以無法對 JavaScript 與 AJAX 進行測試，若搭配了 Selenium，配合我們熟悉的 PHPUnit，就能對驗收測試加以自動化。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>由於安裝環境需要不少時間，而 PHPConf 的 workshop 時間只有 110 分鐘，為了讓大家在現場能有更充分的時間學習 PhpStorm 與實際練寫測試，因此特別將耗時的環境安裝改為事前準備。</p>
+<h2 id="Version">Version</h2><hr>
+<p>macOS Sierra 10.12<br>Java 1.8.0_102<br>PHP 7.0.8<br>Laravel 5.3.18<br>PhpStorm 2016.2.2<br>PHPUnit 5.5.5<br>phpunit-selenium 3.0.2<br>Selenium Standalone Server 2.53.1<br>ChromeDriver 2.24<br>Chrome 53.0.2785.143 (64-bit)</p>
+<h2 id="安裝_PHP_7">安裝 PHP 7</h2><hr>
+<p>請先準備好 PHP 7 環境，本次 workshop 範例無法在 PHP 5.6 執行。</p>
+<h2 id="安裝_Composer">安裝 Composer</h2><hr>
+<p>請先準備好 Composer。</p>
+<h2 id="下載範例">下載範例</h2><hr>
+<p>本次 workshop 的範例放在 <a href="https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed" target="_blank" rel="external">GitHub</a>，請先下載。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ git clone https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed</span><br></pre></td></tr></table></figure>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop000.png" alt=""></p>
+<h2 id="重建_vendor_目錄">重建 vendor 目錄</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ composer install</span><br></pre></td></tr></table></figure>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop010.png" alt=""></p>
+<h2 id="安裝_JDK">安裝 JDK</h2><hr>
+<p>本次 workshop 所使用的 Selenium，是由 Java 所開發，必須先安裝 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">JDK</a>。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop001.png" alt=""></p>
+<p>選擇 <code>Java SE Development Kit 8u102</code>，根據平台下載不同的 JDK 版本。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop002.png" alt=""></p>
+<p>執行剛下載的 <code>jdk-8u102-macosx-x64.dmg</code>，安裝 <code>JDK 8 Update 102.pkg</code>。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop003.png" alt=""></p>
+<p>按 <code>Continue</code> 繼續。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop004.png" alt=""></p>
+<p>按 <code>Install</code> 開始安裝。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop005.png" alt=""></p>
+<p>安裝完成。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/$ java -version</span><br></pre></td></tr></table></figure>
+<p>檢查所安裝的 Java 版本。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop006.png" alt=""></p>
+<p>若看到 <code>1.8.0_102</code>，則 JDK 安裝成功。</p>
+<h2 id="安裝_ChromeDriver">安裝 ChromeDriver</h2><hr>
+<p>Selenium 預設只支援 Firefox，若要使用 Chrome，需另外安裝 <a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="external">ChromeDriver</a>。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium006.png" alt=""></p>
+<p>選擇目前最新版本下載。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium007.png" alt=""></p>
+<p>根據平台下載不同的 ChromeDriver 版本。</p>
+<p><img src="/images/selenium/selenium-phpunit/selenium008.png" alt=""></p>
+<p>將 <code>zip</code> 解開後，將 <code>chromedriver</code> 複製到 <code>Laravel53SeleniumPHPUnit_seed</code> 專案的根目錄下。</p>
+<h2 id="安裝_PhpStorm">安裝 PhpStorm</h2><hr>
+<p>本次 workshop 會使用 PhpStorm 完成自動化測試，請先下載 <a href="https://www.jetbrains.com/phpstorm/download/" target="_blank" rel="external">PhpStorm</a> 安裝檔，安裝只要下一步下一步即可，當場會教大家設定 PhpStorm。</p>
+<h2 id="測試_Workshop_環境">測試 Workshop 環境</h2><hr>
+<p>最後要測試整個 Selenium 測試環境是否能正常啟動。</p>
+<h3 id="啟動_PHP_Web_Server">啟動 PHP Web Server</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ php artisan serve</span><br></pre></td></tr></table></figure>
+<p>啟動 PHP 內建的 Web Server。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop007.png" alt=""></p>
+<p>將啟動在 <code>http://localhost:8000</code>。</p>
+<h3 id="啟動_Selenium">啟動 Selenium</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ java -jar selenium-server-standalone-2.53.1.jar</span><br></pre></td></tr></table></figure>
+<p>原來的 Web Server 必須保持啟動，另外開一個 process 啟動 Selenium Server。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop008.png" alt=""></p>
+<p>若能看到 <code>Selenium Server is up and running</code>，則 Selenium 已經正常啟動。</p>
+<h3 id="執行測試">執行測試</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ cd Laravel53SeleniumPHPUnit_seed&#10;oomusou@mac:~/Laravel53SeleniumPHPUnit_seed$ vendor/bin/phpunit</span><br></pre></td></tr></table></figure>
+<p>原來的 Web Server 與 Selenium Server 必須保持啟動，再另外開一個 process 執行測試。</p>
+<p><img src="/images/phpconf/phpconf-workshop1/workshop009.png" alt=""></p>
+<p>若能看到 2 個測試都是 <span class="label label-success">綠燈</span>，表示整個 Selenium 測試環境已經設定完成。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>本教學以 macOS Sierra 為示範，其他作業系統也可以依照此方式安裝 JDK 、ChromeDriver 與下載 PhpStorm，至於命令列的指令，在各平台都一樣。</li>
+<li>若有任何安裝上的問題，請到 FB 的 <a href="https://www.facebook.com/groups/525259251003816/" target="_blank" rel="external">PHPConf Workshop:自動化驗收測試</a> 社團留言，我與助教們會幫大家解答。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel53SeleniumPHPUnit_seed" target="_blank" rel="external">GitHub</a> 上找到。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[PHPUnit 搭配 Selenium 之後，就能實際對瀏覽器做驗收測試，也能測試 JavaScript 與 AJAX。]]>
+    
+    </summary>
+    
+      <category term="PHPConf" scheme="http://oomusou.io/tags/PHPConf/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何修改 PhpStorm 預設的 Class Template?]]></title>
@@ -2136,113 +2215,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 PhpStorm 打造 Vue.js 開發環境?]]></title>
-    <link href="http://oomusou.io/vuejs/vuejs-on-phpstorm/"/>
-    <id>http://oomusou.io/vuejs/vuejs-on-phpstorm/</id>
-    <published>2016-06-08T15:33:02.000Z</published>
-    <updated>2016-06-12T10:58:09.000Z</updated>
-    <content type="html"><![CDATA[<p>我是一個很依賴語法提示才能寫程式的人，一來我記憶力很差，我記不了很多API，二來我很容易 typo，所以只能依賴語法提示用選的，所以寫 Vue.js 的第一件事情，就是在 PhpStorm 先把開發環境弄好。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Vue.js 1.0.24<br>PhpStorm 2016.1.2<br>Plugin : vue-for-idea 1.0.6<br>Plugin : Vue.js 1.1.0</p>
-<h2 id="Vue-js_on_PhpStorm">Vue.js on PhpStorm</h2><hr>
-<p>PhpStorm 要支援 Vue.js，主要有 3 個重點 :</p>
-<ol>
-<li><strong>Directive</strong> : 支援由 <code>v-</code> 開頭的 directive，如 <code>v-model</code>，以及其 shorthand，如 <code>@click</code>，<code>:href</code>。</li>
-<li><strong>API</strong> : 支援 Vue.js 的 API，如 <code>Vue.component()</code>。</li>
-<li><strong>vue 元件</strong> : 支援 Vue.js 自創的 component 格式，在 PhpStorm 正常顯示，沒有警告。</li>
-</ol>
-<h2 id="安裝_Vue-js_外掛">安裝 Vue.js 外掛</h2><hr>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps000.png" alt=""></p>
-<p><strong><em> PhpStorm -&gt; Preferences -&gt; Plugin </em></strong></p>
-<ul>
-<li>輸入 <code>vue</code>，按 <code>Search in repositories</code>。</li>
-</ul>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps001.png" alt=""></p>
-<p>會搜尋到 2 個 Vue.js 外掛 : <code>vue-for-idea</code> 與 <code>Vue.js</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>這兩個外掛並非 JetBrains 官方所出，而是由 open source 社群所維護，目前這兩個外掛仍在開發中，各自實現了一些功能，如 <code>Vue.js</code> 外掛支援 directive，卻不支援 shorthand，而 <code>vue-for-idea</code> 外掛支援 shorthand，卻不支援 directive，所以必須兩個外掛都裝，功能才會比較齊全。</span></span></span></p>
-<p>將這兩個外掛全部安裝。  </p>
-<p>先安裝 <code>vue-for-idea</code> 外掛。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps002.png" alt=""></p>
-<p>安裝完 <code>vue-for-idea</code> 外掛之後，需重新啟動 PhpStorm。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps003.png" alt=""></p>
-<p>安裝 <code>Vue.js</code> 外掛。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps004.png" alt=""></p>
-<p>安裝完 <code>Vue.js</code> 外掛之後，需重新啟動 PhpStorm。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps005.png" alt=""></p>
-<p><strong><em> PhpStorm -&gt; Preferences -&gt; Plugin </em></strong></p>
-<ul>
-<li>重新啟動後，確認 <code>vue-for-idea</code> 與 <code>Vue.js</code> 兩個外掛都已經安裝成功。</li>
-</ul>
-<h2 id="第一次執行_Vue-js">第一次執行 Vue.js</h2><hr>
-<p>Vue.js 提供很多方式安裝</p>
-<ol>
-<li>直接下載</li>
-<li>CDN</li>
-<li>NPM</li>
-<li>Vue-CLI</li>
-</ol>
-<p>本文先以最簡單的 CDN 方式安裝 Vue.js。</p>
-<p><strong>welcome.blade.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Vue10_demo/commit/888b8d71bd9792e2447a7c750e1c1ce89b7b99f3" target="_blank" rel="external">在 blade 載入 Vue.js</a></span></span></span><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>Laravel<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"https://fonts.googleapis.com/css?family=Lato:100"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">            <span class="tag">html</span>, <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> table</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> <span class="number">100</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">font-family</span>:<span class="value"> <span class="string">'Lato'</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> table-cell</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">vertical-align</span>:<span class="value"> middle</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.content</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.title</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">96px</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"app"</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>Laravel 5<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">div</span>&gt;</span>@&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>45 行<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>直接以 CDN 載入 Vue.js。</p>
-<p>46 行<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>將 Vue.js 的程式碼寫在 <code>js/app.js</code>。</p>
-<p>42 行<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span>@&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>使用 Vue.js 顯示 <code>message</code> 變數。</p>
-<p>加上 <code>@</code> 是為了告訴 Laravel 的 Blade 不要處理，交給 Vue.js 處理。</p>
-<p><strong>app.js</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Vue10_demo/commit/62fd031bf31125e1b7c9570c57017ab861b3c0fb" target="_blank" rel="external">新增 app.js</a></span></span></span><br><figure class="highlight javascript"><figcaption><span>public/js/app.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vue = &#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        message: <span class="string">'Vue.js 1'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(vue);</span><br></pre></td></tr></table></figure></p>
-<p>建立 <code>Vue</code> 物件，<code>vue</code> 為其 constructor，設定了 <code>el</code> 與 <code>data</code> 屬性。</p>
-<p>要將變數 <code>message</code> 為 <code>Vue.js 1</code> 的值，透過 data binding 顯示在 <code>welcome.blade.php</code>。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps010.png" alt=""></p>
-<p>若能看到 <code>Vue.js 1</code>，表示 Vue.js 已經正常啟動。</p>
-<h2 id="安裝_Vue-js_Library">安裝 Vue.js Library</h2><hr>
-<p>目前為止雖然可以正常執行 Vue.js，不過那僅代表瀏覽器執行正常，並不代表 PhpStorm 認識 Vue.js，PhpStorm 目前也還無法對 Vue.js 做語法提示。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps006.png" alt=""></p>
-<p>對於 Vue.js 的 CDN，PhpStorm 提出了警告，表示沒有本機版本，因此無法提供語法提示。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps007.png" alt=""></p>
-<p>將滑鼠放在反白的 CDN 上，按熱鍵 &#8997; + &#8617;，選擇 <code>Download library</code>。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps008.png" alt=""></p>
-<p>下載成功後，CDN 上的反白警告會消失。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps009.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; JavaScript -&gt; Libraries</em></strong></p>
-<ul>
-<li>會出現 <code>vue</code>，表示 Vue.js 的 external library 已經安裝成功，從此 PhpStorm 可以為 Vue.js 的 API 做語法提示。</li>
-</ul>
-<h2 id="Directive">Directive</h2><hr>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps011.png" alt=""></p>
-<p>只要輸入 <code>v</code>，就會顯示 Vue.js 專屬的 directive 了。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps015.png" alt=""></p>
-<p>也支援 <code>@</code> 開頭的 shorthand。</p>
-<h2 id="API">API</h2><hr>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps012.png" alt=""></p>
-<p>PhpStorm 的語法提示可以自動顯示 Vue.js 的 API 了。</p>
-<p>若為 Vue.js 的 API，會加上 <code>(vue)</code>。</p>
-<h2 id="Vue_元件">Vue 元件</h2><hr>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps013.png" alt=""></p>
-<p>按熱鍵 &#8963; + N 時，會出現 <code>Vue File</code>，可以讓我們直接新增 Vue 元件。</p>
-<p><img src="/images/vuejs/vuejs-on-phpstorm/vueps014.png" alt=""></p>
-<p>自動產生預設的 Vue 元件框架。</p>
-<p>PhpStorm 可以認出 Vue 元件，且程式碼也不再出現任何錯誤警告。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>PhpStorm 包含 WebStorm，所以也可以拿來開發 JavaScript，並對 JavaScript 加以測試、重構與偵錯，在 PhpStorm 打造好 Vue.js 的開發環境後，就可以開心的學習 Vue.js 了。</li>
-<li>目前 <code>vue-for-idea</code> 與 <code>Vue.js</code> 這兩個外掛仍在持續開發中，功能還不夠完整，希望 JetBrains 能趕快針對 Vue.js 開發出專屬套件，讓 PhpStorm 開發 Vue.js 更有效率。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52Vue10_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[在 PhpStorm 對 Vue.js 語法提示與語法變色]]>
-    
-    </summary>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-      <category term="Vue.js" scheme="http://oomusou.io/tags/Vue-js/"/>
     
   </entry>
   
