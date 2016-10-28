@@ -99,6 +99,41 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/tdd/tdd-repository-testing-mysql/" title="直接使用 MySQL 與 Test Factory Generator 測試 Repository">如何測試 Repository 模式 (使用 MySQL)?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/tdd/tdd-repository-testing-mysql/"><img src="/images/feature/tdd.png" alt="如何測試 Repository 模式 (使用 MySQL)?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>使用 SQLite In-Memory 的方式雖然又快又方便，但若使用了 <code>DB::raw</code> 或 <code>whereRaw()</code> 的寫法，由於直接使用了 MySQL 的函式，可能 SQLite 並不支援，就必須直接在 MySQL 跑測試。</p>
+<p>雖然我們會另外開一個資料庫做測試，但也有可能我們想直接對正式有資料的資料庫做測試，我們該怎麼快速無痛切換呢?</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/tdd/tdd-repository-testing-mysql/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/tdd/tdd-di/" title="從可測試性角度探討依賴注入">深入探討依賴注入</a></div>						
 		</h3>
 	
@@ -395,40 +430,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/vuejs/vuejs-checkbox-button-disable/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/laravel/homestead/homestead-per-project/" title="再也不用擔心專案 A 安裝的元件會影響到專案B了">如何一個專案使用一個 Homestead?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/laravel/homestead/homestead-per-project/"><img src="/images/feature/vagrant.png" alt="如何一個專案使用一個 Homestead?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>傳統上都是在系統只安裝一個 Homestead，然後每個專案設定不同站台，各專案共用同一個資料庫。這種方式大體上也沒什麼問題，但有時若想測試一些東西，如安裝 Facebook 的 XHProf + XHGUI，將這些測試用的東西安裝在開發用的 Homestead 似乎不妥，因此最理想的方式是每個專案有自己的 Homestead，各專案可以安裝自己所需的元件，而不影響其他專案。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/laravel/homestead/homestead-per-project/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
