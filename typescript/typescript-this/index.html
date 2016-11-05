@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入探討 Anonymous Function 與 Arrow Function 的 this | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探討 Anonymous Function 與 Arrow Function 的 this">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-this/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-11-05T14:15:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探討 Anonymous Function 與 Arrow Function 的 this">
+<meta name="twitter:description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 深入探討 Anonymous Function 與 Arrow Function 的 this</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#this_在_Anonymous_Function"><span class="toc-article-text">this 在 Anonymous Function</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#this_在_Arrow_Function"><span class="toc-article-text">this 在 Arrow Function</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#this_在_Class_Function"><span class="toc-article-text">this 在 Class Function</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#this_在_Class_內使用_Arrow_Function"><span class="toc-article-text">this 在 Class 內使用 Arrow Function</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>一般人印象，Arrow Function 只是 Anonymous Function 的 syntax sugur，讓我們用更精簡的語法來表達這類只使用一次的 function，但對於 <code>this</code> 的認知， 兩種表示法卻有很大的差別。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 1.8.10</p>
+<h2 id="this_在_Anonymous_Function">this 在 Anonymous Function</h2><hr>
+<p>在 ES5，class 是使用 function 來表示，我們先使用 ES5 的方式。</p>
+<p><strong>this_anonymous_function.ts</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/64810f888b29993c148eb73acfb3f888549262e4" target="_blank" rel="external">this 在 anonymous function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_anonymous_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 anonymous function 來定義 <code>say()</code>，並在 anonymous function 使用 <code>this</code>。</p>
+<p>10 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>建立 <code>foo</code> 物件，並將 <code>foo.say</code> 傳入 <code>setTimeout()</code>。</p>
+<p><img src="/images/typescript/typescript-this/this000.png" alt=""></p>
+<p>實際執行，會發現 <code>this.name</code> 會 <code>undefined</code>，因為 JavaScript 的特性，<code>foo.say</code> 會變成 <code>setTimeout</code> 物件的一部分，但 <code>setTimeout</code> 並沒有定義 <code>name</code>，因此會 <code>undefined</code>，這符合我們之前對 JavaScript 對 <code>this</code> 的認知，與一般物件導向語言的 <code>this</code> 並不相同，當然也與 PHP 的 <code>$this</code> 不相同。</p>
+<h2 id="this_在_Arrow_Function">this 在 Arrow Function</h2><hr>
+<p>ES6 提供了 arrow function，大凡本來使用 anonymous function 的地方，都可以使用 arrow function 取代。</p>
+<p><strong>this_arrow_function.ts</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/9a3d5b83757e5a192a9bb3511f14dce798109a96" target="_blank" rel="external">this 在 arrow function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_arrow_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>將 anonymous function 改用 arrow function，其他都不變，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this001.png" alt=""></p>
+<p>實際執行，竟然出現 <code>Hello, Sam</code>，不再是 <code>undefined</code>，跟原來 anonymous function 結果不一樣！</p>
+<p><img src="/images/typescript/typescript-this/this002.png" alt=""></p>
+<p>去看編譯過的 js 檔，會發現一開始先 <code>var _this = this</code>。</p>
+<p>而 <code>this.say</code> 所執行的並不是 <code>this</code>，而是 <code>_this</code>。</p>
+<p>也就是 ES6 的 arrow function，其 <code>this</code> 跟 ES5 的 anonymous function 不同，反而跟主流物件導向語言的 <code>this</code> 相同，當然也跟 PHP 的 <code>$this</code> 相同。</p>
+<h2 id="this_在_Class_Function">this 在 Class Function</h2><hr>
+<p>ES6 多了 <code>class</code> 關鍵字，當然要使用 <code>class</code> 可讀性較高。</p>
+<p><strong>this_class_function.ts</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/fad393cfe415c717dbfe7df9fd358c59d07c28b5" target="_blank" rel="external">this 在 arrow function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> say() &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 9 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>使用了我們熟悉的一般物件導向語言方式定義 <code>say()</code>，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this003.png" alt=""></p>
+<p>實際執行，又出現 <code>undefined</code>，也就是雖然是 ES6，<code>this</code> 並不是全部跟主流程式語言一樣，這裡仍維持 ES5 的 <code>this</code> 觀念。</p>
+<h2 id="this_在_Class_內使用_Arrow_Function">this 在 Class 內使用 Arrow Function</h2><hr>
+<p>若在 ES6 的 class 使用 arrow function，又會變成怎樣呢？我們繼續看下去：</p>
+<p><strong>this_class_arrow_function1.ts</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/465c28b27dc74d1570e9e7a4553ac17d3c61178a" target="_blank" rel="external">this 在 arrow function 第一種方法</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_arrow_function1.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span> = ()=&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 9 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span> = ()=&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>由於 TypeScript 是強行別語言，所以需要定義 say 的型別為 <code>()=&gt;void</code> 這種 arrow function 型別，接著才能定義 arrow function，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this004.png" alt=""></p>
+<p>這樣就不會 <code>undefined</code> 了。</p>
+<p>還有另外一種寫法，讓我們在 constructor 去定義 arrow function。</p>
+<p><strong>this_class_arrow_function2.ts</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/2f2a824f497fc1daa0fecd8b382ee4750935bac1" target="_blank" rel="external">this 在 arrow function 第二種方法</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_arrow_function2.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line">        <span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span>;</span><br></pre></td></tr></table></figure></p>
+<p>先在 field 內定義好 <code>say</code> 的型別為 arrow function。</p>
+<p>第 6 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 constructor 內去定義 arrow function，雖然可行，不過實務上不建議這樣寫，除非 method 真的程式碼很短，否則 constructor 會非常的大而難以維護。</p>
+<p><img src="/images/typescript/typescript-this/this005.png" alt=""></p>
+<p>實際執行，也不再 <code>undefined</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>無論 ES5 或 ES6，<code>this</code> 都維持 JavaScript 一貫的想法，也就是當 function 內掛在哪一個物件，<code>this</code> 就是那個物件。</li>
+<li>唯獨 arrow function 例外，arrow function 會事先將 <code>_this = this</code>，而之後都使用 <code>_this</code>，這種思維與一般物件導向語言相同，但跟傳統 JavaScript 不同。</li>
+<li>Anonymous function 與 arrow function 對於 <code>this</code> 的看法都有他的道理，要視狀況使用，大部分狀況，arrow function 與一般物件導向語言的思維一樣，但有些應用，anonymous function 的想法比較方便。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/TypeScript18this" target="_blank" rel="external">GitHub</a> 上找到。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/selenium/selenium-phpunit/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-11-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

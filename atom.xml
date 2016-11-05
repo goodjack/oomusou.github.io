@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-05T12:09:04.000Z</updated>
+  <updated>2016-11-05T14:15:45.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[深入探討 Anonymous Function 與 Arrow Function 的 this]]></title>
+    <link href="http://oomusou.io/typescript/typescript-this/"/>
+    <id>http://oomusou.io/typescript/typescript-this/</id>
+    <published>2016-11-05T12:23:43.000Z</published>
+    <updated>2016-11-05T14:15:45.000Z</updated>
+    <content type="html"><![CDATA[<p>一般人印象，Arrow Function 只是 Anonymous Function 的 syntax sugur，讓我們用更精簡的語法來表達這類只使用一次的 function，但對於 <code>this</code> 的認知， 兩種表示法卻有很大的差別。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 1.8.10</p>
+<h2 id="this_在_Anonymous_Function">this 在 Anonymous Function</h2><hr>
+<p>在 ES5，class 是使用 function 來表示，我們先使用 ES5 的方式。</p>
+<p><strong>this_anonymous_function.ts</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/64810f888b29993c148eb73acfb3f888549262e4" target="_blank" rel="external">this 在 anonymous function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_anonymous_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 anonymous function 來定義 <code>say()</code>，並在 anonymous function 使用 <code>this</code>。</p>
+<p>10 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>建立 <code>foo</code> 物件，並將 <code>foo.say</code> 傳入 <code>setTimeout()</code>。</p>
+<p><img src="/images/typescript/typescript-this/this000.png" alt=""></p>
+<p>實際執行，會發現 <code>this.name</code> 會 <code>undefined</code>，因為 JavaScript 的特性，<code>foo.say</code> 會變成 <code>setTimeout</code> 物件的一部分，但 <code>setTimeout</code> 並沒有定義 <code>name</code>，因此會 <code>undefined</code>，這符合我們之前對 JavaScript 對 <code>this</code> 的認知，與一般物件導向語言的 <code>this</code> 並不相同，當然也與 PHP 的 <code>$this</code> 不相同。</p>
+<h2 id="this_在_Arrow_Function">this 在 Arrow Function</h2><hr>
+<p>ES6 提供了 arrow function，大凡本來使用 anonymous function 的地方，都可以使用 arrow function 取代。</p>
+<p><strong>this_arrow_function.ts</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/9a3d5b83757e5a192a9bb3511f14dce798109a96" target="_blank" rel="external">this 在 arrow function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_arrow_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>將 anonymous function 改用 arrow function，其他都不變，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this001.png" alt=""></p>
+<p>實際執行，竟然出現 <code>Hello, Sam</code>，不再是 <code>undefined</code>，跟原來 anonymous function 結果不一樣！</p>
+<p><img src="/images/typescript/typescript-this/this002.png" alt=""></p>
+<p>去看編譯過的 js 檔，會發現一開始先 <code>var _this = this</code>。</p>
+<p>而 <code>this.say</code> 所執行的並不是 <code>this</code>，而是 <code>_this</code>。</p>
+<p>也就是 ES6 的 arrow function，其 <code>this</code> 跟 ES5 的 anonymous function 不同，反而跟主流物件導向語言的 <code>this</code> 相同，當然也跟 PHP 的 <code>$this</code> 相同。</p>
+<h2 id="this_在_Class_Function">this 在 Class Function</h2><hr>
+<p>ES6 多了 <code>class</code> 關鍵字，當然要使用 <code>class</code> 可讀性較高。</p>
+<p><strong>this_class_function.ts</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/fad393cfe415c717dbfe7df9fd358c59d07c28b5" target="_blank" rel="external">this 在 arrow function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> say() &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 9 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>使用了我們熟悉的一般物件導向語言方式定義 <code>say()</code>，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this003.png" alt=""></p>
+<p>實際執行，又出現 <code>undefined</code>，也就是雖然是 ES6，<code>this</code> 並不是全部跟主流程式語言一樣，這裡仍維持 ES5 的 <code>this</code> 觀念。</p>
+<h2 id="this_在_Class_內使用_Arrow_Function">this 在 Class 內使用 Arrow Function</h2><hr>
+<p>若在 ES6 的 class 使用 arrow function，又會變成怎樣呢？我們繼續看下去：</p>
+<p><strong>this_class_arrow_function1.ts</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/465c28b27dc74d1570e9e7a4553ac17d3c61178a" target="_blank" rel="external">this 在 arrow function 第一種方法</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_arrow_function1.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span> = ()=&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 9 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span> = ()=&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>由於 TypeScript 是強行別語言，所以需要定義 say 的型別為 <code>()=&gt;void</code> 這種 arrow function 型別，接著才能定義 arrow function，一樣使用 <code>this</code>。</p>
+<p><img src="/images/typescript/typescript-this/this004.png" alt=""></p>
+<p>這樣就不會 <code>undefined</code> 了。</p>
+<p>還有另外一種寫法，讓我們在 constructor 去定義 arrow function。</p>
+<p><strong>this_class_arrow_function2.ts</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/2f2a824f497fc1daa0fecd8b382ee4750935bac1" target="_blank" rel="external">this 在 arrow function 第二種方法</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_class_arrow_function2.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Foo &#123;</span><br><span class="line">        <span class="keyword">private</span> name: <span class="built_in">string</span>;</span><br><span class="line">        <span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line">        <span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>第 4 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> say: ()=&gt;<span class="built_in">void</span>;</span><br></pre></td></tr></table></figure></p>
+<p>先在 field 內定義好 <code>say</code> 的型別為 arrow function。</p>
+<p>第 6 行<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(name: string) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.say = () =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 constructor 內去定義 arrow function，雖然可行，不過實務上不建議這樣寫，除非 method 真的程式碼很短，否則 constructor 會非常的大而難以維護。</p>
+<p><img src="/images/typescript/typescript-this/this005.png" alt=""></p>
+<p>實際執行，也不再 <code>undefined</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>無論 ES5 或 ES6，<code>this</code> 都維持 JavaScript 一貫的想法，也就是當 function 內掛在哪一個物件，<code>this</code> 就是那個物件。</li>
+<li>唯獨 arrow function 例外，arrow function 會事先將 <code>_this = this</code>，而之後都使用 <code>_this</code>，這種思維與一般物件導向語言相同，但跟傳統 JavaScript 不同。</li>
+<li>Anonymous function 與 arrow function 對於 <code>this</code> 的看法都有他的道理，要視狀況使用，大部分狀況，arrow function 與一般物件導向語言的思維一樣，但有些應用，anonymous function 的想法比較方便。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/TypeScript18this" target="_blank" rel="external">GitHub</a> 上找到。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何對 Laravel 進行自動化驗收測試?]]></title>
@@ -2444,99 +2514,6 @@
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
       <category term="Xdebug" scheme="http://oomusou.io/tags/Xdebug/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何設定 PhpStorm 的 Directories?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-directories/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-directories/</id>
-    <published>2016-06-10T12:23:43.000Z</published>
-    <updated>2016-06-17T07:30:40.000Z</updated>
-    <content type="html"><![CDATA[<p>PhpStorm 最強的三個功能為 : Refactoring、Debugging、與 Inspection，但由於 PHP 生態是眾多 framework，而每個 framework 的目錄架構也不太一樣，因此必須先在 PhpStorm 設定 directories，才能發揮 PhpStorm 的強悍功能，而不只是文字編輯器而已。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Laravel 5.2.36</p>
-<h2 id="提示設定_Directories">提示設定 Directories</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-directories/dir000.png" alt=""></p>
-<p>當使用 PhpStorm 開啟 Laravel 專案時，一開始會對專案做 indexing，之後就會出現 <code>Detect PSR-0 namespace roots</code> 的提示，要求你設定 Directories。</p>
-<p>很多初學者因為不知道設定 Directories 的重要性，就直接將對話框關閉，這是非常可惜的，這將喪失很多 PhpStorm 重要的功能。</p>
-<h2 id="手動設定_Directories">手動設定 Directories</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-directories/dir001.png" alt=""></p>
-<p>按 <code>Settings | Directories</code> 手動設定 <code>Directories</code>。</p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  不建議使用 <strong>automatically</strong> 由 PhpStorm 自動設定 directories，這將導致 <strong>vendor</strong> 目錄被設定在 <strong>Excluded</strong> 下，導致 Laravel 與其他 package 的語法提示不正常。</div>
-<p><img src="/images/phpstorm/phpstorm-directories/dir002.png" alt=""></p>
-<p>進入設定 Directories 視窗，若第一次沒由 <code>Detect PSR-0 namespaces roots</code> 設定也沒關係，日後只要在此設定即可。</p>
-<p><strong><em> PhpStorm -&gt; Preferences -&gt; Directories </em></strong></p>
-<p>接下來要設定 <code>Tests</code>、<code>Sources</code>、<code>Excluded</code> 與 <code>Resource Root</code> 4 個目錄。</p>
-<h2 id="Sources">Sources</h2><hr>
-<p>設定 <code>PSR-0 namespace roots</code> 的主目錄，也就是 Laravel 的 <code>app</code> 目錄。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir003.png" alt=""></p>
-<p>選擇 <code>app</code> 目錄，按上方的 <code>Sources</code>，會在右側出現 <code>Source Folders app</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir004.png" alt=""></p>
-<p>按 <code>P</code> 設定該目錄的 property。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir005.png" alt=""></p>
-<p>在 <code>Package prefix</code> 輸入 <code>App</code>，因為 <code>app</code> 目錄對應的正是 Laravel 的 namespace <code>App</code>。</p>
-<p>這是所有 directories 設定中最重要的一個，在 Laravel 5 之後，全面使用 namespace，管理 namespace 成為很多人的惡夢，但只要設定了 <code>Sources</code> 之後，將來 PhpStorm 會幫我們管理 namespace。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir006.png" alt=""></p>
-<p>設定了 <code>Sources</code> 之後，在 project windows 的 <code>app</code> 會顯示藍色。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir007.png" alt=""></p>
-<p>假如我們想在自己建立的 <code>Services</code> 目錄下，建立其他 class 寫商業邏輯。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 Service 模式，詳細請參考<a href="/laravel/laravel-service/">如何使用 Service 模式?</a></span></span></span></p>
-<p>選擇 <code>Services</code> 目錄，按熱鍵 &#8984; + N，顯示 <code>New</code> 視窗，選擇 <code>PHP Class</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir008.png" alt=""></p>
-<p>自行輸入 class 名稱，值得注意的是，PhpStorm 已經自動幫我們準備好 namespace，不必我們操心。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir009.png" alt=""></p>
-<p>程式碼也幫我們管理好 namespace 了。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/81257eedf3819dd685911dd90f04ce7207b3ea34" target="_blank" rel="external">建立 OrderService</a></span></span></span></p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir010.png" alt=""></p>
-<p>若想要注入其他物件，可在 constructor 的參數以 type hint 方式注入。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>關於依賴注入，詳細請參考<a href="/tdd/tdd-di/">深入探討依賴注入</a></span></span></span></p>
-<p>如我們想注入 <code>User</code>，但 PhpStorm 已經反白警告找不到 <code>User</code> class。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir011.png" alt=""></p>
-<p>選擇反白的 <code>User</code>，按熱鍵 &#8997; + &#8617;，選擇 <code>Import class</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir012.png" alt=""></p>
-<p>若整個專案只有一個同名的 class，PhpStorm 會自動 import，否則會出現視窗讓你決定要 import 哪一個 class。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir013.png" alt=""></p>
-<p>PhpStorm 自動幫我們 use 了 <code>App\User</code>。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/8a4d3267723e5b9d3be63767503d1f399a85c6a9" target="_blank" rel="external">注入 User</a></span></span></span></p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  無論是建立 namespace，或者引用 namespace，完全由 PhpStorm 自動幫我們處理，不用擔心 namespace 大小寫寫錯，也不用擔心 namespace 的完整路徑為何。</div>
-<h2 id="Tests">Tests</h2><hr>
-<p>設定測試程式的主目錄，也就是 Laravel 的 <code>tests</code> 目錄。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir014.png" alt=""></p>
-<p>選擇 <code>tests</code> 目錄，按上方的 <code>Tests</code>，會在右側出現 <code>Test Source Folders tests</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir015.png" alt=""></p>
-<p>設定了 <code>Tests</code> 之後，在 project windows 的 <code>tests</code> 會顯示綠色。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir016.png" alt=""></p>
-<p>可在 project windows 選擇 <code>Tests</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir017.png" alt=""></p>
-<p>將只顯示所有測試程式，方便測試時使用。</p>
-<h2 id="Resource_Root">Resource Root</h2><hr>
-<p>設定前端資源的主目錄，也就是 Laravel 的 <code>public</code> 目錄。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir018.png" alt=""></p>
-<p>選擇 <code>public</code> 目錄，按上方的 <code>Resource Root</code>，會在右側出現 <code>Resource roots public</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir019.png" alt=""></p>
-<p>設定了 <code>Resource roots</code> 之後，在 project windows 的 <code>public</code> 會顯示紫色。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir020.png" alt=""></p>
-<p>在 <code>resources/views/welcome.blade.php</code> 加上 Vue.js 後，在 <code>js/app.js</code> 出現反白。<span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/b5e0b68d2677e96e77117eb1d9f17ea316af7d1f" target="_blank" rel="external">修改 welcome.blade.php</a></span></span></span></p>
-<p>PhpStorm 抱怨找不到 <code>js/app.js</code>，的確我們在 <code>public</code> 目錄下還沒有建立 <code>js/app.js</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-directories/dir021.png" alt=""></p>
-<p>在 <code>public</code> 目錄下新增 <code>js/app.js</code> 之後，PhpStorm 就不在警告了。<span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52Directories_demo/commit/4418c29aa7d0913388911dee8ad5411414adbb25" target="_blank" rel="external">新增 js/app.js</a></span></span></span></p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  <strong>Resource roots</strong> 不是設定在 Laravel 的 <strong>resources</strong> 目錄，而是設定在 <strong>public</strong> 目錄。藉由此設定，PhpStorm 可以幫你檢查 Blade 或 HTML 的 JavaScript 與 CSS 路徑是否合法。</div>
-<h2 id="Excluded">Excluded</h2><hr>
-<p>不由 PhpStorm 管理，或不想由 PhpStorm 建立 index 的目錄。</p>
-<p>實務上若你在專案目錄下，會自己建立一個目錄放 Spec 或相關文件，如 pdf, docx, xlsx 格式，這個目錄交給 PhpStorm 管理並沒有任何意義，只會增加建立 index 時間而已，就可以將該目錄設定為 <code>Excluded</code>。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>這些都是很重要的設定，可惜 PhpStorm 文件並沒有仔細介紹，以上都是實際使用 PhpStorm 一段時間之後摸索出來的心得，將這些目錄設定之後，才能發揮 PhpStorm 強悍功能。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52Directories_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[正確設定 Directories 才能發揮 PhpStorm 的威力]]>
-    
-    </summary>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
   </entry>
   
