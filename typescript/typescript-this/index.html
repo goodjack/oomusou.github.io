@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-11-05T14:15:45.000Z">
+<meta property="og:updated_time" content="2016-11-06T06:22:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Anonymous Function 與 Arrow Function 的 this">
 <meta name="twitter:description" content="一樣的 this，在 Anonymous Function 與 Arrow Function 大大不同">
@@ -110,7 +110,7 @@
 	    <p>一般人印象，Arrow Function 只是 Anonymous Function 的 syntax sugur，讓我們用更精簡的語法來表達這類只使用一次的 function，但對於 <code>this</code> 的認知， 兩種表示法卻有很大的差別。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>TypeScript 1.8.10</p>
+<p>TypeScript 2.0.7</p>
 <h2 id="this_在_Anonymous_Function">this 在 Anonymous Function</h2><hr>
 <p>在 ES5，class 是使用 function 來表示，我們先使用 ES5 的方式。</p>
 <p><strong>this_anonymous_function.ts</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/TypeScript18this/commit/64810f888b29993c148eb73acfb3f888549262e4" target="_blank" rel="external">this 在 anonymous function</a></span></span></span><br><figure class="highlight typescript"><figcaption><span>this_anonymous_function.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="module"><span class="keyword">module</span> MyModule </span>&#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(`Hello, $&#123;<span class="keyword">this</span>.name&#125;`);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> MyModule.Foo(<span class="string">'Sam'</span>);</span><br><span class="line">setTimeout(foo.say, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
