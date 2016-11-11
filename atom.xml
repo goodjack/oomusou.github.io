@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-06T12:27:42.000Z</updated>
+  <updated>2016-11-11T08:32:56.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何設定 WebStorm 的 TypeScript 與 TSLint ?]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-typescript-version/"/>
+    <id>http://oomusou.io/webstorm/webstorm-typescript-version/</id>
+    <published>2016-11-11T12:23:43.000Z</published>
+    <updated>2016-11-11T08:32:56.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm 已經內建 TypeScript，只要安裝完 WebStorm 就可以開始寫 TypeScript，但由於 TypeScript 更新快速，你可能會想自己更新 TypeScript 版本，此外，WebStorm 並沒有內建 TSLint，需另外安裝設定。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.0.9<br>WebStorm 2016.2.4</p>
+<h2 id="TypeScript">TypeScript</h2><hr>
+<h3 id="安裝_TypeScript">安裝 TypeScript</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g typescript</span><br></pre></td></tr></table></figure>
+<h3 id="設定_WebStorm">設定 WebStorm</h3><p><img src="/images/webstorm/webstorm-typescript-version/version000.png" alt=""></p>
+<p><strong><em> PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; TypeScript </em></strong></p>
+<p>WebStorm 內建已安裝 TypeScript 1.8.10，按 <code>Edit</code> 設定其他版本。</p>
+<p><img src="/images/webstorm/webstorm-typescript-version/version001.png" alt=""></p>
+<p>在 <code>Custom directory</code> 輸入 TypeScript 目錄。</p>
+<p>TypeScript 預設會安裝在該 Node.js 版本下的 <code>lib/node_modules/typescript/lib</code> 。</p>
+<p>以 Node.js 6.5 為例，TypeScript 會安裝在 <code>/Users/oomusou/.nvm/versions/node/v6.5.0/lib/node_modules/typescript/lib</code> 。</p>
+<h2 id="TSLint">TSLint</h2><hr>
+<h3 id="安裝_TSList">安裝 TSList</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g tslint typescript</span><br></pre></td></tr></table></figure>
+<h3 id="設定_WebStorm-1">設定 WebStorm</h3><p><img src="/images/webstorm/webstorm-typescript-version/version002.png" alt=""></p>
+<p><strong><em> PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; TypeScript -&gt; TSLint </em></strong></p>
+<p>TSLint 預設會安裝在該 Node.js 版本下的 <code>lib/node_modules/tslint</code>。</p>
+<ul>
+<li>將 <code>Enable</code> 打勾。</li>
+<li><strong>TSLint package</strong> : 以 Node.js 6.5 為例，TSLint 會安裝在 <code>/Users/oomusou/.nvm/versions/node/v6.5.0/lib/node_modules/tslint</code> 。</li>
+</ul>
+<p>安裝好 TSLint 之後，當你在寫 TypeScript 時，WebStorm 就會整合 Code Inspection，在編譯前就會顯示警告。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 非常適合開發 TypeScript，只要設定好環境，就可以發揮 WebStorm 的威力。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p>Microsoft, <a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a><br>Palantir, <a href="https://palantir.github.io/tslint/" target="_blank" rel="external">TSLint</a><br>WebStorm Online Help, <a href="https://www.jetbrains.com/help/webstorm/2016.2/using-tslint-code-quality-tool.html" target="_blank" rel="external">Using TSLint Code Quality Tool</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[讓 WebStorm 支援 TypeScript]]>
+    
+    </summary>
+    
+      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[深入探討 Anonymous Function 與 Arrow Function 的 this]]></title>
@@ -2411,109 +2460,6 @@
       <category term="Refactoring" scheme="http://oomusou.io/tags/Refactoring/"/>
     
       <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 PhpStorm 對 Laravel 除錯?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-xdebug/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-xdebug/</id>
-    <published>2016-06-11T12:23:43.000Z</published>
-    <updated>2016-06-12T02:45:15.000Z</updated>
-    <content type="html"><![CDATA[<p>傳統 PHP 大都使用 <code>echo()</code>、<code>var_dump()</code> 或 <code>dd()</code> 除錯，此種方式必須破壞原本程式碼，而且所能觀察的變數有限，也無法明確得知程式執行的流程。PhpStorm 支援 Xdebug，允許我們設定中斷點，程式將停在中斷點設定之處，讓我們透過 Step Into、Step Over、Step Out 的方式除錯，非常方便。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.0<br>Laravel 5.2.37<br>MAMP PRO 3.5<br>PhpStorm 2016.1.2</p>
-<h2 id="設定_Xdebug">設定 Xdebug</h2><hr>
-<p>MAMP PRO 預設已經有安裝 Xdebug，只是在 <code>php.ini</code> 並沒有啟動，必須手動啟動後，再加上一些設定。</p>
-<figure class="highlight php"><figcaption><span>/Applications/MAMP/bin/php/php7.0.0/conf/php.ini</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[xdebug]</span><br><span class="line">zend_extension=<span class="string">"/Applications/MAMP/bin/php/php7.0.0/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so"</span></span><br><span class="line">xdebug.remote_enable=<span class="number">1</span></span><br><span class="line">xdebug.remote_port=<span class="number">9000</span></span><br><span class="line">xdebug.profiler_enable=<span class="number">1</span></span><br><span class="line">xdebug.profiler_output_dir=<span class="string">"/Applications/MAMP/tmp"</span></span><br></pre></td></tr></table></figure>
-<p>MAMP PRO 預設將 PHP 安裝在<code>/Applications/MAMP/bin/php/phpX.X.XX/conf/php.ini</code>，選擇版本加以修改<code>php.ini</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若不知道該改哪一個<code>php.ini</code>，可下<code>php --ini</code>指令，看看目前系統正在使用哪一個<code>php.ini</code>。</span></span></span></p>
-<p>其中 <code>[xdebug]</code> 位於 <code>php.ini</code> 的最後一行，預設使用 <code>;</code> 註解，將 <code>;</code> 拿掉，並加上以上的 Xdebug 設定。</p>
-<p>存檔後須重新啟動MAMP。</p>
-<h2 id="設定_Hosts">設定 Hosts</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug007.png" alt=""></p>
-<p>在 MAMP PRO 設定新 host。</p>
-<ul>
-<li><strong>PHP version</strong> : 7.0.0。</li>
-<li><strong>Document root</strong> : <code>/Users/oomusou/Code/Demo/Laravel52Xdebug_demo/public</code>。</li>
-</ul>
-<p>存檔後須重新啟動MAMP。</p>
-<h2 id="啟動_PHP_外掛">啟動 PHP 外掛</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug000.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
-<ul>
-<li>PhpStorm 預設已經安裝並啟動 PHP 外掛，確認此外掛已經啟動。</li>
-</ul>
-<h2 id="設定_Interpreter">設定 Interpreter</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug001.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP</em></strong></p>
-<ul>
-<li><strong>PHP language level</strong> : <code>7</code>。</li>
-<li><strong>Interpreter</strong> : 按 <code>...</code> 設定PHP interpreter。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>PHP Interpreter 每個專案都要重新設定一遍。</span></span></span></li>
-</ul>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug002.png" alt=""></p>
-<p>選擇 <code>PHP 7.0.0</code> 的路徑 : <code>/Applications/MAMP/bin/php/php7.0.0/bin/php</code>。</p>
-<p>若路徑正確，PhpStorm 會抓到 PHP 與 Xdebug 的版本。</p>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug003.png" alt=""></p>
-<p>從原本的 <code>&lt;no interpreter&gt;</code> 變成明確的 <code>PHP7 (7.0.0)</code>。</p>
-<h2 id="產生_Bookmarklets">產生 Bookmarklets</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug004.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP -&gt; Debug</em></strong></p>
-<ul>
-<li>按下 <code>Use debugger bookmarklets to initiate debugging form your favorite browser</code>，將會使用你預設的瀏覽器開啟 <code>https://www.jetbrains.com/phpstorm/marklets/</code>。</li>
-</ul>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug005.png" alt=""></p>
-<p>在左側的 Xdebug 部分，按下 <code>Generate</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug006.png" alt=""></p>
-<p>將產生 <code>Start debugger</code>，<code>Stop Debugger</code> 與 <code>Debug this page</code>。</p>
-<p>將這 3 個連結拖拉到上方的 Bookmarks Bar。</p>
-<ul>
-<li><strong>Start debugger</strong> : 啟動 Xdebug 除錯。</li>
-<li><strong>Stop debugger</strong> : 停止 Xdebug 除錯。</li>
-<li><strong>Debug this page</strong> : 啟動 Xdebug，並重新載入目前網頁。</li>
-</ul>
-<h2 id="設定中斷點">設定中斷點</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug008.png" alt=""></p>
-<p>在 <code>app/Http/routes.php</code> 的 14 行的最左側點一下，設定中斷點。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>實務上你可以在任何你想要除錯的 PHP 程式碼中設定中斷點，本範例是以 Laravel 預設專案的 <code>routes.php</code> 為例。</span></span></span></p>
-<h2 id="傾聽_Xdebug">傾聽 Xdebug</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug009.png" alt=""></p>
-<p>按下上方的 <code>電話筒</code> 圖示，綠色表示開始傾聽 Xdebug，可在所設定的中斷點停止。</p>
-<h2 id="啟動_Xdebug">啟動 Xdebug</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug010.png" alt=""></p>
-<p>開啟瀏覽器，按下 <code>Start debugger</code>，在網址列輸入 <code>http://laravel52xdebug:8888</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug011.png" alt=""></p>
-<p>PhpStorm 會跳出 <code>Incoming Connection From Xdebug</code> 視窗，按 <code>Accept</code> 繼續。</p>
-<p><img src="/images/phpstorm/phpstorm-xdebug/xdebug012.png" alt=""></p>
-<p>程式執行將停在剛剛設定的中斷點。</p>
-<p>下方會出現 Debugger 視窗，提供除錯的詳細資訊。</p>
-<ul>
-<li>左側綠色三角形為 <code>Resume Program</code>，表示將繼續執行，直到下一個中斷點停止。</li>
-<li>左側紅色方形為 <code>Stop</code>，表示停止目前程式執行。</li>
-<li>上方第一個圖示為 <code>Step Over</code>，表示將跳過目前函式。</li>
-<li>上方第二個圖示為 <code>Step Into</code>，表示將執行目前函式內部的程式碼。</li>
-<li>上方第三個圖示為 <code>Force Step Into</code>，表示將強制執行目前函式內部的程式碼。</li>
-<li>上方第四個圖示為 <code>Step Out</code>，表示將跳出目前函式內部的程式碼。</li>
-<li>上方第五個圖示為 <code>Run to Cursor</code>，表示將快速執行到目前游標處停止。</li>
-<li><code>Variables</code> 為目前 scope 所有的變數值。</li>
-<li><code>Watches</code> 可自行新增想觀察的變數。</li>
-</ul>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>使用這種方式之後，我再也沒用過 <code>echo()</code>、<code>var_dump()</code> 或 <code>dd()</code> 來除錯，只要在認為有問題的程式碼之處，設定中斷點，就可以觀察當時所有變數的值，並且觀察程式實際執行的流程。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[以中斷點方式替 Laravel 除錯]]>
-    
-    </summary>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="MAMP" scheme="http://oomusou.io/tags/MAMP/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-      <category term="Xdebug" scheme="http://oomusou.io/tags/Xdebug/"/>
     
   </entry>
   
