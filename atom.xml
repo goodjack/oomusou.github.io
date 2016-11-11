@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-11T08:32:56.000Z</updated>
+  <updated>2016-11-11T08:34:53.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/webstorm/webstorm-typescript-version/"/>
     <id>http://oomusou.io/webstorm/webstorm-typescript-version/</id>
     <published>2016-11-11T12:23:43.000Z</published>
-    <updated>2016-11-11T08:32:56.000Z</updated>
+    <updated>2016-11-11T08:34:53.000Z</updated>
     <content type="html"><![CDATA[<p>WebStorm 已經內建 TypeScript，只要安裝完 WebStorm 就可以開始寫 TypeScript，但由於 TypeScript 更新快速，你可能會想自己更新 TypeScript 版本，此外，WebStorm 並沒有內建 TSLint，需另外安裝設定。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -51,7 +51,7 @@
 <p>Microsoft, <a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a><br>Palantir, <a href="https://palantir.github.io/tslint/" target="_blank" rel="external">TSLint</a><br>WebStorm Online Help, <a href="https://www.jetbrains.com/help/webstorm/2016.2/using-tslint-code-quality-tool.html" target="_blank" rel="external">Using TSLint Code Quality Tool</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[讓 WebStorm 支援 TypeScript]]>
+    <![CDATA[讓 WebStorm 支援 TypeScript 與 TSLint]]>
     
     </summary>
     
