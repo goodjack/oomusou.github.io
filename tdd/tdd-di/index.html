@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="從可測試性角度探討依賴注入">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-10-18T06:13:35.000Z">
+<meta property="og:updated_time" content="2016-11-18T09:40:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討依賴注入">
 <meta name="twitter:description" content="從可測試性角度探討依賴注入">
@@ -112,7 +112,6 @@
 <h2 id="Version">Version</h2><hr>
 <p>PHP 7.0.0<br>Laravel 5.2.29</p>
 <h2 id="實際案例">實際案例</h2><hr>
-<p>假設目前有 3 家貨運公司，每家公司的計費方式不同，使用者可以動態選擇不同的貨運公司，將一步步的重構成依賴注入方式。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>本範例靈感來自於91哥的<a href="https://dotblogs.com.tw/hatelove/archive/2013/01/02/learning-tdd-in-30-days-day17-refactoring-with-strategy-pattern.aspx" target="_blank" rel="external">30天快速上手TDD Day 17:Refactoring - Stagegy Pattern</a></span></span></span></p>
 <h2 id="傳統寫法">傳統寫法</h2><hr>
 <p>傳統我們會使用 <code>if else</code> 與 <code>new</code> 來建立物件。</p>
 <p><strong>BlackCat.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52DI_demo/commit/4862ffd79ac52e74a245010760662932839fb68d" target="_blank" rel="external">新增BlackCat.php</a></span></span></span><br><figure class="highlight php"><figcaption><span>app/Services/BlackCat.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlackCat</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> int $weight</span><br><span class="line">     * <span class="doctag">@return</span> int</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">calculateFee</span><span class="params">(<span class="variable">$weight</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span> + <span class="variable">$weight</span> * <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -370,7 +369,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/LaraDiner/">LaraDiner<span>17</span></a></li> <li><a href="/tags/Laravel/">Laravel<span>44</span></a></li> <li><a href="/tags/Mockery/">Mockery<span>4</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>13</span></a></li> <li><a href="/tags/TDD/">TDD<span>16</span></a></li>
+  <li><a href="/tags/LaraDiner/">LaraDiner<span>17</span></a></li> <li><a href="/tags/Laravel/">Laravel<span>45</span></a></li> <li><a href="/tags/Mockery/">Mockery<span>4</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>14</span></a></li> <li><a href="/tags/TDD/">TDD<span>16</span></a></li>
     </ul>
 	</div>
 		

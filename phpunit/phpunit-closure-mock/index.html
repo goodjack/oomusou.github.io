@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 PHPUnit mock Closure? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="為了隔離測試，實務上還是有 mock closure 的需求，不過 PHPUnit 目前無法直接 mock closure">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="為了隔離測試，實務上還是有 mock closure 的需求，不過 PHPUnit 目前無法直接 mock closure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 PHPUnit mock Closure?">
+<meta property="og:url" content="http://oomusou.io/phpunit/phpunit-closure-mock/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="為了隔離測試，實務上還是有 mock closure 的需求，不過 PHPUnit 目前無法直接 mock closure">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-11-19T01:24:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 PHPUnit mock Closure?">
+<meta name="twitter:description" content="為了隔離測試，實務上還是有 mock closure 的需求，不過 PHPUnit 目前無法直接 mock closure">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 PHPUnit mock Closure?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 為了隔離測試，實務上還是有 mock closure 的需求，不過 PHPUnit 目前無法直接 mock closure			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#實際案例"><span class="toc-article-text">實際案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Method_Injection"><span class="toc-article-text">Method Injection</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#重構成_Closure"><span class="toc-article-text">重構成 Closure</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>若有需求需要抽換，物件導向編程教我們的是開 interface 達成解耦合，然後使用依賴注入，最後達成依賴反轉目標，隨著函數式編程越來越流行，函數式編程教我們將 closure 當成參數傳進函式，一樣可以解耦合與依賴反轉，尤其對於只使用一次的需求特別有效，不用在另外開 interface 與 class，但在單元測試則面臨挑戰，我們該如何 mock closure 呢？</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>在 PHPConf 第二天的 workshop，我曾經舉手問 PHPUnit 的原作者 Sabastian Bergmann：<code>How to mock closure?</code>，Sabastian 的回答也很鏗鏘有力：<code>You can&#39;t</code>，在這篇 PHPUnit 的 <a href="https://github.com/sebastianbergmann/phpunit-mock-objects/issues/257" target="_blank" rel="external">Closure mock Issue</a>，也有人建議 PHPUnit 支援 mock closure，不過 Sabastian 的回答是</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  I might accept a pull request that implements this but I won't implement it myself.</div>
+<p>不過實務上，仍有 mock closure 的需求，如 closure 內包含外部 API 或別人的 package，為了單元測試，能不 mock closure 嗎? 顯然不可能，除非你不使用 closure 寫法，而改用傳統物件導向的 interface 寫法。</p>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.8<br>Laravel 5.3.10<br>PHPUnit 5.5.5</p>
+<h2 id="實際案例">實際案例</h2><hr>
+<p>假設目前有 3 家貨運公司，每家公司的計費方式不同，使用者可以動態選擇不同的貨運公司。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>完整重構過程請參考 <a href="/tdd/tdd-di/">深入探討依賴注入</a>，本文只從 method injection 繼續重構成 closure。</span></span></span></p>
+<h2 id="Method_Injection">Method Injection</h2><hr>
+<p><strong> 單元測試 ShippingServiceTest.php </strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/9bfce794d885ece5547b475b547e232aeda6bac9" target="_blank" rel="external">單元測試 : ShippingService 使用 interface</a></span></span></span><br><figure class="highlight php"><figcaption><span>tests/Services/ShippingServiceTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">BlackCat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">LogisticsInterface</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">ShippingService</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingServiceTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@test</span> */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> 黑貓單元測試<span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">/** arrange */</span></span><br><span class="line">        <span class="variable">$mock</span> = <span class="variable">$this</span>-&gt;createMock(BlackCat::class);</span><br><span class="line">        <span class="variable">$mock</span>-&gt;expects(<span class="variable">$this</span>-&gt;once())</span><br><span class="line">            -&gt;method(<span class="string">'calculateFee'</span>)</span><br><span class="line">            -&gt;withAnyParameters()</span><br><span class="line">            -&gt;willReturn(<span class="number">110</span>);</span><br><span class="line"></span><br><span class="line">        App::instance(LogisticsInterface::class, <span class="variable">$mock</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** act */</span></span><br><span class="line">        <span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">            <span class="string">'weight'</span> =&gt; <span class="variable">$weight</span>,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** assert */</span></span><br><span class="line">        <span class="variable">$expected</span> = <span class="number">110</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;assertEquals(<span class="variable">$expected</span>, <span class="variable">$actual</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>13 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$mock</span> = <span class="variable">$this</span>-&gt;createMock(BlackCat::class);</span><br></pre></td></tr></table></figure></p>
+<p>PHPUnit 直接使用 <code>createMock()</code> 建立 mock 物件。</p>
+<p>14 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$mock</span>-&gt;expects(<span class="variable">$this</span>-&gt;once())</span><br><span class="line">    -&gt;method(<span class="string">'calculateFee'</span>)</span><br><span class="line">    -&gt;withAnyParameters()</span><br><span class="line">    -&gt;willReturn(<span class="number">110</span>);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>expects()</code> : 設定預期該 mock 的 method 要執行幾次，<code>$this-&gt;once()</code> 為只執行一次。</li>
+<li><code>method()</code> : 設定要 mock 的 method 名稱。</li>
+<li><code>withAnyParameters()</code> : 不考慮 method 的任何參數。</li>
+<li><code>willReturn()</code> : 設定該 mock 的 method 的回傳值。</li>
+</ul>
+<p>19 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">App::instance(LogisticsInterface::class, <span class="variable">$mock</span>);</span><br></pre></td></tr></table></figure></p>
+<p>告訴 Laravel 的 service container，當遇到 <code>LogisticsInterface</code> 的依賴注入時，一律改注入成剛剛由 PHPUnit 所建立的 mock。</p>
+<p>22 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line"><span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">    <span class="string">'weight'</span> =&gt; <span class="variable">$weight</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>實際測試 <code>ShippingService</code> 的 <code>calculateFee()</code>。</p>
+<p>由於 <code>calculateFee()</code> 使用了 method injection，所以必須改用 Laravel service container 所提供的 <code>App::call()</code> 執行，才會啟動 method injection，自動注入剛剛建立的 mock。</p>
+<p>第一個參數要傳進 class 的完整名稱，加上 <code>@</code> 與 method 名稱。</p>
+<p>第二個參數為陣列，傳進其他參數，其中 key 為 參數名稱，value 為要傳進參數的變數。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>關於 <code>App::call()</code>，詳細請參考<a href="/tdd/tdd-di/#Method_Injection">深入探討依賴注入之 Method Injection</a>。</span></span></span></p>
+<p>28 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$expected</span> = <span class="number">110</span>;</span><br><span class="line"><span class="variable">$this</span>-&gt;assertEquals(<span class="variable">$expected</span>, <span class="variable">$actual</span>);</span><br></pre></td></tr></table></figure></p>
+<p>實際測試結果是否為 <code>110</code>。</p>
+<p><strong> ShippingService.php </strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/6eb814f4aeeca9a58a52db55c5465861e78569b8" target="_blank" rel="external">建立 ShippingService 使用 interface</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/ShippingService.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 計算運費</span><br><span class="line">     * <span class="doctag">@param</span> int $weight</span><br><span class="line">     * <span class="doctag">@param</span> LogisticsInterface $logistics</span><br><span class="line">     * <span class="doctag">@return</span> int</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">calculateFee</span><span class="params">(int <span class="variable">$weight</span>, LogisticsInterface <span class="variable">$logistics</span>)</span> : <span class="title">int</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$logistics</span>-&gt;calculateFee(<span class="variable">$weight</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用 method injection 由 <code>LogisticsInterface</code> 注入 <code>$logistics</code>。</p>
+<p>由於 <code>LogisticsInterface</code> 有定義 <code>calculateFee()</code>，因此我們可以在 <code>$logistics</code> 物件使用 <code>calculateFee()</code>。</p>
+<p><strong> LogisticsInterface.php </strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/24aa08e727caa463edaad771ea221687ad9ee22f" target="_blank" rel="external">建立 LogisticsInterface</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/LogisticsInterface.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LogisticsInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 計算運費</span><br><span class="line">     * <span class="doctag">@param</span> int $weight</span><br><span class="line">     * <span class="doctag">@return</span> int</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">calculateFee</span><span class="params">(int <span class="variable">$weight</span>)</span> : <span class="title">int</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定義 <code>LogisticsInterface</code> 有 <code>calculateFee()</code>。</p>
+<p><strong> BlackCat.php </strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/c25e20315b873a9fe139e2ef9114516f20b09f9e" target="_blank" rel="external">建立 BlackCat 實現 LogisticsInterface</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/BlackCat.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlackCat</span> <span class="keyword">implements</span> <span class="title">LogisticsInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 計算運費</span><br><span class="line">     * <span class="doctag">@param</span> int $weight</span><br><span class="line">     * <span class="doctag">@return</span> int</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">calculateFee</span><span class="params">(int <span class="variable">$weight</span>)</span> : <span class="title">int</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span> * <span class="variable">$weight</span> + <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>BlackCat</code> 必須實現 <code>LogisticsInterface</code> 所定義的 <code>calculateFee()</code>，將實際的計算運費演算法在此實現。</p>
+<p><img src="/images/phpunit/phpunit-closure-mock/closure000.png" alt=""></p>
+<p>實際跑單元測試，會得到第 1 個 <span class="label label-success">綠燈</span>。</p>
+<p><strong> 整合測試 ShippingServiceTest.php </strong><span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/ffabd0f165734227fce1e39996869d128739a055" target="_blank" rel="external">整合測試 : ShippingService 使用 interface</a></span></span></span><br><figure class="highlight php"><figcaption><span>tests/Services/ShippingServiceTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">BlackCat</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">LogisticsInterface</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">ShippingService</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingServiceTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@test</span> */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> 黑貓整合測試<span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">/** arrange */</span></span><br><span class="line">        App::bind(LogisticsInterface::class, BlackCat::class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** act */</span></span><br><span class="line">        <span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">            <span class="string">'weight'</span> =&gt; <span class="variable">$weight</span>,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** assert */</span></span><br><span class="line">        <span class="variable">$expected</span> = <span class="number">110</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;assertEquals(<span class="variable">$expected</span>, <span class="variable">$actual</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>12 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** arrange */</span></span><br><span class="line">App::bind(LogisticsInterface::class, BlackCat::class);</span><br></pre></td></tr></table></figure></p>
+<p>整合測試就不再 mock 了，而是實際由 <code>App::bind()</code> 告訴 Laravel service container，當遇到 <code>LogisticsInterface</code> 時，要依賴注入 <code>BlackCat</code> 物件。</p>
+<p>15 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** act */</span></span><br><span class="line"><span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line"><span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">    <span class="string">'weight'</span> =&gt; <span class="variable">$weight</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>一樣使用 <code>App::call()</code> 呼叫 <code>ShippingService</code> 的 <code>calculateFee()</code>，因為使用了 method injection。</p>
+<p><img src="/images/phpunit/phpunit-closure-mock/closure001.png" alt=""></p>
+<p>實際跑整合測試，會得到第 2 個 <span class="label label-success">綠燈</span>。</p>
+<h2 id="重構成_Closure">重構成 Closure</h2><hr>
+<p>若<strong>計算運費</strong>的邏輯在整個專案只使用一次，為此大費周章建立 interface 與 class， 或許殺雞用牛刀了，對於這種只使用一次的需求，函數式編程就特別有效，我們可以再繼續將 interface 重構成 closure。</p>
+<p><strong> ShippingService.php </strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/fb691e1027ee6f5e1025bbf8f4c80c2cbd1fce18" target="_blank" rel="external">重構 ShippingService 使用 closure</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/ShippingService.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 計算運費</span><br><span class="line">     * <span class="doctag">@param</span> int $weight</span><br><span class="line">     * <span class="doctag">@param</span> callable $logistics</span><br><span class="line">     * <span class="doctag">@return</span> int</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">calculateFee</span><span class="params">(int <span class="variable">$weight</span>, callable <span class="variable">$logistics</span>)</span> : <span class="title">int</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$logistics</span>(<span class="variable">$weight</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>將 <code>$logistics</code> 的 type hint 從原本的 <code>LogisticsInterface</code> 改成 <code>callable</code>，因為我們要重構成 closure 的方式。<span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>關於 <code>callable</code>，詳細請參考 <a href="http://localhost:4000/php/php-closure/" target="_blank" rel="external">如何使用 Closure?</a></span></span></span></p>
+<p>既然 <code>$logistics</code> 為 closure，我們就可以直接以 <code>$logistics($weight)</code> 的方式執行了。</p>
+<p><strong> 單元測試 ShippingServiceTest.php </strong><span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/9a1347a16940686651b8333d3fad1a0a0a1ea9e7" target="_blank" rel="external">單元測試 : ShippingService 使用 closure</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/ShippingServiceTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">ShippingService</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingServiceTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@test</span> */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> 黑貓單元測試<span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">/** arrange */</span></span><br><span class="line">        <span class="variable">$mock</span> = <span class="variable">$this</span>-&gt;createPartialMock(stdClass::class, [<span class="string">'__invoke'</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$mock</span>-&gt;expects(<span class="variable">$this</span>-&gt;once())</span><br><span class="line">            -&gt;method(<span class="string">'__invoke'</span>)</span><br><span class="line">            -&gt;withAnyParameters()</span><br><span class="line">            -&gt;willReturn(<span class="number">110</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** act */</span></span><br><span class="line">        <span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">            <span class="string">'weight'</span>    =&gt; <span class="variable">$weight</span>,</span><br><span class="line">            <span class="string">'logistics'</span> =&gt; <span class="variable">$mock</span>,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** assert */</span></span><br><span class="line">        <span class="variable">$expected</span> = <span class="number">110</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;assertEquals(<span class="variable">$expected</span>, <span class="variable">$actual</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>11 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$mock</span> = <span class="variable">$this</span>-&gt;createPartialMock(stdClass::class, [<span class="string">'__invoke'</span>]);</span><br></pre></td></tr></table></figure></p>
+<p>這一行有 3 個重點 :</p>
+<ol>
+<li>為什麼要 mock <code>__invoke</code>?</li>
+<li>為什麼是 <code>stdClass</code> ?</li>
+<li>什麼是 Partial Mock?</li>
+</ol>
+<p><strong> 為什麼要 mock <code>__invoke</code>? </strong><br><figure class="highlight php"><figcaption><span>PHP</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$anonyFunc</span> = <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$name</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello '</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$anonyFunc</span>(<span class="string">"Josh"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result:</span></span><br><span class="line"><span class="comment">// Hello Josh</span></span><br></pre></td></tr></table></figure></p>
+<p>將 anoymous function 指定給 <code>anonyFunc</code> 變數，但實際上 <code>anonyFunc</code> 為 <code>Closure</code> 物件，它看起來像函式，卻是個物件，與函式相同語法，可接受參數，也可回傳參數，但是卻沒有函式名稱。</p>
+<p>但事實上在 PHP 底層，這個 anonymous function 是實作在 <code>Closure</code> 物件的 <code>__invoke()</code> 這個 magic method，因此我們也可以這樣寫</p>
+<figure class="highlight php"><figcaption><span>PHP</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$anonyFunc</span> = <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$name</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">return</span> <span class="string">'Hello '</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$anonyFunc</span>-&gt;__invoke(<span class="string">"Josh"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result:</span></span><br><span class="line"><span class="comment">// Hello Josh</span></span><br></pre></td></tr></table></figure>
+<p>執行結果完全一樣。</p>
+<p>實務上我們不會去使用 <code>__invoke()</code>，但 PHP 底層卻是靠 <code>__invoke()</code> 去實作 anonymous function。<span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>關於 <code>__invoke()</code>，詳細請參考 <a href="http://localhost:4000/php/php-closure/" target="_blank" rel="external">如何使用 Closure?</a></span></span></span></p>
+<p>但因為我們現在是要去 mock closure，因此就相當於要去 mock <code>__invoke()</code>。</p>
+<p><strong> 為什麼是 <code>stdClass</code>? </strong></p>
+<p>我們知道 anonymous function 底層是 <code>Closure</code> 物件，理論上要去 mock <code>Closure</code> class，但令人沮喪的是，<code>Closure</code> 在 PHP 內部已經被宣告成 <code>final</code>，因此無從 mock。</p>
+<blockquote><p>The predefined final class Closure was introduced in PHP 5.3.0. It is used for representing anonymous functions.</p>
+<footer><strong>PHP </strong><cite><a href="http://php.net/manual/en/reserved.classes.php" target="_blank" rel="external">Closure</a></cite></footer></blockquote>
+<p>別忘了 PHP 的 Duck Type 特性 :</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  當看到一隻鳥走起來像鴨子、游泳起來像鴨子、叫起來也像鴨子，那麼這隻鳥就可以被稱為鴨子。</div>
+<p>既然如此，我們就可以對 <code>stdClass</code> 動刀，讓他加上 <code>__invoke()</code>，並對 <code>__invoke()</code> 加以 mock，讓他看起來像 <code>Closure</code>。</p>
+<p><strong> 什麼是 Partial Mock? </strong></p>
+<p>一般我們只會使用普通 Mock，但有兩個地方可能會用到 Partial Mock :</p>
+<ol>
+<li>當你不想 mock 一個 class 所有 method，只想 mock 其中一兩個 method 時。</li>
+<li>當你想 mock 一個無中生有的 method 時。</li>
+</ol>
+<p><code>stdClass</code> 並沒有任何 method，且 <code>__invoke()</code> 本應屬於 <code>Closure</code>，對於 <code>stdClass</code> 是無中生有的，因此我們必須使用 Partial Mock 才能將 <code>__invoke()</code> 加在 <code>stdClass</code> 上。</p>
+<p>13 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$mock</span>-&gt;expects(<span class="variable">$this</span>-&gt;once())</span><br><span class="line">    -&gt;method(<span class="string">'__invoke'</span>)</span><br><span class="line">    -&gt;withAnyParameters()</span><br><span class="line">    -&gt;willReturn(<span class="number">110</span>);</span><br></pre></td></tr></table></figure></p>
+<p>接下來則跟普通 mock 方式一樣，可以發現我們是直接對 <code>__invoke()</code> 做 mock。</p>
+<p>19 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line"><span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">   <span class="string">'weight'</span>    =&gt; <span class="variable">$weight</span>,</span><br><span class="line">   <span class="string">'logistics'</span> =&gt; <span class="variable">$mock</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>將 mock 物件透過 <code>App::call()</code> 傳入。</p>
+<p><img src="/images/phpunit/phpunit-closure-mock/closure002.png" alt=""></p>
+<p>實際跑單元測試，會得到第 3 個 <span class="label label-success">綠燈</span>。</p>
+<p><strong> 整合測試 ShippingServiceTest.php </strong><span class="margin-note-marker"><sup>12</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">12</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo/commit/1303628c3c07cce3cf53572c7ddc1d2b3729bc15" target="_blank" rel="external">整合測試 : ShippingService 使用 closure</a></span></span></span><br><figure class="highlight php"><figcaption><span>Services/ShippingServiceTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span>(strict_types = <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">ShippingService</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShippingServiceTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@test</span> */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> 黑貓整合測試<span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">/** arrange */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/** act */</span></span><br><span class="line">        <span class="variable">$weight</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">            <span class="string">'weight'</span>    =&gt; <span class="variable">$weight</span>,</span><br><span class="line">            <span class="string">'logistics'</span> =&gt; <span class="function"><span class="keyword">function</span> <span class="params">(int <span class="variable">$weight</span>)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">100</span> * <span class="variable">$weight</span> + <span class="number">10</span>;</span><br><span class="line">            &#125;,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** assert */</span></span><br><span class="line">        <span class="variable">$expected</span> = <span class="number">110</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;assertEquals(<span class="variable">$expected</span>, <span class="variable">$actual</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>14 行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$actual</span> = App::call(ShippingService::class . <span class="string">'@calculateFee'</span>, [</span><br><span class="line">    <span class="string">'weight'</span>    =&gt; <span class="variable">$weight</span>,</span><br><span class="line">    <span class="string">'logistics'</span> =&gt; <span class="function"><span class="keyword">function</span> <span class="params">(int <span class="variable">$weight</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span> * <span class="variable">$weight</span> + <span class="number">10</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>整合測試與單元測試的差異就是不 mock，因此我們直接將 closure 傳入。</p>
+<p><img src="/images/phpunit/phpunit-closure-mock/closure003.png" alt=""></p>
+<p>實際跑整合測試，會得到第 4 個 <span class="label label-success">綠燈</span>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Mock closure 並非是炫技，實務上經常用到，尤其當你從物件導向編程，慢慢趨向函數式編程時，常常會重構成 closure，Taylor Otwell 在 Laravel 內部也大量使用 closure，只要使用到 closure，就可能面臨在單元測試時隔離 closure 的需求，透過本文的方式，你將可輕鬆的將 closure 加以 mock。<span class="margin-note-marker"><sup>13</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">13</span>關於 closure 實務上的應用，詳細請參考 <a href="/php/php-closure-practice/">實務上如何活用 Closure?</a></span></span></span></li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel53PHPUnitMockClosure_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p>PHPUnit, <a href="https://github.com/sebastianbergmann/phpunit-mock-objects/issues/257" target="_blank" rel="external">Closure mock Issue</a><br>Sabastian Bergmann, <a href="https://thephp.cc/dates/2016/10/phpconf-taiwan/lately-in-phpunit" target="_blank" rel="external">PHPConf Taiwan 2016 Lately in PHP(Unit)</a><br>大澤木小鐵, <a href="http://jaceju.net/2015-11-09-php-closure-testing/" target="_blank" rel="external">在 PHPUnit 中測試需要 closure 的函式</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webstorm-angular-cli/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-12-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>45</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>14</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
