@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-20T06:34:05.000Z</updated>
+  <updated>2016-11-20T06:37:45.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,14 +19,14 @@
     <link href="http://oomusou.io/phpunit/phpunit-test-private/"/>
     <id>http://oomusou.io/phpunit/phpunit-test-private/</id>
     <published>2016-11-20T12:23:43.000Z</published>
-    <updated>2016-11-20T06:34:05.000Z</updated>
+    <updated>2016-11-20T06:37:45.000Z</updated>
     <content type="html"><![CDATA[<p>剛開始學習寫測試時，最多人的疑問就是該如何測試 <code>private</code> 與 <code>protected</code> method?，理論上不該去測試 <code>private</code> 與 <code>protected</code>，本文會介紹一個 PHP 邪惡的技巧來完成測試，但建議除非萬不得已，不要使用此方法。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
 <p>在 PHPConf 第二天的 workshop，我曾經舉手問 PHPUnit 的原作者 Sabastian Bergmann：<code>How to test private and protected method?</code>，Sabastian 的回答也很鏗鏘有力：<code>You can&#39;t</code>，實務上我也真的沒測試過 <code>private</code> 與  <code>protected</code> method，不過藉此機會理解為什麼不該測試 <code>private</code> 與 <code>protected</code> 也是不錯的。</p>
 <h2 id="Version">Version</h2><hr>
 <p>PHP 7.0.8<br>Laravel 5.3.10<br>PHPUnit 5.5.5</p>
-<h2 id="為什麼不該測試_priavate_與_protected?">為什麼不該測試 priavate 與 protected?</h2><hr>
+<h2 id="為什麼不該測試_private_與_protected?">為什麼不該測試 private 與 protected?</h2><hr>
 <ol>
 <li><p>測試案例是來自於需求，<code>public</code> 才是來自於需求，而 <code>private</code> 與 <code>protected</code> 則是來自於<strong>重構</strong>，所以不應該特別去測試，而應該由 <code>public</code> 的測試案例自然去測試 <code>private</code> 與 <code>protected</code>。</p>
 </li>

@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用 Closure::call() 測試 private 與 protected method">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-11-20T06:34:05.000Z">
+<meta property="og:updated_time" content="2016-11-20T06:37:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 PHPUnit 測試 private 與 protected method?">
 <meta name="twitter:description" content="使用 Closure::call() 測試 private 與 protected method">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼不該測試_priavate_與_protected?"><span class="toc-article-text">為什麼不該測試 priavate 與 protected?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#實際案例"><span class="toc-article-text">實際案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼不該測試_private_與_protected?"><span class="toc-article-text">為什麼不該測試 private 與 protected?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#實際案例"><span class="toc-article-text">實際案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -113,7 +113,7 @@
 <p>在 PHPConf 第二天的 workshop，我曾經舉手問 PHPUnit 的原作者 Sabastian Bergmann：<code>How to test private and protected method?</code>，Sabastian 的回答也很鏗鏘有力：<code>You can&#39;t</code>，實務上我也真的沒測試過 <code>private</code> 與  <code>protected</code> method，不過藉此機會理解為什麼不該測試 <code>private</code> 與 <code>protected</code> 也是不錯的。</p>
 <h2 id="Version">Version</h2><hr>
 <p>PHP 7.0.8<br>Laravel 5.3.10<br>PHPUnit 5.5.5</p>
-<h2 id="為什麼不該測試_priavate_與_protected?">為什麼不該測試 priavate 與 protected?</h2><hr>
+<h2 id="為什麼不該測試_private_與_protected?">為什麼不該測試 private 與 protected?</h2><hr>
 <ol>
 <li><p>測試案例是來自於需求，<code>public</code> 才是來自於需求，而 <code>private</code> 與 <code>protected</code> 則是來自於<strong>重構</strong>，所以不應該特別去測試，而應該由 <code>public</code> 的測試案例自然去測試 <code>private</code> 與 <code>protected</code>。</p>
 </li>
