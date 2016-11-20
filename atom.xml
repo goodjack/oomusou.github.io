@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-20T06:28:13.000Z</updated>
+  <updated>2016-11-20T06:34:05.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/phpunit/phpunit-test-private/"/>
     <id>http://oomusou.io/phpunit/phpunit-test-private/</id>
     <published>2016-11-20T12:23:43.000Z</published>
-    <updated>2016-11-20T06:28:13.000Z</updated>
+    <updated>2016-11-20T06:34:05.000Z</updated>
     <content type="html"><![CDATA[<p>剛開始學習寫測試時，最多人的疑問就是該如何測試 <code>private</code> 與 <code>protected</code> method?，理論上不該去測試 <code>private</code> 與 <code>protected</code>，本文會介紹一個 PHP 邪惡的技巧來完成測試，但建議除非萬不得已，不要使用此方法。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -54,7 +54,7 @@
 <p>實際跑單元測試，會得到 <span class="label label-success">綠燈</span>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>非到萬不得已，不應該直接測試 <code>private</code> 與 <code>protected</code>。</li>
+<li>非到萬不得已，不應該直接測試 <code>private</code> 與 <code>protected</code>，不要為了測試而測試。</li>
 <li>本文以 <code>private</code> 為範例，也可以套用在 <code>protected</code>，一樣使用 <code>Closure::call()</code> 的方式。</li>
 <li><code>Closure::call()</code> 違反物件導向封裝原則，實務上不建議使用，除非真的萬不得已。</li>
 </ul>

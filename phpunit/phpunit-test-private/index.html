@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用 Closure::call() 測試 private 與 protected method">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-11-20T06:28:13.000Z">
+<meta property="og:updated_time" content="2016-11-20T06:34:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 PHPUnit 測試 private 與 protected method?">
 <meta name="twitter:description" content="使用 Closure::call() 測試 private 與 protected method">
@@ -141,7 +141,7 @@
 <p>實際跑單元測試，會得到 <span class="label label-success">綠燈</span>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>非到萬不得已，不應該直接測試 <code>private</code> 與 <code>protected</code>。</li>
+<li>非到萬不得已，不應該直接測試 <code>private</code> 與 <code>protected</code>，不要為了測試而測試。</li>
 <li>本文以 <code>private</code> 為範例，也可以套用在 <code>protected</code>，一樣使用 <code>Closure::call()</code> 的方式。</li>
 <li><code>Closure::call()</code> 違反物件導向封裝原則，實務上不建議使用，除非真的萬不得已。</li>
 </ul>
