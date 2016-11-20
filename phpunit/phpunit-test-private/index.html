@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用 Closure::call() 測試 private 與 protected method">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-11-20T06:20:51.000Z">
+<meta property="og:updated_time" content="2016-11-20T06:28:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 PHPUnit 測試 private 與 protected method?">
 <meta name="twitter:description" content="使用 Closure::call() 測試 private 與 protected method">
@@ -117,7 +117,7 @@
 <ol>
 <li><p>測試案例是來自於需求，<code>public</code> 才是來自於需求，而 <code>private</code> 與 <code>protected</code> 則是來自於<strong>重構</strong>，所以不應該特別去測試，而應該由 <code>public</code> 的測試案例自然去測試 <code>private</code> 與 <code>protected</code>。</p>
 </li>
-<li><p>若特別去測試 <code>private</code> 與 <code>protected</code>，則 coverage 將沒有意義，可以特別只針對 <code>private</code> 與 <code>protected</code> 寫測試，而達成 coverage 為 <code>100%</code>，正確方法應該只測試 <code>public</code>，若有些 <code>private</code> 與 <code>protected</code> 因而沒測試到，則有兩種可能：一個是測試案例不足，導致 <code>private</code> 與 <code>protected</code> 沒測到，另一個則是目前根本無此需求，<code>private</code> 與 <code>protected</code> 為 over design。</p>
+<li><p>若特別去測試 <code>private</code> 與 <code>protected</code>，則 coverage 將沒有意義，可以特別只針對 <code>private</code> 與 <code>protected</code> 寫測試，而達成 coverage 為 <code>100%</code>，正確方法應該根據需求只測試 <code>public</code>，若有些 <code>private</code> 與 <code>protected</code> 因而沒測試到，則有兩種可能：一個是測試案例不足，導致 <code>private</code> 與 <code>protected</code> 沒測到，另一個則是目前根本無此需求，<code>private</code> 與 <code>protected</code> 為 over design。</p>
 </li>
 <li><p>根據物件導向的<strong>封裝</strong>特性，<code>public</code> 會根據 interface 而穩定，但 <code>private</code> 與 <code>protected</code> 則會隨著日後<strong>重構</strong>而變化，若直接針對 <code>private</code> 與 <code>protected</code> 寫測試，則日後只要一重構，就必須修改測試，則將影響測試程式的<strong>健狀性</strong>，測試應該隨著<strong>需求</strong>改變而修改，不該隨著程式碼<strong>重構</strong>而修改。</p>
 </li>
