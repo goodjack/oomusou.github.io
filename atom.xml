@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-11-27T01:48:15.000Z</updated>
+  <updated>2016-11-27T01:57:10.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/laravel/laravel-email-queue-forever/"/>
     <id>http://oomusou.io/laravel/laravel-email-queue-forever/</id>
     <published>2016-11-25T12:23:43.000Z</published>
-    <updated>2016-11-27T01:48:15.000Z</updated>
+    <updated>2016-11-27T01:57:10.000Z</updated>
     <content type="html"><![CDATA[<p>傳統寄送 email 是採用同步的方式，也就是當你寄出一封信，必須等 email server 回應後，才可以繼續後續的程式動作，因此使用者會有明顯的等待時間；若能搭配 queue 機制，寄送 email 後，馬上以非同步的方式回到原來程式繼續執行，會有另外一個 process 去消耗 queue，負責寄送 email。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -83,7 +83,7 @@
 <li><strong> -l </strong> : 指定 log 位置， <code>Forever</code> 預設將 log 放在 <code>~/.forever</code> 目錄下，且每次啟動為亂數，若你想將 log 指定在特定目錄，並使用特定檔名，則必須使用 <code>-l</code>，且必須使用完整路徑。 </li>
 <li><strong> -c </strong> : 要啟動的 CLI 命令。</li>
 </ul>
-<h2 id="由_Queue_寄送信件">由 Queue 寄送信件</h2><hr>
+<h2 id="由_Queue_寄信">由 Queue 寄信</h2><hr>
 <p><strong> MailService.php </strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52QueueForever/commit/b8bbd243b04d78d57c1307193e07bdb832728817" target="_blank" rel="external">由 queue 寄送信件</a></span></span></span><br><figure class="highlight php"><figcaption><span>tests/MailService.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Mail</span>\<span class="title">Message</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Mail</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">mailByQueue</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        Mail::queue(<span class="string">'welcome'</span>, [], <span class="function"><span class="keyword">function</span> <span class="params">(Message <span class="variable">$message</span>)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$message</span>-&gt;sender(<span class="string">'oomusou@gmail.com'</span>);</span><br><span class="line">            <span class="variable">$message</span>-&gt;subject(<span class="string">'Laravel 5.2 mail by Queue'</span>);</span><br><span class="line">            <span class="variable">$message</span>-&gt;to(<span class="string">'oomusou@gmail.com'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>使用 <code>Mail::queue()</code> 寄送信件，其他參數與 <code>Mail::send()</code> 完全相同。</p>
 <p>實際執行發現，<code>Mail::queue()</code> 會馬上執行完，不會有任何等待，因為是非同步，不用等 smtp server 回應就可繼續執行。</p>
