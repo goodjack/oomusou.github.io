@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="歸納自己天天使用的重構步驟">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-12-05T11:54:13.000Z">
+<meta property="og:updated_time" content="2016-12-05T12:09:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 TDD 使用「重構九式」?">
 <meta name="twitter:description" content="歸納自己天天使用的重構步驟">
@@ -310,7 +310,7 @@
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>基本上重構<strong>第一式</strong>到<strong>第七式</strong>，我每次 TDD 重構都會打一遍，讓自己的程式碼符合 <strong>SOLID</strong> 原則與實現<strong>高內聚、低耦合</strong>，但<strong>第八式</strong>與<strong>第九式</strong>則不一定，會視實際狀況隨機應變。</li>
-<li><code>Replace Interface with Closure</code> 的出現，讓物件導向有了不同的實作方式，事實上很多設計模式，如 <code>Strategy Pattern</code>、<code>Command Pattern</code>、<code>Chain of Responsibility Pattern</code> ….等，都可使用 <code>closure</code> 方式實作，但也不是所有的 <code>interface</code> 都要重構成 <code>closure</code>，但最少是個方法，可是實際需求決定是否重構。</li>
+<li><code>Replace Interface with Closure</code> 的出現，讓物件導向有了不同的實作方式，事實上很多設計模式，如 <code>Strategy Pattern</code>、<code>Command Pattern</code>、<code>Chain of Responsibility Pattern</code> ….等，都可使用 <code>closure</code> 方式實作，但也不是所有的 <code>interface</code> 都要重構成 <code>closure</code>，但最少是個方法，可依實際需求決定是否重構。</li>
 <li>重構有很多方法，主要是針對 legacy code，若使用 TDD 方式，因為測試先寫，已經考慮了<strong>可測試性</strong>，基本上程式碼的體質已經不差，只要再加上<strong>重構九式</strong>的輔助，寫出符合 <strong>SOLID</strong> 原則與<strong>高內聚、低耦合</strong>的程式碼將不再是遙不可及的事情。</li>
 </ul>
 <h2 id="Sample_Code">Sample Code</h2><hr>
