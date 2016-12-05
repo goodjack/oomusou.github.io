@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="以非同步的方式寄送 Email 加快執行速度">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-11-27T01:57:10.000Z">
+<meta property="og:updated_time" content="2016-11-28T05:42:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 Forever 搭配 Laravel Queue 寄送 Email?">
 <meta name="twitter:description" content="以非同步的方式寄送 Email 加快執行速度">
@@ -164,11 +164,11 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/$ npm install -g forever</span><br></pre></td></tr></table></figure>
 <p>將 <code>forever</code> 全域安裝。</p>
 <h2 id="啟動_Forever">啟動 Forever</h2><hr>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/$ forever start -l /Users/oomusou/Code/Laravel/Laravel52QueueForever/forever.log -c php artisan queue:listen</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/$ forever start -l /Users/oomusou/Code/Laravel/Laravel52QueueForever/forever.log -c php artisan queue:work</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong> start </strong> : 使用 forever 啟動其他服務。</li>
 <li><strong> -l </strong> : 指定 log 位置， <code>Forever</code> 預設將 log 放在 <code>~/.forever</code> 目錄下，且每次啟動為亂數，若你想將 log 指定在特定目錄，並使用特定檔名，則必須使用 <code>-l</code>，且必須使用完整路徑。 </li>
-<li><strong> -c </strong> : 要啟動的 CLI 命令。</li>
+<li><strong> -c </strong> : 要啟動的 CLI 命令，使用 <code>php artisan queue:work</code> 執行 queue worker。</li>
 </ul>
 <h2 id="由_Queue_寄信">由 Queue 寄信</h2><hr>
 <p><strong> MailService.php </strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52QueueForever/commit/b8bbd243b04d78d57c1307193e07bdb832728817" target="_blank" rel="external">由 queue 寄送信件</a></span></span></span><br><figure class="highlight php"><figcaption><span>tests/MailService.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Mail</span>\<span class="title">Message</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Mail</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">mailByQueue</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        Mail::queue(<span class="string">'welcome'</span>, [], <span class="function"><span class="keyword">function</span> <span class="params">(Message <span class="variable">$message</span>)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$message</span>-&gt;sender(<span class="string">'oomusou@gmail.com'</span>);</span><br><span class="line">            <span class="variable">$message</span>-&gt;subject(<span class="string">'Laravel 5.2 mail by Queue'</span>);</span><br><span class="line">            <span class="variable">$message</span>-&gt;to(<span class="string">'oomusou@gmail.com'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -192,9 +192,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+    	<li class="prev"><a href="/refactor/refactor-in-action/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
