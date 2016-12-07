@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2016-12-07T14:40:05.000Z</updated>
+  <updated>2016-12-07T14:48:01.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/refactor/refactor-in-action/"/>
     <id>http://oomusou.io/refactor/refactor-in-action/</id>
     <published>2016-11-27T12:23:43.000Z</published>
-    <updated>2016-12-07T14:40:05.000Z</updated>
+    <updated>2016-12-07T14:48:01.000Z</updated>
     <content type="html"><![CDATA[<p>TDD 不僅是先寫測試而已，當第一個 <span class="label label-success">綠燈</span> 之後，剩下的半壁江山就是拼<strong>重構</strong>功力，重構的書多半來自於 Java，因此有些 PHP 獨門的重構技巧在 Java 書上是看不到的，也因為編程思維的持續演進，重構也有了新的面貌，本文整理出自己在實務上，天天必用的 9 個適用於 PHP 重構的 SOP。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -212,7 +212,7 @@
 <p><strong>依賴反轉原則 Dependency Inversion Principle</strong><br><div class="alert alert-info"><i class="fa fa-info"></i>  高階模組不該依賴低階模組，兩者都應該依賴其抽象</div></p>
 <p>在透過 <code>Dependency Injection</code> 之前，我們是直接在 <code>ShippingService</code> 直接去 new <code>BlackCat</code>、<code>Hsinchu</code> 與 <code>Post</code>，也就是高階模組的 <code>ShippingService</code> 直接依賴於低階模組的 <code>BlackCat</code>、<code>Hsinchu</code> 與 <code>Post</code>，這就違反了<strong>高階模組不該依賴低階模組</strong>，既然已經透過 <code>Extract Interface</code> 抽象化出 <code>LogisticsInterface</code>，我們就可以透過 <code>Dependency Injection</code>，由高階模組自行注入所依賴的低階模組，此時高階模組 <code>ShippingService</code> 只依賴於 <code>LogisticsInterface</code>，而低階模組 <code>BlackCat</code>、<code>Hsinchu</code> 與 <code>Post</code> 也只依賴於 <code>LogisticsInterface</code>，也就是<strong>兩者都應該依賴其抽象</strong>，符合<strong>依賴反轉原則</strong>的要求。</p>
 <p><strong>高內聚 High Cohesion</strong><br><div class="alert alert-info"><i class="fa fa-info"></i>  應該將功能高度相關的 method 放在同一個 class 與 interface 內，這樣才方便閱讀、方便維護、方便重複使用。</div></p>
-<p><strong>單一職責原則</strong>、<strong>介面隔離原則</strong>講的就是<strong>高內聚</strong>，<code>Extract Method</code>、<code>Extract Class</code>、<code>Extract Trait</code> 則是實現<strong>高內聚</strong>的具體方法，讓我們將功能高度相關的 method 放在同一個 class 與 interface 內。</p>
+<p><strong>單一職責原則</strong>、<strong>介面隔離原則</strong>講的就是<strong>高內聚</strong>，<code>Extract Method</code>、<code>Extract Class</code>、<code>Extract Trait</code> 則是實現<strong>高內聚</strong>的具體方法，讓我們將功能高度相關的 <code>method</code> 放在同一個 <code>class</code> 與 <code>interface</code> 內。</p>
 <p><strong>低耦合 Low Coupling</strong><br><div class="alert alert-info"><i class="fa fa-info"></i>  class 與 class 間的耦合應該盡量減少，避免因為 class 的修改，而導致其他 class 也必須隨之修改。</div></p>
 <p><strong>開放封閉原則</strong>、<strong>里氏替換原則</strong>、<strong>依賴反轉原則</strong>講的就是<strong>低耦合</strong>，<code>Extract Interface</code>、<code>Dependency Injection</code>、<code>Replace Interface with Closure</code> 則是實現<strong>低耦合</strong>的具體方法，讓我們將原本 <code>class</code> 與 <code>class</code> 之間的耦合，變成只與 <code>interface</code> 或 <code>closure</code> 的耦合，由於耦合變少變小，因此將來所做的任何修改，影響將降到最低。</p>
 <p>若重構到這個階段，突然靈機一動想到在這個情境下，某個 Design Pattern 更適合，則可以繼續重構，基本上，Design Pattern 就是前人所留下來破解某個劍招的精妙劍法，只要用的時機對，就會非常的巧，但不必刻意的追求一定要用什麼 Design Pattern 才算好的物件導向，就如<strong>獨孤九劍</strong>一樣，隨機應變，用得到是緣份，用不到也沒關係，因為重構到第七式，已經符合了 <strong>SOLID</strong> 原則了。</p>
