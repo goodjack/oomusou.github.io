@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="歸納自己天天使用的重構步驟">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2016-12-07T14:48:01.000Z">
+<meta property="og:updated_time" content="2016-12-08T06:40:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 TDD 使用「重構九式」?">
 <meta name="twitter:description" content="歸納自己天天使用的重構步驟">
@@ -302,7 +302,7 @@
 <p><strong>單一職責原則</strong>、<strong>介面隔離原則</strong>講的就是<strong>高內聚</strong>，<code>Extract Method</code>、<code>Extract Class</code>、<code>Extract Trait</code> 則是實現<strong>高內聚</strong>的具體方法，讓我們將功能高度相關的 <code>method</code> 放在同一個 <code>class</code> 與 <code>interface</code> 內。</p>
 <p><strong>低耦合 Low Coupling</strong><br><div class="alert alert-info"><i class="fa fa-info"></i>  class 與 class 間的耦合應該盡量減少，避免因為 class 的修改，而導致其他 class 也必須隨之修改。</div></p>
 <p><strong>開放封閉原則</strong>、<strong>里氏替換原則</strong>、<strong>依賴反轉原則</strong>講的就是<strong>低耦合</strong>，<code>Extract Interface</code>、<code>Dependency Injection</code>、<code>Replace Interface with Closure</code> 則是實現<strong>低耦合</strong>的具體方法，讓我們將原本 <code>class</code> 與 <code>class</code> 之間的耦合，變成只與 <code>interface</code> 或 <code>closure</code> 的耦合，由於耦合變少變小，因此將來所做的任何修改，影響將降到最低。</p>
-<p>若重構到這個階段，突然靈機一動想到在這個情境下，某個 Design Pattern 更適合，則可以繼續重構，基本上，Design Pattern 就是前人所留下來破解某個劍招的精妙劍法，只要用的時機對，就會非常的巧，但不必刻意的追求一定要用什麼 Design Pattern 才算好的物件導向，就如<strong>獨孤九劍</strong>一樣，隨機應變，用得到是緣份，用不到也沒關係，因為重構到第七式，已經符合了 <strong>SOLID</strong> 原則了。</p>
+<p><strong>設計模式 Design Pattern</strong><br>若重構到這個階段，突然靈機一動想到在這個情境下，某個 Design Pattern 更適合，則可以繼續重構，基本上，Design Pattern 就是前人所留下來破解某個劍招的精妙劍法，只要用的時機對，就會非常的巧，但不必刻意的追求一定要用什麼 Design Pattern 才算好的物件導向，就如<strong>獨孤九劍</strong>一樣，隨機應變，用得到是緣份，用不到也沒關係，因為重構到第七式，已經符合了 <strong>SOLID</strong> 原則了。</p>
 <p>以本例而言，事實上就是 <strong>Strategy Pattern</strong>，但若你完全不知道 Strategy Pattern 也沒關係，只要從重構一式打到重構七式，就會自然長出 Strategy Pattern 了。</p>
 <div class="alert alert-info"><i class="fa fa-info"></i>  Refactor to Pattern 讓我們可以重構出更精妙的程式碼，但不必強求，隨緣使用即可。</div>
 <h2 id="第九式_:_Replace_Interface_with_Closure">第九式 : Replace Interface with Closure</h2><hr>
