@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-03-05T15:22:59.000Z">
+<meta property="og:updated_time" content="2017-03-05T15:27:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的依賴注入與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -227,6 +227,7 @@
 <p><strong>PostService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private smsService: SMSService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 <code>PostService</code> 中，<code>showMessage()</code> 只使用了 <code>SMSService</code> 的 <code>sendMessage()</code>，卻需要相依整個 <code>SMSService</code>，若能讓 <code>PostService</code> 與 <code>SMSService</code> 之間的相依僅限於 <code>Sendable</code> interface，將大大降低 <code>PostService</code> 與 <code>SMSService</code> 之間的耦合。</p>
+<p><strong><em>重構後</em></strong></p>
 <p><strong>Printable</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Printable </span>&#123;</span><br><span class="line">  printMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>定義 <code>Printable</code> interface，其中只有 <code>printMessage()</code>。</p>
