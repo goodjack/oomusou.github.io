@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入探討 Angular 的依賴注入與 Provider | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="讓前端也能使用後端常用的開發技巧">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="讓前端也能使用後端常用的開發技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探討 Angular 的依賴注入與 Provider">
+<meta property="og:url" content="http://oomusou.io/angular/angular-di/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-03-05T15:06:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探討 Angular 的依賴注入與 Provider">
+<meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 深入探討 Angular 的依賴注入與 Provider</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 讓前端也能使用後端常用的開發技巧			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼需要_DI?"><span class="toc-article-text">為什麼需要 DI?</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#無_DI_版本"><span class="toc-article-text">無 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Brittle"><span class="toc-article-text">Brittle</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Inflexible"><span class="toc-article-text">Inflexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Hard_to_Test"><span class="toc-article-text">Hard to Test</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#有_DI_版本"><span class="toc-article-text">有 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Robust"><span class="toc-article-text">Robust</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Flexible"><span class="toc-article-text">Flexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Testable"><span class="toc-article-text">Testable</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#DI_搭配工廠模式"><span class="toc-article-text">DI 搭配工廠模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Angular_的_Provider"><span class="toc-article-text">Angular 的 Provider</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_Interface"><span class="toc-article-text">Provider 搭配 Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_useFactory"><span class="toc-article-text">Provider 搭配 useFactory</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#重構_Service"><span class="toc-article-text">重構 Service</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><p>Angular CLI 1.0.0-rc.0</p>
+<p>Angular 2.4.9</p>
+<p>WebStorm 2016.3.3</p>
+<h2 id="為什麼需要_DI?">為什麼需要 DI?</h2><p>DI (Dependency Injection) 對於很多前端開發者是個陌生的名詞，畢竟以前沒有 DI 時，也沒有什麼東西寫不出來，為什麼 Angular 要全面提供 DI 與 provider 呢？</p>
+<p>我們先來建立兩個簡單的 service，來觀察有用 DI 與沒用 DI 的差異。</p>
+<h3 id="無_DI_版本">無 DI 版本</h3><p><strong>PostService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">'./sms.service'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> smsService : SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = <span class="keyword">new</span> SMSService();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>PostService</code> 的 <code>showMessage()</code> 需要使用到 <code>SMSService</code> 的 <code>sendMessage()</code>，因此我們在 constructor 內建立 <code>SMSService</code> 物件 。</p>
+<p><strong>SMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService &#123;</span><br><span class="line">  </span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SMSService</code> 提供了 <code>printMessage()</code> 與 <code>sendMessage()</code> 兩個 method。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppComponent</code> 因為需要用到 <code>PostService</code>，所以也在 constructor 內建立 <code>PostService</code> 物件。</p>
+<p>目前看起來沒什麼問題，程式也能正常執行，我們之前也都是這樣寫程式。</p>
+<p>但是 <code>PostService</code> 使用 <code>new</code> 這種寫法有 3 大缺點：<strong><em>Brittle、Inflexible、Hard to Test</em></strong>。</p>
+<h4 id="Brittle">Brittle</h4><p>由於我們是在 <code>PostService</code> 內去 new <code>SMSService</code>，而 new 是透過 constructor 去建立物件，若今天 <code>SMSService</code> 的 constructor 增加或減少參數，勢必 <code>PostService</code> 必須跟著修改，如 <code>this.smsService = new SMSService(theNewParameter)</code>。</p>
+<p>也就是說，一個物件會因為其相依物件的 constructor 參數修改，而連帶必須跟著修改，因此說其為 <strong><em>brittle</em></strong>。</p>
+<h4 id="Inflexible">Inflexible</h4><p>目前 <code>PostService</code> 直接 new <code>SMSService</code>，若將來需求改變，想要換其他簡訊服務，如原本為 AWS 簡訊服務，換成 Azure 的簡訊服務，目前無法做到，因為 <code>PostService</code> 已經直接與 <code>SMSService</code> 耦合在一起。</p>
+<p>也就是說，在程式碼內直接去 new 物件，就類似主機板將記憶體直接焊死 on board，想要擴充都無法擴充，因此說其為 <strong><em>inflexible</em></strong>。</p>
+<h4 id="Hard_to_Test">Hard to Test</h4><p>當我們想對 <code>PostService</code> 做單元測試時，由於 <code>PostService</code> 相依了 <code>SMSService</code>，因此 <code>SMSService</code> 的所有行為將會影響 <code>PostService</code>，如 <code>SMSServce</code> 可能是非同步，可能每次都要收費，但這些都不是我們對 <code>PostService</code> 單元測試想要的，我們只想單純測試 <code>PostService</code> 的行為，因此我們希望對 <code>SMSService</code> 加以隔離，讓我們在單元測試做一個 <code>假SMSService</code> 去取代，但因為 <code>SMSService</code> 被 <code>PostService</code> 建立在內部，因此儘管我們建立了一個 <code>假SMSService</code>，也無從取代內部的 <code>SMSService</code>。</p>
+<p>也就是說，在程式碼內直接去 new 物件，在單元測試時會無法在外部以假物件去取代，因此說其為 <strong><em>hard to test</em></strong>。</p>
+<h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>PostService</code> 能 <strong><em>robut、flexible 與 testable</em></strong> 呢?</p>
+<p>其實很簡單，只要將 new 改成用 contructor 的參數，這就是 DI 了。</p>
+<p><strong>PostService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> smsService : SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>從 new 改成 constructor 參數。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> SMSService)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> SMSService)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為改用 DI，所以在 new <code>PostService</code> 時，就必須將 <code>SMSService</code> 物件帶入。</p>
+<p>當使用 DI 後，<code>PostService</code> 與 <code>SMSService</code> 就解耦合了，<code>PostService</code> 不在內部決定其相依物件，反之改由外部注入相依物件，因此我們可由外部傳入任何物件，只要其符合 constructor 參數型別的要求即可。</p>
+<p> <code>PostService</code> 使用 DI 這種寫法有 3 大優點：<strong><em>Robut、Flexible、Testable</em></strong>。</p>
+<h4 id="Robust">Robust</h4><p>若 <code>SMSService</code> 的 constructor 新增了參數 :</p>
+<p><strong>SMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> logService: LogService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(logService: LogService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.logService = logService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>constructor 增加了 <code>logService: LogService</code> 參數。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> SMSService(<span class="keyword">new</span> LogService));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppComponent</code> 新增加 <code>new LogService</code>。</p>
+<p>但 <code>PostService</code> 不用做任何修改。</p>
+<p>也就是說將來無論相依物件怎麼修改，原 class 都不用修改，因此說其為 <strong><em>Robust</em></strong>。</p>
+<h4 id="Flexible">Flexible</h4><p>若原本為 AWS 簡訊服務，想要換成 Azure 簡訊服務</p>
+<p><strong>AzureSMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AzureSMSService extends SMSService &#123;</span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Azure Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Azure Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增 <code>AzureSMSService</code> ，並繼承原本的 <code>SMSService</code>，將原本的 <code>printMessage()</code> 與 <code>sendMessage()</code> 加以 override，換成 Azure 簡訊服務。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> AzureSMSService);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppComponent</code> 改注入 <code>AzureSMSService</code>。</p>
+<p>但 <code>PostService</code> 不用做任何修改。</p>
+<p>也就是說將來若有新的需求，只要新增 class 即可，原 class 都不用修改，因此說其為 <strong><em>Flexible</em></strong>。</p>
+<h4 id="Testable">Testable</h4><p>若要對 <code>PostService</code> 做單元測試，可建立 <code>假SMSService</code> 取代原來的 <code>SMSService</code>。</p>
+<p><strong>MockSMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> MockSMSService extends SMSService &#123;</span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Mock Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Mock Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立假的 <code>MockSMSService</code>，並繼承原本的 <code>SMSService</code>，將原本的 <code>printMessage()</code> 與 <code>sendMessage()</code> 加以 override，換成假的簡訊服務。</p>
+<p><strong>PostServiceTest</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> MockSMSService());</span><br></pre></td></tr></table></figure>
+<p>建立測試物件時，直接注入假的 <code>MockService</code>，如此就能完全隔離原本 <code>SMSService</code> 的所有功能，只執行我們假物件的功能。</p>
+<p>也就是說若要單元測試，只要建立其相依物件的假物件，並加以注入，如此就能隔離原本相依物件的功能，因此說其為 <strong><em>Testable</em></strong>。</p>
+<blockquote>
+<p>DI 只是一種程式風格，將相依物件改由外界透過 constructor 注入，而不是在內部自己 new 產生。</p>
+</blockquote>
+<h2 id="DI_搭配工廠模式">DI 搭配工廠模式</h2><p>DI 雖然對於 service 本身很有利，無論其相依物件如何修改，service 本身都不用修改，完美達成 SOLID 所謂的<strong>開放封閉原則</strong>，但對於使用 service 的  component 卻很辛苦。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = <span class="keyword">new</span> PostService(<span class="keyword">new</span> SMSService);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Component 必須使用 <code>new PostService(new SMSService)</code> 這種巢狀的方式才能建立物件，若相依物件有更多層，則 new 的寫法將相當恐怖。</p>
+<p>若使用設計模式的<strong>工廠模式</strong>，則狀況會好一點。</p>
+<p><strong>PostServiceFactory</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostServiceFactory &#123;</span><br><span class="line">  <span class="keyword">static</span> createPostService(): PostService &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PostService(<span class="keyword">this</span>.createSMSService());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> createSMSService() : SMSService &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> SMSService();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立一個 <code>PostServiceFactory</code> 專門負責建立物件取代 <code>new</code>。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostServiceFactory&#125; from <span class="string">"./post-service-factory"</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> postService: PostService;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.postService = PostServiceFactory.createPostService();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.postService = PostServiceFactory.createPostService();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原本在 constructor 的 new 改用 <code>PostServiceFactory</code> 取代，最少日後其他 component 要建立 <code>PostService</code> 都改用 <code>PostServiceFactory</code>，不用再使用很恐怖的 new。</p>
+<p>不過這樣寫仍有些問題。</p>
+<p>若 <code>PostService</code> 的依賴物件很多，或依賴物件的層數很深，則 <code>PostServiceFactory</code> 將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解法。</p>
+<h2 id="Angular_的_Provider">Angular 的 Provider</h2><p>Angular 提供了 Provider，專門替我們建立 service，解決<strong>工廠模式</strong>所面臨的問題。</p>
+<p><img src="/images/angular/di/di000.svg" alt="di000"></p>
+<p>原本我們透過<strong>工廠模式</strong>自己處理 service 的 DI，現在改由 Angular 的 provider 接手。</p>
+<p><strong>PostService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private smsService: SMSService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>PostService</code> 相依 <code>SMSService</code> 部分，全部改由 DI 方式。</p>
+<p>直接加上 <code>private</code>，TypeScript 會展開成為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">private</span> smsService: SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這算是 TypeScript  的  syntax sugar，讓我們不用宣告 private field 與 寫 initialization code。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    &#123;provide: PostService, useClass: PostService&#125;,</span><br><span class="line">    &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppComponent</code> 相依 <code>PostService</code> 部分，全部改由 DI 方式。</p>
+<p>除此之外，要在 component 的 decorator 加上 <code>providers</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: PostService, useClass: PostService&#125;,</span><br><span class="line">  &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>Provider 的目的，在於 DI 時，幫我們自動注入物件，但是 Angular 要怎麼知道該注入什麼物件呢？這裏沒有黑魔法，我們要實際告訴 Angular 一個 mapping table，讓 provider 在自動注入時有所依據，<code>providers</code> 的陣列，就是 provider 所仰賴的 mapping table。</p>
+<p>有幾個 service，就要提供幾筆 mapping 資料，這裡我們有  <code>PostService</code> 與 <code>SMSService</code>，所以有兩筆。</p>
+<p>以 <code>PostService</code> 為例：</p>
+<ul>
+<li>當遇到型別為 <code>PostService</code>時，請注入<code>PostService</code> 的物件。</li>
+<li><code>provide</code> 為 service 宣告的型別，<code>useClass</code> 則為 service 要實際注入的型別。</li>
+</ul>
+<p>大部分狀況下，若沒有使用 interface 或 abstract class，<code>provide</code> 與 <code>useClass</code> 會相同，也就是直接注入該型別的物件。</p>
+<p>此時可簡寫為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  PostService,</span><br><span class="line">  SMSService</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>Angular 會自動展開成</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: PostService, useClass: PostService&#125;,</span><br><span class="line">  &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>當改用 provider 後，無論有相依的 service 有多少，相依的 service 層數有多深，我們不用為很多層的 new 傷腦筋，也不用為<strong>工廠模式</strong>的爆炸傷腦筋，只要記住一件事情：</p>
+<blockquote>
+<p>有用到幾個 service，就在 providers 註冊幾個 service。</p>
+</blockquote>
+<p>剩下就交給 Angular 幫你操心了。</p>
+<h2 id="Provider_搭配_Interface">Provider 搭配 Interface</h2><p>為了讓 class 實現不同的角色，且讓 class 與 class 之間的耦合降低，讓物件不要直接相依某個物件，而是僅相依於 interface，實務上需要讓  provider 根據 interface 注入物件。</p>
+<p><strong><em>重構前</em></strong></p>
+<p><strong>SMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>PostService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private smsService: SMSService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>PostService</code> 中，<code>showMessage()</code> 只使用了 <code>SMSService</code> 的 <code>sendMessage()</code>，卻需要相依整個 <code>SMSService</code>，若能讓 <code>PostService</code> 與 <code>SMSService</code> 之間的相依僅限於 <code>Sendable</code> interface，將大大降低 <code>PostService</code> 與 <code>SMSService</code> 之間的耦合。</p>
+<p><strong>Printable</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Printable </span>&#123;</span><br><span class="line">  printMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>Printable</code> interface，其中只有 <code>printMessage()</code>。</p>
+<p><strong>Sendable</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Sendable </span>&#123;</span><br><span class="line">  sendMessage(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>Sendable</code> interface，其中只有 <code>sendMessage()</code>。</p>
+<p><strong>SMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Printable&#125; from <span class="string">"./printable"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService <span class="keyword">implements</span> Printable, Sendable&#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SMSService</code> 去 implement <code>Printable</code> 與 <code>Sendable</code>。</p>
+<p><strong>PostService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private smsService: Sendable) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>PostService</code> 事實上只需要 <code>SMSService</code> 的 <code>sendMessage()</code>，因此只需相依 <code>Sendable</code> interface 即可，不需去相依 <code>SMSService</code> 整個 class，如此 <code>PostService</code> 與 <code>SMSService</code> 的耦合將降低到只有 <code>Sendable</code> interface 而已。</p>
+<p>但 <code>AppComponent</code> 的 provider 該怎麼寫呢？</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    PostService,</span><br><span class="line">    &#123;provide: Sendable, useClass: SMSService&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  PostService,</span><br><span class="line">  &#123;provide: Sendable, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>原來的 <code>PostService</code> 不變，但 <code>SMSService</code> 需改成 <code>{provide: Sendable, useClass: SMSService}</code>，告訴 Angular 當遇到 <code>Sendable</code> interface 時，請注入 <code>SMSService</code> 物件。</p>
+<p>當 <code>PostService</code> 與 <code>SMSService</code> 的相依僅限於 <code>Sendable</code> interface 時，大大降低 <code>PostService</code> 與 <code>SMService</code> 之間的耦合，也就是<strong>設計模式</strong>一書所說的：</p>
+<blockquote>
+<p>根據 interface 寫程式，不要根據 class 寫程式</p>
+</blockquote>
+<p>白話就是</p>
+<blockquote>
+<p>若要降低物件之間的耦合程度，讓物件之間方便抽換與組合，就讓物件與物件之間僅相依於 interface，而不要直接相依於 class</p>
+</blockquote>
+<p>更白話就是</p>
+<blockquote>
+<p>黑貓白貓，能抓老鼠的就是好貓</p>
+<p>黑貓白貓就是 class，能抓老鼠就是 interface</p>
+</blockquote>
+<p>不過最後實際存檔時，卻出現編譯錯誤。<img src="/images/angular/di/di001.png" alt="di001"></p>
+<p>Angular 編譯時抱怨找不到 <code>Sendable</code> interface。</p>
+<p>在 <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="external">Angular/Guide/Dependency Injection</a> 一文中特別強調 :</p>
+<blockquote>
+<p>TypeScript interfaces aren’t valid tokens.</p>
+<p>That seems strange if we’re used to dependency injection in strongly typed languages, where an interface is the preferred dependency lookup key.</p>
+<p>It’s not Angular’s fault. An interface is a TypeScript design-time artifact. JavaScript doesn’t have interfaces. The TypeScript interface disappears from the generated JavaScript. There is no interface type information left for Angular to find at runtime.</p>
+</blockquote>
+<p>這並不是 Angular 或 TypeScript 的錯，因為 JavaScript 本來就沒 interface，interface 為 TypeScript 所擴充，因此編譯後會找不到 interface。</p>
+<p>既然 interface 不能用，我們只能用些小技巧。</p>
+<p><strong>Printable</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> Printable &#123;</span><br><span class="line">  abstract printMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Senable</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> Sendable &#123;</span><br><span class="line">  abstract sendMessage(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 interface 全改成 abstract class。</p>
+<p>存檔後 provider 就正常了。</p>
+<p>事實上這並不是什奇技淫巧，在我們天天在 implement 的 <code>OnInit</code>，事實上就是個 abstract class。</p>
+<p><a href="https://github.com/angular/angular/blob/2.4.8/modules/%40angular/core/src/metadata/lifecycle_hooks.ts#L52-L69" target="_blank" rel="external">lifycycle_hooks.ts</a></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> OnInit &#123; abstract ngOnInit(): <span class="built_in">void</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>因為 JavaScript 沒有 interface，我們只能拿 abstract class 當 interface 用。</p>
+<h2 id="Provider_搭配_useFactory">Provider 搭配 useFactory</h2><p>因需求改變，原本使用的是 AWS 簡訊服務，但需求端想改用 Azure 簡訊服務，且希望原來 AWS 簡訊服務暫時留著，因為日後有可能又會從 Azure 改成 AWS。</p>
+<p><strong>AWSSMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Printable&#125; from <span class="string">"./printable"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AWSSMSService <span class="keyword">implements</span> Printable, Sendable&#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print AWS Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send AWS Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先將原本的 <code>SMSService</code> 重構成 <code>AWSSMSService</code>。</p>
+<p><strong>AzureSMSService</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Printable&#125; from <span class="string">"./printable"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AzureSMSService <span class="keyword">implements</span> Printable, Sendable&#123;</span><br><span class="line"></span><br><span class="line">  printMessage() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Azure Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Azure Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>AzureSMSService</code>，一樣 implement <code>Printable</code> 與 <code>Sendable</code> interface。</p>
+<p><strong>environments.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;AzureSMSService&#125; from <span class="string">"../app/azure-sms.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;AWSSMSService&#125; from <span class="string">"../app/aws-sms.service"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  production: <span class="literal">false</span>,</span><br><span class="line">  SMSService: AzureSMSService,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <code>environment.ts</code> 增加 <code>SMSService</code> 設定，可在此設定要使用 <code>AzureSMSService</code> 或 <code>AWSSMSService</code>。</p>
+<p><strong>SMSServiceProvider</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Sendable&#125; from <span class="string">"./sendable"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;environment&#125; from <span class="string">"../environments/environment"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> SMSServiceProvider = &#123;</span><br><span class="line">  provide: Sendable,</span><br><span class="line">  useFactory: () =&gt; <span class="keyword">new</span> (environment.SMSService)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>為了將來其他 componet 要共用此 provider 方便，特別獨立出 <code>SMSServiceProvider</code>。</p>
+<p>使用 <code>useFactory</code>，依 <code>environment.SMSService</code> 的設定 new 出 <code>AzureSMSService</code> 或  <code>AWSSMSService</code>。</p>
+<p><strong>AppComponent</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">"./post.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSServiceProvider&#125; from <span class="string">"./smsservice-provider"</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    PostService,</span><br><span class="line">    SMSServiceProvider,</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.postService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>providers</code> 改成使用 <code>SMSServiceProvider</code>。</p>
+<p>如此之後，儘管有新增新的 <code>SMSService</code>，只要也 implement <code>Printable</code> 與 <code>Sendable</code> interface，並在 <code>environments.ts</code> 設定新的 <code>SMSService</code> 即可，<code>PostService</code>、 <code>AppComponent</code> 與 <code>SMSServiceProvider</code> 都不用修改，完美達成 SOLID <strong>開放封閉原則</strong>的要求。</p>
+<h2 id="重構_Service">重構 Service</h2><p>目前全部的 service 都在 app 目錄下有點亂，透過 WebStorm，我們可以將所有 service 加以重構，完全不用修改任何程式碼。</p>
+<p><img src="/images/angular/di/di002.png" alt="di002"></p>
+<p>重構前，所有 service 都在 <code>app</code> 目錄下。</p>
+<p><img src="/images/angular/di/di003.png" alt="di003"></p>
+<p>重構之後井井有條：</p>
+<ul>
+<li><code>PostService</code> 放在 <code>app/services/post</code> 目錄下。</li>
+<li><code>AWSSMSService</code> 、<code>AzureSMSService</code> 與 <code>SMSServiceProvider</code> 放在 <code>app/services/sms</code> 目錄下。</li>
+<li><code>Printable</code> 與 <code>Senable</code> 放在 <code>app/services/interfaces</code> 目錄下。</li>
+</ul>
+<p>WebStorm 會幫我們修改所有的 import 路徑，完全不用我們操心。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>DI 雖然好用，但要搭配 provider 才能發揮全部威力，達成物件導向的終極目標：<strong>開放封閉原則</strong>，所幸 Angular 已經提供完整的 DI + provider，讓我們在後端的開發經驗能繼續用在前端。</li>
+</ul>
+<h2 id="Reference">Reference</h2><p>Google, <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="external">Angular/Guide/Dependency Injection</a></p>
+<p>Google, <a href="https://angular.io/docs/ts/latest/cookbook/dependency-injection.html" target="_blank" rel="external">Angular/Cookbook/Dependency Injection</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/refactor/refactor-in-action/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-03-08 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
