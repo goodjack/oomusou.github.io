@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-03-05T15:06:45.000Z">
+<meta property="og:updated_time" content="2017-03-05T15:21:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的依賴注入與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -126,11 +126,11 @@
 <p>目前看起來沒什麼問題，程式也能正常執行，我們之前也都是這樣寫程式。</p>
 <p>但是 <code>PostService</code> 使用 <code>new</code> 這種寫法有 3 大缺點：<strong><em>Brittle、Inflexible、Hard to Test</em></strong>。</p>
 <h4 id="Brittle">Brittle</h4><p>由於我們是在 <code>PostService</code> 內去 new <code>SMSService</code>，而 new 是透過 constructor 去建立物件，若今天 <code>SMSService</code> 的 constructor 增加或減少參數，勢必 <code>PostService</code> 必須跟著修改，如 <code>this.smsService = new SMSService(theNewParameter)</code>。</p>
-<p>也就是說，一個物件會因為其相依物件的 constructor 參數修改，而連帶必須跟著修改，因此說其為 <strong><em>brittle</em></strong>。</p>
+<p>也就是說，一個物件會因為其相依物件的 constructor 參數修改，而連帶必須跟著修改，因此說其為 <strong><em>Brittle</em></strong>。</p>
 <h4 id="Inflexible">Inflexible</h4><p>目前 <code>PostService</code> 直接 new <code>SMSService</code>，若將來需求改變，想要換其他簡訊服務，如原本為 AWS 簡訊服務，換成 Azure 的簡訊服務，目前無法做到，因為 <code>PostService</code> 已經直接與 <code>SMSService</code> 耦合在一起。</p>
-<p>也就是說，在程式碼內直接去 new 物件，就類似主機板將記憶體直接焊死 on board，想要擴充都無法擴充，因此說其為 <strong><em>inflexible</em></strong>。</p>
+<p>也就是說，在程式碼內直接去 new 物件，就類似主機板將記憶體直接焊死 on board，想要擴充都無法擴充，因此說其為 <strong><em>Inflexible</em></strong>。</p>
 <h4 id="Hard_to_Test">Hard to Test</h4><p>當我們想對 <code>PostService</code> 做單元測試時，由於 <code>PostService</code> 相依了 <code>SMSService</code>，因此 <code>SMSService</code> 的所有行為將會影響 <code>PostService</code>，如 <code>SMSServce</code> 可能是非同步，可能每次都要收費，但這些都不是我們對 <code>PostService</code> 單元測試想要的，我們只想單純測試 <code>PostService</code> 的行為，因此我們希望對 <code>SMSService</code> 加以隔離，讓我們在單元測試做一個 <code>假SMSService</code> 去取代，但因為 <code>SMSService</code> 被 <code>PostService</code> 建立在內部，因此儘管我們建立了一個 <code>假SMSService</code>，也無從取代內部的 <code>SMSService</code>。</p>
-<p>也就是說，在程式碼內直接去 new 物件，在單元測試時會無法在外部以假物件去取代，因此說其為 <strong><em>hard to test</em></strong>。</p>
+<p>也就是說，在程式碼內直接去 new 物件，在單元測試時會無法在外部以假物件去取代，因此說其為 <strong><em>Hard to Test</em></strong>。</p>
 <h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>PostService</code> 能 <strong><em>robut、flexible 與 testable</em></strong> 呢?</p>
 <p>其實很簡單，只要將 new 改成用 contructor 的參數，這就是 DI 了。</p>
 <p><strong>PostService</strong></p>
