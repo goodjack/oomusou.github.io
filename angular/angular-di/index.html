@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-03-05T15:21:31.000Z">
+<meta property="og:updated_time" content="2017-03-05T15:22:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的依賴注入與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -131,7 +131,7 @@
 <p>也就是說，在程式碼內直接去 new 物件，就類似主機板將記憶體直接焊死 on board，想要擴充都無法擴充，因此說其為 <strong><em>Inflexible</em></strong>。</p>
 <h4 id="Hard_to_Test">Hard to Test</h4><p>當我們想對 <code>PostService</code> 做單元測試時，由於 <code>PostService</code> 相依了 <code>SMSService</code>，因此 <code>SMSService</code> 的所有行為將會影響 <code>PostService</code>，如 <code>SMSServce</code> 可能是非同步，可能每次都要收費，但這些都不是我們對 <code>PostService</code> 單元測試想要的，我們只想單純測試 <code>PostService</code> 的行為，因此我們希望對 <code>SMSService</code> 加以隔離，讓我們在單元測試做一個 <code>假SMSService</code> 去取代，但因為 <code>SMSService</code> 被 <code>PostService</code> 建立在內部，因此儘管我們建立了一個 <code>假SMSService</code>，也無從取代內部的 <code>SMSService</code>。</p>
 <p>也就是說，在程式碼內直接去 new 物件，在單元測試時會無法在外部以假物件去取代，因此說其為 <strong><em>Hard to Test</em></strong>。</p>
-<h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>PostService</code> 能 <strong><em>robut、flexible 與 testable</em></strong> 呢?</p>
+<h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>PostService</code> 能 <strong><em>Robut、Flexible 與 Testable</em></strong> 呢?</p>
 <p>其實很簡單，只要將 new 改成用 contructor 的參數，這就是 DI 了。</p>
 <p><strong>PostService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">"./sms.service"</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> smsService : SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
