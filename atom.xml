@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-03-05T15:27:59.000Z</updated>
+  <updated>2017-03-05T15:31:30.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-di/"/>
     <id>http://oomusou.io/angular/angular-di/</id>
     <published>2017-03-08T12:23:43.000Z</published>
-    <updated>2017-03-05T15:27:59.000Z</updated>
+    <updated>2017-03-05T15:31:30.000Z</updated>
     <content type="html"><![CDATA[<p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.0.0-rc.0</p>
@@ -222,7 +222,7 @@
 </ul>
 <p>WebStorm 會幫我們修改所有的 import 路徑，完全不用我們操心。</p>
 <h2 id="Conclusion">Conclusion</h2><ul>
-<li>DI 雖然好用，但要搭配 provider 才能發揮全部威力，達成物件導向的終極目標：<strong>開放封閉原則</strong>，所幸 Angular 已經提供完整的 DI + provider，讓我們在後端的開發經驗能繼續用在前端。</li>
+<li>DI 雖然好用，但要搭配 provider 才能發揮全部威力，達成物件導向的終極目標：<strong>開放封閉原則</strong>，所幸 Angular 已經提供完整的 DI + provider，讓我們在後端的開發經驗能繼續在前端使用。</li>
 </ul>
 <h2 id="Reference">Reference</h2><p>Google, <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="external">Angular/Guide/Dependency Injection</a></p>
 <p>Google, <a href="https://angular.io/docs/ts/latest/cookbook/dependency-injection.html" target="_blank" rel="external">Angular/Cookbook/Dependency Injection</a></p>
