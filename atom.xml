@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-03-06T16:09:30.000Z</updated>
+  <updated>2017-03-06T16:11:48.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[深入探討 Angular 的依賴注入與 Provider]]></title>
+    <title><![CDATA[深入探討 Angular 的 DI 與 Provider]]></title>
     <link href="http://oomusou.io/angular/angular-di/"/>
     <id>http://oomusou.io/angular/angular-di/</id>
     <published>2017-03-08T12:23:43.000Z</published>
-    <updated>2017-03-06T16:09:30.000Z</updated>
+    <updated>2017-03-06T16:11:48.000Z</updated>
     <content type="html"><![CDATA[<p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.0.0-rc.0</p>
