@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-03-06T15:52:09.000Z</updated>
+  <updated>2017-03-06T16:09:30.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-di/"/>
     <id>http://oomusou.io/angular/angular-di/</id>
     <published>2017-03-08T12:23:43.000Z</published>
-    <updated>2017-03-06T15:52:09.000Z</updated>
+    <updated>2017-03-06T16:09:30.000Z</updated>
     <content type="html"><![CDATA[<p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.0.0-rc.0</p>
@@ -63,7 +63,7 @@
 <p>16 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.notificationService = <span class="keyword">new</span> NotificationService(<span class="keyword">new</span> SMSService)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>因為改用 DI，所以在 new <code>NotificationService</code> 時，就必須將 <code>SMSService</code> 帶入。</p>
-<p>當使用 DI 後，<code>NotificationService</code> 與 <code>SMSService</code> 就解耦合了，<code>NotificatonService</code> 不在由內部決定其相依 service，而是由外部傳入的 service 所決定，這就是物件導向的<strong>依賴反轉原則</strong>。</p>
+<p>當使用 DI 後，<code>NotificationService</code> 與 <code>SMSService</code> 就解耦合了，<code>NotificatonService</code> 不再由內部決定其相依 service，而是由外部傳入的 service 所決定，這就是物件導向的<strong>依賴反轉原則</strong>。</p>
 <p> <code>NotificationService</code> 使用 DI 這種寫法有 3 大優點：<strong><em>Robut、Flexible、Testable</em></strong>。</p>
 <h4 id="Robust">Robust</h4><p>若 <code>SMSService</code> 的 constructor 新增了參數 :</p>
 <p><strong>SMSService</strong></p>
@@ -126,14 +126,14 @@
 </ul>
 <p>constructor 參數直接加上 <code>private</code>，TypeScript 會展開成為</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NotificationService &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">private</span> smsService: SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這算是 TypeScript  的  syntax sugar，讓我們不用宣告 private field 與寫 field 的initialization code，讓程式碼更加乾淨。</p>
+<p>這算是 TypeScript  的  syntax sugar，讓我們不用宣告 private field 與寫 field 的 initialization code，讓程式碼更加乾淨。</p>
 <p><strong>AppComponent</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NotificationService&#125; from <span class="string">'./notification.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">'./sms.service'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    &#123;provide: NotificationService, useClass: NotificationService&#125;,</span><br><span class="line">    &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private notificationService: NotificationService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.notificationService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>AppComponent</code> 相依 <code>NotificationService</code> 部分，全部改由 DI 方式。</p>
 <p>除此之外，要在 component 的 decorator 加上 <code>providers</code>。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: NotificationService, useClass: NotificationService&#125;,</span><br><span class="line">  &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>Provider 的目的，在於 DI 時，幫我們自動注入 service，但是 Angular 要怎麼知道該注入什麼 service 呢？這裏沒有黑魔法，我們要實際告訴 Angular 一個 mapping table，讓 provider 在自動注入時有所依據，<code>providers</code> 的陣列，就是 provider 所仰賴的 mapping table。</p>
-<p>有幾個 service，就要提供幾筆 mapping 資料，這裡我們有  <code>NotificationService</code> 與 <code>SMSService</code>，所以有 <code>providers</code> 就有兩筆。</p>
+<p>有幾個 service，就要提供幾筆 mapping 資料，這裡我們有  <code>NotificationService</code> 與 <code>SMSService</code>，所以 <code>providers</code> 就有兩筆資料。</p>
 <p>以 <code>NotificationService</code> 為例，我們希望 provider 幫我們：</p>
 <ul>
 <li>當遇到型別為 <code>NotificationService</code>時，請注入<code>NotiticationService</code> 這個 service。</li>
@@ -177,16 +177,16 @@
 <p>原來的 <code>NotificationService</code> 不變，但 <code>SMSService</code> 需改成 <code>{provide: ISendable, useClass: SMSService}</code>，告訴 Angular 當遇到 <code>ISendable</code> interface 時，請注入 <code>SMSService</code> 這個 service。</p>
 <p>當 <code>NotificationService</code> 與 <code>SMSService</code> 的相依僅限於 <code>ISendable</code> interface 時，大大降低 <code>NotificationService</code> 與 <code>SMService</code> 之間的耦合，也就是<strong>設計模式</strong>一書所說的：</p>
 <blockquote>
-<p>根據 interface 寫程式，不要根據 class 寫程式</p>
+<p>根據 interface 寫程式，不要根據 class 寫程式。</p>
 </blockquote>
 <p>白話就是</p>
 <blockquote>
-<p>若要降低 service 之間的耦合程度，讓 service 之間方便抽換與組合，就讓 service 與service 之間僅相依於 interface，而不要直接相依於 service</p>
+<p>若要降低 service 之間的耦合程度，讓 service 之間方便抽換與組合，就讓 service 與service 之間僅相依於 interface，而不要直接相依於 service。</p>
 </blockquote>
 <p>更白話就是</p>
 <blockquote>
-<p>黑貓白貓，能抓老鼠的就是好貓</p>
-<p>黑貓白貓就是 service，能抓老鼠就是 interface</p>
+<p>黑貓白貓，能抓老鼠的就是好貓。</p>
+<p>黑貓白貓就是 service，能抓老鼠就是 interface。</p>
 </blockquote>
 <p>不過最後實際存檔時，卻出現編譯錯誤。</p>
 <p><img src="/images/angular/di/di001.png" alt="di001"></p>
@@ -220,7 +220,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;AzureSMSService&#125; from <span class="string">"../app/azure-sms.service"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;AWSSMSService&#125; from <span class="string">"../app/aws-sms.service"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  production: <span class="literal">false</span>,</span><br><span class="line">  SMSService: AzureSMSService,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>在 <code>environment.ts</code> 增加 <code>SMSService</code> 設定，可在此設定要使用 <code>AzureSMSService</code> 或 <code>AWSSMSService</code>。</p>
 <blockquote>
-<p>一般我們會在設定檔使用字串做設定，因為 provider 主要就是用來建立 service，所以可以直接在設定檔內使用 service 的 class，就不必靠 reflection 將由字串建立 service，且還可受到 TypeScript 強型別的編譯器保護。</p>
+<p>一般我們會在設定檔使用字串做設定，因為 provider 主要就是用來建立 service，所以可以直接在設定檔內使用 service 的 class，就不必靠 reflection 將由字串建立 service，且還可受到 TypeScript 強型別的編譯保護。</p>
 </blockquote>
 <p><strong>SMSServiceProvider</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ISendable&#125; from <span class="string">"./isendable"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;environment&#125; from <span class="string">"../environments/environment"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> SMSServiceProvider = &#123;</span><br><span class="line">  provide: Sendable,</span><br><span class="line">  useFactory: () =&gt; <span class="keyword">new</span> (environment.SMSService)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -229,7 +229,7 @@
 <p><strong>AppComponent</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NotificationService&#125; from <span class="string">'./notification.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSServiceProvider&#125; from <span class="string">'./smsservice-provider'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    NotificationService,</span><br><span class="line">    SMSServiceProvider,</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private notificationService: NotificationService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.notificationService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>providers</code> 改成使用 <code>SMSServiceProvider</code>。</p>
-<p>如此之後，儘管有新增新的 <code>SMSService</code>，只要也 implement <code>IPrintable</code> 與 <code>ISendable</code> interface，並在 <code>environments.ts</code> 設定新的 <code>SMSService</code> 即可，<code>NotificattionService</code>、 <code>AppComponent</code> 與 <code>SMSServiceProvider</code> 都不用修改，達成物件導向<strong>開放封閉原則</strong>的要求。</p>
+<p>如此之後，儘管有新增新的 <code>SMSService</code>，只要也 implement <code>IPrintable</code> 與 <code>ISendable</code> interface，並在 <code>environments.ts</code> 設定新的 <code>SMSService</code> 即可，<code>NotificattionService</code>、 <code>AppComponent</code> 與 <code>SMSServiceProvider</code> 都不用修改，達成物件導向的<strong>開放封閉原則</strong>。</p>
 <h2 id="重構_Service">重構 Service</h2><p>目前全部的 service 都在 app 目錄下有點亂，透過 WebStorm，我們可以將所有 service 加以重構，完全不用人工修改任何程式碼。</p>
 <p><img src="/images/angular/di/di002.png" alt="di002"></p>
 <p>重構前，所有 service 都在 <code>app</code> 目錄下。</p>
