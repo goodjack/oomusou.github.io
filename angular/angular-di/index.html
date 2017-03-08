@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-03-07T15:44:19.000Z">
+<meta property="og:updated_time" content="2017-03-08T05:56:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的 DI 與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -210,13 +210,8 @@
 <p>16 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.notificationService = NotificationServiceFactory.createNotificationService();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>原本在 constructor 的 new 改用 <code>NotificationServiceFactory</code> 取代，最少日後其他 component 要建立 <code>NotificationService</code> 都改用 <code>NotificationServiceFactory</code>，不用再使用很恐怖的 new。</p>
-<p>不過這樣寫法仍有些問題：</p>
-<ul>
-<li>若將來有新增其他相依 service，則 <code>NotificationServiceFactory</code> 仍需要新增 <code>createService</code> method，所以並沒有完全符合<strong>開放封閉原則</strong>。</li>
-</ul>
-<ul>
-<li>若 <code>NotificationService</code> 所依賴的 service 很多，或依賴的 service 層數很深，則 <code>NotificationServiceFactory</code> 的 method 數量將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解法。</li>
-</ul>
+<p>不過這樣寫法仍有些問題。</p>
+<p>若 <code>NotificationService</code> 所依賴的 service 很多，或依賴的 service 層數很深，則 <code>NotificationServiceFactory</code> 的 method 數量將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解法。</p>
 <h2 id="Angular_的_Provider">Angular 的 Provider</h2><p>Angular 提供了 Provider，專門替我們建立 service，解決<strong>工廠模式</strong>所面臨的問題。</p>
 <p><img src="/images/angular/di/di000.svg" alt="di000"></p>
 <p>原本我們透過<strong>工廠模式</strong>自己處理 service 的 DI，現在改由 Angular 的 provider 接手。</p>
@@ -247,7 +242,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  NotificationService,</span><br><span class="line">  SMSService</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>Angular 會自動展開成</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: NotificationService, useClass: NotificationService&#125;,</span><br><span class="line">  &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>當改用 provider 後，無論有相依的 service 個數有多少，相依的 service 層數有多深，我們不用為很多層的 new 傷腦筋，也不用為<strong>工廠模式</strong>的沒有完全開放封閉與 method 爆炸傷腦筋，只要記住一件事情：</p>
+<p>當改用 provider 後，無論有相依的 service 個數有多少，相依的 service 層數有多深，我們不用為很多層的 new 傷腦筋，也不用為<strong>工廠模式</strong>的爆炸傷腦筋，只要記住一件事情：</p>
 <blockquote>
 <p>有用到幾個 service，就在 providers 註冊幾個 service。</p>
 </blockquote>
