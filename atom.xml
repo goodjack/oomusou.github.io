@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-03-08T05:56:25.000Z</updated>
+  <updated>2017-03-09T06:05:39.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-di/"/>
     <id>http://oomusou.io/angular/angular-di/</id>
     <published>2017-03-08T12:23:43.000Z</published>
-    <updated>2017-03-08T05:56:25.000Z</updated>
+    <updated>2017-03-09T06:05:39.000Z</updated>
     <content type="html"><![CDATA[<p>DI (Dependency Injection) 對於很多前端開發者是個陌生的名詞，畢竟以前沒有 DI 時，也沒有什麼東西寫不出來，為什麼 Angular 要全面提供 DI 與 provider 呢？</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
@@ -69,7 +69,7 @@
 <p>抽象不要依賴細節，細節要依賴抽象。</p>
 <p>高階模組不應該依賴低階模組，低階模組應該由高階模組決定其依賴。</p>
 </blockquote>
-<p> <code>NotificationService</code> 使用 DI 這種寫法有 3 大優點：<strong><em>Robut、Flexible、Testable</em></strong>。</p>
+<p> <code>NotificationService</code> 使用 DI 這種寫法有 3 大優點：<strong><em>Robust、Flexible、Testable</em></strong>。</p>
 <h4 id="Robust">Robust</h4><p>若 <code>SMSService</code> 的 constructor 新增了參數 :</p>
 <p><strong>SMSService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> logService: LogService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(logService: LogService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.logService = logService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -87,8 +87,12 @@
 <p>新增 <code>AzureSMSService</code> ，並繼承原本的 <code>SMSService</code>，將原本的 <code>printMessage()</code> 與 <code>sendMessage()</code> 加以 override，換成 Azure 簡訊服務。</p>
 <p><strong>AppComponent</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> notificationService: NotificationService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.notificationService = <span class="keyword">new</span> NotificationService(<span class="keyword">new</span> AzureSMSService);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>AppComponent</code> 改注入 <code>AzureSMSService</code>。</p>
-<p>但 <code>NotificationService</code> 完全不用做任何修改。</p>
+<p>因為物件導向的<strong>里氏替換原則</strong>，<code>AppComponent</code> 可改注入 <code>AzureSMSService</code>。</p>
+<blockquote>
+<p>里氏替換原則</p>
+<p>所有的父類別都可以由子類別代替，但子類別不一定能用父類別代替。</p>
+</blockquote>
+<p><code>NotificationService</code> 完全不用做任何修改。</p>
 <blockquote>
 <p>將來若有新的需求，只要新增 service 注入即可，原 service 都不用修改，因此說其為 <strong><em>Flexible</em></strong>。</p>
 </blockquote>
@@ -99,13 +103,12 @@
 <p><strong>NotificationServiceTest</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> notificationService = <span class="keyword">new</span> NotificationService(<span class="keyword">new</span> MockSMSService());</span><br></pre></td></tr></table></figure>
 <p>單元測試時，因為物件導向的<strong>里氏替換原則</strong>，可使用 <code>MockService</code> 取代 <code>SMSService</code>，如此就能完全隔離原本 <code>SMSService</code> ，只執行我們的假 service 的所有功能。</p>
+<!-- > Service 單元測試時，只要建立其相依 service 的假 service，並加以注入，如此就能隔離原本相依 service 的所有功能，因此說其為 ***Testable***。 -->
+<p>我們來對 DI 做個小結：</p>
 <blockquote>
-<p>里氏替換原則</p>
-<p>所有的父類別都可以由子類別代替，但子類別不一定能用父類別代替。</p>
-<p>Service 單元測試時，只要建立其相依 service 的假 service，並加以注入，如此就能隔離原本相依 service 的所有功能，因此說其為 <strong><em>Testable</em></strong>。</p>
 <p>DI 只是一種程式風格，將相依 service 改由外界透過 constructor 注入，而不是在內部自己用 new 產生。</p>
 </blockquote>
-<h2 id="DI_搭配工廠模式">DI 搭配工廠模式</h2><p>DI 雖然對於 service 本身很有利，無論其相 service 如何修改，service 本身都不用修改，也就是物件導向的<strong>開放封閉原則</strong>，但對於使用 service 的 component 卻很辛苦。</p>
+<h2 id="DI_搭配工廠模式">DI 搭配工廠模式</h2><p>DI 雖然對於 service 本身很有利，無論其相依的 service 如何修改，service 本身都不用修改，也就是物件導向的<strong>開放封閉原則</strong>，但對於使用 service 的 component 卻很辛苦。</p>
 <blockquote>
 <p>開放封閉原則</p>
 <p>對於擴展是開放的，對於修改是封閉的。</p>
@@ -124,7 +127,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.notificationService = NotificationServiceFactory.createNotificationService();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>原本在 constructor 的 new 改用 <code>NotificationServiceFactory</code> 取代，最少日後其他 component 要建立 <code>NotificationService</code> 都改用 <code>NotificationServiceFactory</code>，不用再使用很恐怖的 new。</p>
 <p>不過這樣寫法仍有些問題。</p>
-<p>若 <code>NotificationService</code> 所依賴的 service 很多，或依賴的 service 層數很深，則 <code>NotificationServiceFactory</code> 的 method 數量將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解法。</p>
+<p>若 <code>NotificationService</code> 所依賴的 service 很多，或依賴的 service 層數很深，則 <code>NotificationServiceFactory</code> 的 method 數量將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解決方案。</p>
 <h2 id="Angular_的_Provider">Angular 的 Provider</h2><p>Angular 提供了 Provider，專門替我們建立 service，解決<strong>工廠模式</strong>所面臨的問題。</p>
 <p><img src="/images/angular/di/di000.svg" alt="di000"></p>
 <p>原本我們透過<strong>工廠模式</strong>自己處理 service 的 DI，現在改由 Angular 的 provider 接手。</p>
@@ -157,7 +160,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: NotificationService, useClass: NotificationService&#125;,</span><br><span class="line">  &#123;provide: SMSService, useClass: SMSService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>當改用 provider 後，無論有相依的 service 個數有多少，相依的 service 層數有多深，我們不用為很多層的 new 傷腦筋，也不用為<strong>工廠模式</strong>的爆炸傷腦筋，只要記住一件事情：</p>
 <blockquote>
-<p>有用到幾個 service，就在 providers 註冊幾個 service。</p>
+<p>有用到幾個 service，就在 providers 註冊幾個 provider。</p>
 </blockquote>
 <p>剩下就交給 Angular 的 provider 幫我們 DI 了。</p>
 <h2 id="Provider_搭配_Interface">Provider 搭配 Interface</h2><p>為了讓 service 實現不同的角色，且讓 service 與 service 之間的耦合降低，讓 service 不要直接相依某個 service，而是僅相依於 interface，實務上需要讓  provider 根據 interface 注入 service。</p>
@@ -196,7 +199,7 @@
 </blockquote>
 <p>白話就是</p>
 <blockquote>
-<p>若要降低 service 之間的耦合程度，讓 service 之間方便抽換與組合，就讓 service 與service 之間僅相依於 interface，而不要直接相依於 service。</p>
+<p>若要降低 service 之間的耦合程度，讓 service 之間方便抽換與組合，就讓 service 與 service 之間僅相依於 interface，而不要直接相依於 service。</p>
 </blockquote>
 <p>更白話就是</p>
 <blockquote>
@@ -220,7 +223,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> ISendable &#123;</span><br><span class="line">  abstract sendMessage(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>將 interface 全改成 abstract class。</p>
 <p>存檔後 provider 就正常了。</p>
-<p>這並不是什奇技淫巧，在我們天天在用的 <code>OnInit</code>，事實上就是個 abstract class。</p>
+<p>這並不是什奇技淫巧，在我們天天在用的 <code>OnInit</code>，在 Angular 內部事實上就是個 abstract class。</p>
 <p><a href="https://github.com/angular/angular/blob/2.4.8/modules/%40angular/core/src/metadata/lifecycle_hooks.ts#L52-L69" target="_blank" rel="external">lifycycle_hooks.ts</a></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> OnInit &#123; abstract ngOnInit(): <span class="built_in">void</span>; &#125;</span><br></pre></td></tr></table></figure>
 <p>因為 JavaScript 沒有 interface，我們只能拿 abstract class 當 interface 用。</p>
