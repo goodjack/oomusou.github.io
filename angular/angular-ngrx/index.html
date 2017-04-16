@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angular 也走 Redux 風 (使用 Ngrx) | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 Redux 風格開發 Angular">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 Redux 風格開發 Angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular 也走 Redux 風 (使用 Ngrx)">
+<meta property="og:url" content="http://oomusou.io/angular/angular-ngrx/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 Redux 風格開發 Angular">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-04-16T12:03:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular 也走 Redux 風 (使用 Ngrx)">
+<meta name="twitter:description" content="使用 Redux 風格開發 Angular">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> Angular 也走 Redux 風 (使用 Ngrx)</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 Redux 風格開發 Angular			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼會有_Redux?"><span class="toc-article-text">為什麼會有 Redux?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ngrx_簡介"><span class="toc-article-text">Ngrx 簡介</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#View"><span class="toc-article-text">View</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Action"><span class="toc-article-text">Action</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Middleware"><span class="toc-article-text">Middleware</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Dispatcher"><span class="toc-article-text">Dispatcher</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Store"><span class="toc-article-text">Store</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Reducer"><span class="toc-article-text">Reducer</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#State"><span class="toc-article-text">State</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Ngrx"><span class="toc-article-text">安裝 Ngrx</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Installation"><span class="toc-article-text">Installation</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Counter_範例"><span class="toc-article-text">Counter 範例</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppModule"><span class="toc-article-text">AppModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Component"><span class="toc-article-text">Component</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Action-1"><span class="toc-article-text">Action</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Reducer-1"><span class="toc-article-text">Reducer</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Store-1"><span class="toc-article-text">Store</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Todo_範例"><span class="toc-article-text">Todo 範例</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppModule-1"><span class="toc-article-text">AppModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Component-1"><span class="toc-article-text">Component</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#AppComponent"><span class="toc-article-text">AppComponent</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#TodoList"><span class="toc-article-text">TodoList</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#TodoDashboard"><span class="toc-article-text">TodoDashboard</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Action-2"><span class="toc-article-text">Action</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Reducer-2"><span class="toc-article-text">Reducer</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Store-2"><span class="toc-article-text">Store</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ngrx_DevTools"><span class="toc-article-text">Ngrx DevTools</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Installation-1"><span class="toc-article-text">Installation</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppModule-2"><span class="toc-article-text">AppModule</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ngrx_的特色"><span class="toc-article-text">Ngrx 的特色</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ngrx_的優點"><span class="toc-article-text">Ngrx 的優點</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ngrx_的缺點"><span class="toc-article-text">Ngrx 的缺點</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#什麼時候該使用_Ngrx?"><span class="toc-article-text">什麼時候該使用 Ngrx?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Redux 起源於 React，算是一種 design pattern，適用於某些情境，也提供一些優點，Angular 也有 Redux 的實作，但 Angular 是否該使用 Redux 呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS 10.12.4<br>Angular CLI 1.0.0<br>Angular 4.0.1<br>ngrx/store 2.2.1</p>
+<h2 id="為什麼會有_Redux?">為什麼會有 Redux?</h2><hr>
+<p><img src="/images/angular/ngrx/ngrx004.png" alt="ngrx004"></p>
+<p>Facebook 由於在界面上有多個 component 都可讀取 message，且同時又從 server 端下載 message，也就是當每個 component 的 message 被讀取後，必須更新 unread message count，但 Facebook 發現 unread message count 很難維護，總是有解不完的 bug，因此提出了 Flux 架構。</p>
+<p>Redux 靈感來自於 Flux 架構，在 Angular 目前有兩套實作，一套是 <code>Ng-redux</code>，一套是 <code>Ngrx</code>。</p>
+<ul>
+<li><code>Ng-redux</code> 核心仍使用 Redux，增加對 Angular 的支援。</li>
+<li><code>Ngrx</code> 只有概念使用 Redux，核心完全使用 Rx.js 重新實作。</li>
+</ul>
+<p>目前 <code>Ngrx</code> 在 GitHub 的星星數遠高於 <code>Ng-redux</code>，本文將以 <code>Ngrx</code> 討論。</p>
+<blockquote>
+<p>Flux 是一種概念，Redux 是 Flux 在 React 的實作，Ngrx 則是 Redux 在 Angular 的實作。</p>
+</blockquote>
+<h2 id="Ngrx_簡介">Ngrx 簡介</h2><hr>
+<p><img src="/images/angular/ngrx/ngrx005.png" alt="ngrx005"></p>
+<p>將 component 與 service 的資料統一放到 store，當 store 的資料有更新，將會自動更新到有 subscribe 的 component 與 service。</p>
+<p><img src="/images/angular/ngrx/ngrx006.gif" alt="ngrx006"></p>
+<p>在使用 <code>Ngrx</code> 之前，首先必須了解一些專有名詞。</p>
+<h3 id="View">View</h3><p>相當於 component，主要在顯示使用者介面。</p>
+<h3 id="Action">Action</h3><p>當 component 有任何 event 時，會對 <code>Ngrx</code> 發出 action。</p>
+<h3 id="Middleware">Middleware</h3><p>負責存取對 server 端的 API，本文暫不討論此部分。</p>
+<h3 id="Dispatcher">Dispatcher</h3><p>負責接受 component 或 service 傳來的 action。</p>
+<h3 id="Store">Store</h3><p>可是為 <code>Ngrx</code> 在瀏覽器端的資料庫，各 component 與 service 的資料都可統一放在這裡。</p>
+<h3 id="Reducer">Reducer</h3><p>根據 dispatcher 傳來的 action 與目前的 state，決定該如何寫入下一個 state。</p>
+<p>當 state 有改變時，將通知有 subscribe 該 state 的 component 與 service 自動更新。</p>
+<h3 id="State">State</h3><p>存放在 store 內的資料。</p>
+<p><img src="/images/angular/ngrx/ngrx007.svg" alt="ngrx007"></p>
+<p>有些東西 <code>Ngrx</code> 已經幫我們做了，真的要我們自己實作只有 4 個，且為單向的 : Component -&gt; Action -&gt; Reducer -&gt; Store。</p>
+<h2 id="安裝_Ngrx">安裝 Ngrx</h2><hr>
+<h3 id="Installation">Installation</h3><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ <span class="built_in">npm</span> install <span class="property">@ngrx</span>/core <span class="property">@ngrx</span>/store --save</span><br></pre></td></tr></table></figure>
+<p>安裝 <code>@ngrx/core</code> 與 <code>@ngrx/store</code>。</p>
+<h2 id="Counter_範例">Counter 範例</h2><hr>
+<p><img src="/images/angular/ngrx/ngrx002.png" alt="ngrx002"></p>
+<h3 id="AppModule">AppModule</h3><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;FormsModule&#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;StoreModule&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;counterReducer&#125; from <span class="string">'./stores/counter/counter.reducer'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpModule,</span><br><span class="line">    StoreModule.provideStore(counterReducer),</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule,</span><br><span class="line">  HttpModule,</span><br><span class="line">  StoreModule.provideStore(counterReducer),</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>須在 <code>AppModule</code> import <code>StoreModule.provideStore()</code>，並傳入 reducer。</p>
+<h3 id="Component">Component</h3><p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>Counter: &#123;&#123; counter | async &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"increment()"</span>&gt;</span>Increment<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"decrement()"</span>&gt;</span>Decrement<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"reset()"</span>&gt;</span>Reset<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 <code>counter</code> 加上 <code>async</code> pipe，由 <code>async</code> 負責將 <code>ngrx/store</code> 來 subscribe 與 unsubscribe。</p>
+<p>但這有個限制，<code>counter</code> 必須為宣告成 <code>Observable&lt;number&gt;</code> 型別。</p>
+<p>包含了 <code>Increment</code>、<code>Decrement</code> 與 <code>Reset</code> 3 個 button。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;CounterState&#125; from <span class="string">'./stores/counter/counter.store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Store&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;DECREMENT, INCREMENT, RESET&#125; from <span class="string">'./stores/counter/counter.action'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  counter: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;CounterState&gt;) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.counter = store.select(<span class="string">'counter'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  increment() &#123;</span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">      <span class="keyword">type</span>: INCREMENT,</span><br><span class="line">      payload: &#123;</span><br><span class="line">        value: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  decrement() &#123;</span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">      <span class="keyword">type</span>: DECREMENT,</span><br><span class="line">      payload: &#123;</span><br><span class="line">        value: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  reset() &#123;</span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;<span class="keyword">type</span>: RESET&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;CounterState&gt;) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.counter = store.select(<span class="string">'counter'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將  <code>ngrx/store</code>  的 <code>Store</code> 依賴注入，它是個泛型，需傳入自己的 state 型別。</p>
+<p>由 store 的 <code>select()</code> 傳回 store 內的 <code>counter</code> field，此為 <code>Observable</code> 型別。</p>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter: Observable&lt;<span class="built_in">number</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>counter</code> 為 <code>Observable</code> 型別，其泛型為 <code>number</code>。</p>
+<blockquote>
+<p>為什麼 <code>counter</code> 不是 <code>number</code> 型別，而是 <code>Observable&lt;number&gt;</code> 呢？因為 <code>store.select()</code> 回傳的型別為 <code>Observable</code>。</p>
+</blockquote>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">increment() &#123;</span><br><span class="line">  <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">    <span class="keyword">type</span>: INCREMENT,</span><br><span class="line">    payload: &#123;</span><br><span class="line">      value: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Increment</code> button 的 event handler。</p>
+<p>將 action 透過 store 的 <code>dispatch()</code> 傳入，action 物件包含 <code>type</code> 與 <code>payload</code> 兩個 field，<code>type</code> 為欲 dispatch 的 action，而 <code>payload</code> 則為欲透過 dispatch 傳入的資料，可自行決定其物件屬性，之後會由 reducer 根據 action 與目前的 state 決定下一個 state。 </p>
+<blockquote>
+<p>可將 dispatch 概念上想成類似 event 的 emit。</p>
+</blockquote>
+<h3 id="Action-1">Action</h3><p><strong>counter.action.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INCREMENT = <span class="string">'INCREMENT'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> DECREMENT = <span class="string">'DECREMENT'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> RESET     = <span class="string">'RESET'</span>;</span><br></pre></td></tr></table></figure>
+<p>定義 action 常數，將來 component 或 service 可用 <code>dispatch()</code> 發布 action， 然後 reducer 再根據 action 做 <code>switch</code> 判斷寫入 store。</p>
+<h3 id="Reducer-1">Reducer</h3><p><strong>counter.reducer.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;CounterState, INITIAL_COUNTER_STATE&#125; from <span class="string">'./counter.store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;DECREMENT, INCREMENT, RESET&#125; from <span class="string">'./counter.action'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Action&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">counterReducer</span>(<span class="params">state: CounterState = INITIAL_COUNTER_STATE, action: Action</span>): <span class="title">CounterState</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;<span class="keyword">type</span>, payload&#125; = action;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> INCREMENT:</span><br><span class="line">      <span class="keyword">return</span> &#123;...state, counter: state.counter + payload.value&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> DECREMENT:</span><br><span class="line">      <span class="keyword">return</span> &#123;...state, counter: state.counter - payload.value&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> RESET:</span><br><span class="line">      <span class="keyword">return</span> INITIAL_COUNTER_STATE;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一個 state 會搭配一個 reducer，由 reducer 寫入 state。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">counterReducer</span>(<span class="params">state: CounterState = INITIAL_COUNTER_STATE, action: Action</span>): <span class="title">CounterState</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>Reducer 會以 state 與 action 為參數，並回傳下一個 state。</p>
+<ul>
+<li>第 1 個參數為 <code>state</code>，可設定 reducer 一開始的預設 state，傳入目前的 state。</li>
+<li>第 2 個參數為 <code>action</code>，傳入目前的 action。</li>
+</ul>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;<span class="keyword">type</span>, payload&#125; = action;</span><br></pre></td></tr></table></figure>
+<p>根據 ngrx 的 <code>dispatcher.d.ts</code> ，<code>Action</code> 的定義如下 :</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Action </span>&#123;</span><br><span class="line">  <span class="keyword">type</span>: <span class="built_in">string</span>;</span><br><span class="line">  payload?: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Action</code> 的兩個 field 為 <code>type</code> 與 <code>payload</code>，因此我們可以使用 TypeScript 2.1 的 destruction assignment，將 <code>action</code> 分解成 <code>type</code> 與 <code>payload</code> 兩個變數。</p>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">  <span class="keyword">case</span> INCREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter + payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> DECREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter - payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> RESET:</span><br><span class="line">    <span class="keyword">return</span> INITIAL_COUNTER_STATE;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>典型的 Redux 風格，在 reducer 內會根據 action 的 type 做 <code>switch case</code>。</p>
+<p>第 10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;...state, counter: state.counter + payload.value&#125;;</span><br></pre></td></tr></table></figure>
+<p>Redux 為 FP (Functional Programming) 思維的產物，要求 reducer 必須為 pure function，因此必須回傳一個新的 state，而不是去修改原本的 state。</p>
+<p>TypeScript 2.1 提供了 object spread，<code>…state</code> 會將整個物件的屬性加以展開，之後的參數為要修改的屬性值，<code>{}</code> 會將物件屬性加以合併，並回傳新的物件。</p>
+<blockquote>
+<p>傳統會使用 <code>Object.assign()</code> 的寫法，但寫法並不直覺，且因為其第二個參數需傳入物件，還必須多一層 <code>{}</code>，建議使用 Object Spread 寫法可讀性較高。</p>
+</blockquote>
+<h3 id="Store-1">Store</h3><p><strong>counter.store.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> CounterState </span>&#123;</span><br><span class="line">  counter: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_COUNTER_STATE: CounterState = &#123;</span><br><span class="line">  counter: <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 store 定義自己的 state 型別。</p>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> CounterState </span>&#123;</span><br><span class="line">  counter: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>CounterState</code> 與其 field。</p>
+<blockquote>
+<p>使用 interface 即可，因為 state 型別主要是給 TypeScript 編譯檢查與 IntelliSense 使用，而 JavaScript 沒有 interface，故編譯後 interface 會消失，若 state 使用 class，將來編譯後還會存在 class。</p>
+</blockquote>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_COUNTER_STATE: CounterState = &#123;</span><br><span class="line">  counter: <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>INITIAL_COUNTER_STATE</code> 常數，為 <code>CounterState</code> 的初始狀態。</p>
+<h2 id="Todo_範例">Todo 範例</h2><hr>
+<p><img src="/images/angular/ngrx/ngrx003.png" alt="ngrx003"></p>
+<h3 id="AppModule-1">AppModule</h3><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;FormsModule&#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoListComponent&#125; from <span class="string">'./todo-list/todo-list.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoDashboardComponent&#125; from <span class="string">'./todo-dashboard/todo-dashboard.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;StoreModule&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;todoReducer&#125; from <span class="string">'./stores/todo/todo.reducer'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    TodoListComponent,</span><br><span class="line">    TodoDashboardComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpModule,</span><br><span class="line">    StoreModule.provideStore(todoReducer)</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule,</span><br><span class="line">  HttpModule,</span><br><span class="line">  StoreModule.provideStore(todoReducer)</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>須在 <code>AppModule</code> import <code>StoreModule.provideStore()</code>，並傳入 reducer。</p>
+<h3 id="Component-1">Component</h3><h4 id="AppComponent">AppComponent</h4><p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">h1</span>&gt;</span>Todo<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-todo-list</span>&gt;</span><span class="tag">&lt;/<span class="title">app-todo-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-todo-dashboard</span>&gt;</span><span class="tag">&lt;/<span class="title">app-todo-dashboard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>包含了 <code>TodoList</code> 與 <code>TodoDashboard</code> 兩個 component。</p>
+<h4 id="TodoList">TodoList</h4><p><strong>todo-list.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> #<span class="attribute">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"addTodo(title)"</span>&gt;</span>Add<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let todo of todos | async"</span>&gt;</span></span><br><span class="line">    &#123;&#123; todo.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"removeTodo(todo)"</span>&gt;</span>Remove<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>todos</code> 為 <code>Observable</code>，需加上 <code>async</code> 將 <code>ngrx/store</code> 來 sunscribe 與 unsubscribe。</p>
+<p>但這有個限制，<code>todos</code> 必須為宣告成 <code>Observable&lt;Todo[]&gt;</code> 型別。</p>
+<p>包含了<code>Add</code> 與 <code>Remove</code> 2 個 button。</p>
+<p><strong>todo-list.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Todo, TodoState&#125; from <span class="string">'../stores/todo/todo.store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Store&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;ADD_TODO, REMOVE_TODO&#125; from <span class="string">'../stores/todo/todo.action'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-todo-list'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./todo-list.component.html'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoListComponent &#123;</span><br><span class="line">  todos: Observable&lt;Todo[]&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;TodoState&gt;) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = store.select(<span class="string">'todos'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addTodo(input: HTMLInputElement) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!input.value) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">      <span class="keyword">type</span>: ADD_TODO,</span><br><span class="line">      payload: &#123;</span><br><span class="line">        title: input.value</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    input.value = <span class="string">''</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeTodo(todo: Todo) &#123;</span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">      <span class="keyword">type</span>: REMOVE_TODO,</span><br><span class="line">      payload: &#123;</span><br><span class="line">        id: todo.id</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;TodoState&gt;) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = store.select(<span class="string">'todos'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將  <code>ngrx/store</code>  的 <code>Store</code> 依賴注入，它是個泛型，需傳入自己的 state 型別。</p>
+<p>由 store 的 <code>select()</code> 傳回 store 內的 <code>todos</code> field，此為 <code>Observable</code> 型別。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos: Observable&lt;Todo[]&gt;;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>todos</code> 為 <code>Observable</code> 型別，其泛型為 <code>Todo[]</code>。</p>
+<blockquote>
+<p>為什麼 <code>todos</code> 不是 <code>Todo[]</code> 型別，而是 <code>Observable&lt;Todo[]&gt;</code> 呢？因為 <code>store.select()</code> 回傳的型別為 <code>Observable</code>。</p>
+</blockquote>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">addTodo(input: HTMLInputElement) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!input.value) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">    <span class="keyword">type</span>: ADD_TODO,</span><br><span class="line">    payload: &#123;</span><br><span class="line">      title: input.value</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  input.value = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Add</code> button 的 event handler。</p>
+<p>將 <code>ADD_TODO</code> action 透過 store 的 <code>dispatch()</code> 傳入，action 物件包含 <code>type</code> 與 <code>payload</code> 兩個 field，<code>type</code> 為 <code>ADD_TODO</code> action，而 <code>payload</code> 則為欲新增資料的 <code>title</code>，之後會由 reducer 根據 action 與目前的 state 決定下一個 state。 </p>
+<p>33 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">removeTodo(todo: Todo) &#123;</span><br><span class="line">  <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">    <span class="keyword">type</span>: REMOVE_TODO,</span><br><span class="line">    payload: &#123;</span><br><span class="line">      id: todo.id</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Remove</code> button 的 event handler。</p>
+<p>將 <code>REMOVE_TODO</code> action 透過 store 的 <code>dispatch()</code> 傳入，action 物件包含 <code>type</code> 與 <code>payload</code> 兩個 field，<code>type</code> 為 <code>REMOVE_TODO</code> action，而 <code>payload</code> 則為欲移除資料的 <code>id</code>，之後會由 reducer 根據 action 與目前的 state 決定下一個 state。 </p>
+<h4 id="TodoDashboard">TodoDashboard</h4><p><strong>todo-dashboard.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  Last Update: &#123;&#123; lastUpdate | async | date:'mediumTime'&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  Total items: &#123;&#123; (todos | async).length &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"clearTodos()"</span>&gt;</span>Clear All<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>顯示最後更新時間與 <code>Todo</code> 筆數。</p>
+<p><code>lastUpdate</code> 與 <code>todos</code> 均為 <code>Observable</code>，需加上 <code>async</code> 將 <code>ngrx/store</code> 來 sunscribe 與 unsubscribe。</p>
+<p>包含了 <code>Clear All</code> button。</p>
+<p><strong>todo-dashboard.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Todo, TodoState&#125; from <span class="string">'../stores/todo/todo.store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Store&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;CLEAR_TODOS&#125; from <span class="string">'../stores/todo/todo.action'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-todo-dashboard'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./todo-dashboard.component.html'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoDashboardComponent &#123;</span><br><span class="line">  todos: Observable&lt;Todo[]&gt;;</span><br><span class="line">  lastUpdate: Observable&lt;<span class="built_in">Date</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;TodoState&gt;) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = store.select(<span class="string">'todos'</span>);</span><br><span class="line">    <span class="keyword">this</span>.lastUpdate = store.select(<span class="string">'lastUpdate'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clearTodos() &#123;</span><br><span class="line">    <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">      <span class="keyword">type</span>: CLEAR_TODOS</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private store: Store&lt;TodoState&gt;) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = store.select(<span class="string">'todos'</span>);</span><br><span class="line">  <span class="keyword">this</span>.lastUpdate = store.select(<span class="string">'lastUpdate'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將  <code>ngrx/store</code>  的 <code>Store</code> 依賴注入，它是個泛型，需傳入自己的 state 型別。</p>
+<p>由 store 的 <code>select()</code> 傳回 store 內的 <code>todos</code> 與 <code>lastUpdate</code>field，皆為 <code>Observable</code> 型別。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">todos: Observable&lt;Todo[]&gt;;</span><br><span class="line">lastUpdate: Observable&lt;<span class="built_in">Date</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>todos</code> 為 <code>Observable</code> 型別，其泛型為 <code>Todo[]</code>。</p>
+<p>宣告 <code>lastUpdate</code> 為 <code>Observable</code> 型別，其泛型為 <code>Date</code>。</p>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clearTodos() &#123;</span><br><span class="line">  <span class="keyword">this</span>.store.dispatch(&#123;</span><br><span class="line">    <span class="keyword">type</span>: CLEAR_TODOS</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Clear All</code> button 的 event handler。</p>
+<p>將 <code>CLEAR_TODOS</code> action 透過 store 的 <code>dispatch()</code> 傳入，action 物件包含 <code>type</code> 與 <code>payload</code> 兩個 field，<code>type</code> 為 <code>REMOVE_TODO</code> action，因為沒有要傳入的資料，因此不需 <code>payload</code>，之後會由 reducer 根據 action 與目前的 state 決定下一個 state。 </p>
+<h3 id="Action-2">Action</h3><p><strong>todo.action.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> ADD_TODO    = <span class="string">'ADD_TODO'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> REMOVE_TODO = <span class="string">'REMOVE_TODO'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CLEAR_TODOS = <span class="string">'CLEAR_TODOS'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> DEFAULT     = <span class="string">'DEFAULT'</span>;</span><br></pre></td></tr></table></figure>
+<p>在 action 定義自己的 action 常數。</p>
+<p>實務上 action 常數會以 component 或 service 所要 dispatch 的 event 設計，以本範例而言，在 component 有 <code>Add</code>、<code>Remove</code> 與 <code>Delete All</code>  3 個 button，因此會配合 3 個 button 設計出 <code>ADD_TODO</code> 、<code>REMOVE_TODO</code> 與 <code>CLEAR_TODOS</code> 3 個 action。</p>
+<h3 id="Reducer-2">Reducer</h3><p><strong>todo.reducer.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;INITIAL_TODO_STATE, TodoState&#125; from <span class="string">'./todo.store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;ADD_TODO, CLEAR_TODOS, REMOVE_TODO&#125; from <span class="string">'./todo.action'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Action&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">todoReducer</span>(<span class="params">state: TodoState = INITIAL_TODO_STATE, action: Action</span>): <span class="title">TodoState</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;<span class="keyword">type</span>, payload&#125; = action;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> ADD_TODO:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        todos: [...state.todos, &#123;</span><br><span class="line">          id: state.todos.length + <span class="number">1</span>,</span><br><span class="line">          title: payload.title</span><br><span class="line">        &#125;],</span><br><span class="line">        lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> REMOVE_TODO:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        todos: state.todos.filter(todo =&gt; todo.id !== payload.id),</span><br><span class="line">        lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> CLEAR_TODOS:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        todos: [],</span><br><span class="line">        lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 reducer 定義自己的寫入 state 邏輯。</p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> ADD_TODO:</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ...state,</span><br><span class="line">    todos: [...state.todos, &#123;</span><br><span class="line">      id: state.todos.length + <span class="number">1</span>,</span><br><span class="line">      title: payload.title</span><br><span class="line">    &#125;],</span><br><span class="line">    lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>使用 object spread 方式傳回新物件。</p>
+<p><code>todos</code> 為陣列，而 <code>ADD_TODO</code> 主要的目的就是將新的物件加到 <code>todos</code> 陣列，因此可使用 array spread 方式傳回新的陣列。</p>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> REMOVE_TODO:</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ...state,</span><br><span class="line">    todos: state.todos.filter(todo =&gt; todo.id !== payload.id),</span><br><span class="line">    lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>一樣使用 object spread 方式傳回新的物件。</p>
+<p><code>REMOVE_TODO</code> 主要為移除 <code>payload.id</code> 的 <code>Todo</code>，但因為 Ngrx 要求為 pure function，因此改用 <code>filter()</code> 過濾 <code>todo.id</code> 不為 <code>payload.id</code>。</p>
+<p>26 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> CLEAR_TODOS:</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ...state,</span><br><span class="line">    todos: [],</span><br><span class="line">    lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>一樣使用 object spread 方式傳回新的物件。</p>
+<p><code>CLEAR_TODOS</code> 為清除所有 <code>Todo</code>，但因為 Ngrx 要求為 pure function，因此傳回 <code>[]</code> 空陣列。</p>
+<h3 id="Store-2">Store</h3><p><strong>store.todo.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Todo </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_TODO_STATE: TodoState = &#123;</span><br><span class="line">  todos: [],</span><br><span class="line">  lastUpdate: <span class="literal">null</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 store 定義自己的 state 型別。</p>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>CounterState</code> 與其 field。</p>
+<p>其中 <code>todos</code> 為 <code>Todo</code> 型別的陣列。</p>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Todo </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>Todo</code> 型別。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_TODO_STATE: TodoState = &#123;</span><br><span class="line">  todos: [],</span><br><span class="line">  lastUpdate: <span class="literal">null</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>INITIAL_TODO_STATE</code> 常數，為 <code>TodoState</code> 的初始狀態。</p>
+<h2 id="Ngrx_DevTools">Ngrx DevTools</h2><hr>
+<h3 id="Installation-1">Installation</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="operator"><span class="keyword">install</span> @ngrx/<span class="keyword">store</span>-devtools <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
+<p>安裝 <code>@ngrx/store-devtools</code>。</p>
+<p><img src="/images/angular/ngrx/ngrx000.png" alt="ngrx000"></p>
+<p>安裝 <code>Redux DevTools</code> 到 Chrome。</p>
+<h3 id="AppModule-2">AppModule</h3><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;FormsModule&#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoListComponent&#125; from <span class="string">'./todo-list/todo-list.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoDashboardComponent&#125; from <span class="string">'./todo-dashboard/todo-dashboard.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;StoreModule&#125; from <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;todoReducer&#125; from <span class="string">'./stores/todo/todo.reducer'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;StoreDevtoolsModule&#125; from <span class="string">'@ngrx/store-devtools'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    TodoListComponent,</span><br><span class="line">    TodoDashboardComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpModule,</span><br><span class="line">    StoreModule.provideStore(todoReducer),</span><br><span class="line">    StoreDevtoolsModule.instrumentOnlyWithExtension(),</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule,</span><br><span class="line">  HttpModule,</span><br><span class="line">  StoreModule.provideStore(todoReducer),</span><br><span class="line">  StoreDevtoolsModule.instrumentOnlyWithExtension(),</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>須在 <code>AppModule</code> import <code>StoreDevtoolsModule.instrumentOnlyWithExtension()</code>，並傳入 reducer。</p>
+<p><img src="/images/angular/ngrx/ngrx001.png" alt="ngrx001"></p>
+<p>可在 Chrome 使用 Ngrx DevTools 對 state 與 action 做 debug，並可使用 time-traveling 的方式一個 action 一個 action 的執行。</p>
+<h2 id="Ngrx_的特色">Ngrx 的特色</h2><hr>
+<ul>
+<li>將所有 state 統一放在單一 store 內。</li>
+<li>所有寫入 state 的邏輯都統一放在單一 reducer 內，且必須為 pure function。</li>
+<li>Component 不寫邏輯，只負責 dispatch 適當的 action。</li>
+<li>當 state 變更，component 會自動更新。</li>
+</ul>
+<h2 id="Ngrx_的優點">Ngrx 的優點</h2><hr>
+<ul>
+<li>單向的資料流程，程式碼較易理解與 debug。</li>
+<li>將 state 的變更邏輯統一寫在 reducer 內，而非分散在各 component，較容易維護。</li>
+<li>由於 reducer 為 pure function，很容易寫單元測試。</li>
+<li>資料邏輯與 framework 解耦合，action/reducer/store 獨立於 framework，將來要移植到其他 framework 很方便。</li>
+<li>有 Ngrx DevTools 方便做 time-traveling 方式的 debug。</li>
+</ul>
+<h2 id="Ngrx_的缺點">Ngrx 的缺點</h2><hr>
+<ul>
+<li>為 FP 思維產物，若只熟 OOP 較難以掌握。</li>
+<li>維護的人須事先有 Redux 觀念，否則無法維護，學習門檻較高。</li>
+<li>Reducer 需寫成 pure function，難度較高。</li>
+<li>有點 over design 味道。</li>
+</ul>
+<h2 id="什麼時候該使用_Ngrx?">什麼時候該使用 Ngrx?</h2><hr>
+<ul>
+<li>當多個 component 需使用共用資料，且各 component 的操作會影像其他 component 的結果。</li>
+<li>資料可能同時被多個 component 修改，甚至同時被 server API 修改。</li>
+<li>需要實作 undo/redo 功能。</li>
+</ul>
+<blockquote>
+<p>You’ll know when you need Flux. If you aren’t sure if you need it, you don’t need it.</p>
+</blockquote>
+<p>套句 <a href="https://github.com/petehunt/react-howto" target="_blank" rel="external">React How-to</a> 的名言，當你需要 <code>Ngrx</code> 的時候再使用 <code>Ngrx</code>，若你不確定，就不要使用，避免因誤用而 over design。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>Ngrx</code> 有一點 over design，相當於 command 模式與 Observable 模式的合體。</li>
+<li><code>Ngrx</code> 就跟所有的 design pattern 一樣，都會使設計複雜化，並不是所有應用都適合使用 <code>Ngrx</code>，必須看需求用在刀口上。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel53Refactor9_demo" target="_blank" rel="external">GitHub</a> 上找到 <a href="">CounterNgrx</a> 與 <a href="">TodoNgrx</a>。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://github.com/ngrx" target="_blank" rel="external">ngrx</a>, <a href="https://github.com/ngrx/store" target="_blank" rel="external">ngrx/store</a><br><a href="http://programmingwithmosh.com" target="_blank" rel="external">Mosh Hamedani</a>, <a href="https://www.udemy.com/angular2-advanced/" target="_blank" rel="external">Build Enterprise Applications with Angular 2</a><br><a href="https://angular-university.io" target="_blank" rel="external">Angular University</a>, <a href="http://blog.angular-university.io/angular-ngrx-store-and-effects-crash-course/" target="_blank" rel="external">Angular Ngrx Crash Course Part 1: Ngrx Store - Learn It By Understanding The Original Facebook Counter Bug</a><br><a href="https://angular-university.io" target="_blank" rel="external">Angular University</a>, <a href="http://blog.angular-university.io/angular-2-redux-ngrx-rxjs/" target="_blank" rel="external">Angular Service Layers: Redux, RxJs and Ngrx Store - When to Use a Store And Why ?</a><br><a href="https://www.pluralsight.com/guides/author/Kaizeras" target="_blank" rel="external">Hristo Georgiev</a>, <a href="https://www.pluralsight.com/guides/front-end-javascript/building-a-redux-application-with-angular-2-part-2" target="_blank" rel="external">Building a Redux application with Anguar 2 - Part 1</a><br><a href="https://www.pluralsight.com/guides/author/Kaizeras" target="_blank" rel="external">Hristo Georgiev</a>, <a href="https://www.pluralsight.com/guides/front-end-javascript/building-a-redux-application-with-angular-2-part-1" target="_blank" rel="external">Building a Redux application with Anguar 2 - Part 2</a><br><a href="https://github.com/btroncone" target="_blank" rel="external">Brain Troncone</a>, <a href="https://gist.github.com/btroncone/a6e4347326749f938510" target="_blank" rel="external">A Comprehensive Introduction to @ngrx/store</a><br><a href="https://egghead.io" target="_blank" rel="external">egghead.io</a>, <a href="https://egghead.io/courses/building-a-time-machine-with-angular-2-and-rxjs" target="_blank" rel="external">Build Redux Style Application with Angular 2, RxJS, and ngrx/store</a><br><a href="https://hackernoon.com/@MichalMajewski" target="_blank" rel="external">Michal Majewski</a>, <a href="https://hackernoon.com/@MichalMajewski" target="_blank" rel="external">What I have learned using ngrx/Redux with Angular 2</a><br><a href="https://medium.com/@dan_abramov" target="_blank" rel="external">Dan Abramov</a>, <a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367" target="_blank" rel="external">You Might Not Need Redux</a><br><a href="https://github.com/petehunt" target="_blank" rel="external">Pete Hunt</a>,  <a href="https://github.com/petehunt/react-howto" target="_blank" rel="external">React How-to</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/angular-di/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-19 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

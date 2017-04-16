@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-03-09T06:05:39.000Z">
+<meta property="og:updated_time" content="2017-04-16T12:02:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的 DI 與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -102,18 +102,17 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼需要_DI?"><span class="toc-article-text">為什麼需要 DI?</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#無_DI_版本"><span class="toc-article-text">無 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Brittle"><span class="toc-article-text">Brittle</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Inflexible"><span class="toc-article-text">Inflexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Hard_to_Test"><span class="toc-article-text">Hard to Test</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#有_DI_版本"><span class="toc-article-text">有 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Robust"><span class="toc-article-text">Robust</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Flexible"><span class="toc-article-text">Flexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Testable"><span class="toc-article-text">Testable</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#DI_搭配工廠模式"><span class="toc-article-text">DI 搭配工廠模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Angular_的_Provider"><span class="toc-article-text">Angular 的 Provider</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_Interface"><span class="toc-article-text">Provider 搭配 Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_useFactory"><span class="toc-article-text">Provider 搭配 useFactory</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#重構_Service"><span class="toc-article-text">重構 Service</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼需要_DI?"><span class="toc-article-text">為什麼需要 DI?</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#無_DI_版本"><span class="toc-article-text">無 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Brittle"><span class="toc-article-text">Brittle</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Inflexible"><span class="toc-article-text">Inflexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Hard_to_Test"><span class="toc-article-text">Hard to Test</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#有_DI_版本"><span class="toc-article-text">有 DI 版本</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Robust"><span class="toc-article-text">Robust</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Flexible"><span class="toc-article-text">Flexible</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Testable"><span class="toc-article-text">Testable</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#DI_搭配工廠模式"><span class="toc-article-text">DI 搭配工廠模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Angular_的_Provider"><span class="toc-article-text">Angular 的 Provider</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_Interface"><span class="toc-article-text">Provider 搭配 Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Provider_搭配_useFactory"><span class="toc-article-text">Provider 搭配 useFactory</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#重構_Service"><span class="toc-article-text">重構 Service</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
 	    <p>DI (Dependency Injection) 對於很多前端開發者是個陌生的名詞，畢竟以前沒有 DI 時，也沒有什麼東西寫不出來，為什麼 Angular 要全面提供 DI 與 provider 呢？</p>
 <a id="more"></a>
-<h2 id="Motivation">Motivation</h2><p>DI 與 service provider 是 Laravel 的招牌，因為 Angular 亦提供 DI 與 provider，所以很好奇 Angular 是否能實現 Laravel 風格的 DI 與 service provider。</p>
-<h2 id="Version">Version</h2><p>Angular CLI 1.0.0-rc.0</p>
-<p>Angular 2.4.9</p>
-<p>WebStorm 2016.3.3</p>
-<h2 id="為什麼需要_DI?">為什麼需要 DI?</h2><p>我們先來建立兩個簡單的 service，來觀察有用 DI 與沒用 DI 的差異。</p>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.0.0-rc.0<br>Angular 2.4.9<br>WebStorm 2016.3.3</p>
+<h2 id="為什麼需要_DI?">為什麼需要 DI?</h2><hr>
+<p>我們先來建立兩個簡單的 service，來觀察有用 DI 與沒用 DI 的差異。</p>
 <h3 id="無_DI_版本">無 DI 版本</h3><p><strong>NotificationService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">'./sms.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NotificationService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> smsService : SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = <span class="keyword">new</span> SMSService();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>NotificationService</code> 的 <code>showMessage()</code> 需要使用到 <code>SMSService</code> 的 <code>sendMessage()</code>，因此我們在 constructor 內建立 <code>SMSService</code>  。</p>
@@ -195,7 +194,8 @@
 <blockquote>
 <p>DI 只是一種程式風格，將相依 service 改由外界透過 constructor 注入，而不是在內部自己用 new 產生。</p>
 </blockquote>
-<h2 id="DI_搭配工廠模式">DI 搭配工廠模式</h2><p>DI 雖然對於 service 本身很有利，無論其相依的 service 如何修改，service 本身都不用修改，也就是物件導向的<strong>開放封閉原則</strong>，但對於使用 service 的 component 卻很辛苦。</p>
+<h2 id="DI_搭配工廠模式">DI 搭配工廠模式</h2><hr>
+<p>DI 雖然對於 service 本身很有利，無論其相依的 service 如何修改，service 本身都不用修改，也就是物件導向的<strong>開放封閉原則</strong>，但對於使用 service 的 component 卻很辛苦。</p>
 <blockquote>
 <p>開放封閉原則</p>
 <p>對於擴展是開放的，對於修改是封閉的。</p>
@@ -215,7 +215,8 @@
 <p>原本在 constructor 的 new 改用 <code>NotificationServiceFactory</code> 取代，最少日後其他 component 要建立 <code>NotificationService</code> 都改用 <code>NotificationServiceFactory</code>，不用再使用很恐怖的 new。</p>
 <p>不過這樣寫法仍有些問題。</p>
 <p>若 <code>NotificationService</code> 所依賴的 service 很多，或依賴的 service 層數很深，則 <code>NotificationServiceFactory</code> 的 method 數量將會爆炸，所以<strong>工廠模式</strong>也不算最完美的解決方案。</p>
-<h2 id="Angular_的_Provider">Angular 的 Provider</h2><p>Angular 提供了 Provider，專門替我們建立 service，解決<strong>工廠模式</strong>所面臨的問題。</p>
+<h2 id="Angular_的_Provider">Angular 的 Provider</h2><hr>
+<p>Angular 提供了 Provider，專門替我們建立 service，解決<strong>工廠模式</strong>所面臨的問題。</p>
 <p><img src="/images/angular/di/di000.svg" alt="di000"></p>
 <p>原本我們透過<strong>工廠模式</strong>自己處理 service 的 DI，現在改由 Angular 的 provider 接手。</p>
 <p><strong>NotificationService</strong></p>
@@ -250,7 +251,8 @@
 <p>有用到幾個 service，就在 providers 註冊幾個 provider。</p>
 </blockquote>
 <p>剩下就交給 Angular 的 provider 幫我們 DI 了。</p>
-<h2 id="Provider_搭配_Interface">Provider 搭配 Interface</h2><p>為了讓 service 實現不同的角色，且讓 service 與 service 之間的耦合降低，讓 service 不要直接相依某個 service，而是僅相依於 interface，實務上需要讓  provider 根據 interface 注入 service。</p>
+<h2 id="Provider_搭配_Interface">Provider 搭配 Interface</h2><hr>
+<p>為了讓 service 實現不同的角色，且讓 service 與 service 之間的耦合降低，讓 service 不要直接相依某個 service，而是僅相依於 interface，實務上需要讓  provider 根據 interface 注入 service。</p>
 <p><strong><em>重構前</em></strong></p>
 <p><strong>SMSService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> SMSService &#123;</span><br><span class="line"></span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -314,7 +316,8 @@
 <p><a href="https://github.com/angular/angular/blob/2.4.8/modules/%40angular/core/src/metadata/lifecycle_hooks.ts#L52-L69" target="_blank" rel="external">lifycycle_hooks.ts</a></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> OnInit &#123; abstract ngOnInit(): <span class="built_in">void</span>; &#125;</span><br></pre></td></tr></table></figure>
 <p>因為 JavaScript 沒有 interface，我們只能拿 abstract class 當 interface 用。</p>
-<h2 id="Provider_搭配_useFactory">Provider 搭配 useFactory</h2><p>因需求改變，原本使用的是 AWS 簡訊服務，但需求端想改用 Azure 簡訊服務，且希望原來 AWS 簡訊服務暫時留著，由設定檔決定要使用 AWS 或 Azure，因為日後有可能又會從 Azure 改成 AWS。</p>
+<h2 id="Provider_搭配_useFactory">Provider 搭配 useFactory</h2><hr>
+<p>因需求改變，原本使用的是 AWS 簡訊服務，但需求端想改用 Azure 簡訊服務，且希望原來 AWS 簡訊服務暫時留著，由設定檔決定要使用 AWS 或 Azure，因為日後有可能又會從 Azure 改成 AWS。</p>
 <p><strong>AWSSMSService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;IPrintable&#125; from <span class="string">'./iprintable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;ISendable&#125; from <span class="string">'./isendable'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AWSSMSService <span class="keyword">implements</span> IPrintable, ISendable &#123;</span><br><span class="line">  </span><br><span class="line">  printMessage(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Print AWS Message'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sendMessage(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Send AWS Message'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>先將原本的 <code>SMSService</code> 重構成 <code>AWSSMSService</code>。</p>
@@ -335,7 +338,8 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NotificationService&#125; from <span class="string">'./notification.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;SMSServiceProvider&#125; from <span class="string">'./smsservice-provider'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>],</span><br><span class="line">  providers: [</span><br><span class="line">    NotificationService,</span><br><span class="line">    SMSServiceProvider,</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line"></span><br><span class="line">  title = <span class="string">'app works!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private notificationService: NotificationService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="keyword">this</span>.notificationService.showMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>providers</code> 改成使用 <code>SMSServiceProvider</code>。</p>
 <p>如此之後，儘管有新增新的 <code>SMSService</code>，只要也 implement <code>IPrintable</code> 與 <code>ISendable</code> interface，並在 <code>environments.ts</code> 設定新的 <code>SMSService</code> 即可，<code>NotificattionService</code>、 <code>AppComponent</code> 與 <code>SMSServiceProvider</code> 都不用修改，達成物件導向的<strong>開放封閉原則</strong>。</p>
-<h2 id="重構_Service">重構 Service</h2><p>目前全部的 service 都在 app 目錄下有點亂，透過 WebStorm，我們可以將所有 service 加以重構，完全不用人工修改任何程式碼。</p>
+<h2 id="重構_Service">重構 Service</h2><hr>
+<p>目前全部的 service 都在 app 目錄下有點亂，透過 WebStorm，我們可以將所有 service 加以重構，完全不用人工修改任何程式碼。</p>
 <p><img src="/images/angular/di/di002.png" alt="di002"></p>
 <p>重構前，所有 service 都在 <code>app</code> 目錄下。</p>
 <p><img src="/images/angular/di/di003.png" alt="di003"></p>
@@ -346,12 +350,13 @@
 <li><code>IPrintable</code> 與 <code>ISenable</code> 放在 <code>app/services/interfaces</code> 目錄下。</li>
 </ul>
 <p>WebStorm 會幫我們修改所有的 import 路徑，完全不用我們操心。</p>
-<h2 id="Conclusion">Conclusion</h2><ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
 <li>DI 雖然好用，但要搭配 provider 才能發揮全部威力，達成物件導向的終極目標：<strong>開放封閉原則</strong>。</li>
 <li>Angular 提供完整的 DI + provider，讓我們在後端的開發經驗能繼續在前端使用。</li>
 </ul>
-<h2 id="Reference">Reference</h2><p>Google, <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="external">Angular/Guide/Dependency Injection</a></p>
-<p>Google, <a href="https://angular.io/docs/ts/latest/cookbook/dependency-injection.html" target="_blank" rel="external">Angular/Cookbook/Dependency Injection</a></p>
+<h2 id="Reference">Reference</h2><hr>
+<p>Google, <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="external">Angular/Guide/Dependency Injection</a><br>Google, <a href="https://angular.io/docs/ts/latest/cookbook/dependency-injection.html" target="_blank" rel="external">Angular/Cookbook/Dependency Injection</a></p>
 	  
 	</div>
 
@@ -360,9 +365,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+    	<li class="prev"><a href="/angular/angular-ngrx/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -398,7 +403,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>1</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>2</span></a></li>
     </ul>
 	</div>
 		
