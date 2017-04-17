@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用 Redux 風格開發 Angular">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-04-16T15:04:43.000Z">
+<meta property="og:updated_time" content="2017-04-16T15:42:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular 也走 Redux 風 (使用 Ngrx)">
 <meta name="twitter:description" content="使用 Redux 風格開發 Angular">
@@ -198,7 +198,7 @@
 <p>Redux 為 FP (Functional Programming) 思維的產物，要求 reducer 必須為 pure function，因此必須回傳一個新的 state，而不是去修改原本的 state。</p>
 <p>TypeScript 2.1 提供了 object spread，<code>…state</code> 會將整個物件的屬性加以展開，之後的參數為要修改的屬性值，<code>{}</code> 會將物件屬性加以合併，並回傳新的物件。</p>
 <blockquote>
-<p>傳統會使用 <code>Object.assign()</code> 的寫法，但寫法並不直覺，且因為其第二個參數需傳入物件，還必須多一層 <code>{}</code>，建議使用 Object Spread 寫法可讀性較高。</p>
+<p>傳統會使用 <code>Object.assign()</code> 的寫法，但寫法並不直覺，且因為其第二個參數需傳入物件，還必須多一層 <code>{}</code>，建議使用 object spread 寫法可讀性較高。</p>
 </blockquote>
 <h3 id="Store-1">Store</h3><p><strong>counter.store.ts</strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/CounterNgrx/blob/master/src/app/stores/counter/counter.store.ts" target="_blank" rel="external">counter.store.ts</a></span></span></span></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> CounterState </span>&#123;</span><br><span class="line">  counter: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_COUNTER_STATE: CounterState = &#123;</span><br><span class="line">  counter: <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -368,7 +368,7 @@
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/angular/angular-di/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/phpstorm/phpstorm-refactoring/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
