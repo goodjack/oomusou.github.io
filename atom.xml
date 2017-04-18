@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-04-18T15:01:04.000Z</updated>
+  <updated>2017-04-18T16:04:09.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-ngrx/"/>
     <id>http://oomusou.io/angular/angular-ngrx/</id>
     <published>2017-04-19T12:23:43.000Z</published>
-    <updated>2017-04-18T15:01:04.000Z</updated>
+    <updated>2017-04-18T16:04:09.000Z</updated>
     <content type="html"><![CDATA[<p>Redux 起源於 React 社群，算是一種 design pattern，適用於某些情境，也提供一些優點，Angular 也有 Redux 的實作，但 Angular 是否該使用 Redux 呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -261,7 +261,7 @@
 <ul>
 <li><code>Ngrx</code> 有一點 over design，相當於 command 模式與 Observable 模式的合體。</li>
 <li><code>Ngrx</code> 就跟所有的 design pattern 一樣，都會使設計複雜化，並不是所有應用都適合使用 <code>Ngrx</code>，必須看需求用在刀口上。</li>
-<li>RxJS 出來之後，<code>Ngrx</code> 的寫法重要性不若以往，簡單的應用直接在 service 使用 RxJS 即可。</li>
+<li><code>RxJS</code> 出來之後，<code>Ngrx</code> 的寫法重要性不若以往，簡單的應用直接在 service 使用 <code>RxJS</code> 即可。</li>
 </ul>
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到 <a href="https://github.com/oomusou/CounterNgrx" target="_blank" rel="external">CounterNgrx</a> 與 <a href="https://github.com/oomusou/TodoNgrx" target="_blank" rel="external">TodoNgrx</a>。</p>
