@@ -281,7 +281,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-uml/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-uml/</id>
     <published>2017-04-18T12:23:43.000Z</published>
-    <updated>2017-04-18T13:45:34.000Z</updated>
+    <updated>2017-04-18T13:50:06.000Z</updated>
     <content type="html"><![CDATA[<p>PlantUML 讓我們可以使用文字檔的方式描述 UML，且可以直接在 PhpStorm 內使用，非常方便。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -316,7 +316,7 @@
     
     </summary>
     
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
+      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
   </entry>
   
