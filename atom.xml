@@ -328,7 +328,7 @@
     <link href="http://oomusou.io/phpstorm/phpstorm-refactoring/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-refactoring/</id>
     <published>2017-04-17T12:23:43.000Z</published>
-    <updated>2017-04-18T13:33:14.000Z</updated>
+    <updated>2017-04-18T15:39:52.000Z</updated>
     <content type="html"><![CDATA[<p>PhpStorm 最強悍的就是 Refactoring，這也是文字編輯器無法達到的，善用 Refactoring 將可大幅增加 code review 之後重構 PHP 的速度。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -711,6 +711,8 @@
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
+      <category term="Refactoring" scheme="http://oomusou.io/tags/Refactoring/"/>
+    
   </entry>
   
   <entry>
@@ -984,7 +986,7 @@
     <link href="http://oomusou.io/refactor/refactor-in-action/"/>
     <id>http://oomusou.io/refactor/refactor-in-action/</id>
     <published>2016-11-27T12:23:43.000Z</published>
-    <updated>2016-12-08T06:40:20.000Z</updated>
+    <updated>2017-04-18T15:39:37.000Z</updated>
     <content type="html"><![CDATA[<p>TDD 不僅是先寫測試而已，當第一個 <span class="label label-success">綠燈</span> 之後，剩下的半壁江山就是拼<strong>重構</strong>功力，重構的書多半來自於 Java，因此有些 PHP 獨門的重構技巧在 Java 書上是看不到的，也因為編程思維的持續演進，重構也有了新的面貌，本文整理出自己在實務上，天天必用的 9 個適用於 PHP 重構的 SOP。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
