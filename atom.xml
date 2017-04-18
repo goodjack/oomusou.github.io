@@ -277,11 +277,55 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何在 PhpStorm 繪製 UML?]]></title>
+    <link href="http://oomusou.io/phpstorm/phpstorm-uml/"/>
+    <id>http://oomusou.io/phpstorm/phpstorm-uml/</id>
+    <published>2017-04-18T12:23:43.000Z</published>
+    <updated>2017-04-18T13:45:34.000Z</updated>
+    <content type="html"><![CDATA[<p>PlantUML 讓我們可以使用文字檔的方式描述 UML，且可以直接在 PhpStorm 內使用，非常方便。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS 10.12.4<br>PhpStorm 2017.1.2<br>Graphviz 2.40.1<br>PlantUML Integration Plugin 2.5.0</p>
+<h2 id="安裝_Graphviz">安裝 Graphviz</h2><hr>
+<p>我們必須透過 Graphviz 顯示 <code>puml</code> 格式檔案，因此必須先安裝 Graphviz。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>update</span><br><span class="line">$ <span class="keyword">brew </span>install graphviz</span><br></pre></td></tr></table></figure>
+<p>透過 Homebrew 安裝 Graphviz。</p>
+<h2 id="安裝_PlantUML_Plugin">安裝 PlantUML Plugin</h2><hr>
+<p>為了在 PhpStorm 直接編輯與預覽 <code>puml</code> 格式檔案，須先安裝 PlantUML Integration Plugin。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml01.png" alt="uml01"></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<p>按 <code>Browse repositories…</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml02.png" alt="uml02"></p>
+<p>輸入 <code>PlantUML</code>，選擇 <code>PlantUML Integration</code>，按 <code>Install</code> 安裝。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml03.png" alt="uml03"></p>
+<p>安裝完需按 <code>Restart PhpStorm</code> 重新啟動。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml04.png" alt="uml04"></p>
+<p>按熱鍵 Command + N，若出現 <code>UML Activity</code> 、<code>UML Class</code> 等圖，則表示安裝成功。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml05.png" alt="uml05"></p>
+<p>能在 PhpStorm 順利顯示 <code>puml</code> 格式的 UML 檔案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>由於 <code>puml</code> 格式基本上為文字檔，所以可以透過 Git 做版控管理。</li>
+<li>為了 code review 方便，可將 <code>puml</code> 格式匯出成 <code>svg</code> 格式，放大縮小不會失真。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://plantuml.com" target="_blank" rel="external">PlantUML in a nutshell</a><br><a href="http://macappstore.org/graphviz/" target="_blank" rel="external">Install graphviz on Mac OSX</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[以類似 Markdown 的方式繪製 UML]]>
+    
+    </summary>
+    
+      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何在 PhpStorm 使用 Refactoring (重構)?]]></title>
     <link href="http://oomusou.io/phpstorm/phpstorm-refactoring/"/>
     <id>http://oomusou.io/phpstorm/phpstorm-refactoring/</id>
     <published>2017-04-17T12:23:43.000Z</published>
-    <updated>2017-04-17T14:08:33.000Z</updated>
+    <updated>2017-04-18T13:33:14.000Z</updated>
     <content type="html"><![CDATA[<p>PhpStorm 最強悍的就是 Refactoring，這也是文字編輯器無法達到的，善用 Refactoring 將可大幅增加 code review 之後重構 PHP 的速度。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -3119,82 +3163,6 @@
     <![CDATA[讓我們提早發現語法錯誤]]>
     
     </summary>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 PhpStorm 的 Project Template 建立 Laravel 專案?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-project-template/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-project-template/</id>
-    <published>2016-07-23T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>PhpStorm 2016.2 提供一個新功能，可以將專案打包成 project template，以後新建專案時，可以選擇此 template 直接重建專案，如常用的 package 與 codebase 可以先打包好，將來要建立新專案就很方便。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>我在寫部落格範例時，有些東西是必要的，如 IDE Helper，SQLite 環境，PHPUnit 單元測試環境，以前每次寫一個範例，就得重新安裝這些 package 與 codebase，很花時間，有了 project template之後，只要設定一次即可，以後部落格範例都可以套用此 project template，非常方便。</p>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="建立_Project_Template">建立 Project Template</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template000.png" alt=""></p>
-<p><strong><em>Tools -&gt;Save Project as Template</em></strong></p>
-<p>任何你目前的 Laravel 專案，都可以存成 project template。</p>
-<p><img src="/images/phpstorm/phpstorm-project-template/template001.png" alt=""></p>
-<p>輸入 project template 名稱，不必與原來 project 名稱相同，只要你方便識別即可。</p>
-<h2 id="建立新_Project">建立新 Project</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template002.png" alt=""></p>
-<p>選擇 <code>Create New Project</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-project-template/template003.png" alt=""></p>
-<p>選擇 <code>User-defined</code> 的 <code>Laravel52Blog</code>，這是我們剛剛所建立的 project template。</p>
-<p>在 <code>Location</code> 輸入你的專案路徑。</p>
-<h2 id="重建_Vendor_目錄">重建 Vendor 目錄</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template004.png" alt=""></p>
-<p>如同從 GitHub 下載的 Laravel 專案一樣，<code>vendor</code> 目錄下是空的，你有兩種方法重建 <code>vendor</code> 目錄。</p>
-<ul>
-<li><strong>composer install</strong> : 根據 <code>composer.lock</code> 重建 <code>vendor</code> 目錄，所有 package 版本會與原 project template 完全一樣。</li>
-<li><strong>composer update</strong> : 根據 <code>composer.json</code> 重建 <code>vendor</code> 目錄，所有 package 版本會升級成與原 project template 相容的版本。</li>
-</ul>
-<p>兩種方式都可以，端看你的需求而定，我的需求是想升級到 Laravel 最新的版本，所以下 <code>composer update</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-project-template/template005.png" alt=""></p>
-<p><code>composer update</code> 執行完後，<code>vendor</code> 目錄已經補齊。</p>
-<h2 id="設定_Excluded_Folders">設定 Excluded Folders</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template006.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Directories</em></strong></p>
-<p>若你有設定 <code>Excluded Folders</code>，將所有目錄刪除。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若你由 PhpStorm 幫你建立 Laravel 專案，他會幫你設定 <code>Excluded Folders</code>，若自己由 Composer 建立 Laravel 專案，則不會有此設定。</span></span></span></p>
-<p><img src="/images/phpstorm/phpstorm-project-template/template007.png" alt=""></p>
-<p>刪除完後，只留下 <code>Tests</code>、<code>Sources</code> 與 <code>Resource Root</code> 三個目錄設定。</p>
-<h2 id="設定_PHP_7">設定 PHP 7</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template008.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; PHP</em></strong></p>
-<ul>
-<li><strong>PHP language level</strong> : 設定為 <code>7</code>。</li>
-<li><strong>Interpreter</strong> : 設定 PHP 7 interpreter 位置。</li>
-</ul>
-<h2 id="設定_PHPUnit">設定 PHPUnit</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template009.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; PHP -&gt; PHPUnit</em></strong></p>
-<ul>
-<li><strong>Use Composer autoloader</strong> : 選擇專案目錄下的 <code>vendor/autoload.php</code>。</li>
-<li><strong>Default configuration file</strong> : 選擇專案根目錄下的 <code>phpunit.xml</code>。</li>
-</ul>
-<h2 id="單元測試">單元測試</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-project-template/template010.png" alt=""></p>
-<p>確認專案已經可以正常執行。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Project template 並不包含原專案的 git repository，也就是你必須重新建立一個新的 git local repository。</li>
-<li>透過這種方式，建立新專案時將更為方便，直接套用你常用的 package 與 codebase。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormProjectTemplate_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[將常用的 Package 與 Codebase 打包成 Project Template]]>
-    
-    </summary>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     

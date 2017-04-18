@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 PhpStorm 繪製 UML? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="以類似 Markdown 的方式繪製 UML">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="以類似 Markdown 的方式繪製 UML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 PhpStorm 繪製 UML?">
+<meta property="og:url" content="http://oomusou.io/phpstorm/phpstorm-uml/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="以類似 Markdown 的方式繪製 UML">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-04-18T13:45:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 PhpStorm 繪製 UML?">
+<meta name="twitter:description" content="以類似 Markdown 的方式繪製 UML">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 PhpStorm 繪製 UML?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 以類似 Markdown 的方式繪製 UML			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Graphviz"><span class="toc-article-text">安裝 Graphviz</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_PlantUML_Plugin"><span class="toc-article-text">安裝 PlantUML Plugin</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>PlantUML 讓我們可以使用文字檔的方式描述 UML，且可以直接在 PhpStorm 內使用，非常方便。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS 10.12.4<br>PhpStorm 2017.1.2<br>Graphviz 2.40.1<br>PlantUML Integration Plugin 2.5.0</p>
+<h2 id="安裝_Graphviz">安裝 Graphviz</h2><hr>
+<p>我們必須透過 Graphviz 顯示 <code>puml</code> 格式檔案，因此必須先安裝 Graphviz。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>update</span><br><span class="line">$ <span class="keyword">brew </span>install graphviz</span><br></pre></td></tr></table></figure>
+<p>透過 Homebrew 安裝 Graphviz。</p>
+<h2 id="安裝_PlantUML_Plugin">安裝 PlantUML Plugin</h2><hr>
+<p>為了在 PhpStorm 直接編輯與預覽 <code>puml</code> 格式檔案，須先安裝 PlantUML Integration Plugin。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml01.png" alt="uml01"></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<p>按 <code>Browse repositories…</code>。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml02.png" alt="uml02"></p>
+<p>輸入 <code>PlantUML</code>，選擇 <code>PlantUML Integration</code>，按 <code>Install</code> 安裝。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml03.png" alt="uml03"></p>
+<p>安裝完需按 <code>Restart PhpStorm</code> 重新啟動。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml04.png" alt="uml04"></p>
+<p>按熱鍵 Command + N，若出現 <code>UML Activity</code> 、<code>UML Class</code> 等圖，則表示安裝成功。</p>
+<p><img src="/images/phpstorm/phpstorm-uml/uml05.png" alt="uml05"></p>
+<p>能在 PhpStorm 順利顯示 <code>puml</code> 格式的 UML 檔案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>由於 <code>puml</code> 格式基本上為文字檔，所以可以透過 Git 做版控管理。</li>
+<li>為了 code review 方便，可將 <code>puml</code> 格式匯出成 <code>svg</code> 格式，放大縮小不會失真。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://plantuml.com" target="_blank" rel="external">PlantUML in a nutshell</a><br><a href="http://macappstore.org/graphviz/" target="_blank" rel="external">Install graphviz on Mac OSX</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/angular/angular-ngrx/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/phpstorm/phpstorm-refactoring/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-18 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
