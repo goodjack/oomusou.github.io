@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/angular-ngrx/</loc>
+    <lastmod>2017-04-18T15:01:04.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-uml/</loc>
-    <lastmod>2017-04-18T13:50:06.000Z</lastmod>
+    <lastmod>2017-04-18T14:10:42.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-refactoring/</loc>
     <lastmod>2017-04-18T13:33:14.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/angular-ngrx/</loc>
-    <lastmod>2017-04-16T15:42:18.000Z</lastmod>
   </url>
   
   <url>
