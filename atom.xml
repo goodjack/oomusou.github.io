@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-04-19T15:12:34.000Z</updated>
+  <updated>2017-04-19T15:27:35.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/oop/oop-demeter/"/>
     <id>http://oomusou.io/oop/oop-demeter/</id>
     <published>2017-04-20T12:23:43.000Z</published>
-    <updated>2017-04-19T15:12:34.000Z</updated>
+    <updated>2017-04-19T15:27:35.000Z</updated>
     <content type="html"><![CDATA[<p><strong>迪米特法則</strong>也稱為<strong>最小知識原則</strong>，是物件導向 <code>SOLID</code> 原則中的 <code>L</code> 其中之一 <code>LKP</code> ( Least Knowledge Principle)，是 1987 年 Ian Holland 在美國東北大學所提出，此法則應用在其 The Demeter Project 而得名，是物件導的基本原則。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -34,7 +34,7 @@
 <p>白話就是</p>
 <blockquote>
 <p>Controller 不應該知道 service 的內部如何運作。</p>
-<p>Service 應該將相依 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
+<p>Service 應該將內部 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
 </blockquote>
 <h2 id="Train_Wreck">Train Wreck</h2><hr>
 <p><strong>SMSService</strong></p>
@@ -112,7 +112,7 @@
 </blockquote>
 <h2 id="Fluent_Interface">Fluent Interface</h2><p>在 Laravel 的 Eloquent，我們會這樣寫</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$flights</span> = Flight::where(<span class="string">'active'</span>, <span class="number">1</span>)</span><br><span class="line">               -&gt;orderBy(<span class="string">'name'</span>, <span class="string">'desc'</span>)</span><br><span class="line">               -&gt;take(<span class="number">10</span>)</span><br><span class="line">               -&gt;get();</span><br></pre></td></tr></table></figure>
-<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>？</p>
+<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>嗎？</p>
 <p><code>where()</code>、<code>orderBy()</code> 與 <code>take()</code> 這些，並沒有回傳其內部物件，而是傳回 <code>$this</code>，因此沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>的問題，也沒有與<strong>內部物件強烈耦合</strong>問題，因此 fluent interface 並沒有違反<strong>迪米特法則</strong>。</p>
 <blockquote>
 <p>並不是 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>，關鍵在於有沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>，而不在於 <code>Train Wreck</code> 。</p>
@@ -127,7 +127,7 @@
 <p>Robert C. Martin, <a href="https://www.tenlong.com.tw/events/106" target="_blank" rel="external">無瑕的程式碼</a><br>良葛格, <a href="http://www.ithome.com.tw/voice/98670" target="_blank" rel="external">封裝與迪米特法則</a><br>Martin Fowler, <a href="https://www.martinfowler.com/bliki/FluentInterface.html" target="_blank" rel="external">Fluent Interface</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[標題描述]]>
+    <![CDATA[並不是使用 Train Wreck 就違反迪米特法則]]>
     
     </summary>
     

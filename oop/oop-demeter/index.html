@@ -6,21 +6,21 @@
   <title>迪米特法則 | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="標題描述">
+  <meta name="description" content="並不是使用 Train Wreck 就違反迪米特法則">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="標題描述">
+ <meta name="description" content="並不是使用 Train Wreck 就違反迪米特法則">
 <meta property="og:type" content="article">
 <meta property="og:title" content="迪米特法則">
 <meta property="og:url" content="http://oomusou.io/oop/oop-demeter/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="標題描述">
+<meta property="og:description" content="並不是使用 Train Wreck 就違反迪米特法則">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-04-19T15:12:34.000Z">
+<meta property="og:updated_time" content="2017-04-19T15:27:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="迪米特法則">
-<meta name="twitter:description" content="標題描述">
+<meta name="twitter:description" content="並不是使用 Train Wreck 就違反迪米特法則">
  
 
   
@@ -95,7 +95,7 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 標題描述			
+			<i class="fa fa-info-circle"></i> 並不是使用 Train Wreck 就違反迪米特法則			
 		</div> <!-- alert -->
 		
 
@@ -121,7 +121,7 @@
 <p>白話就是</p>
 <blockquote>
 <p>Controller 不應該知道 service 的內部如何運作。</p>
-<p>Service 應該將相依 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
+<p>Service 應該將內部 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
 </blockquote>
 <h2 id="Train_Wreck">Train Wreck</h2><hr>
 <p><strong>SMSService</strong></p>
@@ -199,7 +199,7 @@
 </blockquote>
 <h2 id="Fluent_Interface">Fluent Interface</h2><p>在 Laravel 的 Eloquent，我們會這樣寫</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$flights</span> = Flight::where(<span class="string">'active'</span>, <span class="number">1</span>)</span><br><span class="line">               -&gt;orderBy(<span class="string">'name'</span>, <span class="string">'desc'</span>)</span><br><span class="line">               -&gt;take(<span class="number">10</span>)</span><br><span class="line">               -&gt;get();</span><br></pre></td></tr></table></figure>
-<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>？</p>
+<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>嗎？</p>
 <p><code>where()</code>、<code>orderBy()</code> 與 <code>take()</code> 這些，並沒有回傳其內部物件，而是傳回 <code>$this</code>，因此沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>的問題，也沒有與<strong>內部物件強烈耦合</strong>問題，因此 fluent interface 並沒有違反<strong>迪米特法則</strong>。</p>
 <blockquote>
 <p>並不是 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>，關鍵在於有沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>，而不在於 <code>Train Wreck</code> 。</p>
