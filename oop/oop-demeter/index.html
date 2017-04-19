@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="並不是使用 Train Wreck 就違反迪米特法則">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-04-19T15:27:35.000Z">
+<meta property="og:updated_time" content="2017-04-19T15:42:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="迪米特法則">
 <meta name="twitter:description" content="並不是使用 Train Wreck 就違反迪米特法則">
@@ -183,7 +183,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
 <p>Clean Code p.111 認為，要看 <code>getOptions()</code> 、<code>getScratchDir()</code> 與 <code>getAbolutePath()</code> 回傳的是 object 還是 data structure？</p>
 <blockquote>
-<p>這裡的 data structure 不是我們在學校念的資料<strong>資料結構</strong>，如 linked list、tree 那些，而是只一個<strong>物件只有資料，沒有任何商業邏輯</strong>。</p>
+<p>這裡的 data structure 不是我們在學校念書時所謂的<strong>資料結構</strong>，如 linked list、tree 那些，而是只一個<strong>物件只有資料，沒有任何商業邏輯</strong>。</p>
 </blockquote>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這種完全用 public field 的物件算 data structure。</p>
@@ -193,7 +193,7 @@
 <p>如果回傳的只是一種無其它行為的 data structure，那它們在本質上必然會揭露內部的結構，所以<strong>迪米特法則</strong>在這種狀況下並不適用。</p>
 <p>Clean Code p.111</p>
 </blockquote>
-<p>如前例回傳  <code>SMSService</code>， 因為包含商業邏輯，所以回傳算是 object，而非 data structure，只要包含商業邏輯，就會<strong>暴露實踐細節</strong>，而導致商業邏輯無法抽換，因此 service 與 service 就必須解耦合，遵守<strong>迪米特原則</strong>。</p>
+<p>如前例回傳  <code>SMSService</code>， 因為包含商業邏輯，所以回傳算是 object，而非 data structure，只要包含商業邏輯，就會<strong>暴露實踐細節</strong>，而導致商業邏輯無法抽換，因此 controller 與 service 就必須解耦合，遵守<strong>迪米特原則</strong>。</p>
 <blockquote>
 <p><code>Train Wreck</code> 不見得違反<strong>迪米特原則</strong>，要看回傳的是 data structure 還是 object。</p>
 </blockquote>
