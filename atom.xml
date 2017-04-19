@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-04-18T16:04:09.000Z</updated>
+  <updated>2017-04-19T15:12:34.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,127 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[迪米特法則]]></title>
+    <link href="http://oomusou.io/oop/oop-demeter/"/>
+    <id>http://oomusou.io/oop/oop-demeter/</id>
+    <published>2017-04-20T12:23:43.000Z</published>
+    <updated>2017-04-19T15:12:34.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>迪米特法則</strong>也稱為<strong>最小知識原則</strong>，是物件導向 <code>SOLID</code> 原則中的 <code>L</code> 其中之一 <code>LKP</code> ( Least Knowledge Principle)，是 1987 年 Ian Holland 在美國東北大學所提出，此法則應用在其 The Demeter Project 而得名，是物件導的基本原則。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>但很多人沒有認清<strong>迪米特法則</strong>的本質，只要看到類似 Clean Code p. 110 書中提到的 <code>Train Wreck</code> 風格的程式碼</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
+<p>就認為違反的迪米特法則，真的是這樣嗎？</p>
+<h2 id="定義">定義</h2><hr>
+<blockquote>
+<p>高階模組不應該知道低階模組的內部如何運作。</p>
+<p>低階模組不應該<strong>暴露內部物件</strong>，不應該<strong>暴露實踐細節</strong>，應僅提供方法給高階模組使用。</p>
+</blockquote>
+<p>白話就是</p>
+<blockquote>
+<p>Controller 不應該知道 service 的內部如何運作。</p>
+<p>Service 應該將相依 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
+</blockquote>
+<h2 id="Train_Wreck">Train Wreck</h2><hr>
+<p><strong>SMSService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SMSService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getMessage</span><span class="params">()</span>: <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Message'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SMSService</code> 僅有一個 <code>getMessage()</code>。</p>
+<p><strong>NotificationService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotificationService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> SMSService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$smsService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * NotificationService constructor.</span><br><span class="line">     * <span class="doctag">@param</span> SMSService $smsService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(SMSService <span class="variable">$smsService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;smsService = <span class="variable">$smsService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> SMSService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getSMSService</span><span class="params">()</span>: <span class="title">SMSService</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;smsService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>NotificationService</code> 相依了 <code>SMSService</code>，直接使用 <code>getSMSService()</code> 將  <code>SMSService</code> 物件傳出去。</p>
+<p><strong>PostController</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">NotificationService</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> NotificationService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$notificationService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * PostController constructor.</span><br><span class="line">     * <span class="doctag">@param</span> NotificationService $notificationService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(NotificationService <span class="variable">$notificationService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;notificationService = <span class="variable">$notificationService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示所有簡訊</span><br><span class="line">     * <span class="doctag">@return</span> View</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$data</span>[<span class="string">'message'</span>] = <span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'posts.index'</span>, <span class="variable">$data</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>getSMSService()</code> 傳回  <code>SMSService</code> 物件，導致 controller 必須寫出</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>這種 <code>Train Wreck</code> 。</p>
+<p>這種寫法有幾個缺點 :</p>
+<ul>
+<li><code>PostController</code> 與 <code>NotificationService</code> 內部的 <code>SMSService</code> 強烈耦合，若想要換掉 <code>SMSService</code> 物件，則 <code>PostController</code> 必須跟著修改，也就是<strong>暴露內部物件</strong>。</li>
+<li><code>PostController</code> 為了要顯示 message，竟然還必須知道 <code>NotificationService</code> 內部使用了 <code>SMSService</code> 物件，先使用 <code>getSMSService()</code> 才行，也就是<strong>暴露實踐細節</strong>。</li>
+<li>違反了物件導向的<strong>封裝</strong>原則，<code>PostController</code> 竟然可以將手伸進去執行 <code>SMSService</code> 的方法。</li>
+</ul>
+<blockquote>
+<p>簡單來說，<strong>迪米特法則</strong>就是物件導向<strong>封裝</strong>特性的具體實現。</p>
+</blockquote>
+<p>建議將以上程式碼重構成以下寫法</p>
+<p><strong>NotificationService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotificationService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> SMSService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$smsService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * NotificationService constructor.</span><br><span class="line">     * <span class="doctag">@param</span> SMSService $smsService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(SMSService <span class="variable">$smsService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;smsService = <span class="variable">$smsService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getMessage</span><span class="params">()</span>: <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;smsService-&gt;getMessage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>PostController</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">NotificationService</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> NotificationService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$notificationService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * PostController constructor.</span><br><span class="line">     * <span class="doctag">@param</span> NotificationService $notificationService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(NotificationService <span class="variable">$notificationService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;notificationService = <span class="variable">$notificationService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示所有文章</span><br><span class="line">     * <span class="doctag">@return</span> View</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$data</span>[<span class="string">'message'</span>] = <span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'posts.index'</span>, <span class="variable">$data</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重構之後，<code>PostController</code> 不再出現 <code>Train Wreck</code> 。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PostController</code> 完全不知道<code>NotificationService</code>的<strong>內部物件</strong>，若想要換掉 <code>SMSService</code> 物件，則 <code>PostController</code> 完全不用修改。</li>
+<li><code>PostController</code> 為了要顯示 message，不必再知道<strong>實踐細節</strong>， 直接使用 <code>getMessage()</code> 就可以抓到資料。</li>
+<li>符合了物件導向的<strong>封裝</strong>原則，<code>PostController</code> 無法將手伸進去執行 <code>SMSService</code> 的方法。</li>
+</ul>
+<blockquote>
+<p>當 service 直接將內部使用的 service 傳出後，逼 controller 必須先了解其內部實踐細節，使得 controller 與 service 內部物件強烈耦合，這違反了物件導向<strong>封裝</strong>特性，也違反了<strong>迪米特法則</strong>。</p>
+<p>違反<strong>迪米特法則</strong>，通常會寫出 <code>Train Wreck</code> ，因此可使用 <code>Train Wreck</code> 檢查是否違反<strong>迪米特法則</strong>。</p>
+</blockquote>
+<h2 id="最小知識原則">最小知識原則</h2><hr>
+<p>物件導向 <code>SOLID</code> 原則的<strong>最小知識原則</strong> <code>LKP</code> (Least Knowledge Principle)，事實上與<strong>迪米特法則</strong>講的是同一件事情。</p>
+<blockquote>
+<p>一個物件應該對其他物件有最少的了解。</p>
+</blockquote>
+<p>白話就是</p>
+<blockquote>
+<p>Controller 應該以最簡單的方式使用 service。</p>
+</blockquote>
+<p>之前的 <code>PostController</code> ，因為違反了<strong>迪米特法則</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>因此必須知道<code>NotificationService</code>  與 <code>SMSService</code> 之後才能 <code>getMessage()</code>。</p>
+<p>但重構之後</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>只要知道 <code>NotificationService</code> 就可以 <code>getMessage()</code>了。</p>
+<blockquote>
+<p> 符合<strong>最小知識原則</strong>，自然符合<strong>迪米特法則</strong>。</p>
+</blockquote>
+<h2 id="再論_Train_Wreck">再論 Train Wreck</h2><hr>
+<p>我們知道違法<strong>迪米特法則</strong>會寫出 <code>Train Wreck</code>，但寫出 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>嗎？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
+<p>Clean Code p.111 認為，要看 <code>getOptions()</code> 、<code>getScratchDir()</code> 與 <code>getAbolutePath()</code> 回傳的是 object 還是 data structure？</p>
+<blockquote>
+<p>這裡的 data structure 不是我們在學校念的資料<strong>資料結構</strong>，如 linked list、tree 那些，而是只一個<strong>物件只有資料，沒有任何商業邏輯</strong>。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這種完全用 public field 的物件算 data structure。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> int */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(int <span class="variable">$id</span>, string <span class="variable">$name</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;id = <span class="variable">$id</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getId</span><span class="params">()</span> </span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;id;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;name;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>儘管多了 constructor 與 getter，它還是 data structure，因為沒有任何商業邏輯。</p>
+<blockquote>
+<p>如果回傳的只是一種無其它行為的 data structure，那它們在本質上必然會揭露內部的結構，所以<strong>迪米特法則</strong>在這種狀況下並不適用。</p>
+<p>Clean Code p.111</p>
+</blockquote>
+<p>如前例回傳  <code>SMSService</code>， 因為包含商業邏輯，所以回傳算是 object，而非 data structure，只要包含商業邏輯，就會<strong>暴露實踐細節</strong>，而導致商業邏輯無法抽換，因此 service 與 service 就必須解耦合，遵守<strong>迪米特原則</strong>。</p>
+<blockquote>
+<p><code>Train Wreck</code> 不見得違反<strong>迪米特原則</strong>，要看回傳的是 data structure 還是 object。</p>
+</blockquote>
+<h2 id="Fluent_Interface">Fluent Interface</h2><p>在 Laravel 的 Eloquent，我們會這樣寫</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$flights</span> = Flight::where(<span class="string">'active'</span>, <span class="number">1</span>)</span><br><span class="line">               -&gt;orderBy(<span class="string">'name'</span>, <span class="string">'desc'</span>)</span><br><span class="line">               -&gt;take(<span class="number">10</span>)</span><br><span class="line">               -&gt;get();</span><br></pre></td></tr></table></figure>
+<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>？</p>
+<p><code>where()</code>、<code>orderBy()</code> 與 <code>take()</code> 這些，並沒有回傳其內部物件，而是傳回 <code>$this</code>，因此沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>的問題，也沒有與<strong>內部物件強烈耦合</strong>問題，因此 fluent interface 並沒有違反<strong>迪米特法則</strong>。</p>
+<blockquote>
+<p>並不是 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>，關鍵在於有沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>，而不在於 <code>Train Wreck</code> 。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>違反<strong>迪米特法則</strong>會寫出 <code>Train Wreck</code>，但 <code>Train Wreck</code> 不一定會違反<strong>迪米特法則</strong>。</li>
+<li><strong>迪米特法則</strong>重點在於強調物件導向的<strong>封裝</strong>特性，關鍵在於不該<strong>暴露內部物件</strong>，進而<strong>暴露實踐細節</strong>，導致使用端與內部物件強烈耦合而無法抽換商業邏輯。</li>
+<li><strong>迪米特法則</strong>要求所有的動作都必須透過物件本身的方法操作，而不能傳出內部物件，讓使用端直接操作內部物件，而不在於是否使用 <code>Train Wreck</code> 。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p>Robert C. Martin, <a href="https://www.tenlong.com.tw/events/106" target="_blank" rel="external">無瑕的程式碼</a><br>良葛格, <a href="http://www.ithome.com.tw/voice/98670" target="_blank" rel="external">封裝與迪米特法則</a><br>Martin Fowler, <a href="https://www.martinfowler.com/bliki/FluentInterface.html" target="_blank" rel="external">Fluent Interface</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[標題描述]]>
+    
+    </summary>
+    
+      <category term="OOP" scheme="http://oomusou.io/tags/OOP/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Angular 也走 Redux 風 (使用 Ngrx)]]></title>
@@ -3061,111 +3182,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[讓我們忘記 Namespace，Class 與 Method]]>
-    
-    </summary>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 PhpStorm 使用 Code Inspection?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-code-inspection/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-code-inspection/</id>
-    <published>2016-07-24T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>PHP 不需編譯，只要存檔就可執行，優點是很方便，缺點是很多程式語法上的錯誤必須在瀏覽器執行才能發現。PhpStorm 的 Code Inspection 就相當於編譯器，在程式開發階段就可檢查語法上的錯誤，再搭配單元測試檢查邏輯上的錯誤，如此雙重保障，就能提早發現錯誤加以解決，降低除錯成本。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="實際案例">實際案例</h2><hr>
-<p>初學者在使用 PhpStorm 時，第一個不習慣的就是原來在 Sublime Text 很漂亮的程式碼，在 PhpStorm 打開了以後，平白無故多了很多警告，覺得很礙眼。</p>
-<p><strong>Authenticate.php</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/350f66fde6c4a532424670478cf2f5b72fed9ba9" target="_blank" rel="external">將 Authenticate.php 改成 use Auth</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect000.png" alt=""></p>
-<p>與 Sublime Text 不同的是 :</p>
-<ul>
-<li>右上角多了 <span class="label label-warning">咖啡色</span> 的方塊 : 表示 Code Inspection 偵測到錯誤。</li>
-<li>scroll bar 多了 <span class="label label-warning">咖啡色</span> 區塊 : 表示錯誤所在的相對位置。</li>
-<li><code>Auth::guard()</code>多了反白警告 : 表示錯誤所在的實際位置。 </li>
-</ul>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect001.png" alt=""></p>
-<p>右上角方塊的顏色，表示各種不同的嚴重層級。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect002.png" alt=""></p>
-<p>將滑鼠 hover 到 scroll bar 的顏色區塊上，會顯示錯誤訊息。</p>
-<p>可用滑鼠直接點 scroll bar 的顏色區塊，快速跳到有錯誤的程式碼位置，或按熱鍵 F2 前進搜尋錯誤，&#8679; + F2 倒退搜尋錯誤。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect003.png" alt=""></p>
-<p>將滑鼠游標放放到反白的 <code>Auth::guard()</code> 上，PhpStorm 顯示 <code>Method guard not found</code>。</p>
-<p>主要是因為 <code>Auth</code> 為 Facade，執行上沒有問題，但是 Code Inspection 找不到。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect004.png" alt=""></p>
-<p>將 namespace 引用改成 IDE Helper 所提供的 <code>Auth</code> 後，Code Inspection 就可以找到 <code>Auth::guard()</code> 了，右上角會出現 <span class="label label-success">綠色</span> 勾勾，表示通過 Code Inspection 檢查。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>關於使用 IDE Helper 解決 Code Inspection 警告的問題，詳細請參考<a href="/phpstorm/phpstorm-ide-helper/">如何在 PhpStorm 活用 PHPDoc?</a></span></span></span></p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  實務上對於 Laravel 或 package 的程式碼，我不會要求需通過 Code Inspection 檢查，但自己寫的程式碼，都必須通過 Code Inspection 的 <span class="label label-success">綠色</span> 勾勾。</div>
-<h2 id="調整_PhpStorm_檢查層級">調整 PhpStorm 檢查層級</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect005.png" alt=""></p>
-<p>若你覺得 Code Inspection 檢查太嚴格，希望 PhpStorm 只幫你檢查 PHP 語法就好，可以按右下角的<strong>哨兵</strong>符號，將 Code Inspection level 調到 <code>Syntax</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect006.png" alt=""></p>
-<p>調整完 Code Inspection level 後，不用改 <code>use Auth</code>，也可以達到右上角會出現 <span class="label label-success">綠色</span> 勾勾。</p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  實務上建議除非是 legacy code 真的不容易修正，否則不建議修改 Code Inspection level，畢竟 PhpStorm 所有的檢查都是有意義的，可以讓你及早發現淺在錯誤，避免實際在瀏覽器測試才發現錯誤的窘境。</div>
-<h2 id="設定_Code_Inspection">設定 Code Inspection</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect007.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; Inspections</em></strong></p>
-<p>假如你不想調整 Code Inspection level，只想將某個你認為不重要的警告拿掉，或降低層級，可以在 PhpStorm 的 preferences 設定。</p>
-<p>如之前 <code>Auth::guard()</code> 的錯誤，你也可以直接在讓 <code>undefined method</code> 不要被檢查。</p>
-<p>Code Inspection 所有的檢查規則都可以客製化，可以依照你的需求加以設定。</p>
-<h2 id="常見_Code_Inspection">常見 Code Inspection</h2><hr>
-<h3 id="使用未定義變數">使用未定義變數</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/3d187e1275e77b698b3d5487cc93e409a45511ae" target="_blank" rel="external">使用未定義變數</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect010.png" alt=""></p>
-<p>直接使用一個未定義參數，Code Inspection 會加以警告。</p>
-<h3 id="Namespace_不存在">Namespace 不存在</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/2855120534815ea7e14f174079a4512b30db5c2e" target="_blank" rel="external">Namespace 不存在</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect011.png" alt=""></p>
-<p>Namespace 因為打錯，而引用了一個不存在的 namespace，Code Inspection 會加以警告。</p>
-<h3 id="Class_不存在">Class 不存在</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/d73af1cd30f52375c62fcab8416c84f6c611397f" target="_blank" rel="external">Class 不存在</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect012.png" alt=""></p>
-<p>依賴注入時 class 名稱打錯，注入了一個不存在的 class，Code Inspection 會加以警告。</p>
-<h3 id="Field_不存在">Field 不存在</h3><p><strong>PostIDPO.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/d389f473081f69e088073a5daa9c5c9e26cf3b47" target="_blank" rel="external">重構成 Parameter Object</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect013.png" alt=""></p>
-<p>將原 <code>showTitle()</code> 的 <code>$id</code> 與 <code>$default</code> 透過重構的 <code>Introduce to Parameter Object</code> 重構成 <code>PostIDPO</code> class。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/c7a50e8620653797d9041e406d51d2a21ee0e03b" target="_blank" rel="external">Field 不存在</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect014.png" alt=""></p>
-<p><code>showTitle()</code> 改傳入 <code>PostIDPO</code> 物件。</p>
-<p>若將 <code>id</code> 打錯成 <code>ip</code>，使用了一個不存在的 field，Code Inspection 會加以警告。</p>
-<h3 id="Method_不存在">Method 不存在</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52DI_demo/commit/4862ffd79ac52e74a245010760662932839fb68d" target="_blank" rel="external">Method 不存在</a></span></span></span></p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect015.png" alt=""></p>
-<p>若將 method 名稱打錯，呼叫一個物件不存在的 method，Code Inspection 會加以警告。</p>
-<h3 id="參數型別檢查">參數型別檢查</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/blob/master/app/Services/PostService.php" target="_blank" rel="external">新增 PostService</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect008.png" alt=""></p>
-<p>在 <code>showTitle()</code> 的參數與回傳值都使用了 PHP 7 的 scalar type hint。</p>
-<p><strong>PostServiceTest.php</strong><span class="margin-note-marker"><sup>10</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">10</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/blob/master/tests/PostServiceTest.php" target="_blank" rel="external">新增 PostServiceTest</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect009.png" alt=""></p>
-<p>若加上了 <code>declare(strict_type = 1);</code>，只要傳入的參數型別不對，Code Inspection 會提出警告。</p>
-<h3 id="Case_忘了加_break">Case 忘了加 break</h3><p><strong>PostService.php</strong><span class="margin-note-marker"><sup>11</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">11</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/4c015e7c250e0db86916f15789ae216745554ecb" target="_blank" rel="external">Case 忘了加上 break</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect016.png" alt=""></p>
-<p>PHP 語法上允許 <code>switch case</code> 不加上 <code>break</code> 的寫法，但大多時候是忘了加上 <code>break</code>，而造成邏輯上的錯誤，Code Inspection 會提出警告，可是需求決定是否該加上 <code>break</code>。</p>
-<h3 id="沒有_PHPDoc">沒有 PHPDoc</h3><p><img src="/images/phpstorm/phpstorm-code-inspection/inspect017.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; Inspections -&gt; PHPDoc</em></strong></p>
-<p>PhpStorm 預設並沒有將 <code>Missing PHPDoc comment</code> 打勾，但實務上建議將此選項打勾。</p>
-<p>PHP 7 因為有完整 type hint 與 return type，所以 PHPDoc 重要性不如以往，但 PHP 7 之前，則必須靠 PHPDoc 描述型別，PhpStorm 的 Code Inspection 才能發揮威力，所以建議開啟。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect018.png" alt=""></p>
-<p><code>showTitle()</code> 沒有寫 PHPDoc，Code Inspection 會提出警告。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect019.png" alt=""></p>
-<p>要補上 PHPDoc 也很簡單，將滑鼠游標放在 method 名稱上，按熱鍵 &#8997; + &#8617;，選擇 <code>Generate PHPDoc Comment</code> 或 <code>Generate PHPDoc for function</code> 皆可。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>12</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">12</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo/commit/51b7adc049927b19bd87f25bf26116932b61abff" target="_blank" rel="external">加上 PHPDoc</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-inspection/inspect020.png" alt=""></p>
-<p>PhpStorm 會自動幫你加上 PHPDoc，只要再加上 method 功能的描述即可。</p>
-<h2 id="執行_Code_Inpection">執行 Code Inpection</h2><hr>
-<p>預設每個開啟的檔案都會自動執行 Code Inspection，此外你也可以自行選擇檔案，讓 Code Inspection 一次檢查多個檔案。</p>
-<h3 id="一次檢查多個檔案">一次檢查多個檔案</h3><p><img src="/images/phpstorm/phpstorm-code-inspection/inspect021.png" alt=""></p>
-<p>在 project windows 用 &#8984; 與滑鼠選擇多個檔案，按滑鼠右鍵，選擇 <code>Inspect Code...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect022.png" alt=""></p>
-<p>選擇 <code>Selected files</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect023.png" alt=""></p>
-<p>Code Inspection 最後會顯示有哪些檔案違反了哪些檢查規則。</p>
-<h3 id="一次檢查整個專案">一次檢查整個專案</h3><p><img src="/images/phpstorm/phpstorm-code-inspection/inspect024.png" alt=""></p>
-<p><strong><em>Code -&gt; Inspect Code…</em></strong></p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect025.png" alt=""></p>
-<p>選擇 <code>Whole project</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-inspection/inspect026.png" alt=""></p>
-<p>Code Inspection 將整個專案做檢查，會檢查出很多警告與錯誤，可視需求決定是否該修正。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>為了使 Code Inspection 沒有出現任何警告，可能會對程式碼產生強迫症，不過提早發現淺在錯誤總是好事，可視自己需求決定是否修正，或者關閉 Code Inspection 某個檢查規則。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormCodeInspection_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/code-inspection.html#phpCodeInspections" target="_blank" rel="external">Code Inspection</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[讓我們提早發現語法錯誤]]>
     
     </summary>
     

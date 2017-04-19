@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>迪米特法則 | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="標題描述">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="標題描述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迪米特法則">
+<meta property="og:url" content="http://oomusou.io/oop/oop-demeter/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="標題描述">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-04-19T15:12:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迪米特法則">
+<meta name="twitter:description" content="標題描述">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 迪米特法則</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 標題描述			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#定義"><span class="toc-article-text">定義</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Train_Wreck"><span class="toc-article-text">Train Wreck</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#最小知識原則"><span class="toc-article-text">最小知識原則</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#再論_Train_Wreck"><span class="toc-article-text">再論 Train Wreck</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Fluent_Interface"><span class="toc-article-text">Fluent Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p><strong>迪米特法則</strong>也稱為<strong>最小知識原則</strong>，是物件導向 <code>SOLID</code> 原則中的 <code>L</code> 其中之一 <code>LKP</code> ( Least Knowledge Principle)，是 1987 年 Ian Holland 在美國東北大學所提出，此法則應用在其 The Demeter Project 而得名，是物件導的基本原則。</p>
+<a id="more"></a>
+<h2 id="Motivation">Motivation</h2><hr>
+<p>但很多人沒有認清<strong>迪米特法則</strong>的本質，只要看到類似 Clean Code p. 110 書中提到的 <code>Train Wreck</code> 風格的程式碼</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
+<p>就認為違反的迪米特法則，真的是這樣嗎？</p>
+<h2 id="定義">定義</h2><hr>
+<blockquote>
+<p>高階模組不應該知道低階模組的內部如何運作。</p>
+<p>低階模組不應該<strong>暴露內部物件</strong>，不應該<strong>暴露實踐細節</strong>，應僅提供方法給高階模組使用。</p>
+</blockquote>
+<p>白話就是</p>
+<blockquote>
+<p>Controller 不應該知道 service 的內部如何運作。</p>
+<p>Service 應該將相依 service 封裝起來，提供 method 給 controller 使用，而非直接提供內部 service 給 controller 呼叫。</p>
+</blockquote>
+<h2 id="Train_Wreck">Train Wreck</h2><hr>
+<p><strong>SMSService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SMSService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getMessage</span><span class="params">()</span>: <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Message'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SMSService</code> 僅有一個 <code>getMessage()</code>。</p>
+<p><strong>NotificationService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotificationService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> SMSService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$smsService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * NotificationService constructor.</span><br><span class="line">     * <span class="doctag">@param</span> SMSService $smsService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(SMSService <span class="variable">$smsService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;smsService = <span class="variable">$smsService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> SMSService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getSMSService</span><span class="params">()</span>: <span class="title">SMSService</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;smsService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>NotificationService</code> 相依了 <code>SMSService</code>，直接使用 <code>getSMSService()</code> 將  <code>SMSService</code> 物件傳出去。</p>
+<p><strong>PostController</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">NotificationService</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> NotificationService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$notificationService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * PostController constructor.</span><br><span class="line">     * <span class="doctag">@param</span> NotificationService $notificationService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(NotificationService <span class="variable">$notificationService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;notificationService = <span class="variable">$notificationService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示所有簡訊</span><br><span class="line">     * <span class="doctag">@return</span> View</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$data</span>[<span class="string">'message'</span>] = <span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'posts.index'</span>, <span class="variable">$data</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>getSMSService()</code> 傳回  <code>SMSService</code> 物件，導致 controller 必須寫出</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>這種 <code>Train Wreck</code> 。</p>
+<p>這種寫法有幾個缺點 :</p>
+<ul>
+<li><code>PostController</code> 與 <code>NotificationService</code> 內部的 <code>SMSService</code> 強烈耦合，若想要換掉 <code>SMSService</code> 物件，則 <code>PostController</code> 必須跟著修改，也就是<strong>暴露內部物件</strong>。</li>
+<li><code>PostController</code> 為了要顯示 message，竟然還必須知道 <code>NotificationService</code> 內部使用了 <code>SMSService</code> 物件，先使用 <code>getSMSService()</code> 才行，也就是<strong>暴露實踐細節</strong>。</li>
+<li>違反了物件導向的<strong>封裝</strong>原則，<code>PostController</code> 竟然可以將手伸進去執行 <code>SMSService</code> 的方法。</li>
+</ul>
+<blockquote>
+<p>簡單來說，<strong>迪米特法則</strong>就是物件導向<strong>封裝</strong>特性的具體實現。</p>
+</blockquote>
+<p>建議將以上程式碼重構成以下寫法</p>
+<p><strong>NotificationService</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Services</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotificationService</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> SMSService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$smsService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * NotificationService constructor.</span><br><span class="line">     * <span class="doctag">@param</span> SMSService $smsService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(SMSService <span class="variable">$smsService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;smsService = <span class="variable">$smsService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getMessage</span><span class="params">()</span>: <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;smsService-&gt;getMessage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>PostController</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Services</span>\<span class="title">NotificationService</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> NotificationService */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$notificationService</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * PostController constructor.</span><br><span class="line">     * <span class="doctag">@param</span> NotificationService $notificationService</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(NotificationService <span class="variable">$notificationService</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;notificationService = <span class="variable">$notificationService</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示所有文章</span><br><span class="line">     * <span class="doctag">@return</span> View</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$data</span>[<span class="string">'message'</span>] = <span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'posts.index'</span>, <span class="variable">$data</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重構之後，<code>PostController</code> 不再出現 <code>Train Wreck</code> 。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PostController</code> 完全不知道<code>NotificationService</code>的<strong>內部物件</strong>，若想要換掉 <code>SMSService</code> 物件，則 <code>PostController</code> 完全不用修改。</li>
+<li><code>PostController</code> 為了要顯示 message，不必再知道<strong>實踐細節</strong>， 直接使用 <code>getMessage()</code> 就可以抓到資料。</li>
+<li>符合了物件導向的<strong>封裝</strong>原則，<code>PostController</code> 無法將手伸進去執行 <code>SMSService</code> 的方法。</li>
+</ul>
+<blockquote>
+<p>當 service 直接將內部使用的 service 傳出後，逼 controller 必須先了解其內部實踐細節，使得 controller 與 service 內部物件強烈耦合，這違反了物件導向<strong>封裝</strong>特性，也違反了<strong>迪米特法則</strong>。</p>
+<p>違反<strong>迪米特法則</strong>，通常會寫出 <code>Train Wreck</code> ，因此可使用 <code>Train Wreck</code> 檢查是否違反<strong>迪米特法則</strong>。</p>
+</blockquote>
+<h2 id="最小知識原則">最小知識原則</h2><hr>
+<p>物件導向 <code>SOLID</code> 原則的<strong>最小知識原則</strong> <code>LKP</code> (Least Knowledge Principle)，事實上與<strong>迪米特法則</strong>講的是同一件事情。</p>
+<blockquote>
+<p>一個物件應該對其他物件有最少的了解。</p>
+</blockquote>
+<p>白話就是</p>
+<blockquote>
+<p>Controller 應該以最簡單的方式使用 service。</p>
+</blockquote>
+<p>之前的 <code>PostController</code> ，因為違反了<strong>迪米特法則</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getSMSService()-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>因此必須知道<code>NotificationService</code>  與 <code>SMSService</code> 之後才能 <code>getMessage()</code>。</p>
+<p>但重構之後</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$this</span>-&gt;notificationService-&gt;getMessage();</span><br></pre></td></tr></table></figure>
+<p>只要知道 <code>NotificationService</code> 就可以 <code>getMessage()</code>了。</p>
+<blockquote>
+<p> 符合<strong>最小知識原則</strong>，自然符合<strong>迪米特法則</strong>。</p>
+</blockquote>
+<h2 id="再論_Train_Wreck">再論 Train Wreck</h2><hr>
+<p>我們知道違法<strong>迪米特法則</strong>會寫出 <code>Train Wreck</code>，但寫出 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>嗎？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
+<p>Clean Code p.111 認為，要看 <code>getOptions()</code> 、<code>getScratchDir()</code> 與 <code>getAbolutePath()</code> 回傳的是 object 還是 data structure？</p>
+<blockquote>
+<p>這裡的 data structure 不是我們在學校念的資料<strong>資料結構</strong>，如 linked list、tree 那些，而是只一個<strong>物件只有資料，沒有任何商業邏輯</strong>。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這種完全用 public field 的物件算 data structure。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> int */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(int <span class="variable">$id</span>, string <span class="variable">$name</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;id = <span class="variable">$id</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getId</span><span class="params">()</span> </span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;id;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;name;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>儘管多了 constructor 與 getter，它還是 data structure，因為沒有任何商業邏輯。</p>
+<blockquote>
+<p>如果回傳的只是一種無其它行為的 data structure，那它們在本質上必然會揭露內部的結構，所以<strong>迪米特法則</strong>在這種狀況下並不適用。</p>
+<p>Clean Code p.111</p>
+</blockquote>
+<p>如前例回傳  <code>SMSService</code>， 因為包含商業邏輯，所以回傳算是 object，而非 data structure，只要包含商業邏輯，就會<strong>暴露實踐細節</strong>，而導致商業邏輯無法抽換，因此 service 與 service 就必須解耦合，遵守<strong>迪米特原則</strong>。</p>
+<blockquote>
+<p><code>Train Wreck</code> 不見得違反<strong>迪米特原則</strong>，要看回傳的是 data structure 還是 object。</p>
+</blockquote>
+<h2 id="Fluent_Interface">Fluent Interface</h2><p>在 Laravel 的 Eloquent，我們會這樣寫</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$flights</span> = Flight::where(<span class="string">'active'</span>, <span class="number">1</span>)</span><br><span class="line">               -&gt;orderBy(<span class="string">'name'</span>, <span class="string">'desc'</span>)</span><br><span class="line">               -&gt;take(<span class="number">10</span>)</span><br><span class="line">               -&gt;get();</span><br></pre></td></tr></table></figure>
+<p>這也是 <code>Train Wreck</code>，也違反<strong>迪米特法則</strong>？</p>
+<p><code>where()</code>、<code>orderBy()</code> 與 <code>take()</code> 這些，並沒有回傳其內部物件，而是傳回 <code>$this</code>，因此沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>的問題，也沒有與<strong>內部物件強烈耦合</strong>問題，因此 fluent interface 並沒有違反<strong>迪米特法則</strong>。</p>
+<blockquote>
+<p>並不是 <code>Train Wreck</code> 一定違反<strong>迪米特法則</strong>，關鍵在於有沒有<strong>暴露內部物件</strong>與<strong>暴露實踐細節</strong>，而不在於 <code>Train Wreck</code> 。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>違反<strong>迪米特法則</strong>會寫出 <code>Train Wreck</code>，但 <code>Train Wreck</code> 不一定會違反<strong>迪米特法則</strong>。</li>
+<li><strong>迪米特法則</strong>重點在於強調物件導向的<strong>封裝</strong>特性，關鍵在於不該<strong>暴露內部物件</strong>，進而<strong>暴露實踐細節</strong>，導致使用端與內部物件強烈耦合而無法抽換商業邏輯。</li>
+<li><strong>迪米特法則</strong>要求所有的動作都必須透過物件本身的方法操作，而不能傳出內部物件，讓使用端直接操作內部物件，而不在於是否使用 <code>Train Wreck</code> 。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p>Robert C. Martin, <a href="https://www.tenlong.com.tw/events/106" target="_blank" rel="external">無瑕的程式碼</a><br>良葛格, <a href="http://www.ithome.com.tw/voice/98670" target="_blank" rel="external">封裝與迪米特法則</a><br>Martin Fowler, <a href="https://www.martinfowler.com/bliki/FluentInterface.html" target="_blank" rel="external">Fluent Interface</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/angular-ngrx/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-20 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/OOP/">OOP<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
