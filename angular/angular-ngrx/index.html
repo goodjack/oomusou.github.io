@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用 Redux 風格開發 Angular">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-04-18T16:04:09.000Z">
+<meta property="og:updated_time" content="2017-04-24T01:16:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular 也走 Redux 風 (使用 Ngrx)">
 <meta name="twitter:description" content="使用 Redux 風格開發 Angular">
@@ -189,7 +189,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;<span class="keyword">type</span>, payload&#125; = action;</span><br></pre></td></tr></table></figure>
 <p>根據 ngrx 的 <code>dispatcher.d.ts</code> ，<code>Action</code> 的定義如下 :</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Action </span>&#123;</span><br><span class="line">  <span class="keyword">type</span>: <span class="built_in">string</span>;</span><br><span class="line">  payload?: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>Action</code> 的兩個 field 為 <code>type</code> 與 <code>payload</code>，因此我們可以使用 TypeScript 2.1 的 destruction assignment，將 <code>action</code> 分解成 <code>type</code> 與 <code>payload</code> 兩個變數。</p>
+<p><code>Action</code> 的兩個 field 為 <code>type</code> 與 <code>payload</code>，因此我們可以使用 TypeScript 2.1 的 object destruction 將 <code>action</code> 分解成 <code>type</code> 與 <code>payload</code> 兩個變數。</p>
 <p>第 8 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">  <span class="keyword">case</span> INCREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter + payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> DECREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter - payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> RESET:</span><br><span class="line">    <span class="keyword">return</span> INITIAL_COUNTER_STATE;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>典型的 Redux 風格，在 reducer 內會根據 action 的 type 做 <code>switch case</code>。</p>
@@ -290,7 +290,7 @@
 <p>在 store 定義自己的 state 型別。</p>
 <p>第 6 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>定義 <code>CounterState</code> 與其 field。</p>
+<p>定義 <code>TodoState</code> 與其 field。</p>
 <p>其中 <code>todos</code> 為 <code>Todo</code> 型別的陣列。</p>
 <p>第 1 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Todo </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -400,7 +400,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>2</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>3</span></a></li>
     </ul>
 	</div>
 		

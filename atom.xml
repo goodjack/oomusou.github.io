@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-04-20T01:56:00.000Z</updated>
+  <updated>2017-04-24T02:04:17.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,181 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[使用 Observable Data Service]]></title>
+    <link href="http://oomusou.io/angular/angular-observable-data-service/"/>
+    <id>http://oomusou.io/angular/angular-observable-data-service/</id>
+    <published>2017-04-24T12:23:43.000Z</published>
+    <updated>2017-04-24T02:04:17.000Z</updated>
+    <content type="html"><![CDATA[<p>在 <a href="/angular/angular-ngrx/">Angular 也走 Redux 風 (使用 Ngrx)</a> 一文中，我們使用了 <code>Ngrx</code> 這種 <code>Redux</code> 風格的 store 來處理 component 之間共用的 state，雖然可行，但有一點 over design，在 RxJS 出現後，我們使用 Observable Data Service，也能實現出相同的效果。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.0<br>Laravel 5.2.22</p>
+<h2 id="Todo_範例">Todo 範例</h2><hr>
+<p><img src="/images/angular/ods/service000.png" alt="service000"></p>
+<h3 id="AppModule">AppModule</h3><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;FormsModule&#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoListComponent&#125; from <span class="string">'./components/todo-list/todo-list.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoDashboardComponent&#125; from <span class="string">'./components/todo-dashboard/todo-dashboard.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoService&#125; from <span class="string">'./services/todo/todo.service'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    TodoListComponent,</span><br><span class="line">    TodoDashboardComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    TodoService</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>22 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  TodoService</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>須在 <code>AppModule</code> 的 <code>providers</code> 加入 <code>TodoService</code>。</p>
+<h3 id="Component">Component</h3><h4 id="AppComponent">AppComponent</h4><p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">h1</span>&gt;</span>Todo<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-todo-list</span>&gt;</span><span class="tag">&lt;/<span class="title">app-todo-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-todo-dashboard</span>&gt;</span><span class="tag">&lt;/<span class="title">app-todo-dashboard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>包含了 <code>TodoList</code> 與 <code>TodoDashboard</code> 兩個 component。</p>
+<h4 id="TodoList">TodoList</h4><p><strong>todo-list.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> #<span class="attribute">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"addTodo(title)"</span>&gt;</span>Add<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let todo of todos|async"</span>&gt;</span></span><br><span class="line">    &#123;&#123; todo.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"removeTodo(todo.id)"</span>&gt;</span>Remove<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>todos</code> 為 <code>Observable</code>，需加上 <code>async</code> 將 <code>Observable</code> 來 subscribe 與 unsubscribe。</p>
+<p>但這有個限制，<code>todos</code> 必須為宣告成 <code>Observable&lt;Todo[]&gt;</code> 型別。</p>
+<p>Component 包含了<code>Add</code> 與 <code>Remove</code> 2 個 button。</p>
+<p><strong>todo-list.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoService&#125; from <span class="string">'../../services/todo/todo.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Todo&#125; from <span class="string">'../../models/todo'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-todo-list'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./todo-list.component.html'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoListComponent &#123;</span><br><span class="line">  todos: Observable&lt;Todo[]&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private todoService: TodoService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todoService.getTodos();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addTodo(input: HTMLInputElement) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!input.value) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.todoService.addTodo(input.value);</span><br><span class="line"></span><br><span class="line">    input.value = <span class="string">''</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.todoService.removeTodo(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private todoService: TodoService) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todoService.getTodos();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將  <code>TodoService</code> 依賴注入。</p>
+<p>由 <code>TodoService.getTodos()</code> 回傳所有 <code>todos</code>， 此為 <code>Observable</code> 型別。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos: Observable&lt;Todo[]&gt;;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>todos</code> 為 <code>Observable</code> 型別，其泛型為 <code>Todo[]</code>。</p>
+<blockquote>
+<p>為什麼 <code>todos</code> 不是 <code>Todo[]</code> 型別，而是 <code>Observable&lt;Todo[]&gt;</code> 呢？因為 <code>TodoService.getTodos()</code>回傳的型別為 <code>Observable</code>。</p>
+</blockquote>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">addTodo(input: HTMLInputElement) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!input.value) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.todoService.addTodo(input.value);</span><br><span class="line"></span><br><span class="line">  input.value = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Add</code> button 的 event handler。</p>
+<p>呼叫 <code>TodoService</code> 的 <code>addTodo()</code>，並直接傳入欲新增的 todo。</p>
+<blockquote>
+<p>使用 Observable Data Service 時，就不必呼叫 <code>Ngrx</code> 的 <code>dispatch()</code> 與傳入 action 與 payload，直接呼叫 service 的 method 與傳入資料即可。</p>
+</blockquote>
+<p>27 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.todoService.removeTodo(id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Remove</code> button 的 event handler。</p>
+<p>呼叫 <code>TodoService</code> 的 <code>addTodo()</code>，並直接傳入欲移除的 id。</p>
+<h4 id="TodoDashboard">TodoDashboard</h4><p><strong>todo-dashboard.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  Last Update: &#123;&#123; lastUpdate | async | date:'mediumTime'&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  Total items: &#123;&#123; (todos | async ).length &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"clearTodos()"</span>&gt;</span>Delete All<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>顯示最後更新時間與 <code>Todo</code> 筆數。</p>
+<p><code>lastUpdate</code> 與 <code>todos</code> 均為 <code>Observable</code>，需加上 <code>async</code> 將 <code>Observable</code> 來 subscribe 與 unsubscribe。</p>
+<p>Component 包含了 <code>Clear All</code> button。</p>
+<p><strong>todo-dashboard.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;TodoService&#125; from <span class="string">'../../services/todo/todo.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Todo&#125; from <span class="string">'../../models/todo'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-todo-dashboard'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./todo-dashboard.component.html'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoDashboardComponent &#123;</span><br><span class="line">  todos: Observable&lt;Todo[]&gt;;</span><br><span class="line">  lastUpdate: Observable&lt;<span class="built_in">Date</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private todoService: TodoService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todoService.getTodos();</span><br><span class="line">    <span class="keyword">this</span>.lastUpdate = <span class="keyword">this</span>.todoService.getLastUpdate();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clearTodos() &#123;</span><br><span class="line">    <span class="keyword">this</span>.todoService.clearTodos();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private todoService: TodoService) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todoService.getTodos();</span><br><span class="line">  <span class="keyword">this</span>.lastUpdate = <span class="keyword">this</span>.todoService.getLastUpdate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將  <code>TodoService</code> 依賴注入。</p>
+<p>由 <code>TodoService.getTodos()</code> 回傳所有 <code>todos</code>， 此為 <code>Observable</code> 型別。</p>
+<p>由 <code>TodoService.getLastUpdate()</code> 回傳所有 <code>LastUpdate</code>， 此為 <code>Observable</code> 型別。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">todos: Observable&lt;Todo[]&gt;;</span><br><span class="line">lastUpdate: Observable&lt;<span class="built_in">Date</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>todos</code> 為 <code>Observable</code> 型別，其泛型為 <code>Todo[]</code>。</p>
+<p>宣告 <code>lastUpdate</code> 為 <code>Observable</code> 型別，其泛型為 <code>Date</code>。</p>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clearTodos() &#123;</span><br><span class="line">  <span class="keyword">this</span>.todoService.clearTodos();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Clear All</code> button 的 event handler。</p>
+<p>呼叫 <code>TodoService</code> 的 <code>clearTodos()</code>。</p>
+<h3 id="Services">Services</h3><h4 id="TodoService">TodoService</h4><p><strong>todo.service.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Todo&#125; from <span class="string">'../../models/todo'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;BehaviorSubject&#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;INITIAL_TODO, TodoState&#125; from <span class="string">'./todo-state'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/pluck'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoService &#123;</span><br><span class="line">  <span class="keyword">private</span> subject = <span class="keyword">new</span> BehaviorSubject&lt;TodoState&gt;(INITIAL_TODO_STATE);</span><br><span class="line"></span><br><span class="line">  getTodos(): Observable&lt;Todo[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.subject.pluck(<span class="string">'todos'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getLastUpdate(): Observable&lt;<span class="built_in">Date</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.subject.pluck(<span class="string">'lastUpdate'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addTodo(title: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.subject.next(&#123;</span><br><span class="line">      todos: [...todos, &#123;</span><br><span class="line">        id: todos.length + <span class="number">1</span>,</span><br><span class="line">        title: title</span><br><span class="line">      &#125;],</span><br><span class="line">      lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.subject.next(&#123;</span><br><span class="line">      todos: todos.filter(todo =&gt; todo.id !== id),</span><br><span class="line">      lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clearTodos() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subject.next(&#123;</span><br><span class="line">      todos: [],</span><br><span class="line">      lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>全部的 state 邏輯都在 <code>TodoService</code> 內。</p>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> TodoService &#123;</span><br></pre></td></tr></table></figure>
+<p>使用 Angular 標準的 service。</p>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> subject = <span class="keyword">new</span> BehaviorSubject&lt;TodoState&gt;(INITIAL_TODO_STATE);</span><br></pre></td></tr></table></figure>
+<p><code>subject</code> 為實際儲存 Observable state 之處，為 <code>BehaviorSubject</code> 型別，<code>TodoState</code> 包含 <code>Todo[]</code> 與  <code>LastUpdate</code>。</p>
+<blockquote>
+<p>什麼是 BehaviorSubject？</p>
+</blockquote>
+<p>根據 RxJS source code</p>
+<p><strong>BehaviorSubject.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> BehaviorSubject&lt;T&gt; extends Subject&lt;T&gt; &#123;</span><br></pre></td></tr></table></figure>
+<p><code>BehaviorSubject</code> 繼承於 <code>Subject</code>。</p>
+<p><strong>Subject.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Subject&lt;T&gt; extends Observable&lt;T&gt; <span class="keyword">implements</span> ISubscription &#123;</span><br></pre></td></tr></table></figure>
+<p><code>Subject</code> 繼承於 <code>Observable</code>。</p>
+<p>也就是 <code>Observable</code> 所有的特性，<code>Subject</code> 與 <code>BehaviorSubject</code> 都有，如 <code>subscribe()</code> 與 operator 操作。</p>
+<p><code>Subject</code> 與 <code>BehaviorSubject</code> 算是一種特殊的 <code>Observable</code>，提供一些原本 <code>Observable</code> 沒有的功能。</p>
+<blockquote>
+<p>Observable 與 Subject 的差異？</p>
+</blockquote>
+<p><code>Subject</code> 多提供了 <code>next()</code>，允許我們手動將值送進 <code>Observable</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> Subject();</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line">subject.next(<span class="string">'Hello World'</span>);</span><br><span class="line"><span class="comment">// Subscription got Hello World</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Subject 與 BehaviorSubject 的差異？</p>
+</blockquote>
+<p>可提供初始值給 <code>BehaviorSubject</code>，使用端只要 <code>subscribe()</code> 就能收到初始值。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> BehaviorSubject(<span class="string">'Hello World'</span>);</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// Subscription got Hello World</span></span><br><span class="line">subject.next(<span class="string">'Hello Taiwan'</span>)</span><br><span class="line"><span class="comment">// Subscription got Hello Taiwan</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Subject</code> 是在 <code>subscribe()</code> 之後，若將來的資料有變動，會得到通知並新資料。</li>
+<li><code>BehaviorSubject</code> 是在 <code>subscribe()</code> 時，就能得到資料，因此可設定初始值。</li>
+</ul>
+<p>因為希望能自己手動更新 state，且有初始值，所以我們選擇使用 <code>BehaviorSubject</code>，而非 <code>Observable</code> 或 <code>Subject</code>。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getTodos(): Observable&lt;Todo[]&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.subject.pluck(<span class="string">'todos'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回傳 <code>todos[]</code> 給使用端，型別為 <code>Observable&lt;Todo[]&gt;</code>。</p>
+<blockquote>
+<p>因為 <code>Subject</code> 是一種特殊的 <code>Observable</code>，所以也有 <code>pluck</code> operator，取出 <code>todos</code> 屬性值回傳。</p>
+</blockquote>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getLastUpdate(): Observable&lt;<span class="built_in">Date</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.subject.pluck(<span class="string">'lastUpdate'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回傳 <code>lastUpdate</code> 給使用端，型別為 <code>Observable&lt;Date&gt;</code>。</p>
+<blockquote>
+<p>因為 <code>Subject</code> 是一種特殊的 <code>Observable</code>，所以也有 <code>pluck</code> operator，取出 <code>lastUpdate</code> 屬性值回傳。</p>
+</blockquote>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/pluck'</span>;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>pluck</code> 時，需單獨 import 進來。</p>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">addTodo(title: <span class="built_in">string</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.subject.next(&#123;</span><br><span class="line">    todos: [...todos, &#123;</span><br><span class="line">      id: todos.length + <span class="number">1</span>,</span><br><span class="line">      title: title</span><br><span class="line">    &#125;],</span><br><span class="line">    lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增 todo 進 <code>BehaviorSubject</code>。</p>
+<p>使用 <code>Subject.getValue()</code> 回傳目前 <code>BehaviorSubject</code> 內的 state。</p>
+<p>使用 <code>Subject.next()</code> 寫入新的 state 進 <code>BehaviorSubject</code> 。</p>
+<p>21 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br></pre></td></tr></table></figure>
+<p><code>Subject.getValue()</code> 會回傳 <code>TodoState</code> 型別</p>
+<p><strong>todo-state.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>內有 <code>todos</code> 與 <code>lastUpdate</code> 兩個屬性，可使用 TypeScript 2.1 的 object destruction 將物件的屬性直接拆成兩個變數。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;todos, lastUpdate&#125; = <span class="keyword">this</span>.subject.getValue();</span><br></pre></td></tr></table></figure>
+<p>因為 <code>lastUpdate</code> 目前用不到，只想取 <code>todos</code> 即可，因此省略成</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br></pre></td></tr></table></figure>
+<p>32 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;todos&#125; = <span class="keyword">this</span>.subject.getValue();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.subject.next(&#123;</span><br><span class="line">    todos: todos.filter(todo =&gt; todo.id !== id),</span><br><span class="line">    lastUpdate: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>從 <code>BehaviorSubject</code> 移除 todo。</p>
+<p>34 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clearTodos() &#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = [];</span><br><span class="line">  <span class="keyword">this</span>.updateSubject();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>從 <code>BehaviorSubject</code> 移除全部 todo。</p>
+<h4 id="TodoState">TodoState</h4><p><strong>todo-state.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Todo&#125; from <span class="string">'../../models/todo'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_TODO_STATE: TodoState = &#123;todos: [], lastUpdate: <span class="literal">null</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>定義 state 型別。</p>
+<p>第 3 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>TodoState</code> 與其 field。</p>
+<p>其中 <code>todos</code> 為 <code>Todo</code> 型別的陣列。</p>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INITIAL_TODO_STATE: TodoState = &#123;todos: [], lastUpdate: <span class="literal">null</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>INITIAL_TODO_STATE</code> 常數，為 <code>TodoState</code> 的初始狀態。</p>
+<h3 id="Models">Models</h3><h4 id="Todo">Todo</h4><p><strong>todo.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Todo </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>Todo</code> 型別。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>對於 component 來說，無論使用了 <code>Ngrx/store</code> 或 Observable Data Service，都是使用 Observable，與 state 的維護方式完全解耦合。</li>
+<li>使用了 <code>BehaviorSubject</code> 後，我們能手動透過 <code>next()</code> 維護新的 state，並能通知 component 自動更新，原本跨 component 維護 state 問題將獲得解決。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/TodoObservable" target="_blank" rel="external">GitHub</a> 上找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://forum.angular.tw" target="_blank" rel="external">Angular User Group Taiwan</a>, <a href="https://forum.angular.tw/t/behavior-subject-observable/285" target="_blank" rel="external">請問 Behavior Subject 與 Observable 的差異？</a><br><a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>, <a href="http://stackoverflow.com/questions/39494058/angular-2-behavior-subject-vs-observable" target="_blank" rel="external">Angular 2 - Behavior Subject vs Observable?</a><br><a href="https://angular-university.io/" target="_blank" rel="external">Angular University</a>, <a href="http://blog.angular-university.io/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/" target="_blank" rel="external">How to build Angular apps using Observable Data Services - Pitfalls to avoid</a><br><a href="http://jasonwatmore.com/" target="_blank" rel="external">Jason Watmore</a>, <a href="http://jasonwatmore.com/post/2016/12/01/angular-2-communicating-between-components-with-observable-subject" target="_blank" rel="external">Angular 2 - Communicating Between Components with Observable &amp; Subject</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[使用 RxJS 的 BehaviorSubject]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[迪米特法則]]></title>
     <link href="http://oomusou.io/oop/oop-demeter/"/>
     <id>http://oomusou.io/oop/oop-demeter/</id>
     <published>2017-04-20T12:23:43.000Z</published>
-    <updated>2017-04-20T01:56:00.000Z</updated>
+    <updated>2017-04-21T23:12:01.000Z</updated>
     <content type="html"><![CDATA[<p><strong>迪米特法則</strong>也稱為<strong>最小知識原則</strong>，是物件導向 <code>SOLID</code> 原則中的 <code>L</code> 其中之一 <code>LKP</code> ( Least Knowledge Principle)，是 1987 年 Ian Holland 在美國東北大學所提出，此法則應用在其 The Demeter Project 而得名，是物件導的基本原則。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
@@ -97,7 +267,7 @@
 <blockquote>
 <p>這裡的 data structure 不是我們在學校念書時所謂的<strong>資料結構</strong>，如 linked list、tree 那些，而是指一個<strong>物件只有資料，沒有任何商業邏輯</strong>。</p>
 </blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Student&#10;&#123;&#10;    public $id;&#10;    public $name;&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>這種完全用 public field 的物件算 data structure。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> int */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$id</span>;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$name</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(int <span class="variable">$id</span>, string <span class="variable">$name</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;id = <span class="variable">$id</span>;</span><br><span class="line">        <span class="variable">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getId</span><span class="params">()</span> </span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;id;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;name;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>儘管多了 constructor 與 getter，它還是 data structure，因為沒有任何商業邏輯。</p>
@@ -139,7 +309,7 @@
     <link href="http://oomusou.io/angular/angular-ngrx/"/>
     <id>http://oomusou.io/angular/angular-ngrx/</id>
     <published>2017-04-19T12:23:43.000Z</published>
-    <updated>2017-04-18T16:04:09.000Z</updated>
+    <updated>2017-04-24T01:16:49.000Z</updated>
     <content type="html"><![CDATA[<p>Redux 起源於 React 社群，算是一種 design pattern，適用於某些情境，也提供一些優點，Angular 也有 Redux 的實作，但 Angular 是否該使用 Redux 呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -222,7 +392,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;<span class="keyword">type</span>, payload&#125; = action;</span><br></pre></td></tr></table></figure>
 <p>根據 ngrx 的 <code>dispatcher.d.ts</code> ，<code>Action</code> 的定義如下 :</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Action </span>&#123;</span><br><span class="line">  <span class="keyword">type</span>: <span class="built_in">string</span>;</span><br><span class="line">  payload?: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>Action</code> 的兩個 field 為 <code>type</code> 與 <code>payload</code>，因此我們可以使用 TypeScript 2.1 的 destruction assignment，將 <code>action</code> 分解成 <code>type</code> 與 <code>payload</code> 兩個變數。</p>
+<p><code>Action</code> 的兩個 field 為 <code>type</code> 與 <code>payload</code>，因此我們可以使用 TypeScript 2.1 的 object destruction 將 <code>action</code> 分解成 <code>type</code> 與 <code>payload</code> 兩個變數。</p>
 <p>第 8 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">  <span class="keyword">case</span> INCREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter + payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> DECREMENT:</span><br><span class="line">    <span class="keyword">return</span> &#123;...state, counter: state.counter - payload.value&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> RESET:</span><br><span class="line">    <span class="keyword">return</span> INITIAL_COUNTER_STATE;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>典型的 Redux 風格，在 reducer 內會根據 action 的 type 做 <code>switch case</code>。</p>
@@ -323,7 +493,7 @@
 <p>在 store 定義自己的 state 型別。</p>
 <p>第 6 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> TodoState </span>&#123;</span><br><span class="line">  todos: Todo[];</span><br><span class="line">  lastUpdate: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>定義 <code>CounterState</code> 與其 field。</p>
+<p>定義 <code>TodoState</code> 與其 field。</p>
 <p>其中 <code>todos</code> 為 <code>Todo</code> 型別的陣列。</p>
 <p>第 1 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Todo </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3098,89 +3268,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[讓我們打更少的字加快開發速度]]>
-    
-    </summary>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 PhpStorm 使用 Code Completion?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-code-completion/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-code-completion/</id>
-    <published>2016-07-25T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>PHP 進入了物件導向與 framework 時代之後，出現了大量的 namespace、class、interface 與 method，基本上這些東西已經很難用記憶的方式來寫程式，必須靠工具輔助。PhpStorm 的 Code Completion 幫我們處理了大部分的東西，讓我們只要用選的就可以開發程式，一來開發速度變快，二來也可以減少 typo，是 modern PHP 的關鍵。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="Basic_Code_Completion">Basic Code Completion</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code004.png" alt=""></p>
-<p>當任何地方需要使用 Code Completion 時，就可以按熱鍵 &#8963; + &#9251;。</p>
-<p>如 constructor 要依賴注入時，不知道要注入的 class 名稱，可以按熱鍵 &#8963; + &#9251;，Code Completion 會列出目前 scope 可用的 class 名稱讓你挑選。</p>
-<h2 id="Smart_Type_Code_Completion">Smart Type Code Completion</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code005.png" alt=""></p>
-<p>當任何地方需要使用 Code Completion 時，且希望 Code Completion 能根據型別自動選擇適當的變數，就可以按熱鍵 &#8963; + &#8679; + &#9251;。</p>
-<p>如 <code>getTitle()</code> 需要輸入變數時，不知道要輸入的變數名稱，可以按熱鍵 &#8963; + &#8679; + &#9251;，Smart Type Code Completion 會根據 <code>getType()</code> 的 scalar type hint 或 PHPDoc 的 <code>@param</code> 列出目前 scope 最適合的變數讓你挑選。</p>
-<h2 id="Class">Class</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code006.png" alt=""></p>
-<p>一般我們都會取將物件變數名稱以 class 名稱的 camelCase 命名，當 <code>new</code> 時，Code Completion 會自動依照變數名稱抓到 class 名稱讓你選擇。</p>
-<h2 id="Field">Field</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code007.png" alt=""></p>
-<ul>
-<li>若是一般 class，Code Completion 可以直接抓到 public field。</li>
-<li>若是 model，則必須透過 IDE Helper 幫 model 加上 PHPDoc 註解，Code Completion 才能抓到。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>關於 IDE Helper 的安裝與執行，詳細請參考<a href="/phpstorm/phpstorm-ide-helper/">如何在 PhpStorm 活用 PHPDoc?</a></span></span></span></li>
-</ul>
-<h2 id="Method">Method</h2><hr>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code000.png" alt=""></p>
-<p>PhpStorm 2016.2 之前的 Code Completion，讓你選擇可以選擇 method，並提供參數資訊，老實說這樣已經很好用了。</p>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code001.png" alt=""></p>
-<p>PhpStorm 2016.2 對於參數的 Code Completion 做了更強的支援，不過預設並沒有啟動。</p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; General -&gt; Smart Keys</em></strong></p>
-<ul>
-<li>將 <code>Enable smart function parameters completion</code> 打勾。</li>
-</ul>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code002.png" alt=""></p>
-<p>以後選擇 method 後，PhpStorm 還會幫你將原 method 的參數名稱複製過來，讓你可以更清楚要填什麼參數。</p>
-<p>除此之外，若你使用的 PHP 7 的 type hint，或使用 PHPDoc 的 <code>@param</code> 描述參數型別，PhpStorm 會自動將相同型別的參數列在前面讓你挑選。</p>
-<p><img src="/images/phpstorm/phpstorm-code-completion/code003.png" alt=""></p>
-<p>按 enter 選擇了變數後，PhpStorm 會自動跳到下一個參數，也讓你用選的。</p>
-<h2 id="Collection">Collection</h2><hr>
-<p>Collection 並非 PHP 原生型別，是由 Laravel 所擴充，由於其實踐了 <code>ArrayAccess</code> 、 <code>Countable</code> 與 <code>IteratorAggregate</code> interface，因此 <code>Collection</code> 使用起來很像 array，若要描述 <code>Collection</code> 元素的型別，可搭配 PHPDoc。</p>
-<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/33f673dcbde4a935e04364c4ce4d064c9371a3cc" target="_blank" rel="external">PostRepository 新增 getAllPosts()</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code008.png" alt=""></p>
-<p><code>getAllPosts()</code> 回傳的是 <code>Collection</code> 型別，若由 PhpStorm 的熱鍵 &#8997; + &#8617;，只會有 <code>@return Collection</code>，如此 <code>foreach</code> 時將無法顯示其元素的 field 與 method，必須加上 <code>|Post[]</code>，表示回傳值除了是 <code>Collection</code> 外，也是 <code>Post</code> 型別的 array。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/70964d9bf2013ebc4b092f0f7699d42f40b26568" target="_blank" rel="external">PostService 新增 showAllPosts()</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code009.png" alt=""></p>
-<p>如此在 <code>foreach</code> 時，就可以顯示 <code>$post</code> 的屬性 <code>title</code>。</p>
-<h2 id="Service_Container">Service Container</h2><hr>
-<p><strong>PostServiceUnitTest.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3b9d185307e4a64258fd8790439b820b44766931" target="_blank" rel="external">PostServiceUnitTest 使用 app::make()</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code010.png" alt=""></p>
-<p>使用 <code>App::make()</code> 或 <code>app()</code> 透過 service container 建立物件時，PhpStorm 也可以抓到該物件的 method。</p>
-<h2 id="Controller">Controller</h2><hr>
-<p><strong>routes.php</strong><br><img src="/images/phpstorm/phpstorm-code-completion/code011.png" alt=""></p>
-<p>在 <code>routes.php</code> 的 <code>uses</code>，可以抓到 controller 與其 method。</p>
-<h2 id="Route">Route</h2><hr>
-<p><strong>index.blade.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/988652b299d7bb6f2e17e91ca175b58e5f7cb325" target="_blank" rel="external">Blade 有 route 別名</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code012.png" alt=""></p>
-<p>Blade 的 <code>route()</code> 可以抓到 <code>routes.php</code> 所定義的 route 別名。</p>
-<h2 id="View">View</h2><hr>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/ee4f0fc1673c491e176bcf5858ce35afee38e465" target="_blank" rel="external">view() 可抓到 view</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code013.png" alt=""></p>
-<p>在 controller 內的 <code>return view()</code> 可以抓到 view 的名稱。</p>
-<h2 id="config::get()">config::get()</h2><hr>
-<p><strong>PostController.php</strong><span class="margin-note-marker"><sup>8</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">8</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/a6efc5f5bba41a79eab09abeeb7384c808d06653" target="_blank" rel="external">Config::get() 可抓到設定</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code014.png" alt=""></p>
-<p><code>Config::get()</code> 可以抓到 array 的 key 值.</p>
-<h2 id="DIR"><strong>DIR</strong></h2><hr>
-<p><strong>PostServiceUnitTest.php</strong><span class="margin-note-marker"><sup>9</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">9</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo/commit/3227a9b15a1f441433758becf7e294bbab8a7f4e" target="_blank" rel="external"><strong>DIR</strong> 可抓到目前目錄的檔案</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-completion/code015.png" alt=""></p>
-<p><code>__DIR__</code> 可抓到目前目錄的檔案，這在寫測試時特別好用，可以將測試案例檔案(如 Excel 檔)放在目前單元測試下，<code>__DIR</code> 會抓到 Excel 檔。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>寫程式重點不是在記憶力，而是在抽象化思考，Code Completion 讓我們從 namespace、class 與 method 解放，將注意力放在解決需求上。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormCodeCompletion_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<p>Gary Hockin, <a href="https://blog.jetbrains.com/phpstorm/2016/07/parameter-code-completion-in-phpstorm-2016-2" target="_blank" rel="external">PhpStorm Code Completion in PhpStorm 2016.2</a><br>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/auto-completing-code.html" target="_blank" rel="external">Auto-Completing Code</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[讓我們忘記 Namespace，Class 與 Method]]>
     
     </summary>
     
