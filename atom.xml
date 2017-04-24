@@ -311,7 +311,7 @@
     <link href="http://oomusou.io/angular/angular-ngrx/"/>
     <id>http://oomusou.io/angular/angular-ngrx/</id>
     <published>2017-04-19T12:23:43.000Z</published>
-    <updated>2017-04-24T01:16:49.000Z</updated>
+    <updated>2017-04-24T13:41:07.000Z</updated>
     <content type="html"><![CDATA[<p>Redux 起源於 React 社群，算是一種 design pattern，適用於某些情境，也提供一些優點，Angular 也有 Redux 的實作，但 Angular 是否該使用 Redux 呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -566,6 +566,8 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="RxJS" scheme="http://oomusou.io/tags/RxJS/"/>
     
   </entry>
   
