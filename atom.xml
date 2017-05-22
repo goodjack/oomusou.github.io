@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-22T02:55:34.000Z</updated>
+  <updated>2017-05-22T03:13:34.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
     <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
     <published>2017-05-22T12:23:43.000Z</published>
-    <updated>2017-05-22T02:55:34.000Z</updated>
+    <updated>2017-05-22T03:13:34.000Z</updated>
     <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -64,20 +64,20 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Hero 有兩個 fields。</p>
 <p><img src="/images/typescript/typescript-assertion/assert000.png" alt="assert000"></p>
-<p>使用 <code>&lt;Hero&gt;</code> 寫法，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p>使用 <code>&lt;Hero&gt;</code> 寫法，就算少寫了 <code>state</code>，TypeScript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
 <p><img src="/images/typescript/typescript-assertion/assert001.png" alt="assert001"></p>
-<p>改用了 <code>as Hero</code> 寫法依舊，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p>改用了 <code>as Hero</code> 寫法依舊，就算少寫了 <code>state</code>，TypeScript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
 <p><img src="/images/typescript/typescript-assertion/assert002.png" alt="assert002"></p>
-<p>若使用了型別宣告，少寫了 <code>state</code>，Typescript language service 會提出警告，編譯也會失敗，明確告知少指定了 <code>state</code> fields。</p>
+<p>若使用了型別宣告，少寫了 <code>state</code>，TypeScript language service 會提出警告，編譯也會失敗，明確告知少指定了 <code>state</code> fields。</p>
 <blockquote>
 <p>以上 3 種寫法，Intellisense 皆正常，但只有明確宣告型別，才能完整檢查出少了 field。</p>
 </blockquote>
-<h2 id="Nullable">Nullable</h2><p>若 model 有些 field 允許不指定值，卻又希望 Typescript 強型別檢查呢？</p>
+<h2 id="Nullable">Nullable</h2><p>若 model 有些 field 允許不指定值，卻又希望 TypeScript 強型別檢查呢？</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state？: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>請在 field 名稱後方加上 <code>?</code>，則 Typescript language service 不會提出警告，編譯也不會失敗。</p>
+<p>請在 field 名稱後方加上 <code>?</code>，則 TypeScript language service 不會提出警告，編譯也不會失敗。</p>
 <h2 id="Conclusion">Conclusion</h2><ul>
 <li>Type Assertion 並非最完美的強型別解決方案，只能對 Intellisense 有幫助。</li>
-<li>若要完整的檢查，還是要明確的指定型別，如此才能發揮 Typescript 的 type 威力。</li>
+<li>若要完整的檢查，還是要明確的指定型別，如此才能發揮 TypeScript 的 type 威力。</li>
 </ul>
 <h2 id="Reference">Reference</h2><hr>
 <p><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a>, <a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
