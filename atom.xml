@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-22T02:53:23.000Z</updated>
+  <updated>2017-05-22T02:55:34.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,19 +19,12 @@
     <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
     <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
     <published>2017-05-22T12:23:43.000Z</published>
-    <updated>2017-05-22T02:53:23.000Z</updated>
+    <updated>2017-05-22T02:55:34.000Z</updated>
     <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>TypeScript 2.2</p>
 <h2 id="傳統建立物件方式">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 class 建立 model。</p>
-<p><strong>app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onAddHeroClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">  hero.name = <span class="string">'Sam'</span>;</span><br><span class="line">  hero.state = <span class="string">'active'</span>;</span><br><span class="line">  <span class="keyword">this</span>.heroes.push(hero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>建立 <code>Hero</code> 物件，然後指定 field 值，最後再 push 進陣列。</p>
-<p>這樣寫當然沒有錯，只是必須先透過 constructor 建立物件，然後一一指定 field 值，程式行數會很多，且沒那麼優雅。</p>
-<h2 id="傳統建立物件方式-1">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用 class 建立 model。</p>
 <p><strong>app.component.ts</strong></p>
