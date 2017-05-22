@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TypeScript 之 Type Assertion | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="釐清 Type Assertion 觀念與盲點">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="釐清 Type Assertion 觀念與盲點">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript 之 Type Assertion">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-type-assertion/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="釐清 Type Assertion 觀念與盲點">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-05-22T02:53:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TypeScript 之 Type Assertion">
+<meta name="twitter:description" content="釐清 Type Assertion 觀念與盲點">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> TypeScript 之 Type Assertion</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 釐清 Type Assertion 觀念與盲點			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#傳統建立物件方式"><span class="toc-article-text">傳統建立物件方式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#傳統建立物件方式-1"><span class="toc-article-text">傳統建立物件方式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#C_Sharp"><span class="toc-article-text">C Sharp</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#TypeScript"><span class="toc-article-text">TypeScript</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#<Foo>_vs-_as_Foo"><span class="toc-article-text"><Foo> vs. as Foo</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Type_Assersion_vs-_Type_Casting"><span class="toc-article-text">Type Assersion vs. Type Casting</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Type_Assertion_的盲點"><span class="toc-article-text">Type Assertion 的盲點</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Nullable"><span class="toc-article-text">Nullable</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.2</p>
+<h2 id="傳統建立物件方式">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 class 建立 model。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onAddHeroClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">  hero.name = <span class="string">'Sam'</span>;</span><br><span class="line">  hero.state = <span class="string">'active'</span>;</span><br><span class="line">  <span class="keyword">this</span>.heroes.push(hero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>Hero</code> 物件，然後指定 field 值，最後再 push 進陣列。</p>
+<p>這樣寫當然沒有錯，只是必須先透過 constructor 建立物件，然後一一指定 field 值，程式行數會很多，且沒那麼優雅。</p>
+<h2 id="傳統建立物件方式-1">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 class 建立 model。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onAddHeroClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">  hero.name = <span class="string">'Sam'</span>;</span><br><span class="line">  hero.state = <span class="string">'active'</span>;</span><br><span class="line">  <span class="keyword">this</span>.heroes.push(hero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>Hero</code> 物件，然後指定 field 值，最後再 push 進陣列。</p>
+<p>這樣寫當然沒有錯，只是必須先透過 constructor 建立物件，然後一一指定 field 值，程式行數會很多，且沒那麼優雅。</p>
+<h2 id="C_Sharp">C Sharp</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hero = <span class="keyword">new</span> Hero</span><br><span class="line">&#123;</span><br><span class="line">  Name = <span class="string">"Sam"</span>,</span><br><span class="line">  State = <span class="string">"active"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>C# 的 Object Initializer 允許我們不用透過 constructor，直接在型別後面使用 <code>{}</code>，且 Intellisense 會自動對 field 加以提示。</p>
+<p>這種方式比起傳統物件導向寫法優雅。</p>
+<h2 id="TypeScript">TypeScript</h2><p>TypeScript 有 3 種寫法，可以寫出類似 C# Object Initializer 風格的程式碼。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero: Hero = &#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &lt;Hero&gt;&#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，使用 type assertion，類似泛型的寫法，將 object type 轉成 <code>Hero</code>，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125; as Hero;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，是 type assertion 的另一種寫法，在最後補上 <code>as</code> 將 object type 轉成 <code>Hero</code>，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<h2 id="&lt;Foo&gt;_vs-_as_Foo"><code>&lt;Foo&gt;</code> vs. <code>as Foo</code></h2><p><code>&lt;Foo&gt;</code> 與 <code>as Foo</code> 寫法都屬於 type assertion，該用哪一種寫法呢？</p>
+<p>一開始 TypeScript 只提供 <code>&lt;Foo&gt;</code>的語法，但這種寫法搭配 JSX 會有問題。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &lt;<span class="built_in">string</span>&gt;bar;</span><br><span class="line">&lt;<span class="regexp">/string&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因此 TypeScript 另外提供 <code>as Foo</code> 寫法給 JSX。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = bar as <span class="built_in">string</span>;</span><br><span class="line">&lt;<span class="regexp">/string&gt;</span></span><br></pre></td></tr></table></figure>
+<p>對於 Angular 來說，<code>&lt;Foo&gt;</code> 與 <code>as Foo</code> 都可以用，但就語意而言，<code>&lt;Foo&gt;</code> 寫法較優。</p>
+<p>因為 type assertion 是在<strong>編譯時期</strong>的<strong>靜態轉型</strong>，而非<strong>執行時期</strong>的<strong>動態轉型</strong>，使用泛型的 <code>&lt;&gt;</code> 符號較能彰顯其<strong>編譯時期</strong>的特性。</p>
+<h2 id="Type_Assersion_vs-_Type_Casting">Type Assersion vs. Type Casting</h2><p>或許你會覺得 type assertion 就是一種轉型而已，只是使用了 <code>&lt;Foo&gt;</code> 或 <code>as Foo</code> 的語法，但事實上並不是如此。</p>
+<p>在 TypeScript PlayGround，我們可以發現使用 type assertion 之後的 JavaScript 的差異：</p>
+<p><strong>TypeScript</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &lt;Hero&gt;&#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>JavaScript</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hero = &#123;</span><br><span class="line"> name: <span class="string">'Sam'</span>,</span><br><span class="line"> state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也就是對於 JavaScript 而言，並沒有所謂的 <code>Hero</code> 型別，只是 <code>object</code> 型別，所以並沒有所謂的<strong>執行時期</strong>的<strong>動態轉型</strong>，type assertion 實際上只有兩個功能：</p>
+<ul>
+<li>編譯時期的型別檢查</li>
+<li>開發時期的 Intellisense。</li>
+</ul>
+<h2 id="Type_Assertion_的盲點">Type Assertion 的盲點</h2><p>Type assertion 並非萬靈丹，事實上它有以下盲點，回顧一下我們的 model：</p>
+<p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Hero 有兩個 fields。</p>
+<p><img src="/images/typescript/typescript-assertion/assert000.png" alt="assert000"></p>
+<p>使用 <code>&lt;Hero&gt;</code> 寫法，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p><img src="/images/typescript/typescript-assertion/assert001.png" alt="assert001"></p>
+<p>改用了 <code>as Hero</code> 寫法依舊，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p><img src="/images/typescript/typescript-assertion/assert002.png" alt="assert002"></p>
+<p>若使用了型別宣告，少寫了 <code>state</code>，Typescript language service 會提出警告，編譯也會失敗，明確告知少指定了 <code>state</code> fields。</p>
+<blockquote>
+<p>以上 3 種寫法，Intellisense 皆正常，但只有明確宣告型別，才能完整檢查出少了 field。</p>
+</blockquote>
+<h2 id="Nullable">Nullable</h2><p>若 model 有些 field 允許不指定值，卻又希望 Typescript 強型別檢查呢？</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state？: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>請在 field 名稱後方加上 <code>?</code>，則 Typescript language service 不會提出警告，編譯也不會失敗。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>Type Assertion 並非最完美的強型別解決方案，只能對 Intellisense 有幫助。</li>
+<li>若要完整的檢查，還是要明確的指定型別，如此才能發揮 Typescript 的 type 威力。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a>, <a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/angular-observable-data-service/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-05-22 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

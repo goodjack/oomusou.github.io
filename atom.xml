@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-04-24T13:32:31.000Z</updated>
+  <updated>2017-05-22T02:53:23.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[TypeScript 之 Type Assertion]]></title>
+    <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
+    <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
+    <published>2017-05-22T12:23:43.000Z</published>
+    <updated>2017-05-22T02:53:23.000Z</updated>
+    <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.2</p>
+<h2 id="傳統建立物件方式">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 class 建立 model。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onAddHeroClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">  hero.name = <span class="string">'Sam'</span>;</span><br><span class="line">  hero.state = <span class="string">'active'</span>;</span><br><span class="line">  <span class="keyword">this</span>.heroes.push(hero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>Hero</code> 物件，然後指定 field 值，最後再 push 進陣列。</p>
+<p>這樣寫當然沒有錯，只是必須先透過 constructor 建立物件，然後一一指定 field 值，程式行數會很多，且沒那麼優雅。</p>
+<h2 id="傳統建立物件方式-1">傳統建立物件方式</h2><p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 class 建立 model。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onAddHeroClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> hero = <span class="keyword">new</span> Hero();</span><br><span class="line">  hero.name = <span class="string">'Sam'</span>;</span><br><span class="line">  hero.state = <span class="string">'active'</span>;</span><br><span class="line">  <span class="keyword">this</span>.heroes.push(hero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>Hero</code> 物件，然後指定 field 值，最後再 push 進陣列。</p>
+<p>這樣寫當然沒有錯，只是必須先透過 constructor 建立物件，然後一一指定 field 值，程式行數會很多，且沒那麼優雅。</p>
+<h2 id="C_Sharp">C Sharp</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hero = <span class="keyword">new</span> Hero</span><br><span class="line">&#123;</span><br><span class="line">  Name = <span class="string">"Sam"</span>,</span><br><span class="line">  State = <span class="string">"active"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>C# 的 Object Initializer 允許我們不用透過 constructor，直接在型別後面使用 <code>{}</code>，且 Intellisense 會自動對 field 加以提示。</p>
+<p>這種方式比起傳統物件導向寫法優雅。</p>
+<h2 id="TypeScript">TypeScript</h2><p>TypeScript 有 3 種寫法，可以寫出類似 C# Object Initializer 風格的程式碼。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero: Hero = &#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &lt;Hero&gt;&#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，使用 type assertion，類似泛型的寫法，將 object type 轉成 <code>Hero</code>，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125; as Hero;</span><br></pre></td></tr></table></figure>
+<p>這種寫法也不用透過 new 與 constructor，是 type assertion 的另一種寫法，在最後補上 <code>as</code> 將 object type 轉成 <code>Hero</code>，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
+<h2 id="&lt;Foo&gt;_vs-_as_Foo"><code>&lt;Foo&gt;</code> vs. <code>as Foo</code></h2><p><code>&lt;Foo&gt;</code> 與 <code>as Foo</code> 寫法都屬於 type assertion，該用哪一種寫法呢？</p>
+<p>一開始 TypeScript 只提供 <code>&lt;Foo&gt;</code>的語法，但這種寫法搭配 JSX 會有問題。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &lt;<span class="built_in">string</span>&gt;bar;</span><br><span class="line">&lt;<span class="regexp">/string&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因此 TypeScript 另外提供 <code>as Foo</code> 寫法給 JSX。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = bar as <span class="built_in">string</span>;</span><br><span class="line">&lt;<span class="regexp">/string&gt;</span></span><br></pre></td></tr></table></figure>
+<p>對於 Angular 來說，<code>&lt;Foo&gt;</code> 與 <code>as Foo</code> 都可以用，但就語意而言，<code>&lt;Foo&gt;</code> 寫法較優。</p>
+<p>因為 type assertion 是在<strong>編譯時期</strong>的<strong>靜態轉型</strong>，而非<strong>執行時期</strong>的<strong>動態轉型</strong>，使用泛型的 <code>&lt;&gt;</code> 符號較能彰顯其<strong>編譯時期</strong>的特性。</p>
+<h2 id="Type_Assersion_vs-_Type_Casting">Type Assersion vs. Type Casting</h2><p>或許你會覺得 type assertion 就是一種轉型而已，只是使用了 <code>&lt;Foo&gt;</code> 或 <code>as Foo</code> 的語法，但事實上並不是如此。</p>
+<p>在 TypeScript PlayGround，我們可以發現使用 type assertion 之後的 JavaScript 的差異：</p>
+<p><strong>TypeScript</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero = &lt;Hero&gt;&#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>JavaScript</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hero = &#123;</span><br><span class="line"> name: <span class="string">'Sam'</span>,</span><br><span class="line"> state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也就是對於 JavaScript 而言，並沒有所謂的 <code>Hero</code> 型別，只是 <code>object</code> 型別，所以並沒有所謂的<strong>執行時期</strong>的<strong>動態轉型</strong>，type assertion 實際上只有兩個功能：</p>
+<ul>
+<li>編譯時期的型別檢查</li>
+<li>開發時期的 Intellisense。</li>
+</ul>
+<h2 id="Type_Assertion_的盲點">Type Assertion 的盲點</h2><p>Type assertion 並非萬靈丹，事實上它有以下盲點，回顧一下我們的 model：</p>
+<p><strong>hero.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Hero 有兩個 fields。</p>
+<p><img src="/images/typescript/typescript-assertion/assert000.png" alt="assert000"></p>
+<p>使用 <code>&lt;Hero&gt;</code> 寫法，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p><img src="/images/typescript/typescript-assertion/assert001.png" alt="assert001"></p>
+<p>改用了 <code>as Hero</code> 寫法依舊，就算少寫了 <code>state</code>，Typescript language service 與 TSLint 都不會警告，且編譯後也沒有錯誤。</p>
+<p><img src="/images/typescript/typescript-assertion/assert002.png" alt="assert002"></p>
+<p>若使用了型別宣告，少寫了 <code>state</code>，Typescript language service 會提出警告，編譯也會失敗，明確告知少指定了 <code>state</code> fields。</p>
+<blockquote>
+<p>以上 3 種寫法，Intellisense 皆正常，但只有明確宣告型別，才能完整檢查出少了 field。</p>
+</blockquote>
+<h2 id="Nullable">Nullable</h2><p>若 model 有些 field 允許不指定值，卻又希望 Typescript 強型別檢查呢？</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Hero &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  state？: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>請在 field 名稱後方加上 <code>?</code>，則 Typescript language service 不會提出警告，編譯也不會失敗。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>Type Assertion 並非最完美的強型別解決方案，只能對 Intellisense 有幫助。</li>
+<li>若要完整的檢查，還是要明確的指定型別，如此才能發揮 Typescript 的 type 威力。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a>, <a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[釐清 Type Assertion 觀念與盲點]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用 Observable Data Service]]></title>
@@ -3091,189 +3175,6 @@
       <category term="GitHub" scheme="http://oomusou.io/tags/GitHub/"/>
     
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 PhpStorm 使用 Code Generation?]]></title>
-    <link href="http://oomusou.io/phpstorm/phpstorm-code-generation/"/>
-    <id>http://oomusou.io/phpstorm/phpstorm-code-generation/</id>
-    <published>2016-07-28T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>實務上開發專案時，有一些程式碼會不斷的出現，這時可靠 PhpStorm 的 Code Generation 幫我們產生這些 code snippet，除此之外，我們也可以將自己的 code snippet 加入 Live Template，可加快發開速度，並減少 typo。<br><a id="more"></a></p>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="Namespace">Namespace</h2><hr>
-<p>Laravel 5 的 <code>app</code> 目錄下都遵循 PSR-4，也就是每個在 <code>app</code> 目錄下的 class 都要有 namespace，且 Laravel 與 package 都有自己的 namespace，實務上我們不可能記得了這麼長的 namespace，Code Generation 可以幫我們自動引入相對應的 namespace，若 namespace 名稱相同，會讓我們用選的。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen009.png" alt=""></p>
-<p><code>return</code> type 為 <code>Collection</code>，這是 Laravel 擴充的型別，輸入 <code>Col</code> 之後，Code Completion 會顯示 <code>Collection</code>，後面為其完整的 namespace。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen010.png" alt=""></p>
-<p>Code Generation 自動幫我們 <code>use</code> 了正確的 namespace，不用我們操心。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen011.png" alt=""></p>
-<p><code>Post</code> 出現反白，Code Inspection 抱怨找不到 <code>Post</code> class。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen012.png" alt=""></p>
-<p>將滑鼠游標放在反白的 <code>Post</code> 上，按熱鍵 &#8997; + &#8617;，選擇 <code>Import class</code>。</p>
-<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/e9e14ebc547c7a805d78b4c880c6112172aaa31e" target="_blank" rel="external">PostRepository 自動 use namespace</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen013.png" alt=""></p>
-<p>Code Generation 自動幫我們 <code>use</code> 了 model 的 namespace，不用我們操心。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen014.png" alt=""></p>
-<p>實務上我們常常只會維護程式碼，但不會去維護 namespace，造成沒用到的 namespace 越來越多。</p>
-<p>如我們將 <code>return Post::all()</code> 刪除後，因為沒使用到 <code>Post</code>，所以在 PhpStorm 的 <code>use App\Post</code> 會反灰警告你此 namspace 目前沒人使用。</p>
-<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/79745623c4cbc82c7759e30d4cb8bdcda4cc8890" target="_blank" rel="external">PostRepository 自動刪除沒用的 namespace</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen015.png" alt=""></p>
-<p>按熱鍵 &#8963; + &#8997; + O，PhpStorm 會自動幫你將沒用到的 namespace 刪除。</p>
-<h2 id="Constructor">Constructor</h2><hr>
-<p>使用<strong>依賴注入</strong>後，必須建立 constructor 並注入相依物件，在每天的開發過程中需要不斷發生，Code Generation 可以幫我們自動完成 constructor injection。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen000.png" alt=""></p>
-<p>按熱鍵 &#8963; + N，出現 <code>Generate</code> 選單，選擇 <code>Constructor...</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen001.png" alt=""></p>
-<p>在 constructor 參數列輸入要依賴注入的 class 名稱，輸入前幾個字母即可，Code Completion 會啟動讓你挑選 class 名稱。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen002.png" alt=""></p>
-<p>Code Generation 自動幫我們 <code>use</code> 了 <code>PostRepository</code> 的 namespace。</p>
-<p>輸入 <code>$</code>，Code Completion 會自動顯示建議的參數名稱，選擇你喜歡的命名方式。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen003.png" alt=""></p>
-<p>Code Inspection 會出現警告，因為還沒產生 constructor 的 PHPDoc。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen004.png" alt=""></p>
-<p>按熱鍵 &#8997; + &#8617;，選擇 <code>Update PHPDoc Comment</code>，由 PhpStorm 來幫我們產生 PHPDoc。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen005.png" alt=""></p>
-<p>PhpStorm 自動幫我們產生 PHPDoc。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen006.png" alt=""></p>
-<p>繼續按熱鍵 &#8997; + &#8617;，選擇 <code>Initialize fields</code>，由 PhpStorm 來幫我們產生其他程式碼。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen007.png" alt=""></p>
-<p>選擇要由 Code Generation 要產生 field 的程式碼。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/blob/master/app/Services/PostService.php" target="_blank" rel="external">新增 PostService</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen008.png" alt=""></p>
-<p>Code Generation 一氣呵成幫我們產生了 field，在 constructor 產生了指定 field 相對應的程式碼，另外也 <code>use</code> 相對應的 namespace。</p>
-<h2 id="Getter/Setter">Getter/Setter</h2><hr>
-<p>實務上常常需要對 private field 加上 getter 與 setter，如<strong>重構</strong>的 <strong>Self Encapculate Field</strong> 也會用到，Code Generation 可以幫我們自動產生 getter 與 setter。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen016.png" alt=""></p>
-<p>新建立一個 <code>$postId</code> field，按熱鍵 &#8997; + &#8617;，會出現各種 getter 與 setter 產生方式。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/d4da6261ee4bed2d0bf916d6ffd22b1c5c364237" target="_blank" rel="external">支援 PHP 7 type hint 與 return type 的 getter 與 setter</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen017.png" alt=""></p>
-<p>若選擇 <code>Add getter and setter</code>，Code Generation 會幫我們自動產生支援 PHP 7 type hint 與 return type 的 getter 與 setter。</p>
-<p><strong>PostService.php</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/d27d4e15a740666c9ad0f1be71048c91970da567" target="_blank" rel="external">支援 fluent setter</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen018.png" alt=""></p>
-<p>若選擇 <code>Add fluent setter</code>，Code Generation 甚至會幫我們自動產生 fluent 風格的 setter。</p>
-<h2 id="Implement_Method">Implement Method</h2><hr>
-<p>在物件導向中，實踐抽象化最重要的就是 interface，所以常常有 implement interface 的需求，Code Generation 提供兩種方式讓我們快速實作 interface。</p>
-<p><strong>SMSInterface.php</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/42fcc908afef8c8d937ff84d1fd1ae981e882b30" target="_blank" rel="external">新增 SMSInterface</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen019.png" alt=""></p>
-<p>定義了 <code>SMSInterface</code>，準備對簡訊的發送加以抽象化。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen020.png" alt=""></p>
-<p>建立了 <code>AzureSMSService</code>，實作 <code>SMSInterface</code>，Code Inspection 馬上提出 <code>尚未實作 SMSInterface</code> 警告。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen021.png" alt=""></p>
-<p>按熱鍵 &#8997; + &#8617;，選擇 <code>Add method stubs</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen022.png" alt=""></p>
-<p>Code Generation 會自動幫我們根據 interface 產生了 method 框架，連 PHPDoc 也會幫我們產生。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen023.png" alt=""></p>
-<p>另外一種方式，按熱鍵 &#8963; + I，出現 <code>Choose methods to implement</code> 視窗，選擇你要 implement 的 method。</p>
-<p><strong>AzureSMSService.php</strong><span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/9db85e766750a619ba89ce75987b3d3d718f0503" target="_blank" rel="external">自動實現 interface 的 method</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen022.png" alt=""></p>
-<h2 id="Override_Method">Override Method</h2><hr>
-<p>繼承是實現物件導向抽象化的另一種方式，當子類別可 override 父類別的 method。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen024.png" alt=""></p>
-<p><code>AzurePostService</code> 繼承了 <code>PostService</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen025.png" alt=""></p>
-<p>若我們想 override 父類別 <code>PostService</code> 的 <code>showTitle()</code>，可按熱鍵 &#8963; + O，出現 <code>Choose method to override</code> 視窗，選擇你要 override 的 method。</p>
-<p><strong>AzurePostService.php</strong><span class="margin-note-marker"><sup>7</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">7</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo/commit/0766384172f9df83539dfb17600e401b2ff96686" target="_blank" rel="external">自動複寫 class 的 method</a></span></span></span><br><img src="/images/phpstorm/phpstorm-code-generation/codegen026.png" alt=""></p>
-<p>Code Generation 會自動幫我們根據父類別產生 method 框架，連 PHPDoc 也會幫我們產生。</p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  AzurePostService 去繼承 PostService 可能不是實務上使用繼承的一個好例子，這裡只是為了示範 Code Generation 的功能，實務上應該為了抽象化的多型來使用繼承，並遵守 SOLID 原則的<strong>里氏替換</strong>原則，而不是為了 code reuse 去使用繼承。</div>
-<h2 id="Postfix_Completion">Postfix Completion</h2><hr>
-<p>很羨慕 fluent API 的好用嗎? Postfix Completion 讓我們可以類似 fluent API 的方式寫 PHP。</p>
-<h3 id="not">not</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen039.png" alt=""></p>
-<p>輸入 <code>$title.not</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen040.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>!</code> 區塊。</p>
-<h3 id="par">par</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen041.png" alt=""></p>
-<p>輸入 <code>$title.par</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen042.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>( )</code> 區塊。</p>
-<h3 id="if">if</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen029.png" alt=""></p>
-<p>輸入 <code>$title.if</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen030.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>if ( )</code> 區塊。</p>
-<h3 id="else">else</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen031.png" alt=""></p>
-<p>輸入 <code>$title.else</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen032.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>if (! )</code> 區塊。</p>
-<h3 id="fe">fe</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen033.png" alt=""></p>
-<p>輸入 <code>$title.fe</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen034.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>foreach( )</code> 區塊。</p>
-<h3 id="null">null</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen035.png" alt=""></p>
-<p>輸入 <code>$title.null</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen036.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>if ( === null)</code> 區塊。</p>
-<h3 id="nn">nn</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen037.png" alt=""></p>
-<p>輸入 <code>$title.nn</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen038.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>if ( !== null)</code> 區塊。</p>
-<h3 id="return">return</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen043.png" alt=""></p>
-<p>輸入 <code>$title.return</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen044.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>return</code>。</p>
-<h3 id="echo">echo</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen027.png" alt=""></p>
-<p>輸入 <code>$title.echo</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen028.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>echo $title;</code>。</p>
-<h3 id="var_dump">var_dump</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen045.png" alt=""></p>
-<p>輸入 <code>$title.var_dump</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen046.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>var_dump()</code>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen047.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; General -&gt; Postfix Completion</em></strong></p>
-<p>在 <strong><em>Preferences</em></strong> 設定底下，可以看到所有 PhpStorm 支援的 Postfix Completion，包含 JavaScript 與 PHP。</p>
-<p>可惜 Postfix Completion 無法擴充，就只能用 PhpStorm 所提供的 postfix。</p>
-<h2 id="Live_Template">Live Template</h2><hr>
-<p>除了 Postfix Completion 外，PhpStorm 另外提供 Live Template，這是可以自行擴充的。</p>
-<h3 id="fore">fore</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen049.png" alt=""></p>
-<p>輸入 <code>fore</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen050.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>foreach( )</code> 區塊。</p>
-<h3 id="forek">forek</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen051.png" alt=""></p>
-<p>輸入 <code>forek</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen052.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>foreach( )</code> 區塊，並包含 key 與 value。</p>
-<h3 id="thr">thr</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen053.png" alt=""></p>
-<p>輸入 <code>thr</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen054.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>throw new</code> 區塊。</p>
-<h3 id="prif">prif</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen055.png" alt=""></p>
-<p>輸入 <code>prif</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen056.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>private function</code> 區塊。</p>
-<h3 id="prof">prof</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen057.png" alt=""></p>
-<p>輸入 <code>prof</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen058.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>protected function</code> 區塊。</p>
-<h3 id="pubf">pubf</h3><p><img src="/images/phpstorm/phpstorm-code-generation/codegen059.png" alt=""></p>
-<p>輸入 <code>pubf</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen060.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>public function</code> 區塊。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen048.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Editor -&gt; Live Templates</em></strong></p>
-<p>在 <strong><em>Preferences</em></strong> 設定底下，可以看到所有 PhpStorm 支援的 Live Template，還包含各種其通語言，甚至包含 Angular 2。</p>
-<h2 id="自訂_Live_Template">自訂 Live Template</h2><hr>
-<p>你也可以自己將常用的 code snippet，存成自己的 Live Template。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen061.png" alt=""></p>
-<p>如在寫單元測試時，<code>$this-&gt;assertEquals()</code> 常常使用，所以我們想將它存成 Live Template。</p>
-<p>選擇你的 code snippet，<strong><em>Tools-&gt; Save as Live Template</em></strong>。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen062.png" alt=""></p>
-<p>輸入你自己的想要的縮寫，並在滑鼠游標停止處加上 <code>$END$</code>，將來 PhpStorm 會將游標停在此方便你輸入。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen063.png" alt=""></p>
-<p>輸入 <code>pubf</code>，按熱鍵 &#8677;。</p>
-<p><img src="/images/phpstorm/phpstorm-code-generation/codegen064.png" alt=""></p>
-<p>Code Generation 會自動幫我們產生 <code>$this-&gt;assertEquals()</code>，並將游標放在 <code>( )</code> 中，方便你後續輸入。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Post Completion 無法自行擴充，不過 Live Template 可以自行擴充。</li>
-<li>Post Completion 與 Live Template 有些是重複的，可視需求決定用哪一種，只要能提高開發效率即可。</li>
-<li>要善用工具改善開發速度，將時間花在真正需要的地方，Code Generation 讓我們可以打更少的字， 還可以避免 typo。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormCodeGeneration_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<p>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/generating-code.html" target="_blank" rel="external">Generating Code</a><br>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/live-templates.html" target="_blank" rel="external">Using Postfix Template</a><br>PhpStorm Online Help, <a href="https://www.jetbrains.com/help/phpstorm/2016.2/live-templates.html" target="_blank" rel="external">Live Template</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[讓我們打更少的字加快開發速度]]>
-    
-    </summary>
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     

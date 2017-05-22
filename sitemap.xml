@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript-type-assertion/</loc>
+    <lastmod>2017-05-22T02:53:23.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/angular-ngrx/</loc>
     <lastmod>2017-04-24T13:41:07.000Z</lastmod>
   </url>
