@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-22T06:57:57.000Z</updated>
+  <updated>2017-05-24T05:59:07.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
     <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
     <published>2017-05-22T12:23:43.000Z</published>
-    <updated>2017-05-22T06:57:57.000Z</updated>
+    <updated>2017-05-24T05:59:07.000Z</updated>
     <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -37,6 +37,8 @@
 <p>C# 的 Object Initializer 允許我們不用透過 constructor，直接在型別後面使用 <code>{}</code>，且 Intellisense 會自動對 field 加以提示。</p>
 <p>這種方式比起傳統物件導向寫法優雅。</p>
 <h2 id="TypeScript">TypeScript</h2><hr>
+<p>在 2015 年，就有人開始討論如何在 TypeScript 提供 Object Initializer，也提出各種語法上的建議。</p>
+<p><a href="https://github.com/Microsoft/TypeScript/issues/3895" target="_blank" rel="external">[New Feature] Initialize Classes by Using an Object Initializer#3895</a></p>
 <p>TypeScript 有 3 種寫法，可以寫出類似 C# Object Initializer 風格的程式碼。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hero: Hero = &#123;</span><br><span class="line">  name: <span class="string">'Sam'</span>,</span><br><span class="line">  state: <span class="string">'active'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>這種寫法也不用透過 new 與 constructor，語法精簡，且 Intellisense 會自動對 field 加以提示。</p>
@@ -90,7 +92,7 @@
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4TypeAssertion" target="_blank" rel="external">GitHub</a> 上找到。</p>
 <h2 id="Reference">Reference</h2><hr>
-<p><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a>, <a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
+<p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a>, <a href="https://github.com/Microsoft/TypeScript/issues/3895" target="_blank" rel="external">[New Feature] Initialize Classes by Using an Object Initializer#3895</a><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a><br><a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[釐清 Type Assertion 觀念與盲點]]>
