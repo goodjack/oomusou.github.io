@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-24T05:59:07.000Z</updated>
+  <updated>2017-05-24T06:05:52.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
     <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
     <published>2017-05-22T12:23:43.000Z</published>
-    <updated>2017-05-24T05:59:07.000Z</updated>
+    <updated>2017-05-24T06:05:52.000Z</updated>
     <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -92,7 +92,7 @@
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4TypeAssertion" target="_blank" rel="external">GitHub</a> 上找到。</p>
 <h2 id="Reference">Reference</h2><hr>
-<p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a>, <a href="https://github.com/Microsoft/TypeScript/issues/3895" target="_blank" rel="external">[New Feature] Initialize Classes by Using an Object Initializer#3895</a><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a><br><a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
+<p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a>, <a href="https://github.com/Microsoft/TypeScript/issues/3895" target="_blank" rel="external">[New Feature] Initialize Classes by Using an Object Initializer#3895</a><br><a href="https://www.gitbook.com/book/basarat/typescript/details" target="_blank" rel="external">TypeScript Deep Dive</a><br><a href="https://basarat.gitbooks.io/typescript/docs/types/type-assertion.html" target="_blank" rel="external">Type Assertion</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[釐清 Type Assertion 觀念與盲點]]>
