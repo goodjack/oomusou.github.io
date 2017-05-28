@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-24T06:06:58.000Z</updated>
+  <updated>2017-05-28T04:35:02.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-type-assertion/"/>
     <id>http://oomusou.io/typescript/typescript-type-assertion/</id>
     <published>2017-05-22T12:23:43.000Z</published>
-    <updated>2017-05-24T06:06:58.000Z</updated>
+    <updated>2017-05-28T04:35:02.000Z</updated>
     <content type="html"><![CDATA[<p>C# 有所謂的 Object Initializer，讓我們可以很優雅的建立物件，並且將物件的 field 一次填滿，TypeScript 是否也提供如 C# 一樣的寫法呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -54,7 +54,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = bar as <span class="built_in">string</span>;</span><br><span class="line">&lt;<span class="regexp">/string&gt;</span></span><br></pre></td></tr></table></figure>
 <p>對於 Angular 來說，<code>&lt;Foo&gt;</code> 與 <code>as Foo</code> 都可以用，但就語意而言，<code>&lt;Foo&gt;</code> 寫法較優。</p>
 <p>因為 type assertion 是在<strong>編譯時期</strong>的<strong>靜態轉型</strong>，而非<strong>執行時期</strong>的<strong>動態轉型</strong>，使用泛型的 <code>&lt;&gt;</code> 符號較能彰顯其<strong>編譯時期</strong>的特性。</p>
-<h2 id="Type_Assersion_vs-_Type_Casting">Type Assersion vs. Type Casting</h2><hr>
+<h2 id="Type_Assertion_vs-_Type_Casting">Type Assertion vs. Type Casting</h2><hr>
 <p>或許你會覺得 type assertion 就是一種轉型而已，只是使用了 <code>&lt;Foo&gt;</code> 或 <code>as Foo</code> 的語法，但事實上並不是如此。</p>
 <p>在 TypeScript PlayGround，我們可以發現使用 type assertion 之後的 JavaScript 的差異：</p>
 <p><strong>TypeScript</strong></p>
