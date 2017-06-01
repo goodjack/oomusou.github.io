@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-05-28T04:35:02.000Z</updated>
+  <updated>2017-06-01T02:29:54.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Quokka for WebStorm]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-quokka/"/>
+    <id>http://oomusou.io/webstorm/webstorm-quokka/</id>
+    <published>2017-06-01T12:23:43.000Z</published>
+    <updated>2017-06-01T02:29:54.000Z</updated>
+    <content type="html"><![CDATA[<p>Angular CLI 雖然讓我們簡化了前端工具的建置，但有時只想測試或示範 TypeScript，並不想真的去跑 Angular，此時 Quokka 就是我們的好幫手了。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.3<br>Quokka 1.0.11</p>
+<h2 id="Installation">Installation</h2><hr>
+<p><img src="/images/webstorm/webstorm-quokka/quokka000.png" alt="quokka000"></p>
+<p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<p>按 <code>Brose repositories…</code>。</p>
+<p><img src="/images/webstorm/webstorm-quokka/quokka001.png" alt="quokka001"></p>
+<p>搜尋 <code>Quokka</code>，按 <code>Install</code> 安裝。</p>
+<p><img src="/images/webstorm/webstorm-quokka/quokka002.png" alt="quokka002"></p>
+<p>安裝完  <code>Quokka</code> 後，按 <code>Restart WebStorm</code> 重新啟動 WebStorm。</p>
+<p><img src="/images/webstorm/webstorm-quokka/quokka003.png" alt="quokka003"></p>
+<p>按 <code>⌘ + ⇧ + N</code> 新增 Scratch File，這並不沒有一個實體檔案，只用來測試而已。</p>
+<p><img src="/images/webstorm/webstorm-quokka/quokka004.png" alt="quokka004"></p>
+<p>可以開始輸入 TypeScript，不需存檔，不需編譯，馬上就可以在下方的 <code>Quokka</code> 視窗看到執行結果，而且在一行的最後面也可以立即顯示這行的執行結果。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>使用 Quokka，就可以在你熟悉的 WebStorm 測試 TypeScript，非常方便。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[TypeScript 之 Type Assertion]]></title>
@@ -2950,236 +2988,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="MySQL" scheme="http://oomusou.io/tags/MySQL/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 PhpStorm 部署 Laravel 到 Azure?]]></title>
-    <link href="http://oomusou.io/azure/azure-phpstorm-deploy/"/>
-    <id>http://oomusou.io/azure/azure-phpstorm-deploy/</id>
-    <published>2016-08-01T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>Azure 是微軟的雲端平台，也可以跑 PHP 與 Laravel，本文將以 PhpStorm 為工具，與 GitHub 結合，將來程式有任何變更，只要 push 到 GitHub，就會自動更新到 Azure，還可透過 PhpStorm 內建的工具管理 Azure。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0<br>Laravel 5.2.39<br>PhpStorm 2016.1.2</p>
-<h2 id="建立_Laravel_專案">建立 Laravel 專案</h2><hr>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure000.png" alt=""></p>
-<p>啟動 PhpStorm，選擇 <code>Create New Project</code> 建立新專案。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure001.png" alt=""></p>
-<ul>
-<li><strong>專案類型</strong> :  <code>Composer Project</code>。</li>
-<li><strong>Location</strong> : Laravel 專案路徑與專案名稱</li>
-<li><strong>composer.phar</strong> : 選擇 <code>Use existing composer.phar</code>，輸入 <code>/usr/local/bin/composer</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>選擇 <code>Download composer.phar from getcomposer.org</code> 亦可，這種方式在 OS X 本機並不需要事先安裝 Composer，PhpStorm 會自動將 Composer 下載到目錄專案跟目錄下，唯此種方式安裝 package 將無法使用到 cache，必須從網路上下載，安裝時間較長，所以實務上建議使用 <code>Use existing composer.phar</code>。</span></span></span></li>
-<li><strong>Filter packages</strong> : 輸入 <code>laravel/laravel</code>，此為 Laravel 專案的 package 名稱。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure002.png" alt=""></p>
-<p>將畫面向下卷，還有其他設定。</p>
-<ul>
-<li><strong>Version to install</strong> : 選擇 Laravel 版本，<code>&lt;default&gt;</code> 為 Laravel 最新版本。</li>
-<li><strong>Path to PHP executable</strong> : 指定 PHP 執行檔路徑，主要為了執行 Composer。</li>
-<li><strong>Command line parameters</strong> : Composer 參數，輸入 <code>prefer-dist</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure003.png" alt=""></p>
-<p>建立 Laravel 專案中，由於 Composer 需解析 package 相依性，需要一些時間。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ php artisan serve</span><br></pre></td></tr></table></figure>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure004.png" alt=""></p>
-<p>執行 PHP 內建 Http Server。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure005.png" alt=""></p>
-<p>Laravel 已經順利在 OS X 本機執行。</p>
-<h2 id="建立_Local_Git_Repository">建立 Local Git Repository</h2><hr>
-<p>實務上開發 Laravel 會搭配 Git 做版本控制，先在本機建立 local repository。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure006.png" alt=""></p>
-<p><strong><em>VCS -&gt; Import ino Version Control -&gt; Create Git Repository</em></strong></p>
-<p>建立 Git repository。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>相當於 <code>git init</code>。</span></span></span></p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure007.png" alt=""></p>
-<p>選擇 local repository 目錄，也就是目前專案目錄。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure008.png" alt=""></p>
-<p>下方出現 <code>Version Control</code>，並顯示有檔案尚未受 Git 管理，按 <code>browse</code> 顯示檔案。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure009.png" alt=""></p>
-<p>選擇專案目錄，按 <code>+</code> (Add to VCS) 將檔案加入 stage。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>相當於 <code>git add .</code>。</span></span></span></p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure010.png" alt=""></p>
-<p>綠色檔案為加入 stage 的檔案，按 <code>VCS</code> (Commit Changes)。<br><img src="/images/azure/azure-phpstorm-deploy/azure011.png" alt=""></p>
-<ul>
-<li>不要選擇 <code>Perform code analysis</code>。</li>
-<li><strong>Commit Message</strong> : Initial commit。</li>
-</ul>
-<p>按 <code>Commit</code> 寫檔案寫入 local repository。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>相當於 <code>git commit -m &quot;Initial commit&quot;</code>。</span></span></span></p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure012.png" alt=""></p>
-<p>Commit 成功後，下方會顯示 <code>xx files committed : initial commit</code>。</p>
-<h2 id="建立_Remote_GitHub_Repository">建立 Remote GitHub Repository</h2><hr>
-<p>將 local repository 上傳至 GitHub 建立 remote repository。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure017.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Version Control -&gt; GitHub</em></strong></p>
-<p>設定 GitHub 帳號。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure013.png" alt=""></p>
-<p><strong><em>VCS -&gt; Import into Version Control -&gt; Share Project on GitHub</em></strong></p>
-<p>將專案發佈到 GitHub。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure014.png" alt=""></p>
-<p>預設會使用專案名稱為 remote GitHub repository 名稱。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure015.png" alt=""></p>
-<p>在 GitHub 建立成功。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure016.png" alt=""></p>
-<p>在 GitHub 已經看到剛剛上傳的專案。</p>
-<h2 id="建立_Azure_Web_App">建立 Azure Web App</h2><hr>
-<p>之前都在 PhpStorm 操作，現在開始要在 <a href="https://portal.azure.com" target="_blank" rel="external">Azure portal</a> 操作了。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure018.png" alt=""></p>
-<p><strong><em>New -&gt; Web + Mobile -&gt; Web App</em></strong></p>
-<p>在 Azure 建立 Web App。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure019.png" alt=""></p>
-<ul>
-<li><strong>App name</strong> : 將來可以使用網址 <code>https://appname.azurewebsites.net</code> 連過來。</li>
-<li><strong>Resource Group</strong> : 可以新建 group，也可以使用目前既有 group，使用 group 的優點是方便管理，若要刪除可以整個 group 一起刪除。</li>
-</ul>
-<p>按 <code>App Service plan/location</code> 繼續設定。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure020.png" alt=""></p>
-<p>預設的 App Service plan 是在美國，並不適合我們，我們應該選離我們最近的主機，所以選擇 <code>Create New</code> 建立新的 App Service plan。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure021.png" alt=""></p>
-<ul>
-<li><strong>App Service plan</strong> : 替 App Service plan 選個名稱。</li>
-<li><strong>Location</strong> : 選擇主機位置，離我們最近的是 <code>East Asia</code>，位在香港。</li>
-<li><strong>Pricing tier</strong> : 預設為 <code>D1 Shared</code>，需要收費，由於我們只是測試用，可以選擇 <code>0</code> 元的方案。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure022.png" alt=""></p>
-<p>預設只會顯示 <code>Recommended</code> 方案，按 <code>View all</code> 顯示全部方案。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure023.png" alt=""></p>
-<p>選擇 <code>0</code> 元的 <code>F1 Free</code> 方案。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure024.png" alt=""></p>
-<p>Pricing tier 改成 <code>F1 Free</code>，按 <code>OK</code> 繼續。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure025.png" alt=""></p>
-<p>App Service plan/location 改成我們想要的 <code>Laravel (East Asia)</code>。</p>
-<p>建議將 <code>Pin to dashboard</code> 打勾，方便我們管理。</p>
-<p>按 <code>Create</code> 開始建立 Web App。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure026.png" alt=""></p>
-<p>Azure 正在建立 Web App 中，需要一點時間。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure027.png" alt=""></p>
-<p>Web App 建立完成，會顯示 <code>Running</code>。</p>
-<h2 id="設定_PHP_版本">設定 PHP 版本</h2><hr>
-<p>Web App 預設的版本為 PHP 5.4，無法執行 Laravel，必須另外設定。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure028.png" alt=""></p>
-<p>選擇剛剛建立的 <code>Laravel52PhpStormAzure</code> Web App。</p>
-<p><strong><em>Settings -&gt; General -&gt; Application settings</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure029.png" alt=""></p>
-<ul>
-<li><strong>PHP version</strong> : 選擇 <code>5.6</code> 或 <code>7.0</code>。</li>
-</ul>
-<p>最後記得按上方的 <code>Save</code> 存檔。</p>
-<h2 id="安裝_Composer">安裝 Composer</h2><hr>
-<p>Laravel 預設的 <code>.gitignore</code> 有排除 <code>vendor</code> 目錄，使得上傳到 GitHub 不包含 <code>vendor</code> ，所以將來 Azure 從 GitHub 所抓下來的檔也沒有 <code>vendor</code> 目錄。</p>
-<p>這使得 Azure 要自己下 <code>composer install</code> 安裝 <code>vendor</code> 下的 package，因此必須另外在 Azure 安裝 Composer。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure030.png" alt=""></p>
-<p><strong><em>Tools -&gt; Develop -&gt; Extensions</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure031.png" alt=""></p>
-<p>按 <code>Add</code> 新增 extension。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure032.png" alt=""></p>
-<p>選 <code>Choose Extension</code> 與 <code>Composer</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure033.png" alt=""></p>
-<p>成功安裝 Composer。</p>
-<h2 id="設定_Deployment_Source">設定 Deployment Source</h2><hr>
-<p>設定 Azure 從 GitHub 抓資料，只要有任何 push 到 GitHub，Azure 都會自動更新。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure034.png" alt=""></p>
-<p><strong><em>Setting -&gt; Publishing -&gt; Deployment source</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure035.png" alt=""></p>
-<p> <strong><em>Choose Source -&gt; GitHub</em></strong></p>
-<p>Azure 支援多種 deployment source，本文以 GitHub 為例。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure036.png" alt=""></p>
-<p>選擇 GitHub 上的 <code>project</code> 與 <code>branch</code>。</p>
-<p>按 <code>OK</code> 後，開始第一次從 GitHub 部署到 Azure。</p>
-<p>由於第一次部署，<code>composer install</code> 要重新安裝 <code>vendor</code> 目錄，需要一點時間。</p>
-<h2 id="設定_Remote_Host">設定 Remote Host</h2><hr>
-<p>設定 Web App 一定得設定虛擬目錄，但是之前的部署皆由 Azure 自動完成，到底 Azure 將我們的專案下載到什麼目錄下呢?</p>
-<p>讓我們再回到 PhpStorm。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure037.png" alt=""></p>
-<p><strong><em>PhpStorm -&gt; Preferences -&gt; Build, Execution Development -&gt; Deployment</em></strong></p>
-<p>按 <code>+</code> 新增。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure038.png" alt=""></p>
-<p>輸入自訂 server 名稱，選擇 type 為 <code>FTP</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure039.png" alt=""></p>
-<p>需要輸入 <code>FTP host</code>、<code>User name</code> 與 <code>Web server root url</code>。</p>
-<p>但此時我們還不知道該輸入什麼。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure040.png" alt=""></p>
-<p>回到 <a href="https://portal.azure.com" target="_blank" rel="external">Azure portal</a>。</p>
-<p><strong><em>Settings -&gt; General -&gt; Properties</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure044.png" alt=""></p>
-<ul>
-<li><code>URL</code> 為 <code>Web server root url</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure041.png" alt=""></p>
-<ul>
-<li><code>FTP/DEPLOYMENT USER</code> 為 <code>User name</code>。</li>
-<li><code>FTP HOST NAME</code> 為 <code>FTP host</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure042.png" alt=""></p>
-<p>再回到 PhpStorm，將 <code>FTP host</code>、<code>User name</code> 與 <code>Web server root url</code> 補上。</p>
-<div class="alert alert-info"><i class="fa fa-info"></i>  FTP host 不包含 <strong>ftp://</strong></div>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure043.png" alt=""></p>
-<p><strong><em>Tools -&gt; Deployment -&gt; Browse Remote Host</em></strong></p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure045.png" alt=""></p>
-<p>由 <code>Remote Host</code> 視窗，我們發現 Laravel 專案是放在 <code>site/wwwroot</code> 底下，所以 virtual root 應該設定在 <code>site/wwwroot/public</code>。</p>
-<h2 id="設定_Virtual_Root">設定 Virtual Root</h2><hr>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure046.png" alt=""></p>
-<p>再回到 <a href="http://protal.azure.com" target="_blank" rel="external">Azure portal</a>。</p>
-<p><strong><em>Settings -&gt; General -&gt; Application settings</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure047.png" alt=""></p>
-<p>在 <code>Virtual application and directories</code> 下，將 virtual root 改成 <code>site\wwwroot\public</code>。</p>
-<p>最後記得按上方的 <code>Save</code> 存檔。</p>
-<h2 id="設定_-env">設定 .env</h2><hr>
-<p>Laravel 提供了 <code>.env</code>，可以設定些敏感資訊，如資料庫連線。預設 <code>.gitignore</code>有排除 <code>.env</code>，所以並沒有上 GitHub，因此也不會上 Azure。</p>
-<p>但 <code>.env</code> 的 <code>APP_KEY</code> 又是 Laravel 執行時所必要資訊，必須加以補上。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure046.png" alt=""></p>
-<p><strong><em>Settings -&gt; General -&gt; Application settings</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure048.png" alt=""></p>
-<p>將本機的 <code>.env</code> 的 <code>APP_KEY</code> 內容加以複製。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure049.png" alt=""></p>
-<p>在 <code>App settings</code> 下新增 <code>APP_KEY</code>，將 <code>.env</code> 的 <code>APP_KEY</code> 值貼上。<span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>實務上 <code>.env</code> 的設定，都可以改設定在 Azure 的 <code>App settings</code>。</span></span></span></p>
-<p>最後記得按上方的 <code>Save</code> 存檔。</p>
-<h2 id="第一次在_Azure_執行_Laravel">第一次在 Azure 執行 Laravel</h2><hr>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure050.png" alt=""></p>
-<p>點擊 <code>URL</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure051.png" alt=""></p>
-<p>在 Azure 的網址上正確執行 Laravel。</p>
-<h2 id="修改並_Push_到_GitHub">修改並 Push 到 GitHub</h2><hr>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure052.png" alt=""></p>
-<p>將 <code>welcome.blade.php</code> 加以修改，由 <code>Laravel 5</code> 改成 <code>Hello Laravel</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure053.png" alt=""></p>
-<p>點擊下方的 <code>Version control</code> 標籤，按 <code>VCS</code> 將此次變更加以 commit。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure054.png" alt=""></p>
-<p>填入 commit message 後，按 <code>Commit and Push</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure055.png" alt=""></p>
-<p>按 <code>Push</code> 將直接 push 到 GitHub。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure056.png" alt=""></p>
-<p>Push 到 GitHub 成功。</p>
-<p><img src="/images/azure/azure-phpstorm-deploy/azure057.png" alt=""></p>
-<p>Azure 會自動從 GitHub 更新。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>本文以 GitHub 為例，實務上你可以搭配你習慣的版本控制系統。</li>
-<li>透過 <a href="http://protal.azure.com" target="_blank" rel="external">Azure portal</a> 與 PhpStorm，您不需要下任何一行指令，就可以經鬆的將 Laravel 部署到 Azure。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormAzure_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li>Cephas Lin, <a href="https://azure.microsoft.com/en-us/documentation/articles/app-service-web-php-get-started/" target="_blank" rel="external">Create, configure, and deploy a PHP web app to Azure</a></li>
-<li>Robert McMurray, <a href="https://azure.microsoft.com/en-us/documentation/articles/web-sites-php-configure/" target="_blank" rel="external">Configure PHP in Azure App Service Web Apps</a></li>
-<li>Mikhail Vink, <a href="https://confluence.jetbrains.com/display/PhpStorm/Working+with+Windows+Azure+from+within+PhpStorm" target="_blank" rel="external">Working with Windows Azure from within PhpStorm</a></li>
-<li>KevinAtStout, <a href="https://www.youtube.com/watch?v=48moauj0KtE" target="_blank" rel="external">Connecting PhpStorm to Your Azure Web Server</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[使用有效率的工具部署 Laravel]]>
-    
-    </summary>
-    
-      <category term="Azure" scheme="http://oomusou.io/tags/Azure/"/>
-    
-      <category term="Git" scheme="http://oomusou.io/tags/Git/"/>
-    
-      <category term="GitHub" scheme="http://oomusou.io/tags/GitHub/"/>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
