@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-01T05:07:50.000Z</updated>
+  <updated>2017-06-07T14:22:46.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[WebStorm 之 Angular Debug]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-debug/"/>
+    <id>http://oomusou.io/webstorm/webstorm-debug/</id>
+    <published>2017-06-07T12:23:43.000Z</published>
+    <updated>2017-06-07T14:22:46.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm 允許我們如同 Visual Studio 一樣，直接在 IDE 內設定<strong>中斷點</strong>，並停止執行在那一行，我們可觀察當時的變數，也可使用 step over、step into、step out 等除錯技巧，重點是它是停止在 TypeScript 上，而非 JavaScript 上。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.2<br>Angular CLI 1.0.1<br>Angular 4.1.0</p>
+<h2 id="Installation">Installation</h2><hr>
+<h3 id="安裝_Chrome_Extension">安裝 Chrome Extension</h3><p><img src="/images/webstorm/webstorm-debug/debug000.png" alt="debug000"></p>
+<p>安裝 <code>JetBrains IDE Support</code> Chrome extension。</p>
+<h3 id="WebStorm_設定">WebStorm 設定</h3><p><img src="/images/webstorm/webstorm-debug/debug001.png" alt="debug001"></p>
+<p><strong><em>Run -&gt; Edit Configurations…</em></strong></p>
+<p><img src="/images/webstorm/webstorm-debug/debug002.png" alt="debug002"></p>
+<p>按左上角的 <code>+</code>，選擇 <code>JavaScript Debug</code>。</p>
+<p><img src="/images/webstorm/webstorm-debug/debug003.png" alt="debug003"></p>
+<ul>
+<li><strong>URL</strong> : 輸入 <code>http://localhost:4200</code>。</li>
+</ul>
+<p>按 <code>Apply</code> 與 <code>OK</code> 繼續。</p>
+<h2 id="Debug">Debug</h2><hr>
+<h3 id="設定_TypeScript_中斷點">設定 TypeScript 中斷點</h3><p><img src="/images/webstorm/webstorm-debug/debug004.png" alt="debug004"></p>
+<p>在任意 TypeScript 你想停止的地方，加上<strong>中斷點</strong>。</p>
+<h3 id="開始_Debug">開始 Debug</h3><p><img src="/images/webstorm/webstorm-debug/debug005.png" alt="debug005"></p>
+<p>使用 <code>ng serve</code> 啟動 Angular CLI 內建 web server，並按下上方的 <code>瓢蟲</code> 開始 debug。</p>
+<p><img src="/images/webstorm/webstorm-debug/debug006.png" alt="debug006"></p>
+<p>畫面會跳到 Chrome，並在上面顯示 <code>JetBrains IDE Support is debugging this browser</code>.</p>
+<p>在 tod 輸入任何值，按 <code>enter</code>。</p>
+<p><img src="/images/webstorm/webstorm-debug/debug007.png" alt="debug007"></p>
+<p>從 Chrome 自動跳回 WebStorm，並且停到中斷點，顯示目前所有變數與 call stack。</p>
+<p><img src="/images/webstorm/webstorm-debug/debug008.png" alt="debug008"></p>
+<p>但這樣使用有個前提，就是要產生 source map，我們才有辦法透過 source map 將中斷點停在 TypeScript。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>後端使用<strong>中斷點</strong>的 debug 經驗，一樣可以套用在 TypeScript 與 Angular。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://manuel-rauber.com/author/manuelrauber/" target="_blank" rel="external">Manuel Rauber</a>,<a href="https://manuel-rauber.com/2016/09/30/how-to-debug-angular-2-with-webstorm/" target="_blank" rel="external">How to debug Angular 2 with WebStorm?</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[在 WebStorm 下中斷點對 TypeScript 做 debug]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Quokka for WebStorm]]></title>
@@ -2882,113 +2934,6 @@
       <category term="Azure" scheme="http://oomusou.io/tags/Azure/"/>
     
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 Azure 使用 Laravel + MySQL?]]></title>
-    <link href="http://oomusou.io/azure/azure-phpstorm-mysql/"/>
-    <id>http://oomusou.io/azure/azure-phpstorm-mysql/</id>
-    <published>2016-08-02T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p>Azure 除了可以跑 PHP 與 Laravel 外，更可以跑我們喜愛的 MySQL 資料庫。本文將實際在 Azure 建立 MySQL 資料庫，透過 <code>.env</code> 的設定，讓 Laravel 可以連上 MySQL，並透過 PhpStorm 直接管理 Azure 雲端的 MySQL 資料庫。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>在 <a href="/azure/azure-phpstorm-deploy/">如何使用 PhpStorm 部署 Laravel 到 Azure</a> 一文中，我們已經可以順利在 Azure 跑 PHP 7.0 與 Laravel，唯一就是 MySQL 還沒連上，本文將以前一篇為基礎，繼續設定 MySQL 部分。</p>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="建立_Laravel_專案">建立 Laravel 專案</h2><hr>
-<p>請參考 <a href="/azure/azure-phpstorm-deploy/">如何使用 PhpStorm 部署 Laravel 到 Azure</a>，將本機的 Laravel 專案部署到 Azure。</p>
-<h2 id="在_Azure_建立_MySQL_資料庫">在 Azure 建立 MySQL 資料庫</h2><hr>
-<p>登入 <a href="https://portal.azure.com" target="_blank" rel="external">Azure portal</a>，在 Azure 建立 MySQL 資料庫。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql000.png" alt=""></p>
-<p><strong><em>New -&gt; Data + Analytics</em></strong>，選擇 <code>See all</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql001.png" alt=""></p>
-<p>在 <code>Data services</code> 下選擇 <code>More</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql002.png" alt=""></p>
-<p>選擇 <code>ClearDB</code> 的 <code>MySQL Database</code>。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql003.png" alt=""></p>
-<p>按 <code>Create</code> 建立 MySQL 資料庫。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql004.png" alt=""></p>
-<ul>
-<li><strong>Database Name</strong> : 輸入資料庫名稱。</li>
-<li><strong>Resource group</strong> : 可以新建 group，也可以使用目前既有 group，使用 group 的優點是方便管理，若要刪除可以整個 group 一起刪除。</li>
-<li><strong>Location</strong> : 選擇離我們最近的 <code>East Asia</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql005.png" alt=""></p>
-<ul>
-<li><strong>Pricing Tier</strong> : 選擇免費的 <code>Mercury</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql006.png" alt=""></p>
-<ul>
-<li><strong>Legal Terms</strong> : 確認是 <code>0.00 TWD/month</code>，按 <code>Purchase</code>。</li>
-</ul>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql007.png" alt=""></p>
-<p>建議將 <code>Pin to dashboard</code> 打勾，方便我們管理。</p>
-<p>按 <code>Create</code> 開始建立 MySQL 資料庫。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql008.png" alt=""></p>
-<p>MySQL 資料庫建立完成，會顯示 <code>Healthy</code>。</p>
-<h2 id="設定本機_-env">設定本機 .env</h2><hr>
-<p>MySQL 資料庫建立完成後，馬上來測試資料庫是否建立成功。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql009.png" alt=""></p>
-<p><strong><em>Settings -&gt; General -&gt; Properties</em></strong></p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql010.png" alt=""></p>
-<p>注意其 <code>HOSTNAME</code>、<code>PORT</code>、<code>USERNAME</code>、<code>PASSWORD</code> 與 <code>CONNECTION STRING</code> 欄位。</p>
-<p>其中 <code>CONNECTION STRING</code> 的 <code>Database</code>，即為我們剛剛建立的資料庫。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql011.png" alt=""></p>
-<p>將本機 <code>.env</code> 的設定與 Azure 的設定一致。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql012.png" alt=""></p>
-<p>執行 <code>php artisan migrate</code>，若能成功執行 migration，表示 MySQL 資料庫已經順利建立成功。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql016.png" alt=""></p>
-<p>執行 seeding，將預設資料寫入 Azure 的 MySQL 資料庫。</p>
-<h2 id="設定_PhpStorm_Database">設定 PhpStorm Database</h2><hr>
-<p>目前為止，我們已經將資料 seeding 到 Azure 的 MySQL，不過還無法確定資料是否真的已經寫入成功，因此要設定 PhpStorm 的 Database 工具連到 Azure 查看資料。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql013.png" alt=""></p>
-<p>點選右側的 <code>Database</code>，按 <code>+</code> 新增資料庫連線。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql014.png" alt=""></p>
-<p><strong><em>Data Source -&gt; MySQL</em></strong>。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql015.png" alt=""></p>
-<p>將之前的 Azure 的 <code>Host</code>、<code>Database</code>、<code>User</code> 與 <code>Password</code> 設定填過來。</p>
-<p>按 <code>Test Connection</code> 測試是否可連線成功。</p>
-<p>若第一次在 PhpStorm 連接 MySQL，需安裝 MySQL 的 Java driver。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql017.png" alt=""></p>
-<p>PhpStorm 的 Database 工具可以看到 Azure MySQL 上所有的 table，也能看到 <code>posts</code> 上剛剛 seeding 的三筆資料。</p>
-<h2 id="設定_Azure_-env">設定 Azure .env</h2><p>資料已經上 Azure 的 MySQL了，不過在 Azure 上的 Laravel 還不認識我們剛剛建立的 MySQL 資料庫。</p>
-<p>Laravel 雖然提供了 <code>.env</code>，可以設定些敏感資訊，如資料庫連線。但預設 <code>.gitignore</code> 有排除 <code>.env</code>，所以並沒有上 GitHub，因此也不會上 Azure。</p>
-<p>我們須在 Azure 的 <code>Application settings</code> 設定資料庫連線資訊。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql019.png" alt=""></p>
-<p>選擇我們的 Laravel Web App。</p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql020.png" alt=""></p>
-<p><strong><em>Settings -&gt; General -&gt; Application Settings</em></strong></p>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql021.png" alt=""></p>
-<p>建立 <code>DB_CONNECTION</code>、<code>DB_HOST</code>、<code>DB_DATABASE</code>、<code>DB_USERNAME</code> 與 <code>DB_PASSWORD</code> 這些 key，並將 <code>.env</code> 的這些值設定在這裡。</p>
-<h2 id="在_Azure_執行_Laravel">在 Azure 執行 Laravel</h2><hr>
-<p><img src="/images/azure/azure-phpstorm-mysql/mysql018.png" alt=""></p>
-<p>Azure 上的 Laravel 已經能順利讀取到 Azure 上的 MySQL 了。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Azure 雖然沒有原生支援 MySQL，但透過 ClearDB 所提供的 MySQL 服務，我們依然可以在 Azure 上使用 PHP + Laravel + MySQL。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormAzureMySQL_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li>Cephas Lin, <a href="https://azure.microsoft.com/en-us/documentation/articles/store-php-create-mysql-database/" target="_blank" rel="external">Create and connect to a MySQL database in Azure</a></li>
-<li>Mikhail Vink, <a href="https://confluence.jetbrains.com/display/PhpStorm/Working+with+Windows+Azure+SQL+Database+in+PhpStorm" target="_blank" rel="external">Working with Windows Azure SQL Database in PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[在 Azure 一樣可以使用我們喜愛的 MySQL]]>
-    
-    </summary>
-    
-      <category term="Azure" scheme="http://oomusou.io/tags/Azure/"/>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="MySQL" scheme="http://oomusou.io/tags/MySQL/"/>
     
       <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
