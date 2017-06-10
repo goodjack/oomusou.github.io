@@ -1973,12 +1973,12 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何在 WebStorm 使用 Angular CLI 建立 Angular 2 專案?]]></title>
+    <title><![CDATA[如何在 WebStorm 使用 Angular CLI 建立 Angular 專案?]]></title>
     <link href="http://oomusou.io/webstorm/webstorm-angular-cli/"/>
     <id>http://oomusou.io/webstorm/webstorm-angular-cli/</id>
     <published>2016-11-15T12:23:43.000Z</published>
-    <updated>2016-11-25T02:42:42.000Z</updated>
-    <content type="html"><![CDATA[<p>Angluar 2 提供了 Angular CLI，一些原本必須自己使用前端自動化工具的部分，Angular CLI 都能幫我做到，讓我們不用為整合前端工具煩惱；除此之外，WebStorm 也支援 Angular CLI，讓我們可以在 WebStorm 內直接使用 Angular CLI。</p>
+    <updated>2017-06-10T01:21:03.000Z</updated>
+    <content type="html"><![CDATA[<p>Angluar 提供了 Angular CLI，一些原本必須自己使用前端自動化工具的部分，Angular CLI 都能幫我做到，讓我們不用為整合前端工具煩惱；除此之外，WebStorm 也支援 Angular CLI，讓我們可以在 WebStorm 內直接使用 Angular CLI。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>Angular 2.1.2<br>Angular CLI 1.0.0-beta.19-3<br>WebStorm 2016.3</p>
@@ -2024,11 +2024,11 @@
 <p>JetBrains, <a href="https://blog.jetbrains.com/webstorm/2016/08/webstorm-2016-3-early-access-preview/#ng-cli" target="_blank" rel="external">WebStorm 2016.3 Early Access Preview : Flow, PostCSS, and more</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[使用圖形化工具建立 Angular 2 專案]]>
+    <![CDATA[使用圖形化工具建立 Angular 專案]]>
     
     </summary>
     
-      <category term="Angular 2" scheme="http://oomusou.io/tags/Angular-2/"/>
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
