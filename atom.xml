@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-07T15:05:54.000Z</updated>
+  <updated>2017-06-11T03:25:36.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,97 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[TypeScript 特色與歷史簡介]]></title>
+    <link href="http://oomusou.io/typescript/typescript101/"/>
+    <id>http://oomusou.io/typescript/typescript101/</id>
+    <published>2017-06-14T12:23:43.000Z</published>
+    <updated>2017-06-11T03:25:36.000Z</updated>
+    <content type="html"><![CDATA[<p>TypeScript 是 Angular 欽定的開發語言，所以學 Angular 一定要學 TypeScript，但很多人認為 TypeScript 是 JavaScript 的方言，不是 JavaScript 標準，因而有所疑慮，本文簡單介紹 TypeScript 的歷史與特色，提供大家技術選擇的參考。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.3</p>
+<h2 id="什麼是_TypeScript？">什麼是 TypeScript？</h2><hr>
+<p><img src="/images/typescript/typescript101/ts000.png" alt="ts000"></p>
+<p>在 TypeScript 官網，大大的 3 個字</p>
+<blockquote>
+<p>JavaScript that scales.</p>
+</blockquote>
+<p>簡單的說，TypeScript 就是為了讓 JavaScript 可以寫<strong>大型應用程式</strong>的<strong>商業邏輯</strong>所設計，讓 JavaScript 不再只是能控制 DOM 而已，而是真的可以寫<strong>複雜</strong>商業邏輯。</p>
+<blockquote>
+<p>Visual Studio Code 就是使用 TypeScript 開發。</p>
+</blockquote>
+<p>TypeScript 既然稱為 <strong>Type</strong>Script，重點就是將 JavaScript 加上 type。</p>
+<ul>
+<li>更多型別 (More types) 與強型別檢查</li>
+<li>多型 (Interface)</li>
+<li>泛型 (Generic)</li>
+</ul>
+<p>一旦有了強型別，則很多圍繞在<strong>型別</strong>的技術都可在 TypeScript 使用。</p>
+<p><img src="/images/typescript/typescript101/ts001.svg" alt="ts001"></p>
+<h2 id="TypeScript_的歷史">TypeScript 的歷史</h2><hr>
+<p>TypeScript 是由 Turbo Pascal、Delphi、J++ 與 C# 的爸爸 <a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a> 所設計的程式語言，Anders 在很年輕時，就立志要幫 JavaScript 寫一個 compiler，在他 <code>52</code> 歲時，發表了 TypeScript，幫 JavaScript 補上很多<strong>強型別</strong>語言該有的元素，並且相容 JavaScript。</p>
+<p><img src="/images/typescript/typescript101/ts002.png" alt="ts002"></p>
+<p>只要是 ES5、ES6 有的東西，TypeScript 都會概括承受，所以你原本在 ES5、ES6 的投資，都可以用在 TypeScript。</p>
+<p>Angular 團隊原本用自己的 AtScript 開發，它除了有 TypeScript 的強型別外，更擴展了一些東西，當然也包含 ES5、ES6。</p>
+<p><img src="/images/typescript/typescript101/ts005.png" alt="ts005"></p>
+<p>2015 年 3 月，Angular 團隊決定從原本自己的 AtScript，改用 Microsoft 的 TypeScript，Google 專心於 framework 部分，Microsoft 則專心於程式語言部分，這也是 Google 與 Microsoft 首次攜手合作。</p>
+<p><img src="/images/typescript/typescript101/ts003.png" alt="ts003"></p>
+<p>原本 Angular 大量依賴 AtScript 的 annotation，為了配合 Angular，TypeScript 也根據了 ECMAScript 的 decorator 草案加以實作，在 NG-Conf 2015 也宣布 AtScript 與 TypeScript 合而為一。</p>
+<p><img src="/images/typescript/typescript101/ts004.gif" alt="ts004"></p>
+<p>在 NG-Conf 2017，Google 也宣布 TypeScript 正式成為 Google 內部所使用的語言。<img src="/images/typescript/typescript101/ts006.jpg" alt="ts006"></p>
+<p>TypeScript 雖然早在 2012 年就上市，但始終叫好不叫座，尤其遠不如 CoffeeScript，但在 2015 年開始有了爆炸性的成場。</p>
+<p>因為 TypeScript 總算有殺手級的應用出現：Angular。</p>
+<h2 id="為什麼要使用_TypeScript？">為什麼要使用 TypeScript？</h2><hr>
+<p>除了 Angular 挑選 TypeScript 外，讓我們回歸<strong>需求面</strong>，為什麼要選擇 TypeScript？</p>
+<h3 id="JavaScript_規格與瀏覽器的支援">JavaScript 規格與瀏覽器的支援</h3><p><img src="/images/typescript/typescript101/ts007.png" alt="ts007"></p>
+<p>在今年的 Microsoft Build 2017，<a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a> 提到了 JavaScript 所謂的 feature gap，以往我們在寫 JavaScript 時，都要很在乎瀏覽器是否支援了 JavaScript 某個 keyword 與 function，以目前來說，ES7 (ES2016) 規格都已經出來，但瀏覽器卻只有支援 ES5 與少部份 ES6，因此很多 JavaScript 語言功能根本是看得到但吃不到。</p>
+<p>但透過 TypeScript，你立刻就能使用最新的 JavaScript 規格，透過編譯技術將 TypeScript 編譯成 ES5，不用再擔心瀏覽器版本問題。</p>
+<h3 id="前端越來越複雜">前端越來越複雜</h3><p>JavaScript 一開始設計只是為了控制 DOM，但隨著 Ajax 與 SPA 出現後，為了更好的使用者經驗，我們開始將一部分的商業邏輯寫在 JavaScript，這也使得前端常常動不動出現上千行的程式碼，JavaScript 的<strong>可維護性</strong>一直受到挑戰，因此我們需要一個能夠寫<strong>複雜商業邏輯</strong>的語言。</p>
+<blockquote>
+<p>JavaScript 的 ES6、ES7 … 已經朝更成熟的語言邁進，不過現階段還不夠成熟，TypeScript 則包含了開發大型應用程式所需要的元素。</p>
+</blockquote>
+<h3 id="強型別_+_編譯_=_大型應用程式的保證">強型別 + 編譯 =  大型應用程式的保證</h3><p>Web 發展之初，由於需求單純，無論是前後端，都放棄了強型別與編譯技術，改用弱型別與解譯技術，但 Web 20 年來的發展，前後端都越來越複雜，弱型別與解譯技術則面臨了強大的挑戰：</p>
+<ul>
+<li>Framework 越來越龐大，眾多的 class 與 method，弱型別無法 intellisense。</li>
+<li>參數沒有型別，也沒有編譯器檢查，因此要撰寫大量的驗證參數的程式碼。</li>
+<li>沒有編譯做第一層的把關，因此必須<strong>寫大量測試</strong>取代編譯器，測試的 coverage 必須要拉很高。</li>
+</ul>
+<blockquote>
+<p>你覺得寫型別很麻煩？寫測試不是更麻煩？</p>
+<p>你覺得寫測試很麻煩？手動測試不是更麻煩？</p>
+</blockquote>
+<p>有了強行別 + 編譯，透過編譯器檢查，讓我們可以少寫很多測試，專注在為<strong>商業邏輯的需求寫測試</strong>，而不是為了追求 coverage 100% ，為測試而寫測試。</p>
+<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，而 TypeScript 有自己的的強行別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
+<ul>
+<li><strong>FRP</strong> : Functional Reactive Programming</li>
+<li><strong>OOP</strong> : Object Oriented Programming</li>
+<li><strong>GP</strong> : Generic Programming</li>
+</ul>
+<p>可以視專案需求與規模，選擇適當的武器，不再你手上只有錘子，所有的東西都是釘子。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>TypeScript 是我這幾年來，僅見的集<strong>優雅</strong>與<strong>強悍</strong>於一身的程式語言，原本因為 Angular 學習 TypeScript，但最後卻發現對於 TypeScript 的愛遠勝於 Angular。</li>
+<li><strong>強型別 + 編譯</strong>才是開發大型應用程式的保證，讓我們可以根據需求寫測試，不是為測試而寫測試。</li>
+<li>TypeScript 融合 FRP、OOP 與 GP，在 multi paradigm 下，你可以選擇適當的武器，不再手中只有錘子。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a>, <a href="https://www.typescriptlang.org" target="_blank" rel="external">TypeScript</a><br><a href="https://stackoverflow.com/" target="_blank" rel="external">stack overflow</a>, <a href="https://stackoverflow.com/questions/28960934/what-is-difference-between-typescript-and-atscript" target="_blank" rel="external">What is difference between TypeScript and AtScript</a><br><a href="https://social.msdn.microsoft.com/profile/Jonathan+Turner+%5BMS%5D" target="_blank" rel="external">Jonathan Turner</a>, <a href="https://blogs.msdn.microsoft.com/typescript/2015/03/05/angular-2-built-on-typescript/" target="_blank" rel="external">Angular 2: Built on TypeScript</a><br><a href="https://twitter.com/ngconf" target="_blank" rel="external">@ngconf</a>,<a href="https://twitter.com/ngconf/status/573521849780305920" target="_blank" rel="external">AtScript is TypeScript</a><br><a href="http://developer.telerik.com/author/tvantoll/" target="_blank" rel="external">TJ VanToll</a>, <a href="http://developer.telerik.com/featured/the-rise-of-typescript/" target="_blank" rel="external">The Rise of TypeScript?</a><br><a href="https://build.microsoft.com/" target="_blank" rel="external">Microsoft Build 2017</a>, <a href="https://channel9.msdn.com/Events/Build/2017/B8088" target="_blank" rel="external">What’s new in TypeScript</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[以開發者角度看 TypeScript]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何在 WebStorm 對 Angular 下中斷點 Debug?]]></title>
     <link href="http://oomusou.io/webstorm/webstorm-debug/"/>
     <id>http://oomusou.io/webstorm/webstorm-debug/</id>
     <published>2017-06-07T12:23:43.000Z</published>
-    <updated>2017-06-07T15:05:54.000Z</updated>
+    <updated>2017-06-11T03:14:41.000Z</updated>
     <content type="html"><![CDATA[<p>WebStorm 允許我們如同 Visual Studio 一樣，直接在 IDE 內設定<strong>中斷點</strong>，並停止執行在那一行，我們可觀察當時的變數，也可使用 step over、step into、step out 等除錯技巧，重點是它是停止在 TypeScript 上，而非 JavaScript 上。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -56,7 +142,7 @@
 <p><a href="https://manuel-rauber.com/author/manuelrauber/" target="_blank" rel="external">Manuel Rauber</a>,<a href="https://manuel-rauber.com/2016/09/30/how-to-debug-angular-2-with-webstorm/" target="_blank" rel="external">How to debug Angular 2 with WebStorm?</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[在 WebStorm 下中斷點對 TypeScript 做 debug]]>
+    <![CDATA[直接在 IDE 內 debug]]>
     
     </summary>
     
@@ -2862,80 +2948,6 @@
       <category term="Azure" scheme="http://oomusou.io/tags/Azure/"/>
     
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何解決安裝 IDE Helper 造成 Laravel 在 Azure 部署失敗?]]></title>
-    <link href="http://oomusou.io/azure/azure-ide-helper/"/>
-    <id>http://oomusou.io/azure/azure-ide-helper/</id>
-    <published>2016-08-06T12:23:43.000Z</published>
-    <updated>2016-10-18T06:13:35.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="https://github.com/barryvdh/laravel-ide-helper" target="_blank" rel="external">Laravel IDE Helper</a> 解決了 PhpStorm 無法對 Facade 做 code completion 的問題，，為使用 Laravel 與 PhpStorm 必裝的套件，但安裝方式的差異，可能造成 Laravel 在 Azure 無法部署成功。</p>
-<a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
-<p>因為 IDE Helper 為<strong>開發用</strong>套件，在<a href="/phpstorm/phpstorm-ide-helper/">如何在 PhpStorm 活用 PHPDoc?</a> 一文中，建議大家將 IDE Helper 安裝在 <code>require-dev</code>，事實上開發用套件都應該使用這種方式安裝，不過 IDE Helper 在 Azure 部署時卻遇到困難。</p>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.8<br>Laravel 5.2.41<br>PhpStorm 2016.2</p>
-<h2 id="實際案例">實際案例</h2><hr>
-<p>已經在本機順利安裝 IDE Helper 的 Laravel 專案，部署到 Azure 後，出現部署失敗的錯誤。</p>
-<p><img src="/images/azure/azure-ide-helper/ide000.png" alt=""></p>
-<p><strong><em>Settings -&gt; Publishing -&gt; Development source</em></strong></p>
-<p><img src="/images/azure/azure-ide-helper/ide001.png" alt=""></p>
-<p>部署出現 <code>Failed</code>。</p>
-<p><img src="/images/azure/azure-ide-helper/ide002.png" alt=""></p>
-<p>繼續往下按 <code>View Log</code>，按錯誤訊息。</p>
-<p><img src="/images/azure/azure-ide-helper/ide003.png" alt=""></p>
-<p>錯誤訊息出現在 <code>composer install</code> 之後，在執行 <code>php artisan optimize</code> 時，出現找不到 <code>Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider</code> 的錯誤。</p>
-<h2 id="Root_Cause">Root Cause</h2><hr>
-<p><img src="/images/azure/azure-ide-helper/ide008.png" alt=""></p>
-<p>觀察 <code>composer.json</code>，會發現當 Azure 在執行完 <code>composer install</code> 後，會觸發 <code>post-install-cmd</code> 事件，並執行 <code>php artisan optimize</code>。</p>
-<p><img src="/images/azure/azure-ide-helper/ide007.png" alt=""></p>
-<p>一旦執行 <code>php artisan optimize</code>，就會執行 <code>config/app.php</code> 的所有 service provider，當然包括我們安裝 IDE Helper 新增的 <code>Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider</code>。</p>
-<p><img src="/images/azure/azure-ide-helper/ide004.png" alt=""></p>
-<p>實際由 PhpStorm 的 Remote Host 連到 Azure，會發現 Laravel 專案只出現在 <code>repository</code> 目錄下，而沒在 <code>wwwroot</code> 目錄下，事實上 Laravel 整個專案應該放在 <code>wwwroot</code> 目錄下，這表示在 Azure 的部署並沒有成功。</p>
-<p><img src="/images/azure/azure-ide-helper/ide005.png" alt=""></p>
-<p>我們再比較本機的 <code>vendor</code> 目錄與 Azure 的 <code>repository</code> 下的 <code>vendor</code> 目錄，會發現 Azure 的 <code>vendor</code> 目錄並沒有 IDE Helper 所需的 <code>barryvdh</code> 目錄。</p>
-<p>而 <code>Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider</code> 這個 service provider 正是放在 <code>vendor/barryvdh</code> 目錄下。</p>
-<p><img src="/images/azure/azure-ide-helper/ide006.png" alt=""></p>
-<p>打開本機的 <code>composer.json</code>，我們發現 <code>barryvdh/laravel-ide-helper</code> 是放在 <code>require-dev</code>，也就是說，Azure 在部署時，是下 <code>composer install --no-dev</code>，因此才沒將 <code>barryvdh</code> 安裝在 <code>vendor</code> 目錄下。</p>
-<h2 id="Solution">Solution</h2><hr>
-<p><img src="/images/azure/azure-ide-helper/ide009.png" alt=""></p>
-<p>在 <code>composer.json</code> 中，將 <code>barryvdh/laravel-ide-helper&quot;: &quot;^2.2&quot;</code> 從 <code>require-dev</code> 改到 <code>require</code>。</p>
-<p>雖然本機已經有 <code>vendor/barryvdh</code>，但別忘了 <code>composer install</code> 吃的是 <code>composer.lock</code>，所以我們必須重新執行 <code>composer update</code> 來更新 <code>composer.lock</code>。</p>
-<p><img src="/images/azure/azure-ide-helper/ide010.png" alt=""></p>
-<p><code>composer update</code> 執行完後，會發現 <code>_ide_helper.php</code>、<code>composer.json</code> 與 <code>composer.lock</code> 三個檔案被變更，須重新寫入 git repository。</p>
-<p>直接在 PhpStorm 的 <code>Version Control</code> 按 <code>Commit Changes</code> 即可。</p>
-<p><img src="/images/azure/azure-ide-helper/ide011.png" alt=""></p>
-<p>輸入 commit message 之後，直接按 <code>Commit and Push</code> 一併 push 到 GitHub。</p>
-<p><img src="/images/azure/azure-ide-helper/ide012.png" alt=""></p>
-<p>按 <code>Push</code> 直接送進 GitHub。</p>
-<p><img src="/images/azure/azure-ide-helper/ide013.png" alt=""></p>
-<p>上傳至 GitHub 成功。</p>
-<p><img src="/images/azure/azure-ide-helper/ide014.png" alt=""></p>
-<p>再次觀察 Azure 的部署訊息，這次就成功了。</p>
-<p><img src="/images/azure/azure-ide-helper/ide015.png" alt=""></p>
-<p>由 PhpStorm 的 Remote Host 去觀察 Azure，<code>wwwroot</code> 目錄下的確有完整的 Laravel 專案，表示 Azure 已經成功部署。</p>
-<p><img src="/images/azure/azure-ide-helper/ide016.png" alt=""></p>
-<p>再觀察 <code>vendor</code> 目錄的確多了 <code>barryvdh</code>，因此 <code>php artisan optimize</code> 時，可以順利找到 <code>Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider</code>。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Azure 會自動下 <code>composer install --no-dev</code>，因此只會安裝 <code>require</code> 的套件，不會安裝 <code>requre-dev</code> 的套件。</li>
-<li>開發用的套件，理論上安裝在 <code>require-dev</code> 即可，除非該套件會用到 service provider，就必須改安裝在 <code>require</code>，否則會造成 Azure 部署失敗。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52PhpStormAzureMySQL_demo" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[將 IDE Helper 安裝在 require-dev 將造成 Azure 部署失敗]]>
-    
-    </summary>
-    
-      <category term="Azure" scheme="http://oomusou.io/tags/Azure/"/>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="PhpStorm" scheme="http://oomusou.io/tags/PhpStorm/"/>
     
   </entry>
   
