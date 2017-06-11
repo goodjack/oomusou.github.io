@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TypeScript 之變數宣告與建立 | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="ES6 提供不少語法關於變數宣告與建立">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="ES6 提供不少語法關於變數宣告與建立">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript 之變數宣告與建立">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-variable/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="ES6 提供不少語法關於變數宣告與建立">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-11T14:57:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TypeScript 之變數宣告與建立">
+<meta name="twitter:description" content="ES6 提供不少語法關於變數宣告與建立">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> TypeScript 之變數宣告與建立</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> ES6 提供不少語法關於變數宣告與建立			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#var"><span class="toc-article-text">var</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#let"><span class="toc-article-text">let</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#const"><span class="toc-article-text">const</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Destructuring"><span class="toc-article-text">Destructuring</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Array_Destructing"><span class="toc-article-text">Array Destructing</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Object_Destructing"><span class="toc-article-text">Object Destructing</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Spread"><span class="toc-article-text">Spread</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>變數宣告部分，除了 <code>var</code> 以外，在 ES6 增加了 <code>let</code> 與 <code>const</code>，在變數建立部分，則增加了 destructuring 與 spread，當然 TypeScript 也完全支援。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.3</p>
+<h2 id="var">var</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>var</code> 最經典的範例莫過於此，原本我們預期會輸出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p>結果輸出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>這裡有兩個觀念：</p>
+<ul>
+<li><code>setTimeout()</code> 屬於非同步 function，JavaScript 的 event loop model 會在最後執行。</li>
+<li><code>var</code> 看似在 <code>{}</code> 內，但沒有 scope 概念，因為其 hoisting 機制，會將 <code>var</code> 提升到程式最前面，相當於全域變數，因此 <code>console.log()</code> 印出 for loop 執行完的 <code>10</code>。</li>
+</ul>
+<h2 id="let">let</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>var</code> 改成 <code>let</code> 之後，結果就如預期了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p><code>let</code> 對變數有 scope 概念，其生命週期只存在於 <code>{}</code> ，因此儘管非同步的 <code>setTimeout()</code> 最後執行，let 仍將 <code>i</code> 鎖住到最後，而不像 <code>var</code> 沒有 scope 概念，都是全域變數。</p>
+<blockquote>
+<p>實務上應該全面使用 let 取代 var，若你使用 var，language service 也會提出警告，要你改用 let。</p>
+</blockquote>
+<h2 id="const">const</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numLivesForCat = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
+<p> 若此變數不會再被修改，則應宣告成 const。</p>
+<blockquote>
+<p>傳統我們都是確定此變數不能被修改，才會宣告成 const，但在 TypeScript 中是反過來，<strong>變數應該盡量宣告成 const，除非要修改才宣告成 let</strong>，事實上，若 language service 發現變數從來沒被修改過，會主動提出警告，要求你改成 const，這是希望大家盡量寫出 immutable 的 pure function，減少不必要的 side effect。</p>
+</blockquote>
+<h2 id="Destructuring">Destructuring</h2><hr>
+<h3 id="Array_Destructing">Array Destructing</h3><p>ES6 允許我們直接將陣列加以解構成變數。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> first = input[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> second = input[<span class="number">1</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// outputs 2</span></span><br></pre></td></tr></table></figure>
+<p>在 ES5，我們必須使用 array index 方式，才能將值指定到變數。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> [first, second] = input;</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// outputs 2</span></span><br></pre></td></tr></table></figure>
+<p>ES6 我們可以直接使用 <code>[]</code> 將陣列加以解構。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swap variables</span></span><br><span class="line">[first, second] = [second, first];</span><br></pre></td></tr></table></figure>
+<p>交換變數，只要一行就可以寫出來。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">[first, second]: <span class="built_in">number</span>[]</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(first); <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line">f([<span class="number">1</span>, <span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
+<p>若傳入陣列，可以接在參數就解構成變數。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first, ...rest] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// outputs [ 2, 3, 4 ]</span></span><br></pre></td></tr></table></figure>
+<p>配合 <code>…</code>，將剩餘的值結構成陣列。</p>
+<p><code>first</code> 為單一變數，<code>rest</code> 為陣列。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br></pre></td></tr></table></figure>
+<p><code>first</code> 為 <code>1</code>，其他值會忽略。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [, second, , fourth] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(fourth); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<p>只有 <code>2</code> 與 <code>4</code> 會解構，其他值會忽略。</p>
+<h3 id="Object_Destructing">Object Destructing</h3><p>除了解構陣列外，ES6 還允許我們解構物件。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span>,</span><br><span class="line">  c: <span class="string">"bar"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; a, b &#125; = o;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
+<p> <code>c</code> 因為沒有變數解構，會自動忽略。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span>,</span><br><span class="line">  c: <span class="string">"bar"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123; a, ...passthrough &#125; = o;</span><br><span class="line"><span class="keyword">let</span> total = passthrough.b + passthrough.c.length</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line"><span class="built_in">console</span>.log(total); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<p>配合 <code>…</code>，將剩餘的值結構成物件。</p>
+<p><code>a</code> 為單一變數，<code>passthrough</code> 為物件。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> C = &#123; a: <span class="built_in">string</span>, b: <span class="built_in">number</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">&#123;a, b&#125;: C</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line">  <span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">f(o);</span><br></pre></td></tr></table></figure>
+<h2 id="Spread">Spread</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> first = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> second = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> bothPlus = [<span class="number">0</span>, ...first, ...second, <span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+<p><code>…</code> 會將陣列加以展開。</p>
+<p><code>bothPlus</code> 為 <code>[0, 1, 2, 3, 4, 5]</code> 。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> defaults = &#123; food: <span class="string">"spicy"</span>, price: <span class="string">"$$"</span>, ambiance: <span class="string">"noisy"</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> search = &#123; ...defaults, food: <span class="string">"rich"</span> &#125;;</span><br></pre></td></tr></table></figure>
+<p><code>…</code> 會將物件屬性加以展開。</p>
+<p><code>search</code> 為 <code>{ food: &quot;rich&quot;, price: &quot;$$&quot;, ambiance: &quot;noisy&quot; }</code></p>
+<blockquote>
+<p>若屬性有重複，將後面蓋前面。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> C &#123;</span><br><span class="line">  p = <span class="number">12</span>;</span><br><span class="line">  m() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> C();</span><br><span class="line"><span class="keyword">let</span> clone = &#123; ...c &#125;;</span><br><span class="line">clone.p; <span class="comment">// ok</span></span><br><span class="line">clone.m(); <span class="comment">// error!</span></span><br></pre></td></tr></table></figure>
+<p><code>…</code> 只能展開 property，不能展開 method。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>實務上應該盡量使用 <code>const</code>，除非變數需要被修改才用 <code>let</code>。</li>
+<li>盡量寫出 pure function 減少 side effect。</li>
+<li>Destructuring 與 spread 非常好用，可以讓程式碼更精簡。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/variable-declarations.html" target="_blank" rel="external">Handbook : Variable Declaration</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/typescript/typescript-basic-type/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-16 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

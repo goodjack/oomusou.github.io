@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript-variable/</loc>
+    <lastmod>2017-06-11T14:57:59.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/typescript-basic-type/</loc>
     <lastmod>2017-06-11T13:13:00.000Z</lastmod>
   </url>
@@ -197,12 +202,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
+    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -422,7 +427,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/php/php-interface/</loc>
+    <loc>http://oomusou.io/php/php-generator/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -537,7 +542,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/php/php-generator/</loc>
+    <loc>http://oomusou.io/php/php-interface/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
