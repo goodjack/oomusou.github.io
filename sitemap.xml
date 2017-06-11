@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript-basic-type/</loc>
+    <lastmod>2017-06-11T13:13:00.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/typescript101/</loc>
     <lastmod>2017-06-11T10:39:45.000Z</lastmod>
   </url>
@@ -147,12 +152,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-ide-helper/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
+    <loc>http://oomusou.io/azure/azure-phpstorm-deploy/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -227,7 +232,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-phpstorm-deploy/</loc>
+    <loc>http://oomusou.io/azure/azure-ide-helper/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   

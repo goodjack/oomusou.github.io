@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TypeScript 之基本型別 | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="簡介 TypeScript 所有內建的型別">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="簡介 TypeScript 所有內建的型別">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript 之基本型別">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-basic-type/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="簡介 TypeScript 所有內建的型別">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-11T13:13:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TypeScript 之基本型別">
+<meta name="twitter:description" content="簡介 TypeScript 所有內建的型別">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> TypeScript 之基本型別</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 簡介 TypeScript 所有內建的型別			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Boolean"><span class="toc-article-text">Boolean</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Number"><span class="toc-article-text">Number</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#String"><span class="toc-article-text">String</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Array"><span class="toc-article-text">Array</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Tuple"><span class="toc-article-text">Tuple</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Enum"><span class="toc-article-text">Enum</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Any"><span class="toc-article-text">Any</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Void"><span class="toc-article-text">Void</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Null_與_Undefined"><span class="toc-article-text">Null 與 Undefined</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Never"><span class="toc-article-text">Never</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Type_Assertion"><span class="toc-article-text">Type Assertion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>TypeScript 既然稱為 TypeScript，想當然爾型別就是該語言的重頭戲，本文我們來看看 TypeScript 對於 JavaScript 增加了哪些型別支援。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.3</p>
+<h2 id="Boolean">Boolean</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isDone: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span><br><span class="line">isDone = <span class="number">1</span>; <span class="comment">// 編譯失敗</span></span><br></pre></td></tr></table></figure>
+<p>若值只有 <code>true</code> 與 <code>false</code>，則其型別為 <code>boolean</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isDone = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>若變數可直接由初始值 <code>true</code> 或 <code>false</code> 獲得型別，language service 會加以提示省略型別宣告，但 <code>isDone</code> 本質仍是強型別 <code>boolean</code>，<strong>編譯器會加以檢查</strong>，只是程式不用宣告 <code>boolean</code> 而已。</p>
+<h2 id="Number">Number</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> decimal: <span class="built_in">number</span> = <span class="number">6</span>; <span class="comment">// 十進位</span></span><br><span class="line"><span class="keyword">let</span> hex: <span class="built_in">number</span> = <span class="number">0xf00d</span>; <span class="comment">// 0x 開頭為十六進位</span></span><br><span class="line"><span class="keyword">let</span> binary: <span class="built_in">number</span> = <span class="number">0b1010</span>; <span class="comment">// 0b 開頭為二進位 (ES6)</span></span><br><span class="line"><span class="keyword">let</span> octal: <span class="built_in">number</span> = <span class="number">0o744</span>; <span class="comment">// 0o 開頭為八進位 (ES6)</span></span><br></pre></td></tr></table></figure>
+<p>TypeScript 與 JavaScript 一樣，數字只有 <code>number</code> 型別，且本質是<strong>浮點數</strong>，不像 C# 數字有 <code>int</code> 、 <code>float</code> 與 <code>double</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> decimal = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">let</span> hex = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="keyword">let</span> binary = <span class="number">0b1010</span>;</span><br><span class="line"><span class="keyword">let</span> octal = <span class="number">0o744</span>;</span><br></pre></td></tr></table></figure>
+<p>若變數可直接由初始值<strong>數字</strong>獲得型別，language service 會加以提示省略型別宣告，但變數本質仍是強型別 <code>number</code>，<strong>編譯器會加以檢查</strong>，只是程式不用宣告 <code>number</code> 而已。</p>
+<h2 id="String">String</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> firstName: <span class="built_in">string</span> = <span class="string">"Sam"</span>;</span><br><span class="line"><span class="keyword">let</span> lastName: <span class="built_in">string</span> = <span class="string">'Xiao'</span>;</span><br><span class="line"><span class="keyword">let</span> sentence: <span class="built_in">string</span> = `Hello, my name is $&#123;firstName&#125; $&#123;lastName&#125;`;</span><br></pre></td></tr></table></figure>
+<p>TypeScript 與 JavaScript 一樣，提供 <code>string</code> 型別，有 3 種表示法：</p>
+<ul>
+<li>雙引號</li>
+<li>單引號</li>
+<li>Backtick</li>
+</ul>
+<p>其中 backtick 寫法，稱為 template string，可配合變數直接鑲在字串內，而不用靠 <code>+</code> 湊字串，可讀性較高，實務上建議使用。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> firstName = <span class="string">"Sam"</span>;</span><br><span class="line"><span class="keyword">let</span> lastName = <span class="string">'Xiao'</span>;</span><br><span class="line"><span class="keyword">let</span> sentence = `Hello, my name is $&#123;firstName&#125; $&#123;lastName&#125;`;</span><br></pre></td></tr></table></figure>
+<p>若變數可直接由初始值<strong>字串</strong>獲得型別，language service 會加以提示省略型別宣告，但變數本質仍是強型別 <code>string</code>，<strong>編譯器會加以檢查</strong>，只是程式不用宣告 <code>string</code> 而已。</p>
+<blockquote>
+<p>雖然 TypeScript 允許 string 使用雙引號，但 language service 會提示建議使用單引號。</p>
+</blockquote>
+<h2 id="Array">Array</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list: <span class="built_in">number</span>[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> list: <span class="built_in">Array</span>&lt;<span class="built_in">number</span>&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>TypeScript 對於陣列提供兩種寫法：</p>
+<ul>
+<li>傳統 JavaScript 風格寫法。</li>
+<li>泛型風格寫法。</li>
+</ul>
+<blockquote>
+<p>兩種寫法可讀性都很高，實務上都推薦，只要團隊取得共識要使用哪種寫法即可。</p>
+</blockquote>
+<h2 id="Tuple">Tuple</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x: [<span class="built_in">string</span>, <span class="built_in">number</span>];</span><br><span class="line">x = [<span class="string">"hello"</span>, <span class="number">10</span>];</span><br><span class="line">x = [<span class="number">10</span>, <span class="string">"hello"</span>]; <span class="comment">// 編譯失敗</span></span><br></pre></td></tr></table></figure>
+<p>陣列必須每個元素的型別都相同，若你希望陣列中有不同型別的元素，則應該使用 <code>tuple</code>。</p>
+<blockquote>
+<p>實務上若你希望 function 回傳多值，且型態不相同，則可使用 tuple。</p>
+</blockquote>
+<h2 id="Enum">Enum</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Color &#123;Red, Green, Blue&#125;</span><br><span class="line"><span class="keyword">let</span> c: Color = Color.Green;</span><br></pre></td></tr></table></figure>
+<p>Enum 型別是強型別語言的代表，從 C 語言就已經有 enum，C++ 與 C# 也有 <code>enum</code>，但 JavaScript 一直都沒有 <code>enum</code> (未來有的機會也不高)，TypeScript 將之補上，它有幾個優點：</p>
+<ul>
+<li>參數之間的傳遞不用在使用 magic number，可以透過 enum 取可讀性更高的名字。</li>
+<li>Number 不用再直接輸入，可由 enum 型別透過 intellisense 自動帶出。</li>
+<li>若輸入 enum 型別沒有的數字，編譯器會幫我們擋下來。</li>
+</ul>
+<blockquote>
+<p>TypeScript 2.4 的 enum 即將支援字串，讓我們透過 enum 可以確保所輸入的是我們要的字串。</p>
+</blockquote>
+<h2 id="Any">Any</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> notSure: <span class="built_in">any</span> = <span class="number">4</span>;</span><br><span class="line">notSure = <span class="string">"maybe a string instead"</span>; <span class="comment">// 編譯器不會檢查</span></span><br><span class="line">notSure = <span class="literal">false</span>; <span class="comment">// 編譯器不會檢查</span></span><br></pre></td></tr></table></figure>
+<p>對於 JavaScript legacy code 或 3rd party library，若一時導入 TypeScript 有其困難，可先暫時宣告為 <code>any</code> 放生，讓 TypeScript 不做型別檢查，日後再慢慢重構成適當型別。</p>
+<blockquote>
+<p>實務上不建議使用 any 型別，因為這將喪失 TypeScript  的型別檢查機制，除非有充分的理由。</p>
+</blockquote>
+<h2 id="Void">Void</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">warnUser</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">   alert(<span class="string">"This is my warning message"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> message = warnUser(); <span class="comment">// 編譯失敗</span></span><br></pre></td></tr></table></figure>
+<p>若 function 明確不傳回任何值，可宣告為 <code>void</code> 型別，若將此 function 的回傳值指定為變數，將編譯失敗。</p>
+<h2 id="Null_與_Undefined">Null 與 Undefined</h2><p><code>null</code> 與 <code>undefined</code> 一直是寫 JavaScript 很惱人的問題，我們必須在程式碼內判斷輸入的參數是否為 <code>null</code> 或 <code>undefined</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Compiled with --strictNullChecks</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a: <span class="built_in">number</span> , b: <span class="built_in">number</span> | <span class="literal">null</span> </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;  <span class="comment">// Produces value of type number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 TypeScript 2.0 提供了 strict null check，可以幫我們檢查參數是否為 <code>null</code> 或 <code>undefined</code>。 </p>
+<p>若我們參數明確要接受 <code>null</code> 或 <code>undefined</code>，則必須在參數用 <code>|</code>  明確宣告，否則預設不接受 <code>null</code> 與 <code>undefined</code>。</p>
+<p><code>a</code> 可接受的型別為 <code>number</code> ，不接受 <code>null</code> 與 <code>undefined</code> ，但 <code>b</code> 可接受的型別為 <code>number</code>、<code>null</code> ，不接受 <code>undefined</code>。</p>
+<p>若輸入的參數 <code>a</code> 為 <code>null</code> 或 <code>undefined</code>，將編譯失敗。</p>
+<p><img src="/images/typescript/typescript-basic-type/type000.png" alt="type000"></p>
+<p>Angular 預設並沒有啟動 <code>strictNullChecks</code>，須在專案根目錄的 <code>tsconfig.json</code> 的 <code>compilerOptions</code> 加上 <code>strictNullChecks</code> 為 <code>true</code>，TypeScript 才會啟動 <code>strictNullChecks</code>。</p>
+<h2 id="Never">Never</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">message: <span class="built_in">string</span></span>): <span class="title">never</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">infiniteLoop</span>(<span class="params"></span>): <span class="title">never</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = error(<span class="string">'Sam'</span>); <span class="comment">// 編譯失敗</span></span><br><span class="line"><span class="keyword">let</span> b = infiniteLoop(<span class="string">'Sam'</span>); <span class="comment">// 編譯失敗</span></span><br></pre></td></tr></table></figure>
+<p>有些 function 永遠不傳回值，只會拋出 exception 或無窮回圈，雖然可以回傳 <code>void</code>，<strong>但語意上並不精確</strong>，TypeScript 另外提出 <code>never</code> 型別，專門對付 exception 或無窮迴圈。</p>
+<p>若將回傳 <code>never</code> 型別的 function 指定給變數，將編譯失敗。</p>
+<h2 id="Type_Assertion">Type Assertion</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someValue: <span class="built_in">any</span> = <span class="string">'this is a string'</span>;</span><br><span class="line"><span class="keyword">let</span> strLength: <span class="built_in">number</span> = (&lt;<span class="built_in">string</span>&gt;someValue).length;</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someValue: <span class="built_in">any</span> = <span class="string">'this is a string'</span>;</span><br><span class="line"><span class="keyword">let</span> strLength: <span class="built_in">number</span> = (someValue as <span class="built_in">string</span>).length;</span><br></pre></td></tr></table></figure>
+<p>實務上有時宣告了 <code>any</code>，但為了 intellisense 或其他變數，需要做明確的轉型，此時可使用 <code>type assertion</code> 明確轉型，也就是告訴編譯器：</p>
+<ul>
+<li>我自己知道此變數的明確型別，請相信我的轉型。</li>
+</ul>
+<blockquote>
+<p>雖然 type assertion 有兩種寫法，實務上建議使用第一種，第二種是為了 React 的 JSX 所妥協的語法，在 Angular 用不到。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>透過 TypeScript 的明確型別宣告，可以讓編譯器幫我們檢查傳入參數是否符合型別，不用再寫一堆程式判斷。</li>
+<li><code>enum</code> 在實務上非常用有，建議大家多用。</li>
+<li>建議大家將 <code>strictNullCheck</code> 打開，讓 TypeScript 編譯器幫我們檢查惱人 <code>null</code> 與 <code>undefined</code>。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" rel="external">Handbook : Basic Types</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/typescript/typescript101/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-15 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>7</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
