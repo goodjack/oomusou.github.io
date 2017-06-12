@@ -219,7 +219,7 @@
     <link href="http://oomusou.io/typescript/typescript101/"/>
     <id>http://oomusou.io/typescript/typescript101/</id>
     <published>2017-06-14T12:23:43.000Z</published>
-    <updated>2017-06-11T22:53:55.000Z</updated>
+    <updated>2017-06-12T02:08:46.000Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 是 Angular 欽定的開發語言，所以學 Angular 一定要學 TypeScript，但很多人認為 TypeScript 是 JavaScript 的<strong>方言</strong>，不是 JavaScript 標準，因而有所疑慮，本文簡單介紹 TypeScript 的歷史與特色，提供大家技術選擇的參考。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -258,7 +258,7 @@
 <p>因為 TypeScript 總算有殺手級的應用出現：Angular。</p>
 <h2 id="為什麼選擇_TypeScript？">為什麼選擇 TypeScript？</h2><hr>
 <p>除了 Angular 挑選 TypeScript 外，讓我們回歸<strong>需求面</strong>，為什麼要選擇 TypeScript？</p>
-<h3 id="JavaScript_規格與瀏覽器的支援">JavaScript 規格與瀏覽器的支援</h3><p><img src="/images/typescript/typescript101/ts007.png" alt="ts007"></p>
+<h3 id="JavaScript_規格與瀏覽器支援">JavaScript 規格與瀏覽器支援</h3><p><img src="/images/typescript/typescript101/ts007.png" alt="ts007"></p>
 <p>在今年的 Microsoft Build 2017，<a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a> 提到了 JavaScript 所謂的 feature gap，以往我們在寫 JavaScript 時，都要很在乎瀏覽器是否支援了 JavaScript 某個 keyword 與 function，以目前來說，ES7 (ES2016) 規格都已經出來，但瀏覽器卻只有支援 ES5 與少部份 ES6，因此很多 JavaScript 語言功能根本是看得到但吃不到。</p>
 <p>但透過 TypeScript，你立刻就能使用最新的 JavaScript 規格，透過編譯技術將 TypeScript 編譯成 ES5，不用再擔心瀏覽器版本問題。</p>
 <h3 id="前端越來越複雜">前端越來越複雜</h3><p>JavaScript 一開始設計只是為了控制 DOM，但隨著 Ajax 與 SPA 出現後，為了更好的使用者體驗，我們開始將一部分的商業邏輯寫在 JavaScript，這也使得前端常常動不動出現上千行的程式碼，JavaScript 的<strong>可維護性</strong>一直受到質疑，因此我們需要一個能夠寫<strong>複雜商業邏輯</strong>的語言。</p>
@@ -276,7 +276,7 @@
 <p>你覺得寫測試很麻煩？手動測試不是更麻煩？</p>
 </blockquote>
 <p>有了<strong>強型別 + 編譯</strong>保護，透過編譯器檢查，讓我們可以少寫很多測試，專注在為<strong>商業邏輯的需求寫測試</strong>，而不是為了追求 coverage 100% ，為測試而寫測試。</p>
-<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，而 TypeScript 有自己的的強型別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
+<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，但 TypeScript 有自己的的強型別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
 <ul>
 <li><strong>FRP</strong> : Functional Reactive Programming</li>
 <li><strong>OOP</strong> : Object Oriented Programming</li>
