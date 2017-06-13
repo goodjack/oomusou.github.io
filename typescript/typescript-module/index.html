@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TypeScript 之 Module | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="TypeScript 也支援 ES6 的 module">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="TypeScript 也支援 ES6 的 module">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript 之 Module">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-module/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="TypeScript 也支援 ES6 的 module">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-13T16:15:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TypeScript 之 Module">
+<meta name="twitter:description" content="TypeScript 也支援 ES6 的 module">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> TypeScript 之 Module</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> TypeScript 也支援 ES6 的 module			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Export"><span class="toc-article-text">Export</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#直接_Export"><span class="toc-article-text">直接 Export</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#以別名_Export"><span class="toc-article-text">以別名 Export</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#重新_Export"><span class="toc-article-text">重新 Export</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Import"><span class="toc-article-text">Import</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#單一_Import"><span class="toc-article-text">單一 Import</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#以別名_Import"><span class="toc-article-text">以別名 Import</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Default_Export"><span class="toc-article-text">Default Export</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>ES6 提出了 module 概念，讓我們將程式碼加以模組化，避免如 ES5 一樣常常寫出幾千行的程式碼，造成日後難以維護，TypeScript 也支援 ES6 的 module。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScrpit 2.3</p>
+<h2 id="Introduction">Introduction</h2><hr>
+<p>Module 有自己的 scope，不是 global scope，也就是說，在 module 內的變數、function、class 與 interface …，只有在同一個 module 內才看得到，除非特別加上 <code>export</code> 關鍵字，外界才能存取；同樣的，module 要使用其他 module 的變數、function、class 與 interface …，除非特別加上 <code>import</code> 關鍵字，才能存取外界。</p>
+<blockquote>
+<p>在 TypeScript，只要檔案中存在 <code>import</code> 或 <code>export</code> 關鍵字，都被視為 module。</p>
+</blockquote>
+<h2 id="Export">Export</h2><hr>
+<h3 id="直接_Export">直接 Export</h3><p><strong>Validation.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> StringValidator </span>&#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>): <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>interface</code> 前面加上 <code>export</code>，則可直接 export 出去。</p>
+<p><strong>ZipCodeValidator.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> numberRegexp = <span class="regexp">/^[0-9]+$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>const</code> 之前加上 <code>export</code>，則可直接 export 出去。</p>
+<p>在 <code>class</code> 之前加上 <code>export</code> ，則可直接 export 出去。</p>
+<blockquote>
+<p>要直接 export，只要在 <code>const</code>、<code>function</code> 、<code>class</code> 與 <code>interface</code> 之前加上 <code>export</code> 關鍵字即可。</p>
+</blockquote>
+<h3 id="以別名_Export">以別名 Export</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator as mainValidator &#125;;</span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator &#125;;</span><br></pre></td></tr></table></figure>
+<p>相當於</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator as mainValidator &#125;;</span><br></pre></td></tr></table></figure>
+<p>將原本 <code>ZipCodeValidator</code> 以 <code>mainValidator</code> 名稱 export 出去。</p>
+<blockquote>
+<p>實務上有可能原本要 export 的名稱太長，或者不夠貼近 domain，因此不適合使用者，需要用更簡短、更精準的名稱時，可以搭配 <code>as</code>。</p>
+</blockquote>
+<h3 id="重新_Export">重新 Export</h3><p><strong>ParseIntBasedZipCodeValidator.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ParseIntBasedZipCodeValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; <span class="built_in">parseInt</span>(s).toString() === s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Export original validator but rename it</span></span><br><span class="line"><span class="keyword">export</span> &#123;ZipCodeValidator as RegExpBasedZipCodeValidator&#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>export {} from</code> 可以從另外一個 module 間接的將另外一個 module 內的東西 export 出去。</p>
+<p>可明確指定要 export 什麼東西。</p>
+<p><strong>AllValidators.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * from <span class="string">"./StringValidator"</span>; <span class="comment">// exports interface 'StringValidator'</span></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">"./LettersOnlyValidator"</span>; <span class="comment">// exports class 'LettersOnlyValidator'</span></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">"./ZipCodeValidator"</span>;  <span class="comment">// exports class 'ZipCodeValidator'</span></span><br></pre></td></tr></table></figure>
+<p>使用 <code>export * from</code> 明確另外一個 module 的<strong>所有東西</strong> export 出去。</p>
+<h2 id="Import">Import</h2><hr>
+<h3 id="單一_Import">單一 Import</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ZipCodeValidator &#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> ZipCodeValidator();</span><br></pre></td></tr></table></figure>
+<p>使用 <code>import {} from</code> 可以從一個 module 單一 import 一個東西。</p>
+<h3 id="以別名_Import">以別名 Import</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ZipCodeValidator as ZCV &#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> ZCV();</span><br></pre></td></tr></table></figure>
+<p>使用 <code>import { as } from</code> 可以從一個 module 單一 import 後，並同時取別名。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * as validator from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> validator.ZipCodeValidator();</span><br></pre></td></tr></table></figure>
+<p>使用 <code>import * as from</code> 將一個 module 所有東西 import 成一個變數，並透過變數去存取所有 export 的東西。</p>
+<h2 id="Default_Export">Default Export</h2><hr>
+<p>一個 module 僅可以有一個 default export。</p>
+<p><strong>ZipCodeValidator.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> ZipCodeValidator &#123;</span><br><span class="line">    <span class="keyword">static</span> numberRegexp = <span class="regexp">/^[0-9]+$/</span>;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; ZipCodeValidator.numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>export</code> 之後加上 <code>default</code>。</p>
+<p><strong>Test.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> validator from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> validator();</span><br></pre></td></tr></table></figure>
+<p>使用 <code>import 名稱 from</code>，不需使用 <code>{}</code>，直接將 default export 成特定名稱。 </p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>透過 module，我們能將功能相近的變數、function、class 與 interface 放在同一個 module，讓程式碼更加模組化，避免一個檔案好幾千行而難以維護。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/modules.html" target="_blank" rel="external">Handbook : Modules</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/typescript/typescript-arrow-function/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-18 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
