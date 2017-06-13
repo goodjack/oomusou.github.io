@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript-function/</loc>
+    <lastmod>2017-06-13T09:01:10.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/typescript-arrow-function/</loc>
     <lastmod>2017-06-13T06:31:58.000Z</lastmod>
   </url>
@@ -437,7 +442,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/php/php-namespace/</loc>
+    <loc>http://oomusou.io/php/php-interface/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
@@ -547,7 +552,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/php/php-interface/</loc>
+    <loc>http://oomusou.io/php/php-namespace/</loc>
     <lastmod>2016-03-22T14:03:51.000Z</lastmod>
   </url>
   
