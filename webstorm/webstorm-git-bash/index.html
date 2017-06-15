@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Quokka for WebStorm | 點燈坊</title>
+  <title>如何將 Git Bash 整合進 WebStorm？ | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果">
+  <meta name="description" content="Git Bash 也能跑在 WebStorm 的 terminal">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果">
+ <meta name="description" content="Git Bash 也能跑在 WebStorm 的 terminal">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Quokka for WebStorm">
-<meta property="og:url" content="http://oomusou.io/webstorm/webstorm-quokka/index.html">
+<meta property="og:title" content="如何將 Git Bash 整合進 WebStorm？">
+<meta property="og:url" content="http://oomusou.io/webstorm/webstorm-git-bash/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果">
+<meta property="og:description" content="Git Bash 也能跑在 WebStorm 的 terminal">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-06-01T05:07:50.000Z">
+<meta property="og:updated_time" content="2017-06-15T07:31:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quokka for WebStorm">
-<meta name="twitter:description" content="不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果">
+<meta name="twitter:title" content="如何將 Git Bash 整合進 WebStorm？">
+<meta name="twitter:description" content="Git Bash 也能跑在 WebStorm 的 terminal">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> Quokka for WebStorm</h1>
+			<h1> 如何將 Git Bash 整合進 WebStorm？</h1>
 		</div>		
 	
 
@@ -95,38 +95,44 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果			
+			<i class="fa fa-info-circle"></i> Git Bash 也能跑在 WebStorm 的 terminal			
 		</div> <!-- alert -->
 		
 
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Installation"><span class="toc-article-text">Installation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Quokka"><span class="toc-article-text">執行 Quokka</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Git_Bash"><span class="toc-article-text">下載 Git Bash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Git_Bash"><span class="toc-article-text">安裝 Git Bash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Git_Bash"><span class="toc-article-text">執行 Git Bash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>Angular CLI 雖然讓我們簡化了前端工具的建置，但有時只想測試或示範 TypeScript，並不想真的去跑 Angular，此時 Quokka 就是我們的好幫手了。</p>
+	    <p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 PhpStorm 的 terminal。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.3<br>Quokka 1.0.11</p>
-<h2 id="Installation">Installation</h2><hr>
-<p><img src="/images/webstorm/webstorm-quokka/quokka000.png" alt="quokka000"></p>
-<p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
-<p>按 <code>Brose repositories…</code>。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka001.png" alt="quokka001"></p>
-<p>搜尋 <code>Quokka</code>，按 <code>Install</code> 安裝。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka002.png" alt="quokka002"></p>
-<p>安裝完  <code>Quokka</code> 後，按 <code>Restart WebStorm</code> 重新啟動 WebStorm。</p>
-<h2 id="執行_Quokka">執行 Quokka</h2><hr>
-<p><img src="/images/webstorm/webstorm-quokka/quokka003.png" alt="quokka003"></p>
-<p>按 <code>⌘ + ⇧ + N</code> 新增 Scratch File，這並沒有一個實體檔案，只用來測試而已。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka004.png" alt="quokka004"></p>
-<p>可以開始輸入 TypeScript，不需存檔，不需編譯，馬上就可以在下方的 <code>Quokka</code> 視窗看到執行結果，而且在一行的最後面也可以立即顯示這行的執行結果。</p>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>使用 Quokka，就可以在你熟悉的 WebStorm 測試 TypeScript，非常方便。</li>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
 </ul>
 	  
 	</div>
@@ -136,14 +142,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/webstorm/webstorm-debug/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/typescript/typescript-type-assertion/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/typescript/typescript-module/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -164,7 +170,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-06-01 
+	2017-06-19 
 	</div>
 	
 
@@ -174,7 +180,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/TypeScript/">TypeScript<span>10</span></a></li> <li><a href="/tags/WebStorm/">WebStorm<span>5</span></a></li>
+  <li><a href="/tags/WebStorm/">WebStorm<span>5</span></a></li>
     </ul>
 	</div>
 		

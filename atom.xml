@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-13T16:15:26.000Z</updated>
+  <updated>2017-06-15T07:31:17.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:31:17.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 PhpStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[TypeScript 之 Module]]></title>
@@ -207,7 +250,7 @@
     <link href="http://oomusou.io/typescript/typescript-function/"/>
     <id>http://oomusou.io/typescript/typescript-function/</id>
     <published>2017-06-17T11:23:43.000Z</published>
-    <updated>2017-06-13T09:01:10.000Z</updated>
+    <updated>2017-06-14T02:22:40.000Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 的 function 可對參數做強型別檢查與 function type，此外 ES6 還多了 optional / default / rest parameter，當然 TypeScript 也可使用。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -236,7 +279,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯錯誤，少 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
 <p>在 TypeScript 世界，既然宣告了參數，就代表傳入參數的個數與型別必須完全符合，過多或過少都不行。</p>
 <p>但  JavaScript 世界，每個變數都是 optional，若參數個數不對，只是 <code>undefined</code> 而已，為了讓 TypeScript 有強型別檢查，又能相容於 JavaScript 習慣，可在參數後加上 <code>?</code>。</p>
- <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName?: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastName)</span><br><span class="line">        <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> firstName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯通過</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多一個</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName?: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastName)</span><br><span class="line">        <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> firstName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯通過</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多一個</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
 <p>若使用 <code>?</code> optional parameter，記得將必要參數寫在最前面，後面才擺 optional parameter。</p>
 <h2 id="Default_Parameter">Default Parameter</h2><hr>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function buildName(firstName: string, lastName = "Smith") &#123;</span><br><span class="line">    return firstName + " " + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let result1 = buildName("Bob");                  // Bob Smith</span><br><span class="line">let result2 = buildName("Bob", undefined);       // Bob Smite</span><br><span class="line">let result3 = buildName("Bob", "Adams", "Sr.");  // 編譯錯誤，多一個參數</span><br><span class="line">let result4 = buildName("Bob", "Adams");         // Bob Adams</span><br></pre></td></tr></table></figure>
@@ -271,7 +314,7 @@
     <link href="http://oomusou.io/typescript/typescript-variable/"/>
     <id>http://oomusou.io/typescript/typescript-variable/</id>
     <published>2017-06-16T12:23:43.000Z</published>
-    <updated>2017-06-11T14:57:59.000Z</updated>
+    <updated>2017-06-15T07:34:22.000Z</updated>
     <content type="html"><![CDATA[<p>變數宣告部分，除了 <code>var</code> 以外，在 ES6 增加了 <code>let</code> 與 <code>const</code>，在變數建立部分，則增加了 destructuring 與 spread，當然 TypeScript 也完全支援。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -310,7 +353,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swap variables</span></span><br><span class="line">[first, second] = [second, first];</span><br></pre></td></tr></table></figure>
 <p>交換變數，只要一行就可以寫出來。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">[first, second]: <span class="built_in">number</span>[]</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(first); <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line">f([<span class="number">1</span>, <span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
-<p>若傳入陣列，可以接在參數就解構成變數。</p>
+<p>若用在 function 的參數，可以接陣列解構成變數。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first, ...rest] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// outputs [ 2, 3, 4 ]</span></span><br></pre></td></tr></table></figure>
 <p>配合 <code>…</code>，將剩餘的值結構成陣列。</p>
 <p><code>first</code> 為單一變數，<code>rest</code> 為陣列。</p>
@@ -325,6 +368,7 @@
 <p>配合 <code>…</code>，將剩餘的值結構成物件。</p>
 <p><code>a</code> 為單一變數，<code>passthrough</code> 為物件。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> C = &#123; a: <span class="built_in">string</span>, b: <span class="built_in">number</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">&#123;a, b&#125;: C</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line">  <span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">f(o);</span><br></pre></td></tr></table></figure>
+<p>若用在 function 的參數，可以接物件解構成變數。</p>
 <h2 id="Spread">Spread</h2><hr>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> first = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> second = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> bothPlus = [<span class="number">0</span>, ...first, ...second, <span class="number">5</span>];</span><br></pre></td></tr></table></figure>
 <p><code>…</code> 會將陣列加以展開。</p>
@@ -2508,68 +2552,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="PHPUnit" scheme="http://oomusou.io/tags/PHPUnit/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 WebStorm 使用 Angular CLI 建立 Angular 專案?]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-angular-cli/"/>
-    <id>http://oomusou.io/webstorm/webstorm-angular-cli/</id>
-    <published>2016-11-15T12:23:43.000Z</published>
-    <updated>2017-06-10T01:21:03.000Z</updated>
-    <content type="html"><![CDATA[<p>Angluar 提供了 Angular CLI，一些原本必須自己使用前端自動化工具的部分，Angular CLI 都能幫我做到，讓我們不用為整合前端工具煩惱；除此之外，WebStorm 也支援 Angular CLI，讓我們可以在 WebStorm 內直接使用 Angular CLI。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Angular 2.1.2<br>Angular CLI 1.0.0-beta.19-3<br>WebStorm 2016.3</p>
-<h2 id="安裝_Angular_CLI">安裝 Angular CLI</h2><hr>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g angular-cli</span><br></pre></td></tr></table></figure>
-<h2 id="建立新專案">建立新專案</h2><hr>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello000.png" alt=""></p>
-<p>選擇 <code>Create New Project</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello001.png" alt=""></p>
-<p>選擇左側 <code>Angular CLI</code>，WebStorm 會自動抓到你目前所安裝的 Node.js 與 Angular CLI 路徑。</p>
-<p>只要輸入專案路徑即可。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello002.png" alt=""></p>
-<p>當 NPM 安裝完所有套件後，會顯示 <code>Done</code>。</p>
-<h2 id="啟動_Web_Server">啟動 Web Server</h2><hr>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello003.png" alt=""></p>
-<p>選擇 <code>package.json</code>，按滑鼠右鍵選擇 <code>Show npm Scripts</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello004.png" alt=""></p>
-<p>點兩下 <code>start</code> 啟動 Angular CLI 內建的 Web Server。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello005.png" alt=""></p>
-<p>在瀏覽器輸入 <code>http://localhost:4200</code>，若出現 <code>app works!</code>，表示 Angular 2 已經正常啟動。</p>
-<h2 id="建立_Component">建立 Component</h2><hr>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello006.png" alt=""></p>
-<p>選擇 <code>src</code> 目錄，按熱鍵 &#8984; +  N，選擇 <code>Angular CLI...</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello007.png" alt=""></p>
-<p>選擇 <code>component</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello008.png" alt=""></p>
-<p>輸入 component 名稱 : <code>hello-world</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello009.png" alt=""></p>
-<p>WebStorm 會呼叫 Angular CLI 幫我們建立 <code>hello-world</code> component，其 selector 為 <code>app-hello-world</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Angular2HelloWorld/commit/fbaf4864f3f7b265dd2a2e1793ba356ceb91bee9" target="_blank" rel="external">建立 hello-world component</a></span></span></span></p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello012.png" alt=""></p>
-<p>其 HTML 為 <code>hello-world works!</code>。</p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello010.png" alt=""></p>
-<p>在 <code>app.component.html</code> 加上 <code>app-hello-world</code> tag。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Angular2HelloWorld/commit/c944bbbceed1fda1959306f9e019a13a8d7181b2" target="_blank" rel="external">加入 hello-world component</a></span></span></span></p>
-<p><img src="/images/webstorm/webstorm-angular-cli/hello011.png" alt=""></p>
-<p>瀏覽器會自動更新，顯示我們新加上的 <code>hello-world</code> component。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>WebStorm 內建支援 Angular CLI，除了可以直接透過 Angular CLI 建立專案外，還可以直接在 WebStorm 建立 component、directive、service …等，非常方便。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Angular2HelloWorld" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
-<p>JetBrains, <a href="https://blog.jetbrains.com/webstorm/2016/08/webstorm-2016-3-early-access-preview/#ng-cli" target="_blank" rel="external">WebStorm 2016.3 Early Access Preview : Flow, PostCSS, and more</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[使用圖形化工具建立 Angular 專案]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   

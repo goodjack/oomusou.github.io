@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="ES6 提供不少語法關於變數宣告與建立">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-06-11T14:57:59.000Z">
+<meta property="og:updated_time" content="2017-06-15T07:34:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TypeScript 之變數宣告與建立">
 <meta name="twitter:description" content="ES6 提供不少語法關於變數宣告與建立">
@@ -145,7 +145,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swap variables</span></span><br><span class="line">[first, second] = [second, first];</span><br></pre></td></tr></table></figure>
 <p>交換變數，只要一行就可以寫出來。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">[first, second]: <span class="built_in">number</span>[]</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(first); <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line">f([<span class="number">1</span>, <span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
-<p>若傳入陣列，可以接在參數就解構成變數。</p>
+<p>若用在 function 的參數，可以接陣列解構成變數。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first, ...rest] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// outputs [ 2, 3, 4 ]</span></span><br></pre></td></tr></table></figure>
 <p>配合 <code>…</code>，將剩餘的值結構成陣列。</p>
 <p><code>first</code> 為單一變數，<code>rest</code> 為陣列。</p>
@@ -160,6 +160,7 @@
 <p>配合 <code>…</code>，將剩餘的值結構成物件。</p>
 <p><code>a</code> 為單一變數，<code>passthrough</code> 為物件。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> C = &#123; a: <span class="built_in">string</span>, b: <span class="built_in">number</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">&#123;a, b&#125;: C</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line">  <span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">f(o);</span><br></pre></td></tr></table></figure>
+<p>若用在 function 的參數，可以接物件解構成變數。</p>
 <h2 id="Spread">Spread</h2><hr>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> first = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> second = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> bothPlus = [<span class="number">0</span>, ...first, ...second, <span class="number">5</span>];</span><br></pre></td></tr></table></figure>
 <p><code>…</code> 會將陣列加以展開。</p>
