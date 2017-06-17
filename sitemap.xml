@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript101/</loc>
+    <lastmod>2017-06-17T08:27:25.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/refactor/refactor-in-action/</loc>
+    <lastmod>2017-06-17T08:26:35.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/webstorm/webstorm-git-bash/</loc>
     <lastmod>2017-06-15T07:39:55.000Z</lastmod>
   </url>
@@ -24,11 +34,6 @@
   <url>
     <loc>http://oomusou.io/typescript/typescript-arrow-function/</loc>
     <lastmod>2017-06-13T06:31:58.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/typescript/typescript101/</loc>
-    <lastmod>2017-06-12T02:08:46.000Z</lastmod>
   </url>
   
   <url>
@@ -74,11 +79,6 @@
   <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-refactoring/</loc>
     <lastmod>2017-04-18T15:39:52.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/refactor/refactor-in-action/</loc>
-    <lastmod>2017-04-18T15:39:37.000Z</lastmod>
   </url>
   
   <url>

@@ -515,7 +515,7 @@
     <link href="http://oomusou.io/typescript/typescript101/"/>
     <id>http://oomusou.io/typescript/typescript101/</id>
     <published>2017-06-14T12:23:43.000Z</published>
-    <updated>2017-06-12T02:08:46.000Z</updated>
+    <updated>2017-06-17T08:27:25.000Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 是 Angular 欽定的開發語言，所以學 Angular 一定要學 TypeScript，但很多人認為 TypeScript 是 JavaScript 的<strong>方言</strong>，不是 JavaScript 標準，因而有所疑慮，本文簡單介紹 TypeScript 的歷史與特色，提供大家技術選擇的參考。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -572,7 +572,7 @@
 <p>你覺得寫測試很麻煩？手動測試不是更麻煩？</p>
 </blockquote>
 <p>有了<strong>強型別 + 編譯</strong>保護，透過編譯器檢查，讓我們可以少寫很多測試，專注在為<strong>商業邏輯的需求寫測試</strong>，而不是為了追求 coverage 100% ，為測試而寫測試。</p>
-<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，但 TypeScript 有自己的的強型別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
+<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，但 TypeScript 有自己的強型別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
 <ul>
 <li><strong>FRP</strong> : Functional Reactive Programming</li>
 <li><strong>OOP</strong> : Object Oriented Programming</li>
@@ -2043,7 +2043,7 @@
     <link href="http://oomusou.io/refactor/refactor-in-action/"/>
     <id>http://oomusou.io/refactor/refactor-in-action/</id>
     <published>2016-11-27T12:23:43.000Z</published>
-    <updated>2017-04-18T15:39:37.000Z</updated>
+    <updated>2017-06-17T08:26:35.000Z</updated>
     <content type="html"><![CDATA[<p>TDD 不僅是先寫測試而已，當第一個 <span class="label label-success">綠燈</span> 之後，剩下的半壁江山就是拼<strong>重構</strong>功力，重構的書多半來自於 Java，因此有些 PHP 獨門的重構技巧在 Java 書上是看不到的，也因為編程思維的持續演進，重構也有了新的面貌，本文整理出自己在實務上，天天必用的 9 個適用於 PHP 重構的 SOP。</p>
 <a id="more"></a>
 <h2 id="Motivation">Motivation</h2><hr>
