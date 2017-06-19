@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-19T14:58:54.000Z</updated>
+  <updated>2017-06-19T15:06:32.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[如何使用 Protractor 對 Laravel 做驗收測試?]]></title>
+    <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
     <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-19T14:58:54.000Z</updated>
+    <updated>2017-06-19T15:06:32.000Z</updated>
     <content type="html"><![CDATA[<p><strong>驗收測試</strong>是以使用者角度對網站做測試，屬於<strong>黑箱測試</strong>，既然是黑箱測試，原本使用 PHP/Laravel 所開發的網站，就不一定要使用 PHP/Laravel 後端技術來做驗收測試，也可以使用前端的技術來做；透過 Angular CLI，我們可使用 TypeScript + Protractor + Jasmine + Webpack 對 PHP/Laravel 做驗收測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
