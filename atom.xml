@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-19T15:18:26.000Z</updated>
+  <updated>2017-06-19T15:53:39.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
     <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-19T15:18:26.000Z</updated>
+    <updated>2017-06-19T15:53:39.000Z</updated>
     <content type="html"><![CDATA[<p><strong>驗收測試</strong>是以使用者角度對網站做測試，屬於<strong>黑箱測試</strong>，既然是黑箱測試，原本使用 PHP/Laravel 所開發的網站，就不一定要使用 PHP/Laravel 後端技術來做驗收測試，也可以使用前端的技術來做；透過 Angular CLI，我們可使用 TypeScript + Protractor + Jasmine + Webpack 對 PHP/Laravel 做驗收測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -33,7 +33,7 @@
 <p><img src="/images/protractor/protractor-laravel/laravel001.png" alt="laravel001"></p>
 <p>在 <code>http://127.0.0.1:8000</code>，我們看到了首頁有斗大的 <code>Laravel</code>。</p>
 <h2 id="安裝_Angular_CLI">安裝 Angular CLI</h2><hr>
-<p>我們即將使用 Protractor 對 Laravel 做驗收測試，在 Angular CLI 中，已經將 TypeScript + Protractor + Jasmine + Webpack 都整合好了，因此我們要安裝 Angular CLI，由 Angular CLI 建立 Angular 專案後，再修改專案內的 <code>e2e</code> 目錄的測試程式，由 protractor 對 Laravel 做驗收測試。</p>
+<p>我們即將使用 Protractor 對 Laravel 做驗收測試，在 Angular CLI 中，已經將 TypeScript + Protractor + Jasmine + Webpack 都整合好了，因此我們要安裝 Angular CLI，由 Angular CLI 建立 Angular 專案後，再修改專案內的 <code>e2e</code> 目錄的測試程式，由 Protractor 對 Laravel 做驗收測試。</p>
 <p><strong>安裝 Node.js</strong></p>
 <p>(略)</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> install -g <span class="property">@angular</span>/cli</span><br></pre></td></tr></table></figure>
