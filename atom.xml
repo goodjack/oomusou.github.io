@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-19T15:53:39.000Z</updated>
+  <updated>2017-06-19T23:03:58.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
     <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-19T15:53:39.000Z</updated>
+    <updated>2017-06-19T23:03:58.000Z</updated>
     <content type="html"><![CDATA[<p><strong>驗收測試</strong>是以使用者角度對網站做測試，屬於<strong>黑箱測試</strong>，既然是黑箱測試，原本使用 PHP/Laravel 所開發的網站，就不一定要使用 PHP/Laravel 後端技術來做驗收測試，也可以使用前端的技術來做；透過 Angular CLI，我們可使用 TypeScript + Protractor + Jasmine + Webpack 對 PHP/Laravel 做驗收測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -45,7 +45,7 @@
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng <span class="keyword">new</span> NG4Protractor</span><br></pre></td></tr></table></figure>
 <p>使用 Angular CLI 建立 Angular 專案。</p>
 <h2 id="修改_Page_Object">修改 Page Object</h2><hr>
-<p><strong>app.po.ts</strong></p>
+<p><strong>e2e/app.po.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    browser.waitForAngularEnabled(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'http://127.0.0.1:8000/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.className(<span class="string">'title m-b-md'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>app.po.ts</code> 為 page object，目的讓我們的驗收測試不用直接面對容易變動的 HTML 與 CSS，若將來 HTML 與 CSS 有任何修改，只要統一的修改 <code>app.po.ts</code> 檔案即可，不用修改驗收測試。</p>
 <p>第 4 行</p>
@@ -58,7 +58,7 @@
 <p><img src="/images/protractor/protractor-laravel/laravel002.png" alt="laravel002"></p>
 <p>根據 <code>welcome.blade.php</code>，我們發現 <code>Laravel</code> 的 <code>&lt;div&gt;</code> 的 CSS class 是 <code>title m-b-md</code>，因此使用 Protractor 的 <code>by.className(&#39;title m-b-md&#39;)</code> 抓到該 element，再由 <code>getText()</code> 抓到 <code>Laravel</code>。</p>
 <h2 id="修改驗收測試">修改驗收測試</h2><hr>
-<p><strong>app.e2e-spec.ts</strong></p>
+<p><strong>e2e/app.e2e-spec.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NG4ProtractorPage &#125; from <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'ng4-protractor App'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> page: NG4ProtractorPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    page = <span class="keyword">new</span> NG4ProtractorPage();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should display Laravel'</span>, () =&gt; &#123;</span><br><span class="line">    page.navigateTo();</span><br><span class="line">    expect(page.getParagraphText()).toEqual(<span class="string">'Laravel'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><code>app.e2e-spec.ts</code> 才是真正的驗收測試，如同使用 Jasmine 寫單元測試一樣。</p>
 <p>第 6 行</p>
@@ -72,6 +72,10 @@
 <p>預設 <code>ng e2e</code> 會重新編譯整個 Angular，但目前我們並沒有寫 Angular，只是想藉由 Angular CLI 的 Protractor 環境測試 Laravel 而已，因此要加上 <code>—serve=false</code>，則 Angular CLI 將只會編譯 Protractor 部分的驗收測試而已，速度會快很多。 </p>
 <p><img src="/images/protractor/protractor-laravel/laravel003.png" alt="laravel003"></p>
 <p><code>綠燈</code> 通過 Protractor 驗收測試。</p>
+<blockquote>
+<p>若在公司的 proxy 內，Protractor 將無法正常執行，必須自行設定 NPM proxy。</p>
+</blockquote>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> https-proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br></pre></td></tr></table></figure>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>Protractor 原本是 Google 為 Angular 量身定做的 E2E testing framework，專門用來測試 Angular 所開發的網站，但也能用來測試任何以後端為主的網站，不侷限於 Laravel。</li>
