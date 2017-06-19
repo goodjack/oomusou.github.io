@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 Protractor 對 Laravel 做驗收測試? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用前端技術對後端做驗收測試">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用前端技術對後端做驗收測試">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 Protractor 對 Laravel 做驗收測試?">
+<meta property="og:url" content="http://oomusou.io/protractor/protractor-laravel/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用前端技術對後端做驗收測試">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-19T14:51:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 Protractor 對 Laravel 做驗收測試?">
+<meta name="twitter:description" content="使用前端技術對後端做驗收測試">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 Protractor 對 Laravel 做驗收測試?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用前端技術對後端做驗收測試			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立_Laravel_專案"><span class="toc-article-text">建立 Laravel 專案</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Laravel"><span class="toc-article-text">執行 Laravel</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Angular_CLI"><span class="toc-article-text">安裝 Angular CLI</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立_Angular_專案"><span class="toc-article-text">建立 Angular 專案</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#修改_Page_Object"><span class="toc-article-text">修改 Page Object</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#修改驗收測試"><span class="toc-article-text">修改驗收測試</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行驗收測試"><span class="toc-article-text">執行驗收測試</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p><strong>驗收測試</strong>是以使用者角度對網站做測試，屬於<strong>黑箱測試</strong>，既然是黑箱測試，原本使用 PHP/Laravel 所開發的網站，就不一定要使用 PHP/Laravel 後端技術來做驗收測試，也可以使用前端的技術來做；透過 Angular CLI，我們可使用 TypeScript + Protractor + Jasmine 對 PHP/Laravel 做驗收測試。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.15<br>Laravel 5.4.27<br>Angular CLI 1.1.2<br>Angular 4.2.3<br>TypeScript 2.3.3<br>Protractor 5.1.2<br>Jasmine 2.6.2</p>
+<h2 id="建立_Laravel_專案">建立 Laravel 專案</h2><hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer <span class="operator"><span class="keyword">create</span>-<span class="keyword">project</span> laravel/laravel Laravel54 <span class="comment">--prefer-dist</span></span></span><br></pre></td></tr></table></figure>
+<p>使用 Composer 建立 Laravel 專案。</p>
+<h2 id="執行_Laravel">執行 Laravel</h2><hr>
+<p><img src="/images/protractor/protractor-laravel/laravel000.png" alt="laravel000"></p>
+<p>執行 <code>php artisan serve</code> 啟動內建的 PHP web server，預設執行在 <code>http://127.0.0.1:8000</code>。</p>
+<p><img src="/images/protractor/protractor-laravel/laravel001.png" alt="laravel001"></p>
+<p>在 <code>http://127.0.0.1:8000</code>，我們看到了首頁有斗大的 <code>Laravel</code>。</p>
+<h2 id="安裝_Angular_CLI">安裝 Angular CLI</h2><hr>
+<p>我們即將使用 Protractor 對 Laravel 做驗收測試，在 Angular CLI 中，已經將 TypeScript + Protractor + Jasmine 都整合好了，因此我們要安裝 Angular CLI，由 Angular CLI 建立 Angular 專案後，再修改專案內的 <code>e2e</code> 目錄的測試程式，由 protractor 對 Laravel 做驗收測試。</p>
+<p><strong>安裝 Node.js</strong></p>
+<p>(略)</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> install -g <span class="property">@angular</span>/cli</span><br></pre></td></tr></table></figure>
+<p>由 NPM 安裝 Angular CLI。</p>
+<ul>
+<li><strong>-g</strong>  : 表 global，將 Angular CLI 安裝在系統全域環境，整個 macOS 都能用。</li>
+</ul>
+<h2 id="建立_Angular_專案">建立 Angular 專案</h2><hr>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng <span class="keyword">new</span> NG4Protractor</span><br></pre></td></tr></table></figure>
+<p>使用 Angular CLI 建立 Angular 專案。</p>
+<h2 id="修改_Page_Object">修改 Page Object</h2><hr>
+<p><strong>app.po.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    browser.waitForAngularEnabled(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'http://127.0.0.1:8000/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.className(<span class="string">'title m-b-md'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>app.po.ts</code> 為 page object，目的讓我們的驗收測試不用直接面對容易變動的 HTML 與 CSS，若將來 HTML 與 CSS 有任何修改，只要統一的修改 <code>app.po.ts</code> 檔案即可，不用修改驗收測試。</p>
+<p>第 4 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">navigateTo() &#123;</span><br><span class="line">  browser.waitForAngularEnabled(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> browser.get(<span class="string">'http://127.0.0.1:8000/'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Angular 的 Protractor，預設會判斷網頁是否由 Angular 開發，但目前我們要測的不是 Angular，而是 Laravel，因此必須加上 <code>browser.waitForAngularEnabled(false)</code>，避免測試失敗。</p>
+<p>由於 Laravel 預設的網址為 <code>http://127.0.0.1:8000/</code>，因此在 <code>browser.get()</code> 加上網址。</p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> getParagraphText() &#123;</span><br><span class="line">   <span class="keyword">return</span> element(by.className(<span class="string">'title m-b-md'</span>)).getText();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我們想要測試的<strong>首頁是否有 Laravel</strong>。</p>
+<p><img src="/images/protractor/protractor-laravel/laravel002.png" alt="laravel002"></p>
+<p>根據 <code>welcome.blade.php</code>，我們發現 <code>Laravel</code> 的 <code>&lt;div&gt;</code> 的 CSS class 是 <code>title m-b-md</code>，因此使用 Protractor 的 <code>by.className(&#39;title m-b-md&#39;)</code> 抓到該 element，再由 <code>getText()</code> 抓到 <code>Laravel</code>。</p>
+<h2 id="修改驗收測試">修改驗收測試</h2><hr>
+<p><strong>app.e2e-spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NG4ProtractorPage &#125; from <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'ng4-protractor App'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> page: NG4ProtractorPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    page = <span class="keyword">new</span> NG4ProtractorPage();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should display Laravel'</span>, () =&gt; &#123;</span><br><span class="line">    page.navigateTo();</span><br><span class="line">    expect(page.getParagraphText()).toEqual(<span class="string">'Laravel'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>app.e2e-spec.ts</code> 才是真正的驗收測試，如同使用 Jasmine 寫單元測試一樣。</p>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(() =&gt; &#123;</span><br><span class="line">  page = <span class="keyword">new</span> NG4ProtractorPage();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在每個驗收測試執行之前，先建立 page object 物件。</p>
+<p>第 10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should display Laravel'</span>, () =&gt; &#123;</span><br><span class="line">  page.navigateTo();</span><br><span class="line">  expect(page.getParagraphText()).toEqual(<span class="string">'Laravel'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試案例，想要測試是否在首頁看到 <code>Laravel</code> ，使用 page object 的 <code>getParagraphText()</code> 抓到值，再由 <code>expect().toEqual(&#39;Laravel&#39;)</code> 判斷是否為 <code>Laravel</code>。</p>
+<h2 id="執行驗收測試">執行驗收測試</h2><hr>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ng e2e --serve=<span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>預設 <code>ng e2e</code> 會重新編譯整個 Angular，但目前我們並沒有寫 Angular，只是想藉由 Angular CLI 的 Protractor 環境測試 Laravel 而已，因此要加上 <code>—serve=false</code>，則 Angular CLI 將只會編譯 Protractor 部分的驗收測試而已，速度會快很多。 </p>
+<p><img src="/images/protractor/protractor-laravel/laravel003.png" alt="laravel003"></p>
+<p><code>綠燈</code> 通過 Protractor 驗收測試。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>這種測試方式，將不侷限於只能測試 Laravel，由於 Protractor 屬於黑箱測試，事實上可以測試任何語言、任何後端技術所開發的網頁。</li>
+<li>藉由 Angular CLI 所建立的 Angular 專案，我們將不用再手動整理 TypeScript + Protractor + Jasmine + Webpack 環境，Angular CLI 已經幫我們搞定了。</li>
+<li>若將來想將 MVC 專案重構成前後端分離的專案，可藉由此方式先將 MVC 的驗收測試先用 Protractor 寫好，然後重構 MVC 專案，達到商業邏輯與後端 framework 解耦合後，將來再將後端的商業邏輯移植到前後端分離的後端 framework，下一步再使用 Angular 接後端 API，最後再使用同一份 Protractor 驗收測試來測試 Angular，由於驗收測試是同一份，更能確保從 MVC 重構成前後端分離後，功能是否完全正常。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou" target="_blank" rel="external">GitHub</a> 上找到</p>
+<ul>
+<li><a href="https://github.com/oomusou/Laravel54" target="_blank" rel="external">Laravel</a></li>
+<li><a href="https://github.com/oomusou/NG4Protractor" target="_blank" rel="external">Protractor</a></li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://coryrylan.com" target="_blank" rel="external">Cory Rylan</a>, <a href="https://coryrylan.com/blog/introduction-to-e2e-testing-with-the-angular-cli-and-protractor" target="_blank" rel="external">Introduction to E2E Testing with the Angular CLI and Protractor</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webstorm-git-bash/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-19 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>6</span></a></li> <li><a href="/tags/Laravel/">Laravel<span>49</span></a></li> <li><a href="/tags/Protractor/">Protractor<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

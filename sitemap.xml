@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/protractor/protractor-laravel/</loc>
+    <lastmod>2017-06-19T14:51:46.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/typescript101/</loc>
     <lastmod>2017-06-17T08:27:25.000Z</lastmod>
   </url>
@@ -157,7 +162,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -172,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
+    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -192,7 +197,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
+    <loc>http://oomusou.io/azure/azure-phpstorm-mysql/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -222,7 +227,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-phpstorm-mysql/</loc>
+    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -237,7 +242,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
