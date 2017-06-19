@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="使用前端技術對後端做驗收測試">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-06-19T15:06:32.000Z">
+<meta property="og:updated_time" content="2017-06-19T15:18:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 Protractor 對 Laravel 進行驗收測試?">
 <meta name="twitter:description" content="使用前端技術對後端做驗收測試">
@@ -161,7 +161,7 @@
 <p><code>綠燈</code> 通過 Protractor 驗收測試。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>這種測試方式，將不侷限於只能測試 Laravel，由於 Protractor 屬於黑箱測試，事實上可以測試任何語言、任何後端技術所開發的網頁。</li>
+<li>Protractor 原本是 Google 為 Angular 量身定做的 E2E testing framework，專門用來測試 Angular 所開發的網站，但也能用來測試任何以後端為主的網站，不侷限於 Laravel。</li>
 <li>藉由 Angular CLI 所建立的 Angular 專案，我們將不用再手動整理 TypeScript + Protractor + Jasmine + Webpack 環境，Angular CLI 已經幫我們搞定了。</li>
 <li>若將來想將 MVC 專案重構成前後端分離的專案，可藉由此方式先將 MVC 的驗收測試先用 Protractor 寫好，然後重構 MVC 專案，達到商業邏輯與後端 framework 解耦合後，將來再將後端的商業邏輯移植到前後端分離的後端 framework，下一步再使用 Angular 接後端 API，最後再使用同一份 Protractor 驗收測試來測試 Angular，由於驗收測試是同一份，更能確保從 MVC 重構成前後端分離後，功能是否完全正常。</li>
 </ul>
