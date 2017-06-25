@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-25T15:45:57.000Z</updated>
+  <updated>2017-06-25T15:57:32.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <link href="http://oomusou.io/angular/angular-http-get/"/>
     <id>http://oomusou.io/angular/angular-http-get/</id>
     <published>2017-06-24T12:23:43.000Z</published>
-    <updated>2017-06-25T15:45:57.000Z</updated>
-    <content type="html"><![CDATA[<p>Angular 作為前端 framework，因此必須依賴後端 API 提供資料，最常見的就是透過 HTTP GET 抓到 JSON，這個看似簡單的動作，在 Angular 並不是單一 method 即可完成，必須配合 DI 與 RxJS ，才能順利抓到資料。</p>
+    <updated>2017-06-25T15:57:32.000Z</updated>
+    <content type="html"><![CDATA[<p>Angular 為前端 framework，因此必須依賴後端 API 提供資料，最常見的就是透過 HTTP GET 抓到 JSON，這個看似簡單的動作，在 Angular 並不是單一 method 即可完成，必須透過 DI 與 RxJS ，才能順利抓到資料。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
 <h2 id="HTTP_GET">HTTP GET</h2><p>為了聚焦在 Angular 的 HTTP GET，在此我們就不自建後端 API，而使用網路上現成的 API 做示範。</p>
@@ -31,7 +31,7 @@
 <p><img src="/images/angular/angular-http-get/httpget002.png" alt="httpget002"></p>
 <p>回傳為 JSON 物件陣列，每個物件有 <code>userId</code>，<code>id</code>，<code>title</code> 與 <code>body</code> 4 個欄位。</p>
 <h2 id="Service_部分">Service 部分</h2><hr>
-<h3 id="建立_Service">建立 Service</h3><p>Angular 除了引入 component 概念，還提供了 service 概念：</p>
+<h3 id="建立_Service">建立 Service</h3><p>Angular 除了引入 component 概念外，還提供了 service 概念：</p>
 <ol>
 <li>負責前端的商業邏輯</li>
 <li>負責前端的顯示邏輯</li>
@@ -63,7 +63,7 @@
 <p><code>AppModule</code> 為 Angular 預設的 module，每個 Angular 專案一定會有此 module。</p>
 <p>15 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">providers: [PostService],</span><br></pre></td></tr></table></figure>
-<p>為了要讓 <code>AppModule</code> 的 provider 提供 <code>PostService</code>，須在 <code>[]</code> 陣列中加上 service 名稱：<code>PostService</code>，如此整個 service 才算建立完成，之前 Angular CLI 的 warning 主要就是在警告這件事情。</p>
+<p>為了要讓 <code>AppModule</code> 的 provider 提供 <code>PostService</code>，須在 <code>[]</code> 陣列中加上 service 名稱：<code>PostService</code>，整個 service 才算建立完成，之前 Angular CLI 的 warning 主要就是在警告這件事情。</p>
 <p><img src="/images/angular/angular-http-get/httpget004.png" alt="httpget004"></p>
 <blockquote>
 <p>若你覺得建立 service 後，還要另外修改 <code>AppModule</code> 很麻煩，也可以在使用 Angular CLI 建立 service 時，直接下 <code>ng g s PostService -m app</code>，<code>-m</code> 表示 <code>PostService</code> 要由 <code>AppModule</code> 提供，Angular CLI 會自動幫我們在 <code>AppModule</code> 的 <code>providers</code> 加上 <code>PostService</code>。</p>
@@ -172,7 +172,7 @@
 <p>實務上該使用 <code>async</code> pipe 或是 <code>subscribe()</code> 呢？</p>
 </blockquote>
 <p>就功能面而言，兩種寫法結果都正確，但就程式的可維護性而言，建議使用 <code>subscribe()</code>。</p>
-<p>一般而言，HTML template 建議只用於 data binding，盡量不要寫程式碼，因為日後 debug 時，注意力都是放在 TypeScript 部分，比較不會注意 HTML template，所以若有程式碼藏在 HTML template，比較不容易被發現。</p>
+<p>一般來說，HTML template 建議只用於 data binding，盡量不要寫程式碼，因為日後 debug 時，注意力都是放在 TypeScript 部分，比較不會注意 HTML template，所以若有程式碼藏在 HTML template，比較不容易被發現。</p>
 <p>此外，在 component 看到 <code>subscribe()</code>，也可很容易看出這是 RxJS 的 <code>Observable</code>，有助於日後維護。</p>
 <h2 id="為什麼要使用_Service_存取_API?">為什麼要使用 Service 存取 API?</h2><p>或許你會認為，明明使用  <code>XMLHttpRequest</code> 向後端 API 抓資料是很單純的事情，為什麼 Angular 還要透過 service + DI 的方式，不是提供一個簡單的 method 就好了嗎？有幾個原因：</p>
 <ul>
