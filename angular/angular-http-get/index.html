@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 HTTP GET 對 API 抓資料? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="包含 DI 與 RxJS 觀念">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="包含 DI 與 RxJS 觀念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 HTTP GET 對 API 抓資料?">
+<meta property="og:url" content="http://oomusou.io/angular/angular-http-get/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="包含 DI 與 RxJS 觀念">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-25T15:45:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 HTTP GET 對 API 抓資料?">
+<meta name="twitter:description" content="包含 DI 與 RxJS 觀念">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 HTTP GET 對 API 抓資料?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 包含 DI 與 RxJS 觀念			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#HTTP_GET"><span class="toc-article-text">HTTP GET</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Service_部分"><span class="toc-article-text">Service 部分</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#建立_Service"><span class="toc-article-text">建立 Service</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Module_提供_Service"><span class="toc-article-text">Module 提供 Service</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Http_Class"><span class="toc-article-text">使用 Http Class</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#載入_HttpModule"><span class="toc-article-text">載入 HttpModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#建立_ViewModel"><span class="toc-article-text">建立 ViewModel</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Component_部分"><span class="toc-article-text">Component 部分</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Async_Pipe"><span class="toc-article-text">使用 Async Pipe</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Subscribe()"><span class="toc-article-text">使用 Subscribe()</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#為什麼要使用_Service_存取_API?"><span class="toc-article-text">為什麼要使用 Service 存取 API?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Angular 作為前端 framework，因此必須依賴後端 API 提供資料，最常見的就是透過 HTTP GET 抓到 JSON，這個看似簡單的動作，在 Angular 並不是單一 method 即可完成，必須配合 DI 與 RxJS ，才能順利抓到資料。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
+<h2 id="HTTP_GET">HTTP GET</h2><p>為了聚焦在 Angular 的 HTTP GET，在此我們就不自建後端 API，而使用網路上現成的 API 做示範。</p>
+<p><img src="/images/angular/angular-http-get/httpget000.png" alt="httpget000"></p>
+<p><a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="external">JSONPlaceholder</a> 提供了現成的 API 服務，非常適合 Angular 練習使用。</p>
+<p><img src="/images/angular/angular-http-get/httpget001.png" alt="httpget001"></p>
+<p>我們將使用 <a href="https://jsonplaceholder.typicode.com/posts" target="_blank" rel="external">/posts</a> API 作為示範。</p>
+<p><img src="/images/angular/angular-http-get/httpget002.png" alt="httpget002"></p>
+<p>回傳為 JSON 物件陣列，每個物件有 <code>userId</code>，<code>id</code>，<code>title</code> 與 <code>body</code> 4 個欄位。</p>
+<h2 id="Service_部分">Service 部分</h2><hr>
+<h3 id="建立_Service">建立 Service</h3><p>Angular 除了引入 component 概念，還提供了 service 概念：</p>
+<ol>
+<li>負責前端的商業邏輯</li>
+<li>負責前端的顯示邏輯</li>
+<li>負責 API 的溝通</li>
+</ol>
+<blockquote>
+<p>Angular 另外一個重要觀念 : component，則相當於後端 MVC 的 controller，負責管理 HTML，CSS 與 service。</p>
+</blockquote>
+<p>由於我們要透過 HTTP GET 抓 <a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="external">JSONPlaceholder</a> API 資料，因此必須建立 service。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng <span class="keyword">g</span> s <span class="keyword">post</span></span><br></pre></td></tr></table></figure>
+<p>使用 Angular CLI 建立 <code>PostService</code>，Angular CLI 會自動幫我們在 class 名稱加上 <code>Service</code>，所以在建立 service 時不用加上 <code>service</code> 字眼。</p>
+<blockquote>
+<p>完整應為 <code>ng generate service</code>，但實務可取第一個字母即可，即 <code>ng g s</code>。</p>
+</blockquote>
+<p><img src="/images/angular/angular-http-get/httpget003.png" alt="httpget003"></p>
+<p>Angular CLI 會幫我們建立 2 個檔案：</p>
+<ul>
+<li><strong>post.service.ts</strong>：class 名稱自動會以大駝峰命名為 <code>PostService</code>。</li>
+<li><strong>post.service.spec.ts</strong>：<code>PostService</code> 的單元測試檔。</li>
+</ul>
+<p>其中 <code>PostService</code> 還會自動加上 <code>@Injectable</code> decorator，表示此 class 可透過 provider 提供完成 DI。</p>
+<blockquote>
+<figure class="highlight mizar"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; WARNING Service <span class="keyword">is</span> generated but <span class="keyword">not</span> <span class="keyword">provided</span>, it must <span class="keyword">be</span> <span class="keyword">provided</span> to <span class="keyword">be</span> used</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>Angular CLI 還會特別加上警告，此 service 僅被建立而已，還必須透過 provider 提供才能 DI。</p>
+<h3 id="Module_提供_Service">Module 提供 Service</h3><p>Angular CLI 僅幫我們建立了 service 而已，我們還必須由 module 的 provider 提供 service，才能完成 DI。</p>
+<p><strong>src/app/app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [PostService],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppModule</code> 為 Angular 預設的 module，每個 Angular 專案一定會有此 module。</p>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">providers: [PostService],</span><br></pre></td></tr></table></figure>
+<p>為了要讓 <code>AppModule</code> 的 provider 提供 <code>PostService</code>，須在 <code>[]</code> 陣列中加上 service 名稱：<code>PostService</code>，如此整個 service 才算建立完成，之前 Angular CLI 的 warning 主要就是在警告這件事情。</p>
+<p><img src="/images/angular/angular-http-get/httpget004.png" alt="httpget004"></p>
+<blockquote>
+<p>若你覺得建立 service 後，還要另外修改 <code>AppModule</code> 很麻煩，也可以在使用 Angular CLI 建立 service 時，直接下 <code>ng g s PostService -m app</code>，<code>-m</code> 表示 <code>PostService</code> 要由 <code>AppModule</code> 提供，Angular CLI 會自動幫我們在 <code>AppModule</code> 的 <code>providers</code> 加上 <code>PostService</code>。</p>
+</blockquote>
+<h3 id="使用_Http_Class">使用 Http Class</h3><p>Angular 提供了 <code>Http</code> class，讓我們使用 <code>XMLHttpRequest</code> 向後端 API 要資料。</p>
+<p><strong>src/app/post.service.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Injectable&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/operator/map'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Post&#125; from <span class="string">'./post'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Http, Response&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService &#123;</span><br><span class="line">  <span class="keyword">private</span> getPostsURI = <span class="string">'https://jsonplaceholder.typicode.com/posts'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private http: Http) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  getPosts(): Observable&lt;Post[]&gt;  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.http.get(<span class="keyword">this</span>.getPostsURI)</span><br><span class="line">      .map((response: Response) =&gt; response.json());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> getPostsURI = <span class="string">'https://jsonplaceholder.typicode.com/posts'</span>;</span><br></pre></td></tr></table></figure>
+<p>將 API 網址寫在 class 的 private property。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private http: Http) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>我們要透過 <code>Http</code> class 對後端 API 抓資料，因此要透過 constructor DI <code>Http</code> class。</p>
+<blockquote>
+<p>為什麼 <code>Http</code> class 可以 DI 呢？</p>
+</blockquote>
+<p><strong><a href="https://github.com/angular/angular/blob/master/packages/http/src/http.ts#L103" target="_blank" rel="external">angular/packages/http/src/http.ts</a></strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Http &#123;</span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(protected _backend: ConnectionBackend, protected _defaultOptions: RequestOptions) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Http</code> class 本身也是 <code>@Injectable()</code>，所以可以透過 constructor DI <code>Http</code> class。</p>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getPosts(): Observable&lt;Post[]&gt;  &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增 <code>getPost()</code> method，負責將 HTTP GET 的資料回傳。</p>
+<p>注意其回傳型別為 <code>Observable</code>，因為 Angular <code>Http class</code> 的 <code>get()</code>，已經整合了 RxJS，所以回傳為 <code>Observable</code>，因此 service 回傳也應該為 <code>Observable</code>，才能由 component 決定 <code>subscribe()</code>。</p>
+<p>至於 <code>Observable</code> 的泛型為 <code>Post[]</code>，畢竟 API 回傳的資料，其實是 JSON 物件的陣列，每個物件有 <code>userId</code>，<code>id</code>，<code>title</code> 與 <code>body</code> 4 個欄位，可將此 4 個欄位視為 <code>Post</code> ViewModel，所以回傳的資料本質為 <code>Post[]</code>，會在稍後建立 <code>Post</code> ViewModel。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">this</span>.http.get(<span class="keyword">this</span>.getPostsURI)</span><br></pre></td></tr></table></figure>
+<p>既然已經在 constructor DI <code>Http</code> class，就可以使用 <code>this.http.get()</code> 對後端 API 抓資料。</p>
+<p>值得注意的是，<code>get()</code> 的回傳值型別為 <code>Observable&lt;Response&gt;</code>，並不是我們想要回傳的 <code>Observable&lt;Post[]&gt;</code> ，因此仍需要進一步的轉換。</p>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.map((response: Response) =&gt; response.json());</span><br></pre></td></tr></table></figure>
+<p>由於 <code>get()</code> 回傳的為 <code>Observable&lt;Response&gt;</code>，因此 RxJS 的 operator 都可以拿來用，其中最常用的就是 <code>map()</code>，我們可以利用 <code>map()</code> 將 <code>Observable&lt;Response&gt;</code> 轉成 <code>Observable&lt;Post[]&gt;</code>。</p>
+<p>對 <code>map()</code> 傳入 arrow function，因為 <code>get()</code> 回傳為 <code>Observable&lt;Response&gt;</code>，因此 <code>map()</code> 會將 <code>Response</code> 物件傳進 arrow function 的第 1 個參數，我們就可透過 <code>response.json()</code> 回傳 <code>Post[]</code>。</p>
+<blockquote>
+<p>其中 <code>response: Response</code> 的 <code>Response</code>，目前 WebStorm 無法自動 import，必須手動加上 <code>import {Response} from &#39;@angular/http&#39;;</code>，正常來說，WebStorm 會對型別自動 import，不過在 arrow function 內的參數型別，目前 WebStorm 還無法自動 import，需手動 import。</p>
+</blockquote>
+<p><img src="/images/angular/angular-http-get/httpget006.png" alt="httpget006"></p>
+<blockquote>
+<p>實物上的商業邏輯，會需要更複雜的轉換與判斷，RxJS 提供了很豐富的 operator 可使用。</p>
+</blockquote>
+<h3 id="載入_HttpModule">載入 HttpModule</h3><p><strong>src/app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserModule&#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;NgModule&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;AppComponent&#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;HttpModule&#125; from <span class="string">'@angular/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    HttpModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [PostService],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  HttpModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>由於 <code>Http</code> class 隸屬於 <code>HttpModule</code>，因此在 <code>app.module</code> 的 <code>imports</code> 必須手動加上 <code>HttpModule</code>。</p>
+<blockquote>
+<p>目前 WebStorm 只能自動 import class，但還無法自動 import module，必須手動處理。</p>
+</blockquote>
+<p><img src="/images/angular/angular-http-get/httpget005.png" alt="httpget005"></p>
+<blockquote>
+<p>為什麼我們 DI <code>Http</code> class 時，都不用自己用 provider 提供 <code>Http</code> class，但自己寫的 service 卻要 provider 提供呢？</p>
+</blockquote>
+<p><strong><a href="https://github.com/angular/angular/blob/master/packages/http/src/http_module.ts#L49" target="_blank" rel="external">angular/packages/http/src/http_module.ts</a></strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">  providers: [</span><br><span class="line">    &#123;provide: Http, useFactory: httpFactory, deps: [XHRBackend, RequestOptions]&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在 <code>HttpModule</code> 的 provider 中已經提供 <code>Http</code> class，因此我們不必自己手動提供，但<code>PostService</code> 因為是自己建立的，所以必須在 <code>AppModule</code> 手動提供。</p>
+<h3 id="建立_ViewModel">建立 ViewModel</h3><p><strong>src/app/post.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Post </span>&#123;</span><br><span class="line">  userId: <span class="built_in">number</span>,</span><br><span class="line">  id: <span class="built_in">number</span>,</span><br><span class="line">  title: <span class="built_in">string</span>,</span><br><span class="line">  body: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>Post</code> ViewModel 提供 <code>userId</code>、<code>id</code>、<code>title</code> 與 <code>body</code> 4 個 property，因為要給外界使用，記得加上 <code>export</code>。</p>
+<p>到目前為止，service 部分已經完成，接下來是 component 部分。</p>
+<h2 id="Component_部分">Component 部分</h2><hr>
+<p>Component 部分有兩種寫法，一種是使用 <code>async</code> pipe，一種是使用 <code>subscribe()</code> ，將分別討論。</p>
+<h3 id="使用_Async_Pipe">使用 Async Pipe</h3><p><strong>src/app/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Observable&#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Post&#125; from <span class="string">'./post'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  posts: Observable&lt;Post[]&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.posts = <span class="keyword">this</span>.postService.getPosts();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">posts: Observable&lt;Post[]&gt;;</span><br></pre></td></tr></table></figure>
+<p>將從 API 抓下來的資料設定為 <code>posts</code> property，因為 <code>PostService.getPosts()</code> 回傳為 <code>Observable&lt;Post[]&gt;</code> 型別，所以 <code>posts</code> 型別也為 <code>Observable&lt;Post[]&gt;</code>。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由 constructor DI <code>PostService</code>，因為 <code>PostService</code> 為 <code>@Injectable</code>，且在 <code>AppModule</code> 的 providers 已經提供 <code>PostService</code>，因此可以順利 DI。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.posts = <span class="keyword">this</span>.postService.getPosts();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若要在 <code>AppComponent</code> 一開始執行時就執行一段程式，可在 component 內實踐 <code>ngOnInit()</code> method，此為 <code>OnInit</code> interface 所定義。</p>
+<p>將 <code>postService.getPosts()</code> 結果指定給 <code>this.posts</code>。</p>
+<p><strong>src/app/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts|async"</span>&gt;</span></span><br><span class="line">    Post ID: &#123;&#123; post.id &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    User ID: &#123;&#123; post.userId &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Title: &#123;&#123; post.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Body: &#123;&#123; post.body &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">hr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 API 全部回傳資料顯示。</p>
+<p>第 2 行</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">li</span> *ngFor=<span class="string">"let post of posts|async"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>特別在 <code>posts</code> 之後加上 <code>async</code> pipe。</p>
+<p>RxJS 的 Observable 有個特性，會在 <code>subscribe()</code> 後才真正執行向後端 API 抓資料，若在 HTML template 加上 <code>async</code> pipe，則會自動在顯示資料時加以 <code>subscribe()</code>，並在執行結束加以 <code>unsubscribe()</code>。</p>
+<h3 id="使用_Subscribe()">使用 Subscribe()</h3><p><strong>src/app/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;PostService&#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Post&#125; from <span class="string">'./post'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  posts: Post[];</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: PostService) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.postService.getPosts()</span><br><span class="line">      .subscribe(</span><br><span class="line">        (posts: Post[]) =&gt; <span class="keyword">this</span>.posts = posts,</span><br><span class="line">        (error: <span class="built_in">any</span>) =&gt; <span class="built_in">console</span>.log(error),</span><br><span class="line">        () =&gt; <span class="built_in">console</span>.log(<span class="string">'Get posts completed'</span>)</span><br><span class="line">      );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">posts: Post[];</span><br></pre></td></tr></table></figure>
+<p><code>posts</code> 的型別從 <code>Observable&lt;Post[]&gt;</code> 改成 <code>Post[]</code>。</p>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.postService.getPosts()</span><br><span class="line">    .subscribe(</span><br><span class="line">      (posts: Post[]) =&gt; <span class="keyword">this</span>.posts = posts,</span><br><span class="line">      (error: <span class="built_in">any</span>) =&gt; <span class="built_in">console</span>.log(error),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">'Get posts completed'</span>)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <code>getPosts()</code> 回傳的為 RxJS 的 <code>Observable&lt;Post[]&gt;</code>，必須在 component 下了 <code>subscribe()</code>之後，才會真正的向後端 API 抓資料。</p>
+<p><code>subscribe()</code> 有 3 個參數，可分別傳入 arrow function：</p>
+<ul>
+<li><strong>next</strong>：<code>subscribe()</code> 後接下來要做的事情，由於 <code>map()</code> 已經在 service 內完成，要做的只剩下將 <code>posts</code> 指定到 <code>this.posts</code>。</li>
+<li><strong>error</strong>：抓 API 出錯該做的事情，相當於 <code>try catch finally</code> 的 <code>catch</code>。</li>
+<li><strong>complete</strong>：抓 API 結束該做的事情，相當於 <code>try catch finally</code> 的 <code>finally</code>。</li>
+</ul>
+<p>其中 <code>next</code>為必須，<code>error</code> 與 <code>complete</code> 可視情況省略。</p>
+<blockquote>
+<p>需要自己 <code>unsubscribe()</code> 嗎？</p>
+</blockquote>
+<p>RxJS 中，若是持續在背景執行的，就必須手動 <code>unsubscribe()</code>，但若只執行一次的，如 HTTP GET，Angular 會自動幫我們 <code>unsubscribe()</code>，不需手動 <code>unsubscribe()</code>。</p>
+<p><strong>src/app/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts"</span>&gt;</span></span><br><span class="line">    Post ID: &#123;&#123; post.id &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    User ID: &#123;&#123; post.userId &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Title: &#123;&#123; post.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Body: &#123;&#123; post.body &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">hr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第 2 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以將 <code>async</code> 拿掉。</p>
+<p><img src="/images/angular/angular-http-get/httpget007.png" alt="httpget007"></p>
+<blockquote>
+<p>實務上該使用 <code>async</code> pipe 或是 <code>subscribe()</code> 呢？</p>
+</blockquote>
+<p>就功能面而言，兩種寫法結果都正確，但就程式的可維護性而言，建議使用 <code>subscribe()</code>。</p>
+<p>一般而言，HTML template 建議只用於 data binding，盡量不要寫程式碼，因為日後 debug 時，注意力都是放在 TypeScript 部分，比較不會注意 HTML template，所以若有程式碼藏在 HTML template，比較不容易被發現。</p>
+<p>此外，在 component 看到 <code>subscribe()</code>，也可很容易看出這是 RxJS 的 <code>Observable</code>，有助於日後維護。</p>
+<h2 id="為什麼要使用_Service_存取_API?">為什麼要使用 Service 存取 API?</h2><p>或許你會認為，明明使用  <code>XMLHttpRequest</code> 向後端 API 抓資料是很單純的事情，為什麼 Angular 還要透過 service + DI 的方式，不是提供一個簡單的 method 就好了嗎？有幾個原因：</p>
+<ul>
+<li>將來若其他 component 要使用 API 時，將 service 直接 DI 進 compoent 即可。</li>
+<li>將來若要對 API 的 service 做抽換，可直接透過 DI 換掉即可。</li>
+<li>將來若要對 component 做單元測試，可輕易的 mock API service 即可。</li>
+</ul>
+<p>間單的說，將 API 部分獨立成 service，目的要使 component 與 API <strong>解耦合</strong>。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>簡單的 HTTP GET 需求，就可以讓我們學會 DI 與 RxJS。</li>
+<li>實務上建議使用 <code>subscribe()</code>，程式的可維護性較高。</li>
+<li>使用 service 存取 API，而不在 component 內存取 API，可讓 component 與 API 解耦合。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4HttpGet" target="_blank" rel="external">GitHub</a> 上找到。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webstorm-jasmine/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-24 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>9</span></a></li> <li><a href="/tags/RxJS/">RxJS<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
