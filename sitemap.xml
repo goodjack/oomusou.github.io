@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/webstorm/webstorm-iterm2-slow/</loc>
+    <lastmod>2017-06-26T03:15:57.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/angular-http-get/</loc>
     <lastmod>2017-06-26T02:44:34.000Z</lastmod>
   </url>
@@ -172,12 +177,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
+    <loc>http://oomusou.io/laravel/laravel-service/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-service/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -277,7 +282,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
+    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
