@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="包含 DI 與 RxJS 觀念">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-06-26T02:32:38.000Z">
+<meta property="og:updated_time" content="2017-06-26T02:44:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 HTTP GET 對 API 抓資料?">
 <meta name="twitter:description" content="包含 DI 與 RxJS 觀念">
@@ -248,7 +248,7 @@
 <blockquote>
 <p>需要自己 <code>unsubscribe()</code> 嗎？</p>
 </blockquote>
-<p>RxJS 中，若 Observable 沒有 completed 的一天，就需要手動 unsubscribe()，但因為 Http.get() 執行完後就會 completed，所以就不需要 unsubscribe() 動作。</p>
+<p>RxJS 中，若 <code>Observable</code> 沒有 completed 的一天，就需要手動 <code>unsubscribe()</code>，但因為 <code>Http.get()</code> 執行完後就會 completed，所以就不需要 <code>unsubscribe()</code> 動作。</p>
 <p><strong>src/app/app.component.html</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts"</span>&gt;</span></span><br><span class="line">    Post ID: &#123;&#123; post.id &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    User ID: &#123;&#123; post.userId &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Title: &#123;&#123; post.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Body: &#123;&#123; post.body &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">hr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>第 2 行</p>

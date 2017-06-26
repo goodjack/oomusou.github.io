@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-26T02:32:38.000Z</updated>
+  <updated>2017-06-26T02:44:34.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-http-get/"/>
     <id>http://oomusou.io/angular/angular-http-get/</id>
     <published>2017-06-24T12:23:43.000Z</published>
-    <updated>2017-06-26T02:32:38.000Z</updated>
+    <updated>2017-06-26T02:44:34.000Z</updated>
     <content type="html"><![CDATA[<p>Angular 為前端 framework，因此必須依賴後端 API 提供資料，最常見的就是透過 HTTP GET 抓 JSON，這個看似簡單的動作，在 Angular 並不是單一 method 可完成，必須透過 DI 與 RxJS ，才能順利抓到資料。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
@@ -161,7 +161,7 @@
 <blockquote>
 <p>需要自己 <code>unsubscribe()</code> 嗎？</p>
 </blockquote>
-<p>RxJS 中，若 Observable 沒有 completed 的一天，就需要手動 unsubscribe()，但因為 Http.get() 執行完後就會 completed，所以就不需要 unsubscribe() 動作。</p>
+<p>RxJS 中，若 <code>Observable</code> 沒有 completed 的一天，就需要手動 <code>unsubscribe()</code>，但因為 <code>Http.get()</code> 執行完後就會 completed，所以就不需要 <code>unsubscribe()</code> 動作。</p>
 <p><strong>src/app/app.component.html</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts"</span>&gt;</span></span><br><span class="line">    Post ID: &#123;&#123; post.id &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    User ID: &#123;&#123; post.userId &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Title: &#123;&#123; post.title &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">br</span>&gt;</span></span><br><span class="line">    Body: &#123;&#123; post.body &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="title">hr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>第 2 行</p>
