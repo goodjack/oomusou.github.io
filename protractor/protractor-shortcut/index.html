@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 Protractor 使用 $ 與 $$? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="在 Angular 也能使用 `$` 與 `$$`">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="在 Angular 也能使用 `$` 與 `$$`">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Protractor 使用 $ 與 $$?">
+<meta property="og:url" content="http://oomusou.io/protractor/protractor-shortcut/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="在 Angular 也能使用 `$` 與 `$$`">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-27T10:48:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 Protractor 使用 $ 與 $$?">
+<meta name="twitter:description" content="在 Angular 也能使用 `$` 與 `$$`">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 Protractor 使用 $ 與 $$?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 在 Angular 也能使用 `$` 與 `$$`			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#$_Shortcut"><span class="toc-article-text">$ Shortcut</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#標準_Locator_寫法"><span class="toc-article-text">標準 Locator 寫法</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_$"><span class="toc-article-text">使用 $</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_$$"><span class="toc-article-text">使用 $$</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>在 Protractor 官網的 <a href="http://www.protractortest.org/#/locators" target="_blank" rel="external">Using Locators</a>，看到了 <code>$</code> 與 <code>$$</code> 兩個 shortcut，但在 Angular 卻無法使用，本文筆記解決方案。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2</p>
+<h2 id="$_Shortcut">$ Shortcut</h2><hr>
+<p>根據 Protractor 官網的 <a href="http://www.protractortest.org/#/locators" target="_blank" rel="external">Using Locators</a>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element(by.css(<span class="string">'my-css'</span>));</span><br></pre></td></tr></table></figure>
+<p>可以簡寫為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'my-css'</span>);</span><br></pre></td></tr></table></figure>
+<p>而</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.all(by.css(<span class="string">'.selector'</span>));</span><br></pre></td></tr></table></figure>
+<p>可以簡寫為</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$(<span class="string">'.selector'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="標準_Locator_寫法">標準 Locator 寫法</h2><hr>
+<p><strong>e2e/app.po.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'app-root h1'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> element(by.css(<span class="string">'app-root h1'</span>)).getText();</span><br></pre></td></tr></table></figure>
+<p>理論上可以改用 <code>$</code> 與 <code>$$</code> 寫法。</p>
+<h2 id="使用_$">使用 $</h2><hr>
+<p><img src="/images/protractor/protractor-shortcut/shortcut000.png" alt="shortcut000"></p>
+<p>但改成 <code>$</code> 之後，language service 對 <code>$</code> 提出警告，實際編譯後也出現錯誤。</p>
+<p><strong>e2e/app.po.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;$, browser&#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> $(<span class="string">'app-root h1'</span>).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;$, browser&#125; from <span class="string">'protractor'</span>;</span><br></pre></td></tr></table></figure>
+<p>將 <code>$</code> import 進來即可。</p>
+<p><img src="/images/protractor/protractor-shortcut/shortcut001.png" alt="shortcut001"></p>
+<h2 id="使用_$$">使用 $$</h2><hr>
+<p><img src="/images/protractor/protractor-shortcut/shortcut002.png" alt="shortcut002"></p>
+<p>但改成 <code>$$</code> 之後，language service 對 <code>$$</code> 提出警告，實際編譯後也出現錯誤。</p>
+<p><strong>e2e/app.po.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;$$, browser&#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> $$(<span class="string">'app-root h1'</span>).get(<span class="number">0</span>).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;$$, browser&#125; from <span class="string">'protractor'</span>;</span><br></pre></td></tr></table></figure>
+<p>將 <code>$</code> import 進來即可。</p>
+<p><img src="/images/protractor/protractor-shortcut/shortcut003.png" alt="shortcut003"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>$</code> 與 <code>$$</code> 寫法可以使 locator 寫法更為簡潔，實務上推薦使用，但記得要將 <code>$</code> 與 <code>$$</code> import 進來。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://www.protractortest.org/" target="_blank" rel="external">Protractor</a>,  <a href="http://www.protractortest.org/#/locators" target="_blank" rel="external">Using Locators</a><br><a href="http://www.protractortest.org/" target="_blank" rel="external">Protractor</a>,  <a href="https://github.com/angular/protractor/tree/5.1.2/exampleTypescript" target="_blank" rel="external">Protractor with TypeScript</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webstorm-iterm2-slow/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-27 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>10</span></a></li> <li><a href="/tags/Protractor/">Protractor<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
