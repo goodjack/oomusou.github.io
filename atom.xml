@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-27T10:48:39.000Z</updated>
+  <updated>2017-06-27T12:27:59.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/protractor/protractor-shortcut/"/>
     <id>http://oomusou.io/protractor/protractor-shortcut/</id>
     <published>2017-06-27T12:23:43.000Z</published>
-    <updated>2017-06-27T10:48:39.000Z</updated>
+    <updated>2017-06-27T12:27:59.000Z</updated>
     <content type="html"><![CDATA[<p>在 Protractor 官網的 <a href="http://www.protractortest.org/#/locators" target="_blank" rel="external">Using Locators</a>，看到了 <code>$</code> 與 <code>$$</code> 兩個 shortcut，但在 Angular 卻無法使用，本文筆記解決方案。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -65,7 +65,7 @@
 <p><a href="http://www.protractortest.org/" target="_blank" rel="external">Protractor</a>,  <a href="http://www.protractortest.org/#/locators" target="_blank" rel="external">Using Locators</a><br><a href="http://www.protractortest.org/" target="_blank" rel="external">Protractor</a>,  <a href="https://github.com/angular/protractor/tree/5.1.2/exampleTypescript" target="_blank" rel="external">Protractor with TypeScript</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[在 Angular 也能使用 `$` 與 `$$`]]>
+    <![CDATA[在 Angular 也能使用 $ 與 $$]]>
     
     </summary>
     
