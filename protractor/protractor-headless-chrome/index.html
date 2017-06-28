@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使 Protractor 跑 Headless Chrome? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 Headless Chrome 取代 PhantomJS">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 Headless Chrome 取代 PhantomJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使 Protractor 跑 Headless Chrome?">
+<meta property="og:url" content="http://oomusou.io/protractor/protractor-headless-chrome/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 Headless Chrome 取代 PhantomJS">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-28T06:45:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使 Protractor 跑 Headless Chrome?">
+<meta name="twitter:description" content="使用 Headless Chrome 取代 PhantomJS">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使 Protractor 跑 Headless Chrome?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 Headless Chrome 取代 PhantomJS			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#修改_protractor-conf-js"><span class="toc-article-text">修改 protractor.conf.js</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Angular CLI 的 Protractor 預設是跑 Chrome，但在 Chrome 59 之後提供了 Headless Chrome，讓我們以類似 PhantomJS 方式跑 E2E 測試。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2</p>
+<h2 id="修改_protractor-conf-js">修改 protractor.conf.js</h2><hr>
+<p><strong>protractor.conf.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Protractor configuration file, see link for more information</span></span><br><span class="line"><span class="comment">// https://github.com/angular/protractor/blob/master/lib/config.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; SpecReporter &#125; = <span class="built_in">require</span>(<span class="string">'jasmine-spec-reporter'</span>);</span><br><span class="line"></span><br><span class="line">exports.config = &#123;</span><br><span class="line">  allScriptsTimeout: <span class="number">11000</span>,</span><br><span class="line">  specs: [</span><br><span class="line">    <span class="string">'./e2e/**/*.e2e-spec.ts'</span></span><br><span class="line">  ],</span><br><span class="line">  capabilities: &#123;</span><br><span class="line">    <span class="string">'browserName'</span>: <span class="string">'chrome'</span>,</span><br><span class="line">    chromeOptions: &#123;</span><br><span class="line">      args: [ <span class="string">"--headless"</span>, <span class="string">"--disable-gpu"</span>, <span class="string">"--window-size=1920, 1080"</span> ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  directConnect: <span class="literal">true</span>,</span><br><span class="line">  baseUrl: <span class="string">'http://localhost:4200/'</span>,</span><br><span class="line">  framework: <span class="string">'jasmine'</span>,</span><br><span class="line">  jasmineNodeOpts: &#123;</span><br><span class="line">    showColors: <span class="literal">true</span>,</span><br><span class="line">    defaultTimeoutInterval: <span class="number">30000</span>,</span><br><span class="line">    print: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  onPrepare() &#123;</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">'ts-node'</span>).register(&#123;</span><br><span class="line">      project: <span class="string">'e2e/tsconfig.e2e.json'</span></span><br><span class="line">    &#125;);</span><br><span class="line">    jasmine.getEnv().addReporter(<span class="keyword">new</span> SpecReporter(&#123; spec: &#123; displayStacktrace: <span class="literal">true</span> &#125; &#125;));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>13 行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chromeOptions: &#123;</span><br><span class="line">      args: [ <span class="string">"--headless"</span>, <span class="string">"--disable-gpu"</span>, <span class="string">"--window-size=1920, 1080"</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增 <code>chromeOptions</code>。</p>
+<ul>
+<li><strong>—headless</strong> : 以 headless 模式跑 Chrome。</li>
+<li><strong>—disable-cpu</strong> : <a href="https://developers.google.com/web/updates/2017/04/headless-chrome" target="_blank" rel="external">官網</a> 沒做進一步解釋，但提到將來會拿掉此選項。</li>
+<li><strong>—window-size</strong> : 決定 Chrome 視窗大小，對於 RWD 測試有幫助。</li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Headless Chrome 執行速度比 Chrome 快。</li>
+<li>若要在 Jenkins 或 VSTS 跑 E2E 測試，則 Headless Chrome 是必須的。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://cvuorinen.net" target="_blank" rel="external">Carl Vuorinen</a>, <a href="http://cvuorinen.net/2017/05/running-angular-tests-in-headless-chrome/" target="_blank" rel="external">Running Angular tests in headless Chrome</a><br><a href="https://developers.google.com/web/resources/contributors#ericbidelman" target="_blank" rel="external">Eric Bidelman</a>, <a href="https://developers.google.com/web/updates/2017/04/headless-chrome" target="_blank" rel="external">Getting Started with Headless Chrome</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/dp/dp-adapter/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-29 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>11</span></a></li> <li><a href="/tags/Protractor/">Protractor<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
