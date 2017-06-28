@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-28T06:45:14.000Z</updated>
+  <updated>2017-06-28T06:58:37.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/protractor/protractor-headless-chrome/"/>
     <id>http://oomusou.io/protractor/protractor-headless-chrome/</id>
     <published>2017-06-29T12:23:43.000Z</published>
-    <updated>2017-06-28T06:45:14.000Z</updated>
+    <updated>2017-06-28T06:58:37.000Z</updated>
     <content type="html"><![CDATA[<p>Angular CLI 的 Protractor 預設是跑 Chrome，但在 Chrome 59 之後提供了 Headless Chrome，讓我們以類似 PhantomJS 方式跑 E2E 測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -32,7 +32,7 @@
 <p>新增 <code>chromeOptions</code>。</p>
 <ul>
 <li><strong>—headless</strong> : 以 headless 模式跑 Chrome。</li>
-<li><strong>—disable-cpu</strong> : <a href="https://developers.google.com/web/updates/2017/04/headless-chrome" target="_blank" rel="external">官網</a> 沒做進一步解釋，但提到將來會拿掉此選項。</li>
+<li><strong>—disable-gpu</strong> : <a href="https://developers.google.com/web/updates/2017/04/headless-chrome" target="_blank" rel="external">官網</a> 沒做進一步解釋，但提到將來會拿掉此選項。</li>
 <li><strong>—window-size</strong> : 決定 Chrome 視窗大小，對於 RWD 測試有幫助。</li>
 </ul>
 <h2 id="Conclusion">Conclusion</h2><hr>
