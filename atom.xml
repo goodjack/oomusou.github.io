@@ -59,7 +59,7 @@
     <link href="http://oomusou.io/dp/dp-adapter/"/>
     <id>http://oomusou.io/dp/dp-adapter/</id>
     <published>2017-06-28T12:23:43.000Z</published>
-    <updated>2017-06-28T03:39:22.000Z</updated>
+    <updated>2017-06-29T09:47:37.000Z</updated>
     <content type="html"><![CDATA[<p>Adapter pattern 是實務上常用的設計模式，本文將以實際案例，根據需求一步步重構，最後變成 adapter pattern。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -108,7 +108,7 @@
 </blockquote>
 <p>若以 Adapter pattern 思考</p>
 <blockquote>
-<p><code>Client</code> 就類似 Macbook，<code>Adaptee</code> 就類似投影機，這些都是不能修改的，我們只好以 MacBook 角度訂出 <code>Target</code> interface，然後實做 VGa Adapter 實作 <code>Target</code> interface，這樣 MacBook 就能使用投影機了。</p>
+<p><code>Client</code> 就類似 Macbook，<code>Adaptee</code> 就類似投影機，這些都是不能修改的，我們只好以 MacBook 角度訂出 <code>Target</code> interface，然後實做 VGA Adapter 實作 <code>Target</code> interface，這樣 MacBook 就能使用投影機了。</p>
 </blockquote>
 <h2 id="真實案例">真實案例</h2><hr>
 <h3 id="使用_AWS_S3">使用 AWS S3</h3><p>AWS 提供 S3 (Simple Storage Service) 服務，讓我們可以上傳檔案到雲端，並且下載。AWS 也提供了 <code>AWS SDK for PHP</code> 供 PHP 使用。</p>
