@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/protractor/protractor-promise/</loc>
+    <lastmod>2017-06-29T16:22:46.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/dp/dp-adapter/</loc>
     <lastmod>2017-06-29T09:47:37.000Z</lastmod>
   </url>
@@ -187,7 +192,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
+    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -207,12 +212,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
+    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -267,7 +272,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -297,7 +302,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   

@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Protractor 的 getText() 的回傳型別到底是什麼? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="必要時也可以用 any">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="必要時也可以用 any">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Protractor 的 getText() 的回傳型別到底是什麼?">
+<meta property="og:url" content="http://oomusou.io/protractor/protractor-promise/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="必要時也可以用 any">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-06-29T16:22:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Protractor 的 getText() 的回傳型別到底是什麼?">
+<meta name="twitter:description" content="必要時也可以用 any">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> Protractor 的 getText() 的回傳型別到底是什麼?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 必要時也可以用 any			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Symptoms"><span class="toc-article-text">Symptoms</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Recipes"><span class="toc-article-text">Recipes</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>使用了 TypeScript 之後，對於型別就非常敏感，都會要求自己要將傳入參數的型別與回傳型別明確指定，但 Protractor 在 page object 常用的 <code>getText()</code>，到底回傳型別是什麼呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2</p>
+<h2 id="Symptoms">Symptoms</h2><hr>
+<p><strong>e2e/app.po.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4DemoPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'app-root h1'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Angular CLI 專案預設的 Protractor 範例，其 page object 的 <code>nagivateTo()</code> 與 <code>getParagraphText()</code> 並沒有加上回傳型別，既然使用了 TypeScript，就希望能盡量加上型別，由編譯器替我們檢查與保護。</p>
+<p><img src="/images/protractor/protractor-promise/promise000.png" alt="promise000"></p>
+<p>有 <code>get()</code> 我們得知其回傳型別為 <code>wdpromise.Promise&lt;any&gt;</code>。</p>
+<p><img src="/images/protractor/protractor-promise/promise001.png" alt="promise001"></p>
+<p>但實際替回傳型別加上 <code>wdpromise.Promise&lt;any&gt;</code> 之後，language service 會抱怨找不到 <code>wdpromise</code> namespace。</p>
+<p><img src="/images/protractor/protractor-promise/promise002.png" alt="promise002"></p>
+<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 的回傳型別該回傳什麼呢？</p>
+<p><img src="/images/protractor/protractor-promise/promise005.png" alt="promise005"></p>
+<p>實際執行 <code>ng e2e</code>，結果當然也是編譯失敗。</p>
+<h2 id="Recipes">Recipes</h2><hr>
+<p>由於 <code>getText()</code> 之後可以用 <code>then()</code>，在觀念上知道 <code>getText()</code> 回傳的是 <code>Promise</code>。</p>
+<p><img src="/images/protractor/protractor-promise/promise004.png" alt="promise004"></p>
+<p>實際加上回傳型別 <code>Promise&lt;string&gt;</code>，language service 抱怨 <code>promise.Promise&lt;string&gt;</code> 與 <code>Promise&lt;string&gt;</code> 不相容，試試看回傳 <code>promise.Promise&lt;string&gt;</code> 看看。</p>
+<p><img src="/images/protractor/protractor-promise/promise006.png" alt="promise006"></p>
+<p>改成回傳 <code>promise.Promise&lt;string&gt;</code> 之後，另外加上 <code>import { promise } from &#39;selenium-webdriver&#39;;</code> 之後，language service 就不再抱怨了。</p>
+<blockquote>
+<p>promise.Promise<string> 看起來很怪，不像我們常用的 TypeScript 寫法，事實上，小寫的 <code>promise</code> 為 namespace，而 <code>Promise&lt;string&gt;</code> 才是我們所熟悉的 <code>Promise</code>。</string></p>
+</blockquote>
+<p><img src="/images/protractor/protractor-promise/promise007.png" alt="promise007"></p>
+<p>藉由剛剛的經驗，將 <code>wdpromise.Promise&lt;any&gt;</code> 改成 <code>promise.Promise&lt;any&gt;</code> 試試看，結果 language service 完全不再抱怨了。</p>
+<p><img src="/images/protractor/protractor-promise/promise008.png" alt="promise008"></p>
+<p>實際跑 <code>ng e2e</code>，TypeScript 編譯成功，也可以成功跑完測試。</p>
+<blockquote>
+<p>實務上真的要這樣寫回傳型別嗎？</p>
+</blockquote>
+<p><a href="https://github.com/angular/protractor/blob/master/exampleTypescript/angularPage.ts" target="_blank" rel="external">protractor/exampleTypescript/angularPage.ts</a></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Because this file references protractor, you'll need to have it as a project</span></span><br><span class="line"><span class="comment">// dependency to use 'protractor/globals'. Here is the full list of imports:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// import &#123;browser, element, by, By, $, $$, ExpectedConditions&#125;</span></span><br><span class="line"><span class="comment">//   from 'protractor/globals';</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">import</span> &#123;browser, element, by&#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AngularHomepage &#123;</span><br><span class="line">  nameInput = element(by.model(<span class="string">'yourName'</span>));</span><br><span class="line">  greeting = element(by.binding(<span class="string">'yourName'</span>));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    browser.get(<span class="string">'http://www.angularjs.org'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setName(name: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.nameInput.sendKeys(name);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// getGreeting returns a webdriver.promise.Promise.&lt;string&gt;. For simplicity</span></span><br><span class="line">  <span class="comment">// setting the return value to any</span></span><br><span class="line">  getGreeting(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.greeting.getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Protractor 官網實際示範了應該如何用 TypeScript 寫 page object。</p>
+<p>21 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// getGreeting returns a webdriver.promise.Promise.&lt;string&gt;. For simplicity</span></span><br><span class="line"><span class="comment">// setting the return value to any</span></span><br><span class="line">getGreeting(): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.greeting.getText();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>getGreeting()</code> 用的正是 <code>getText()</code>，Protractor 官方也認為 <code>webdriver.promise.Promise.&lt;string&gt;</code> 實在太麻煩了，用 <code>any</code> 即可。</p>
+<p><img src="/images/protractor/protractor-promise/promise009.png" alt="promise009"></p>
+<p>若你跟我一樣有型別強迫症，回傳 <code>any</code> 即可。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>雖然 TypeScript 是強型別，但 <code>any</code> 也不是不能用，除非能說出理由，在這裡就是因為  <code>webdriver.promise.Promise.&lt;string&gt;</code> 實在太麻煩了，連 Protractor 官網也建議直接用 <code>any</code> 即可。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://github.com/angular/protractor" target="_blank" rel="external">Protractor</a>, <a href="https://github.com/angular/protractor/blob/master/exampleTypescript/angularPage.ts" target="_blank" rel="external">angularPage.ts</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/protractor/protractor-headless-chrome/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-30 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>12</span></a></li> <li><a href="/tags/Protractor/">Protractor<span>5</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
