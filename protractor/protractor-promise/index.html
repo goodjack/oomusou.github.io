@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Protractor 的 getText() 的回傳型別到底是什麼? | 點燈坊</title>
+  <title>Protractor 的 getText() 回傳型別到底是什麼? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
   <meta name="description" content="必要時也可以用 any">
@@ -12,14 +12,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
  <meta name="description" content="必要時也可以用 any">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Protractor 的 getText() 的回傳型別到底是什麼?">
+<meta property="og:title" content="Protractor 的 getText() 回傳型別到底是什麼?">
 <meta property="og:url" content="http://oomusou.io/protractor/protractor-promise/index.html">
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="必要時也可以用 any">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-06-29T16:22:46.000Z">
+<meta property="og:updated_time" content="2017-06-29T16:28:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Protractor 的 getText() 的回傳型別到底是什麼?">
+<meta name="twitter:title" content="Protractor 的 getText() 回傳型別到底是什麼?">
 <meta name="twitter:description" content="必要時也可以用 any">
  
 
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> Protractor 的 getText() 的回傳型別到底是什麼?</h1>
+			<h1> Protractor 的 getText() 回傳型別到底是什麼?</h1>
 		</div>		
 	
 
@@ -119,7 +119,7 @@
 <p><img src="/images/protractor/protractor-promise/promise001.png" alt="promise001"></p>
 <p>但實際替回傳型別加上 <code>wdpromise.Promise&lt;any&gt;</code> 之後，language service 會抱怨找不到 <code>wdpromise</code> namespace。</p>
 <p><img src="/images/protractor/protractor-promise/promise002.png" alt="promise002"></p>
-<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 的回傳型別該回傳什麼呢？</p>
+<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 該回傳什麼型別呢？</p>
 <p><img src="/images/protractor/protractor-promise/promise005.png" alt="promise005"></p>
 <p>實際執行 <code>ng e2e</code>，結果當然也是編譯失敗。</p>
 <h2 id="Recipes">Recipes</h2><hr>

@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-06-29T16:22:46.000Z</updated>
+  <updated>2017-06-29T16:28:58.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Protractor 的 getText() 的回傳型別到底是什麼?]]></title>
+    <title><![CDATA[Protractor 的 getText() 回傳型別到底是什麼?]]></title>
     <link href="http://oomusou.io/protractor/protractor-promise/"/>
     <id>http://oomusou.io/protractor/protractor-promise/</id>
     <published>2017-06-30T12:23:43.000Z</published>
-    <updated>2017-06-29T16:22:46.000Z</updated>
+    <updated>2017-06-29T16:28:58.000Z</updated>
     <content type="html"><![CDATA[<p>使用了 TypeScript 之後，對於型別就非常敏感，都會要求自己要將傳入參數的型別與回傳型別明確指定，但 Protractor 在 page object 常用的 <code>getText()</code>，到底回傳型別是什麼呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2</p>
@@ -32,7 +32,7 @@
 <p><img src="/images/protractor/protractor-promise/promise001.png" alt="promise001"></p>
 <p>但實際替回傳型別加上 <code>wdpromise.Promise&lt;any&gt;</code> 之後，language service 會抱怨找不到 <code>wdpromise</code> namespace。</p>
 <p><img src="/images/protractor/protractor-promise/promise002.png" alt="promise002"></p>
-<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 的回傳型別該回傳什麼呢？</p>
+<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 該回傳什麼型別呢？</p>
 <p><img src="/images/protractor/protractor-promise/promise005.png" alt="promise005"></p>
 <p>實際執行 <code>ng e2e</code>，結果當然也是編譯失敗。</p>
 <h2 id="Recipes">Recipes</h2><hr>
