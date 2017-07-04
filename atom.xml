@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-02T08:20:11.000Z</updated>
+  <updated>2017-07-04T15:23:31.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何使 WebStorm 存檔時自動刪除 whitespace?]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-whitespace/"/>
+    <id>http://oomusou.io/webstorm/webstorm-whitespace/</id>
+    <published>2017-07-04T12:23:43.000Z</published>
+    <updated>2017-07-04T15:23:31.000Z</updated>
+    <content type="html"><![CDATA[<p>Ng lint 預設會檢查是否有 trailing whitespace，尤其在 enter 換行時，WebStorm 為了排版漂亮，會自動新增 whitespace，這將導致 ng lint 的抱怨，希望在存檔時，自動刪除這些 whitespace。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><p>WebStorm 2017.1.4</p>
+<h2 id="Symptons">Symptons</h2><p><img src="/images/webstorm/webstorm-whitespace/white000.png" alt="white000"></p>
+<p>多按了幾個 enter，WebStorm 會塞 whitespace，ng lint 就開始抱怨了。</p>
+<h2 id="Recipes">Recipes</h2><p><img src="/images/webstorm/webstorm-whitespace/white001.png" alt="white001"></p>
+<p><strong><em>WebStorm -&gt; Preferences -&gt; Editor -&gt; General</em></strong></p>
+<ol>
+<li>將 <code>Allow placement of caret after end of line</code> 打勾。</li>
+<li>將 <code>Strip trailing spaces on Save</code> 選 <code>All</code>。</li>
+</ol>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>這樣存檔時，WebStorm 就會自動將所有 whitespace 刪除，ng lint 就不再抱怨了。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[避免 ng lint 抱怨]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使 WebStorm 的 Auto Import 符合 ng lint 格式?]]></title>
@@ -987,6 +1017,49 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1073,49 +1146,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1706,45 +1736,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Quokka for WebStorm]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-quokka/"/>
-    <id>http://oomusou.io/webstorm/webstorm-quokka/</id>
-    <published>2017-06-01T12:23:43.000Z</published>
-    <updated>2017-06-01T05:07:50.000Z</updated>
-    <content type="html"><![CDATA[<p>Angular CLI 雖然讓我們簡化了前端工具的建置，但有時只想測試或示範 TypeScript，並不想真的去跑 Angular，此時 Quokka 就是我們的好幫手了。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.3<br>Quokka 1.0.11</p>
-<h2 id="Installation">Installation</h2><hr>
-<p><img src="/images/webstorm/webstorm-quokka/quokka000.png" alt="quokka000"></p>
-<p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
-<p>按 <code>Brose repositories…</code>。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka001.png" alt="quokka001"></p>
-<p>搜尋 <code>Quokka</code>，按 <code>Install</code> 安裝。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka002.png" alt="quokka002"></p>
-<p>安裝完  <code>Quokka</code> 後，按 <code>Restart WebStorm</code> 重新啟動 WebStorm。</p>
-<h2 id="執行_Quokka">執行 Quokka</h2><hr>
-<p><img src="/images/webstorm/webstorm-quokka/quokka003.png" alt="quokka003"></p>
-<p>按 <code>⌘ + ⇧ + N</code> 新增 Scratch File，這並沒有一個實體檔案，只用來測試而已。</p>
-<p><img src="/images/webstorm/webstorm-quokka/quokka004.png" alt="quokka004"></p>
-<p>可以開始輸入 TypeScript，不需存檔，不需編譯，馬上就可以在下方的 <code>Quokka</code> 視窗看到執行結果，而且在一行的最後面也可以立即顯示這行的執行結果。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>使用 Quokka，就可以在你熟悉的 WebStorm 測試 TypeScript，非常方便。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[不用編譯，不用存檔，馬上就可以顯示 TypeScript 結果]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
