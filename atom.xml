@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-04T15:23:31.000Z</updated>
+  <updated>2017-07-04T16:17:14.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在執行階段對 Angular 除錯?]]></title>
+    <link href="http://oomusou.io/angular/angular-runtime-debug/"/>
+    <id>http://oomusou.io/angular/angular-runtime-debug/</id>
+    <published>2017-07-05T12:23:43.000Z</published>
+    <updated>2017-07-04T16:17:14.000Z</updated>
+    <content type="html"><![CDATA[<p>由於 TypeScript 是編譯語言，很多人擔心該如何 debug Angular，尤其是 TypeScript 編譯沒錯，但在瀏覽器執行卻錯誤了，但因為 TypeScript 已經編譯成 JavaScript，我該怎麼知道錯在 TypeScript 哪一行呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
+<h2 id="Runtime_Error">Runtime Error</h2><hr>
+<p><strong>src/app/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.title.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'app'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>title</code> 設為 <code>undefined</code> 後，再取得 <code>title.length</code> 當然會錯誤，不過 TypeScript 在編譯階段不會報錯。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug000.png" alt="debug000"></p>
+<p>若 Angular 執行階段錯誤，在 Chrome 的 Developer Tools 的 Console 會出現錯誤訊息。</p>
+<p>Chrome 明確顯示 <code>Cannot read property &#39;length&#39; of undefined</code>，因為 <code>title</code> 為 <code>undefined</code>。</p>
+<p>重要的是，Chrome 明確告訴我們錯在 <code>app.component.ts</code>，是 TypeScript 而不是 JavaScript。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug001.png" alt="debug001"></p>
+<p>點 <code>app.component.ts</code> 後，會進入 TypeScript 程式碼錯的那一行，因此不用擔心是編譯過的 JavaScript 而無從 debug。</p>
+<blockquote>
+<p>不是已經編譯成 JavaScript 了嗎？為什麼 Chrome 知道錯在 TypeScript 哪一行？</p>
+</blockquote>
+<p><img src="/images/angular/angular-runtime-debug/debug005.png" alt="debug005"></p>
+<p>事實上在 <code>ng serve</code> 編譯時，還同時產生了各 <code>js</code> 對應的 <code>js.map</code>，Chrome 就是靠這些 <code>map</code> 檔得知錯誤的 JavaScript 對應到 TypeScript 哪一行。</p>
+<blockquote>
+<p>可是我不希望正式上線主機也包含這些 <code>map</code> 檔怎麼辦？</p>
+</blockquote>
+<p><img src="/images/angular/angular-runtime-debug/debug006.png" alt="debug006"></p>
+<p>下 <code>ng build —-prod</code> ，則編譯後將不包含 <code>map</code> 檔，且 <code>js</code> size 也小很多，可安心放在正式上線主機上。</p>
+<h2 id="關於_undefined">關於 undefined</h2><hr>
+<p>關於 undefined 問題，其實 TypeScript 另有解法，只要啟動 StrictNullCheck，就可由 TypeScript 編譯器幫我們擋掉這個錯誤。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug002.png" alt="debug002"></p>
+<p>在 <code>tsconfig.json</code> 加上  <code>strictNullChecks: true</code>，強迫 TypeScript 檢查 <code>null</code> 與 <code>undefined</code> 的型別檢查。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug003.png" alt="debug003"></p>
+<p>Language service 會提出警告，不可將 <code>undefined</code> 指定給 <code>string</code> 型別。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug004.png" alt="debug004"></p>
+<p>TypeScript 實際編譯也是會報錯。</p>
+<blockquote>
+<p>啟動 StrictNullCheck 後，TypeScript 會將 <code>null</code> 與 <code>undefined</code> 視為一種型別，因此不可將 <code>null</code> 與 <code>undefined</code> 指定給 <code>string</code> 型別。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>其實我一開始也很擔心 TypeScript 經過編譯後，會很難 debug，但所幸有 <code>map</code> 檔配套方案，讓 Chrome 能從 JavaScript 對應到 TypeScript，直接將錯誤顯示在 TypeScript 的正確行數。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[不用擔心 TypeScript 編譯後會很難除錯]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使 WebStorm 存檔時自動刪除 whitespace?]]></title>
@@ -1017,49 +1074,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1146,6 +1160,49 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1686,58 +1743,6 @@
     </summary>
     
       <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 WebStorm 對 Angular 下中斷點 Debug?]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-debug/"/>
-    <id>http://oomusou.io/webstorm/webstorm-debug/</id>
-    <published>2017-06-07T12:23:43.000Z</published>
-    <updated>2017-06-11T07:04:07.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm 允許我們如同 Visual Studio 一樣，直接在 IDE 內設定<strong>中斷點</strong>，並停止執行在那一行，我們可觀察當時的變數，也可使用 step over、step into、step out 等除錯技巧，重點是它是停止在 TypeScript 上，而非 JavaScript 上。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.2<br>Angular CLI 1.0.1<br>Angular 4.1.0</p>
-<h2 id="Installation">Installation</h2><hr>
-<h3 id="安裝_Chrome_Extension">安裝 Chrome Extension</h3><p><img src="/images/webstorm/webstorm-debug/debug000.png" alt="debug000"></p>
-<p>安裝 <code>JetBrains IDE Support</code> Chrome extension。</p>
-<h3 id="WebStorm_設定">WebStorm 設定</h3><p><img src="/images/webstorm/webstorm-debug/debug001.png" alt="debug001"></p>
-<p><strong><em>Run -&gt; Edit Configurations…</em></strong></p>
-<p><img src="/images/webstorm/webstorm-debug/debug002.png" alt="debug002"></p>
-<p>按左上角的 <code>+</code>，選擇 <code>JavaScript Debug</code>。</p>
-<p><img src="/images/webstorm/webstorm-debug/debug003.png" alt="debug003"></p>
-<ul>
-<li><strong>URL</strong> : 輸入 <code>http://localhost:4200</code>。</li>
-</ul>
-<p>按 <code>Apply</code> 與 <code>OK</code> 繼續。</p>
-<h2 id="Debug">Debug</h2><hr>
-<h3 id="設定_TypeScript_中斷點">設定 TypeScript 中斷點</h3><p><img src="/images/webstorm/webstorm-debug/debug004.png" alt="debug004"></p>
-<p>在任意 TypeScript 你想停止的地方，加上<strong>中斷點</strong>。</p>
-<h3 id="開始_Debug">開始 Debug</h3><p><img src="/images/webstorm/webstorm-debug/debug005.png" alt="debug005"></p>
-<p>使用 <code>ng serve</code> 啟動 Angular CLI 內建 web server，並按下上方的 <code>瓢蟲</code> 開始 debug。</p>
-<p><img src="/images/webstorm/webstorm-debug/debug006.png" alt="debug006"></p>
-<p>畫面會跳到 Chrome，並在上面顯示 <code>JetBrains IDE Support is debugging this browser</code>.</p>
-<p>在 tod 輸入任何值，按 <code>enter</code>。</p>
-<p><img src="/images/webstorm/webstorm-debug/debug007.png" alt="debug007"></p>
-<p>從 Chrome 自動跳回 WebStorm，並且停到中斷點，顯示目前所有變數與 call stack。</p>
-<p><img src="/images/webstorm/webstorm-debug/debug008.png" alt="debug008"></p>
-<p>但這樣使用有個前提，就是要產生 source map，我們才有辦法透過 source map 將中斷點停在 TypeScript。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>後端使用<strong>中斷點</strong>的 debug 經驗，一樣可以套用在 TypeScript 與 Angular。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://manuel-rauber.com/author/manuelrauber/" target="_blank" rel="external">Manuel Rauber</a>,<a href="https://manuel-rauber.com/2016/09/30/how-to-debug-angular-2-with-webstorm/" target="_blank" rel="external">How to debug Angular 2 with WebStorm?</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[直接在 IDE 下中斷點 debug]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
