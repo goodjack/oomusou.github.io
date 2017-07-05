@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="不用擔心 TypeScript 編譯後會很難除錯">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-05T01:00:22.000Z">
+<meta property="og:updated_time" content="2017-07-05T01:32:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在執行階段對 Angular 除錯?">
 <meta name="twitter:description" content="不用擔心 TypeScript 編譯後會很難除錯">
@@ -145,6 +145,8 @@
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>其實我一開始也很擔心 TypeScript 經過編譯後，會很難 debug，但所幸有 <code>map</code> 檔配套方案，讓 Chrome 能從 JavaScript 對應到 TypeScript，直接將錯誤顯示在 TypeScript 的正確行數。</li>
+<li>實務上 Angular 的除錯，第一步是看 TypeScript 是否編譯錯誤，第二部是用 Chrome Developer Tools 看是否有執行上的錯誤，然後對應到相對應的 TypeScript 檔案。</li>
+<li>Angular 為 Chrome 提供非常清楚的 TypeScript 錯誤訊息，不用擔心編譯過的 JavaScript 看不懂而無從 debug。</li>
 </ul>
 	  
 	</div>

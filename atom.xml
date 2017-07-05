@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-05T01:00:22.000Z</updated>
+  <updated>2017-07-05T01:32:20.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-runtime-debug/"/>
     <id>http://oomusou.io/angular/angular-runtime-debug/</id>
     <published>2017-07-05T12:23:43.000Z</published>
-    <updated>2017-07-05T01:00:22.000Z</updated>
+    <updated>2017-07-05T01:32:20.000Z</updated>
     <content type="html"><![CDATA[<p>由於 TypeScript 是編譯語言，很多人擔心該如何 debug Angular，尤其是 TypeScript 編譯沒錯，但在瀏覽器執行卻錯了，但因為 TypeScript 已經編譯成 JavaScript，我該怎麼知道錯在 TypeScript 哪一行呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -58,6 +58,8 @@
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>其實我一開始也很擔心 TypeScript 經過編譯後，會很難 debug，但所幸有 <code>map</code> 檔配套方案，讓 Chrome 能從 JavaScript 對應到 TypeScript，直接將錯誤顯示在 TypeScript 的正確行數。</li>
+<li>實務上 Angular 的除錯，第一步是看 TypeScript 是否編譯錯誤，第二部是用 Chrome Developer Tools 看是否有執行上的錯誤，然後對應到相對應的 TypeScript 檔案。</li>
+<li>Angular 為 Chrome 提供非常清楚的 TypeScript 錯誤訊息，不用擔心編譯過的 JavaScript 看不懂而無從 debug。</li>
 </ul>
 ]]></content>
     <summary type="html">
