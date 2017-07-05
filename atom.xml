@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-05T00:58:14.000Z</updated>
+  <updated>2017-07-05T01:00:22.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-runtime-debug/"/>
     <id>http://oomusou.io/angular/angular-runtime-debug/</id>
     <published>2017-07-05T12:23:43.000Z</published>
-    <updated>2017-07-05T00:58:14.000Z</updated>
+    <updated>2017-07-05T01:00:22.000Z</updated>
     <content type="html"><![CDATA[<p>由於 TypeScript 是編譯語言，很多人擔心該如何 debug Angular，尤其是 TypeScript 編譯沒錯，但在瀏覽器執行卻錯了，但因為 TypeScript 已經編譯成 JavaScript，我該怎麼知道錯在 TypeScript 哪一行呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
