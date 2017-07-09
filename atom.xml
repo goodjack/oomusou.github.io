@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-09T14:21:17.000Z</updated>
+  <updated>2017-07-09T14:39:25.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/webstorm/webstorm-wallaby/"/>
     <id>http://oomusou.io/webstorm/webstorm-wallaby/</id>
     <published>2017-07-09T12:23:43.000Z</published>
-    <updated>2017-07-09T14:21:17.000Z</updated>
+    <updated>2017-07-09T14:39:25.000Z</updated>
     <content type="html"><![CDATA[<p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 的單元測試</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -27,7 +27,7 @@
 <h2 id="下載_Wallaby">下載 Wallaby</h2><hr>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby000.png" alt="wallaby000"></p>
 <p>到 Wallaby.js 官網 <a href="https://wallabyjs.com" target="_blank" rel="external">https://wallabyjs.com</a>，選擇 WebStorm 版本下載。</p>
-<h2 id="安裝_Wallybs">安裝 Wallybs</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
+<h2 id="安裝_Wallyby">安裝 Wallyby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
 <p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
 <p>按 <code>Install plugin from disk…</code>。</p>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby002.png" alt="wallaby002"></p>

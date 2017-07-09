@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓 TypeScript 也能 Alive">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-09T14:21:17.000Z">
+<meta property="og:updated_time" content="2017-07-09T14:39:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 WebStorm 執行 Wallaby 單元測試?">
 <meta name="twitter:description" content="讓 TypeScript 也能 Alive">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Wallaby"><span class="toc-article-text">下載 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallybs"><span class="toc-article-text">安裝 Wallybs</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_src/tsconfig-app-json"><span class="toc-article-text">設定 src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Wallaby"><span class="toc-article-text">下載 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallyby"><span class="toc-article-text">安裝 Wallyby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_src/tsconfig-app-json"><span class="toc-article-text">設定 src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -114,7 +114,7 @@
 <h2 id="下載_Wallaby">下載 Wallaby</h2><hr>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby000.png" alt="wallaby000"></p>
 <p>到 Wallaby.js 官網 <a href="https://wallabyjs.com" target="_blank" rel="external">https://wallabyjs.com</a>，選擇 WebStorm 版本下載。</p>
-<h2 id="安裝_Wallybs">安裝 Wallybs</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
+<h2 id="安裝_Wallyby">安裝 Wallyby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
 <p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
 <p>按 <code>Install plugin from disk…</code>。</p>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby002.png" alt="wallaby002"></p>
