@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-09T14:15:16.000Z</updated>
+  <updated>2017-07-09T14:21:17.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/webstorm/webstorm-wallaby/"/>
     <id>http://oomusou.io/webstorm/webstorm-wallaby/</id>
     <published>2017-07-09T12:23:43.000Z</published>
-    <updated>2017-07-09T14:15:16.000Z</updated>
+    <updated>2017-07-09T14:21:17.000Z</updated>
     <content type="html"><![CDATA[<p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 的單元測試</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -92,7 +92,7 @@
 <ul>
 <li>Wallaby 有各種版本，如 Visual Studio、Visual Studio Code，甚至於 Sublime Text 與 Atom 也有支援。</li>
 <li>Wallaby 雖然是個付費軟體，但非常有其價值。</li>
-<li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅增進 TDD 開發效率。</li>
+<li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅提升 TDD 開發效率。</li>
 </ul>
 <h2 id="Reference">Reference</h2><hr>
 <p><a href="https://wallabyjs.com" target="_blank" rel="external">Wallyby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/" target="_blank" rel="external">[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2</a><br><a href="https://www.youtube.com/watch?v=RjrIK__PepU&amp;feature=youtu.be" target="_blank" rel="external">Techniques and practices for testing Angular 2 | Identity Server 4 with Angular 2 ASP.NET core</a></p>
