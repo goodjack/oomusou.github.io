@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 WebStorm 執行 Wallaby 單元測試? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="讓 TypeScript 也能 Alive">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="讓 TypeScript 也能 Alive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 WebStorm 執行 Wallaby 單元測試?">
+<meta property="og:url" content="http://oomusou.io/webstorm/webstorm-wallaby/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="讓 TypeScript 也能 Alive">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-07-09T14:03:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 WebStorm 執行 Wallaby 單元測試?">
+<meta name="twitter:description" content="讓 TypeScript 也能 Alive">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 WebStorm 執行 Wallaby 單元測試?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 讓 TypeScript 也能 Alive			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Wallaby"><span class="toc-article-text">下載 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallybs"><span class="toc-article-text">安裝 Wallybs</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_src/tsconfig-app-json"><span class="toc-article-text">設定 src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 的單元測試</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Wallaby 1.0.92</p>
+<h2 id="下載_Wallaby">下載 Wallaby</h2><hr>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby000.png" alt="wallaby000"></p>
+<p>到 Wallaby.js 官網 <a href="https://wallabyjs.com" target="_blank" rel="external">https://wallabyjs.com</a>，選擇 WebStorm 版本下載。</p>
+<h2 id="安裝_Wallybs">安裝 Wallybs</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
+<p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<p>按 <code>Install plugin from disk…</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby002.png" alt="wallaby002"></p>
+<p>選擇剛剛由 Wallaby.js 官網下載的 <code>zip</code> 檔。</p>
+<blockquote>
+<p>若由 Safari 下載，<code>zip</code> 檔已經被解開，可選擇解開後的 <code>jar</code> 檔。</p>
+</blockquote>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby003.png" alt="wallaby003"></p>
+<ol>
+<li>安裝成功後會出現 <code>Wallaby</code>。</li>
+<li>按 <code>Restart WebStorm</code>  才能使用 Wallaby。</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby004.png" alt="wallaby004"></p>
+<p>WebStorm 重新啟動後，右下角會出現 <code>Wallaby License</code> 提示，表示 Wallaby 已經安裝成功。</p>
+<blockquote>
+<p>Trial versions available for download are fully functional and should work for 30 days. Note that in the trial mode wallaby will sometimes prompt you to restart your editor to get another trial session. </p>
+</blockquote>
+<p>根據 Wallaby 官網說明，可試用 30 天，在適用過程中，偶爾會提示你重新啟動 WebStorm。</p>
+<h2 id="設定_Angular_CLI">設定 Angular CLI</h2><hr>
+<h3 id="新增_wallaby-js">新增 wallaby.js</h3><p><strong>wallaby.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> wallabyWebpack = <span class="built_in">require</span>(<span class="string">'wallaby-webpack'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> compilerOptions = <span class="built_in">Object</span>.assign(</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./tsconfig.json'</span>).compilerOptions,</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./src/tsconfig.spec.json'</span>).compilerOptions);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">wallaby</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> webpackPostprocessor = wallabyWebpack(&#123;</span><br><span class="line">    entryPatterns: [</span><br><span class="line">      <span class="string">'src/wallabyTest.js'</span>,</span><br><span class="line">      <span class="string">'src/**/*spec.js'</span></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      loaders: [</span><br><span class="line">        &#123;test: <span class="regexp">/\.css$/</span>, loader: <span class="string">'raw-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.html$/</span>, loader: <span class="string">'raw-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.ts$/</span>, loader: <span class="string">'@ngtools/webpack'</span>, include: <span class="regexp">/node_modules/</span>, query: &#123;tsConfigPath: <span class="string">'tsconfig.json'</span>&#125;&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.js$/</span>, loader: <span class="string">'angular2-template-loader'</span>, exclude: <span class="regexp">/node_modules/</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.json$/</span>, loader: <span class="string">'json-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.styl$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'stylus-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.less$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'less-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.scss$|\.sass$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'sass-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.(jpg|png)$/</span>, loader: <span class="string">'url-loader?limit=128000'</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    resolve: &#123;</span><br><span class="line">      extensions: [<span class="string">'.js'</span>, <span class="string">'.ts'</span>],</span><br><span class="line">      modules: [</span><br><span class="line">        path.join(wallaby.projectCacheDir, <span class="string">'src/app'</span>),</span><br><span class="line">        path.join(wallaby.projectCacheDir, <span class="string">'src'</span>)</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    files: [</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.ts'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.d.ts'</span>, ignore: <span class="literal">true</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.css'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.less'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.scss'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.sass'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.styl'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.html'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.json'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*spec.ts'</span>, ignore: <span class="literal">true</span>&#125;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    tests: [</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*spec.ts'</span>, load: <span class="literal">false</span>&#125;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    testFramework: <span class="string">'jasmine'</span>,</span><br><span class="line"></span><br><span class="line">    compilers: &#123;</span><br><span class="line">      <span class="string">'**/*.ts'</span>: wallaby.compilers.typeScript(compilerOptions)</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    middleware: <span class="function"><span class="keyword">function</span> (<span class="params">app, express</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">      app.use(<span class="string">'/favicon.ico'</span>, express.static(path.join(__dirname, <span class="string">'src/favicon.ico'</span>)));</span><br><span class="line">      app.use(<span class="string">'/assets'</span>, express.static(path.join(__dirname, <span class="string">'src/assets'</span>)));</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    env: &#123;</span><br><span class="line">      kind: <span class="string">'electron'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    postprocessor: webpackPostprocessor,</span><br><span class="line"></span><br><span class="line">    setup: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.__moduleBundler.loadTests();</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    debug: <span class="literal">true</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在專案的根目錄下新增 <code>wallaby.js</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby005.png" alt="wallaby005"></p>
+<blockquote>
+<p>注意 <code>wallaby.js</code> 為 JavaScript 檔，不是 TypeScript 檔。</p>
+</blockquote>
+<h3 id="新增_src/wallabyTest-ts">新增 src/wallabyTest.ts</h3><p><strong>src/wallabyTest.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./polyfills'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/long-stack-trace-zone'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/proxy.js'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/sync-test'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/jasmine-patch'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/async-test'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/fake-async-test'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; getTestBed &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  BrowserDynamicTestingModule,</span><br><span class="line">  platformBrowserDynamicTesting</span><br><span class="line">&#125; from <span class="string">'@angular/platform-browser-dynamic/testing'</span>;</span><br><span class="line"></span><br><span class="line">getTestBed().initTestEnvironment(</span><br><span class="line">  BrowserDynamicTestingModule,</span><br><span class="line">  platformBrowserDynamicTesting()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>在 <code>src</code> 目錄下新增 <code>wallabyTest.ts</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby006.png" alt="wallaby006"></p>
+<blockquote>
+<p>注意 <code>wallabyTest.ts</code> 為 TypeScript 檔，不是 JavaScript 檔。</p>
+</blockquote>
+<h3 id="設定_src/tsconfig-app-json">設定 src/tsconfig.app.json</h3><p><strong>src/tsconfig.app.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">extends</span>": <span class="value"><span class="string">"../tsconfig.json"</span></span>,</span><br><span class="line">  "<span class="attribute">compilerOptions</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">outDir</span>": <span class="value"><span class="string">"../out-tsc/app"</span></span>,</span><br><span class="line">    "<span class="attribute">module</span>": <span class="value"><span class="string">"es2015"</span></span>,</span><br><span class="line">    "<span class="attribute">baseUrl</span>": <span class="value"><span class="string">""</span></span>,</span><br><span class="line">    "<span class="attribute">types</span>": <span class="value">[]</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">exclude</span>": <span class="value">[</span><br><span class="line">    <span class="string">"test.ts"</span>,</span><br><span class="line">    <span class="string">"**/*.spec.ts"</span>,</span><br><span class="line">    <span class="string">"wallabyTest.ts"</span></span><br><span class="line">  ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"wallabyTest.ts"</span></span><br></pre></td></tr></table></figure>
+<p>新增 <code>&quot;wallabyTest.ts&quot;</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby007.png" alt="wallaby007"></p>
+<h3 id="安裝_Node-js_套件">安裝 Node.js 套件</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject$ npm install wallaby-webpack angular2-template-loader electron --save-dev</span><br></pre></td></tr></table></figure>
+<p>安裝 Wallaby 所需要的 Node.js 套件。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby008.png" alt="wallaby008"></p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby009.png" alt="wallaby009"></p>
+<p><strong><em>Run -&gt; Edit Configurations…</em></strong></p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby010.png" alt="wallaby010"></p>
+<ol>
+<li>按左上角 <code>+</code>。</li>
+<li>選擇 <code>Wallaby.js</code>。</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby011.png" alt="wallaby011"></p>
+<ol>
+<li><strong>Name</strong> : 取名為 <code>Wallaby</code>。</li>
+<li><strong>Configuration file</strong>：設定為剛剛在根目錄建立的 <code>wallaby.js</code>。</li>
+</ol>
+<h2 id="執行_Wallaby">執行 Wallaby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby012.png" alt="wallaby012"></p>
+<p>上方選擇 <code>Wallaby</code>，按下右邊的綠色三角形執行 Wallaby。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby013.png" alt="wallaby013"></p>
+<p>通過測試的案例，左側會出現<code>綠燈</code>，下方也會顯示目前通過測試案例的個數。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby014.png" alt="wallaby014"></p>
+<p><strong>不用</strong>按存檔就可以立即跑測試顯示<code>紅燈</code>或<code>綠燈</code>，並且立刻顯示實際值與期望值的差異。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Wallaby 有各種版本，如 Visual Studio、Visual Studio Code，甚至於 Sublime Text 與 Atom 也有支援。</li>
+<li>Wallaby 雖然是個付費軟體，但非常有其價值。</li>
+<li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅增進 TDD 開發效率。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://wallabyjs.com" target="_blank" rel="external">Wallyby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/" target="_blank" rel="external">[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2</a><br><a href="https://www.youtube.com/watch?v=RjrIK__PepU&amp;feature=youtu.be" target="_blank" rel="external">Techniques and practices for testing Angular 2 | Identity Server 4 with Angular 2 ASP.NET core</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/angular-runtime-debug/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-09 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>16</span></a></li> <li><a href="/tags/TDD/">TDD<span>17</span></a></li> <li><a href="/tags/Wallaby/">Wallaby<span>1</span></a></li> <li><a href="/tags/WebStorm/">WebStorm<span>11</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

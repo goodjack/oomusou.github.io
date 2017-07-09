@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-05T01:32:20.000Z</updated>
+  <updated>2017-07-09T14:03:37.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,104 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 WebStorm 執行 Wallaby 單元測試?]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-wallaby/"/>
+    <id>http://oomusou.io/webstorm/webstorm-wallaby/</id>
+    <published>2017-07-09T12:23:43.000Z</published>
+    <updated>2017-07-09T14:03:37.000Z</updated>
+    <content type="html"><![CDATA[<p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 的單元測試</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Wallaby 1.0.92</p>
+<h2 id="下載_Wallaby">下載 Wallaby</h2><hr>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby000.png" alt="wallaby000"></p>
+<p>到 Wallaby.js 官網 <a href="https://wallabyjs.com" target="_blank" rel="external">https://wallabyjs.com</a>，選擇 WebStorm 版本下載。</p>
+<h2 id="安裝_Wallybs">安裝 Wallybs</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
+<p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
+<p>按 <code>Install plugin from disk…</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby002.png" alt="wallaby002"></p>
+<p>選擇剛剛由 Wallaby.js 官網下載的 <code>zip</code> 檔。</p>
+<blockquote>
+<p>若由 Safari 下載，<code>zip</code> 檔已經被解開，可選擇解開後的 <code>jar</code> 檔。</p>
+</blockquote>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby003.png" alt="wallaby003"></p>
+<ol>
+<li>安裝成功後會出現 <code>Wallaby</code>。</li>
+<li>按 <code>Restart WebStorm</code>  才能使用 Wallaby。</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby004.png" alt="wallaby004"></p>
+<p>WebStorm 重新啟動後，右下角會出現 <code>Wallaby License</code> 提示，表示 Wallaby 已經安裝成功。</p>
+<blockquote>
+<p>Trial versions available for download are fully functional and should work for 30 days. Note that in the trial mode wallaby will sometimes prompt you to restart your editor to get another trial session. </p>
+</blockquote>
+<p>根據 Wallaby 官網說明，可試用 30 天，在適用過程中，偶爾會提示你重新啟動 WebStorm。</p>
+<h2 id="設定_Angular_CLI">設定 Angular CLI</h2><hr>
+<h3 id="新增_wallaby-js">新增 wallaby.js</h3><p><strong>wallaby.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> wallabyWebpack = <span class="built_in">require</span>(<span class="string">'wallaby-webpack'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> compilerOptions = <span class="built_in">Object</span>.assign(</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./tsconfig.json'</span>).compilerOptions,</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./src/tsconfig.spec.json'</span>).compilerOptions);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">wallaby</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> webpackPostprocessor = wallabyWebpack(&#123;</span><br><span class="line">    entryPatterns: [</span><br><span class="line">      <span class="string">'src/wallabyTest.js'</span>,</span><br><span class="line">      <span class="string">'src/**/*spec.js'</span></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      loaders: [</span><br><span class="line">        &#123;test: <span class="regexp">/\.css$/</span>, loader: <span class="string">'raw-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.html$/</span>, loader: <span class="string">'raw-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.ts$/</span>, loader: <span class="string">'@ngtools/webpack'</span>, include: <span class="regexp">/node_modules/</span>, query: &#123;tsConfigPath: <span class="string">'tsconfig.json'</span>&#125;&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.js$/</span>, loader: <span class="string">'angular2-template-loader'</span>, exclude: <span class="regexp">/node_modules/</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.json$/</span>, loader: <span class="string">'json-loader'</span>&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.styl$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'stylus-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.less$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'less-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.scss$|\.sass$/</span>, loaders: [<span class="string">'raw-loader'</span>, <span class="string">'sass-loader'</span>]&#125;,</span><br><span class="line">        &#123;test: <span class="regexp">/\.(jpg|png)$/</span>, loader: <span class="string">'url-loader?limit=128000'</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    resolve: &#123;</span><br><span class="line">      extensions: [<span class="string">'.js'</span>, <span class="string">'.ts'</span>],</span><br><span class="line">      modules: [</span><br><span class="line">        path.join(wallaby.projectCacheDir, <span class="string">'src/app'</span>),</span><br><span class="line">        path.join(wallaby.projectCacheDir, <span class="string">'src'</span>)</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    files: [</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.ts'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.d.ts'</span>, ignore: <span class="literal">true</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.css'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.less'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.scss'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.sass'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.styl'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.html'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*.json'</span>, load: <span class="literal">false</span>&#125;,</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*spec.ts'</span>, ignore: <span class="literal">true</span>&#125;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    tests: [</span><br><span class="line">      &#123;pattern: <span class="string">'src/**/*spec.ts'</span>, load: <span class="literal">false</span>&#125;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    testFramework: <span class="string">'jasmine'</span>,</span><br><span class="line"></span><br><span class="line">    compilers: &#123;</span><br><span class="line">      <span class="string">'**/*.ts'</span>: wallaby.compilers.typeScript(compilerOptions)</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    middleware: <span class="function"><span class="keyword">function</span> (<span class="params">app, express</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">      app.use(<span class="string">'/favicon.ico'</span>, express.static(path.join(__dirname, <span class="string">'src/favicon.ico'</span>)));</span><br><span class="line">      app.use(<span class="string">'/assets'</span>, express.static(path.join(__dirname, <span class="string">'src/assets'</span>)));</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    env: &#123;</span><br><span class="line">      kind: <span class="string">'electron'</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    postprocessor: webpackPostprocessor,</span><br><span class="line"></span><br><span class="line">    setup: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.__moduleBundler.loadTests();</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    debug: <span class="literal">true</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在專案的根目錄下新增 <code>wallaby.js</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby005.png" alt="wallaby005"></p>
+<blockquote>
+<p>注意 <code>wallaby.js</code> 為 JavaScript 檔，不是 TypeScript 檔。</p>
+</blockquote>
+<h3 id="新增_src/wallabyTest-ts">新增 src/wallabyTest.ts</h3><p><strong>src/wallabyTest.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./polyfills'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/long-stack-trace-zone'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/proxy.js'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/sync-test'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/jasmine-patch'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/async-test'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'zone.js/dist/fake-async-test'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; getTestBed &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  BrowserDynamicTestingModule,</span><br><span class="line">  platformBrowserDynamicTesting</span><br><span class="line">&#125; from <span class="string">'@angular/platform-browser-dynamic/testing'</span>;</span><br><span class="line"></span><br><span class="line">getTestBed().initTestEnvironment(</span><br><span class="line">  BrowserDynamicTestingModule,</span><br><span class="line">  platformBrowserDynamicTesting()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>在 <code>src</code> 目錄下新增 <code>wallabyTest.ts</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby006.png" alt="wallaby006"></p>
+<blockquote>
+<p>注意 <code>wallabyTest.ts</code> 為 TypeScript 檔，不是 JavaScript 檔。</p>
+</blockquote>
+<h3 id="設定_src/tsconfig-app-json">設定 src/tsconfig.app.json</h3><p><strong>src/tsconfig.app.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">extends</span>": <span class="value"><span class="string">"../tsconfig.json"</span></span>,</span><br><span class="line">  "<span class="attribute">compilerOptions</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">outDir</span>": <span class="value"><span class="string">"../out-tsc/app"</span></span>,</span><br><span class="line">    "<span class="attribute">module</span>": <span class="value"><span class="string">"es2015"</span></span>,</span><br><span class="line">    "<span class="attribute">baseUrl</span>": <span class="value"><span class="string">""</span></span>,</span><br><span class="line">    "<span class="attribute">types</span>": <span class="value">[]</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">exclude</span>": <span class="value">[</span><br><span class="line">    <span class="string">"test.ts"</span>,</span><br><span class="line">    <span class="string">"**/*.spec.ts"</span>,</span><br><span class="line">    <span class="string">"wallabyTest.ts"</span></span><br><span class="line">  ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"wallabyTest.ts"</span></span><br></pre></td></tr></table></figure>
+<p>新增 <code>&quot;wallabyTest.ts&quot;</code>。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby007.png" alt="wallaby007"></p>
+<h3 id="安裝_Node-js_套件">安裝 Node.js 套件</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject$ npm install wallaby-webpack angular2-template-loader electron --save-dev</span><br></pre></td></tr></table></figure>
+<p>安裝 Wallaby 所需要的 Node.js 套件。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby008.png" alt="wallaby008"></p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby009.png" alt="wallaby009"></p>
+<p><strong><em>Run -&gt; Edit Configurations…</em></strong></p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby010.png" alt="wallaby010"></p>
+<ol>
+<li>按左上角 <code>+</code>。</li>
+<li>選擇 <code>Wallaby.js</code>。</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby011.png" alt="wallaby011"></p>
+<ol>
+<li><strong>Name</strong> : 取名為 <code>Wallaby</code>。</li>
+<li><strong>Configuration file</strong>：設定為剛剛在根目錄建立的 <code>wallaby.js</code>。</li>
+</ol>
+<h2 id="執行_Wallaby">執行 Wallaby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby012.png" alt="wallaby012"></p>
+<p>上方選擇 <code>Wallaby</code>，按下右邊的綠色三角形執行 Wallaby。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby013.png" alt="wallaby013"></p>
+<p>通過測試的案例，左側會出現<code>綠燈</code>，下方也會顯示目前通過測試案例的個數。</p>
+<p><img src="/images/webstorm/webstorm-wallaby/wallaby014.png" alt="wallaby014"></p>
+<p><strong>不用</strong>按存檔就可以立即跑測試顯示<code>紅燈</code>或<code>綠燈</code>，並且立刻顯示實際值與期望值的差異。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Wallaby 有各種版本，如 Visual Studio、Visual Studio Code，甚至於 Sublime Text 與 Atom 也有支援。</li>
+<li>Wallaby 雖然是個付費軟體，但非常有其價值。</li>
+<li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅增進 TDD 開發效率。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://wallabyjs.com" target="_blank" rel="external">Wallyby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/" target="_blank" rel="external">[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2</a><br><a href="https://www.youtube.com/watch?v=RjrIK__PepU&amp;feature=youtu.be" target="_blank" rel="external">Techniques and practices for testing Angular 2 | Identity Server 4 with Angular 2 ASP.NET core</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[讓 TypeScript 也能 Alive]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
+    
+      <category term="Wallaby" scheme="http://oomusou.io/tags/Wallaby/"/>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何在執行階段對 Angular 除錯?]]></title>
@@ -1076,6 +1174,49 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1136,7 +1277,7 @@
 <blockquote>
 <p>若在公司的 proxy 內，Protractor 將無法正常執行，必須自行設定 NPM proxy。</p>
 </blockquote>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> proxy http:<span class="comment">//<span class="label">xxx.xxx.xxx.xxx.xxx:80</span></span></span><br><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> https-proxy http:<span class="comment">//<span class="label">xxx.xxx.xxx.xxx.xxx:80</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> https-proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br></pre></td></tr></table></figure>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>Protractor 原本是 Google 為 Angular 量身定做的 E2E testing framework，專門用來測試 Angular 所開發的網站，但也能用來測試任何以後端為主的網站，不侷限於 Laravel。</li>
@@ -1162,49 +1303,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1654,93 +1752,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[簡介 TypeScript 所有內建的型別]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[TypeScript 特色與歷史簡介]]></title>
-    <link href="http://oomusou.io/typescript/typescript101/"/>
-    <id>http://oomusou.io/typescript/typescript101/</id>
-    <published>2017-06-14T12:23:43.000Z</published>
-    <updated>2017-06-17T08:27:25.000Z</updated>
-    <content type="html"><![CDATA[<p>TypeScript 是 Angular 欽定的開發語言，所以學 Angular 一定要學 TypeScript，但很多人認為 TypeScript 是 JavaScript 的<strong>方言</strong>，不是 JavaScript 標準，因而有所疑慮，本文簡單介紹 TypeScript 的歷史與特色，提供大家技術選擇的參考。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScript 2.3</p>
-<h2 id="什麼是_TypeScript？">什麼是 TypeScript？</h2><hr>
-<p><img src="/images/typescript/typescript101/ts000.png" alt="ts000"></p>
-<p>在 TypeScript 官網，大大的 3 個字</p>
-<blockquote>
-<p>JavaScript that scales.</p>
-</blockquote>
-<p>簡單的說，TypeScript 就是為了讓 JavaScript 可以寫<strong>大型應用程式</strong>的<strong>商業邏輯</strong>所設計，讓 JavaScript 不再只是控制 DOM 而已，而是真的可以寫<strong>複雜</strong>商業邏輯。</p>
-<blockquote>
-<p>Visual Studio Code 就是使用 TypeScript 開發。</p>
-</blockquote>
-<p>TypeScript 既然稱為 <strong>Type</strong>Script，重點就是將 JavaScript 加上 <strong>type</strong>。</p>
-<ul>
-<li>更多型別 (more types) 與強型別檢查</li>
-<li>多型 (interface)</li>
-<li>泛型 (generic)</li>
-</ul>
-<p><img src="/images/typescript/typescript101/ts001.svg" alt="ts001"></p>
-<p>一旦有了型別，則很多圍繞在<strong>型別</strong>的技術都可在 TypeScript 使用。</p>
-<h2 id="TypeScript_的歷史">TypeScript 的歷史</h2><hr>
-<p>TypeScript 是由 Turbo Pascal、Delphi、J++ 與 C# 的爸爸 <a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a> 所設計的程式語言，Anders 在很年輕時，就立志要幫 JavaScript 寫一個 compiler，在他 <code>52</code> 歲時，發表了 TypeScript，幫 JavaScript 補上很多<strong>強型別</strong>語言該有的元素，並且相容 JavaScript。</p>
-<p><img src="/images/typescript/typescript101/ts002.png" alt="ts002"></p>
-<p>只要是 ES5、ES6 有的東西，TypeScript 都會概括承受，所以你原本在 ES5、ES6 的投資，都可以繼續用在 TypeScript。</p>
-<p>Angular 團隊原本用自己的 AtScript 開發，它除了有 TypeScript 的強型別外，更擴展了一些東西，當然也包含 ES5、ES6。</p>
-<p><img src="/images/typescript/typescript101/ts005.png" alt="ts005"></p>
-<p>2015 年 3 月，Angular 團隊決定從原本自己的 AtScript，改用 Microsoft 的 TypeScript，Google 專心於 framework 部分，Microsoft 則專心於程式語言部分，這也是 Google 與 Microsoft 首次攜手合作。</p>
-<p><img src="/images/typescript/typescript101/ts003.png" alt="ts003"></p>
-<p>原本 Angular 大量依賴 AtScript 的 annotation，為了配合 Angular，TypeScript 根據了 ECMAScript 的 decorator 草案加以實作，在 NG-Conf 2015 也宣布 AtScript 與 TypeScript 合而為一。</p>
-<p><img src="/images/typescript/typescript101/ts004.gif" alt="ts004"></p>
-<p>在 NG-Conf 2017，Google 宣布 TypeScript 正式成為 Google 內部所使用的語言之一。</p>
-<p><img src="/images/typescript/typescript101/ts006.jpg" alt="ts006"></p>
-<p>TypeScript 雖然早在 2012 年就上市，但始終叫好不叫座，尤其遠不如 CoffeeScript，但在 2015 年開始有了爆炸性的成長。</p>
-<p>因為 TypeScript 總算有殺手級的應用出現：Angular。</p>
-<h2 id="為什麼選擇_TypeScript？">為什麼選擇 TypeScript？</h2><hr>
-<p>除了 Angular 挑選 TypeScript 外，讓我們回歸<strong>需求面</strong>，為什麼要選擇 TypeScript？</p>
-<h3 id="JavaScript_規格與瀏覽器支援">JavaScript 規格與瀏覽器支援</h3><p><img src="/images/typescript/typescript101/ts007.png" alt="ts007"></p>
-<p>在今年的 Microsoft Build 2017，<a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a> 提到了 JavaScript 所謂的 feature gap，以往我們在寫 JavaScript 時，都要很在乎瀏覽器是否支援了 JavaScript 某個 keyword 與 function，以目前來說，ES7 (ES2016) 規格都已經出來，但瀏覽器卻只有支援 ES5 與少部份 ES6，因此很多 JavaScript 語言功能根本是看得到但吃不到。</p>
-<p>但透過 TypeScript，你立刻就能使用最新的 JavaScript 規格，透過編譯技術將 TypeScript 編譯成 ES5，不用再擔心瀏覽器版本問題。</p>
-<h3 id="前端越來越複雜">前端越來越複雜</h3><p>JavaScript 一開始設計只是為了控制 DOM，但隨著 Ajax 與 SPA 出現後，為了更好的使用者體驗，我們開始將一部分的商業邏輯寫在 JavaScript，這也使得前端常常動不動出現上千行的程式碼，JavaScript 的<strong>可維護性</strong>一直受到質疑，因此我們需要一個能夠寫<strong>複雜商業邏輯</strong>的語言。</p>
-<blockquote>
-<p>JavaScript 的 ES6、ES7 … 已經朝更成熟的語言邁進，不過現階段還不夠成熟，TypeScript 則包含了開發大型應用程式所需要的必要元素。</p>
-</blockquote>
-<h3 id="強型別_+_編譯_=_大型應用程式的保證">強型別 + 編譯 =  大型應用程式的保證</h3><p>Web 發展之初，由於需求單純，無論是前後端，都放棄了強型別與編譯技術，改用弱型別與解譯技術，但 Web 20 年來的發展，前後端都越來越複雜，弱型別與解譯技術則面臨了強大的挑戰：</p>
-<ul>
-<li>Framework 越來越龐大，眾多的 class 與 method，弱型別無法 intellisense。</li>
-<li>參數沒有型別，也沒有編譯器檢查，因此要撰寫大量的驗證參數的程式碼。</li>
-<li>沒有編譯做第一層的把關，因此必須<strong>寫大量測試</strong>取代編譯器，測試的 coverage 必須要拉很高。</li>
-</ul>
-<blockquote>
-<p>你覺得寫型別很麻煩？寫測試不是更麻煩？</p>
-<p>你覺得寫測試很麻煩？手動測試不是更麻煩？</p>
-</blockquote>
-<p>有了<strong>強型別 + 編譯</strong>保護，透過編譯器檢查，讓我們可以少寫很多測試，專注在為<strong>商業邏輯的需求寫測試</strong>，而不是為了追求 coverage 100% ，為測試而寫測試。</p>
-<h3 id="Multi-Paradigm">Multi-Paradigm</h3><p>因為 TypeScript 包含 JavaScript (ES5、ES6、ES7 …)，而 JavaScript 比較偏向 FRP (Functional Reactive Programming)，但 TypeScript 有自己的強型別系統，比較偏向 OOP (Object Oriented Programming) 與 GP (Generic Progrmming)，因此在寫 TypeScript 時，基本上你會有 3 套武器可用：</p>
-<ul>
-<li><strong>FRP</strong> : Functional Reactive Programming</li>
-<li><strong>OOP</strong> : Object Oriented Programming</li>
-<li><strong>GP</strong> : Generic Programming</li>
-</ul>
-<p>可以視專案需求與規模，選擇適當的武器，不再你手上只有錘子，所有的東西都是釘子。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>TypeScript 是我這幾年來，僅見的集<strong>優雅</strong>與<strong>強悍</strong>於一身的程式語言，原本因為 Angular 學習 TypeScript，但最後卻發現對於 TypeScript 的愛遠勝於 Angular。</li>
-<li><strong>強型別 + 編譯</strong>才是開發大型應用程式的保證，讓我們可以根據需求寫測試，不是為測試而寫測試。</li>
-<li>TypeScript 融合 FRP、OOP 與 GP，在 multi-paradigm 下，你可以選擇適當的武器，不再手中只有錘子。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://en.wikipedia.org/wiki/Anders_Hejlsberg" target="_blank" rel="external">Anders Hejlsberg</a>, <a href="https://www.typescriptlang.org" target="_blank" rel="external">TypeScript</a><br><a href="https://stackoverflow.com/" target="_blank" rel="external">stack overflow</a>, <a href="https://stackoverflow.com/questions/28960934/what-is-difference-between-typescript-and-atscript" target="_blank" rel="external">What is difference between TypeScript and AtScript?</a><br><a href="https://social.msdn.microsoft.com/profile/Jonathan+Turner+%5BMS%5D" target="_blank" rel="external">Jonathan Turner</a>, <a href="https://blogs.msdn.microsoft.com/typescript/2015/03/05/angular-2-built-on-typescript/" target="_blank" rel="external">Angular 2: Built on TypeScript</a><br><a href="https://twitter.com/ngconf" target="_blank" rel="external">@ngconf</a>, <a href="https://twitter.com/ngconf/status/573521849780305920" target="_blank" rel="external">AtScript is TypeScript</a><br><a href="http://developer.telerik.com/author/tvantoll/" target="_blank" rel="external">TJ VanToll</a>, <a href="http://developer.telerik.com/featured/the-rise-of-typescript/" target="_blank" rel="external">The Rise of TypeScript?</a><br><a href="https://build.microsoft.com/" target="_blank" rel="external">Microsoft Build 2017</a>, <a href="https://channel9.msdn.com/Events/Build/2017/B8088" target="_blank" rel="external">What’s new in TypeScript</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[以開發者角度看 TypeScript]]>
     
     </summary>
     
