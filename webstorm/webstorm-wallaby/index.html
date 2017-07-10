@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓 TypeScript 也能 Alive">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-09T14:39:25.000Z">
+<meta property="og:updated_time" content="2017-07-10T02:54:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 WebStorm 執行 Wallaby 單元測試?">
 <meta name="twitter:description" content="讓 TypeScript 也能 Alive">
@@ -102,19 +102,19 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Wallaby"><span class="toc-article-text">下載 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallyby"><span class="toc-article-text">安裝 Wallyby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_src/tsconfig-app-json"><span class="toc-article-text">設定 src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_Wallaby"><span class="toc-article-text">下載 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallaby"><span class="toc-article-text">安裝 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_src/tsconfig-app-json"><span class="toc-article-text">設定 src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 的單元測試</p>
+	    <p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 <a href="https://wallabyjs.com/" target="_blank" rel="external">Wallaby</a>，在 WebStorm 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 單元測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Wallaby 1.0.92</p>
 <h2 id="下載_Wallaby">下載 Wallaby</h2><hr>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby000.png" alt="wallaby000"></p>
 <p>到 Wallaby.js 官網 <a href="https://wallabyjs.com" target="_blank" rel="external">https://wallabyjs.com</a>，選擇 WebStorm 版本下載。</p>
-<h2 id="安裝_Wallyby">安裝 Wallyby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
+<h2 id="安裝_Wallaby">安裝 Wallaby</h2><p><img src="/images/webstorm/webstorm-wallaby/wallaby001.png" alt="wallaby001"></p>
 <p><strong><em>WebStorm -&gt; Preferences -&gt; Plugins</em></strong></p>
 <p>按 <code>Install plugin from disk…</code>。</p>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby002.png" alt="wallaby002"></p>
@@ -125,10 +125,10 @@
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby003.png" alt="wallaby003"></p>
 <ol>
 <li>安裝成功後會出現 <code>Wallaby</code>。</li>
-<li>按 <code>Restart WebStorm</code>  才能使用 Wallaby。</li>
+<li>按 <code>Restart WebStorm</code>  才能使用。</li>
 </ol>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby004.png" alt="wallaby004"></p>
-<p>WebStorm 重新啟動後，右下角會出現 <code>Wallaby License</code> 提示，表示 Wallaby 已經安裝成功。</p>
+<p>WebStorm 重新啟動後，右下角會出現 <code>Wallaby License</code> 提示，表示已經安裝成功。</p>
 <blockquote>
 <p>Trial versions available for download are fully functional and should work for 30 days. Note that in the trial mode wallaby will sometimes prompt you to restart your editor to get another trial session. </p>
 </blockquote>
@@ -174,7 +174,7 @@
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby013.png" alt="wallaby013"></p>
 <p>通過測試的案例，左側會出現<code>綠燈</code>，下方也會顯示目前通過測試案例的個數。</p>
 <p><img src="/images/webstorm/webstorm-wallaby/wallaby014.png" alt="wallaby014"></p>
-<p><strong>不用</strong>按存檔就可以立即跑測試顯示<code>紅燈</code>或<code>綠燈</code>，並且立刻顯示實際值與期望值的差異。</p>
+<p><strong>不用</strong>按存檔就可以立即跑測試顯示<code>紅燈</code>或<code>綠燈</code>，且立刻顯示實際值與期望值的差異。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>Wallaby 有各種版本，如 Visual Studio、Visual Studio Code，甚至於 Sublime Text 與 Atom 也有支援。</li>
@@ -182,7 +182,7 @@
 <li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅提升 TDD 開發效率。</li>
 </ul>
 <h2 id="Reference">Reference</h2><hr>
-<p><a href="https://wallabyjs.com" target="_blank" rel="external">Wallyby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/" target="_blank" rel="external">[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2</a><br><a href="https://www.youtube.com/watch?v=RjrIK__PepU&amp;feature=youtu.be" target="_blank" rel="external">Techniques and practices for testing Angular 2 | Identity Server 4 with Angular 2 ASP.NET core</a></p>
+<p><a href="https://wallabyjs.com" target="_blank" rel="external">Wallaby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/01/05/angular2-ssw-testing-angular2-note/" target="_blank" rel="external">[Angular] 學習筆記(1) - Techniques and practices for testing Angular 2</a><br><a href="https://www.youtube.com/watch?v=RjrIK__PepU&amp;feature=youtu.be" target="_blank" rel="external">Techniques and practices for testing Angular 2 | Identity Server 4 with Angular 2 ASP.NET core</a></p>
 	  
 	</div>
 
