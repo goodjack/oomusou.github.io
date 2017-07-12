@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/angular-di/</loc>
+    <lastmod>2017-07-12T12:52:58.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/webstorm/webstorm-jasmine/</loc>
+    <lastmod>2017-07-10T06:04:02.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/webstorm/webstorm-wallaby/</loc>
     <lastmod>2017-07-10T02:54:21.000Z</lastmod>
   </url>
@@ -54,11 +64,6 @@
   <url>
     <loc>http://oomusou.io/angular/angular-http-get/</loc>
     <lastmod>2017-06-26T02:44:34.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/webstorm/webstorm-jasmine/</loc>
-    <lastmod>2017-06-22T07:36:51.000Z</lastmod>
   </url>
   
   <url>
@@ -154,11 +159,6 @@
   <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-uml/</loc>
     <lastmod>2017-04-18T14:10:42.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/angular-di/</loc>
-    <lastmod>2017-04-16T12:02:30.000Z</lastmod>
   </url>
   
   <url>

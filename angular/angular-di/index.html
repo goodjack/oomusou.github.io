@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓前端也能使用後端常用的開發技巧">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-04-16T12:02:30.000Z">
+<meta property="og:updated_time" content="2017-07-12T12:52:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 的 DI 與 Provider">
 <meta name="twitter:description" content="讓前端也能使用後端常用的開發技巧">
@@ -137,7 +137,7 @@
 <blockquote>
 <p>在一個 service 內直接去 new 其他 service，在單元測試時會無法在外部以假 service 取代，因此說其為 <strong>Hard to Test</strong>。</p>
 </blockquote>
-<h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>NotificationService</code>  <strong><em>Robut、Flexible 與 Testable</em></strong> 呢?</p>
+<h3 id="有_DI_版本">有 DI 版本</h3><p>我們該怎麼使 <code>NotificationService</code>  <strong><em>Robust、Flexible 與 Testable</em></strong> 呢?</p>
 <p>其實很簡單，只要將 new 改成用 contructor 參數，這就是 DI 了。</p>
 <p><strong>NotificationService</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;SMSService&#125; from <span class="string">'./sms.service'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NotificationService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> smsService : SMSService;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(smsService: SMSService) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.smsService = smsService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  showMessage() : <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.smsService.sendMessage();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

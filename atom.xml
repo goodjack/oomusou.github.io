@@ -1049,7 +1049,7 @@
     <link href="http://oomusou.io/webstorm/webstorm-jasmine/"/>
     <id>http://oomusou.io/webstorm/webstorm-jasmine/</id>
     <published>2017-06-22T12:23:43.000Z</published>
-    <updated>2017-06-22T07:36:51.000Z</updated>
+    <updated>2017-07-10T06:04:02.000Z</updated>
     <content type="html"><![CDATA[<p>Angular CLI 已經將 Jasmine 整好，我們可以直接在 terminal  下 <code>ng test</code> 執行單元測試；WebStorm 亦整合了 Karma + Jasmine，讓我們可以在 IDE 內直接跑 Jasmine。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1090,8 +1090,8 @@
 </blockquote>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>是否要<strong>自動執行</strong>或<strong>手動執行</strong> Protractor 因人而異，個人是比較喜歡用 <code>fit()</code> 與  <code>xit()</code>  控制要執行什麼測試，然後手動執行。</li>
-<li>Angular CLI  雖然提供了 <code>ng test</code>，讓我們在 terminal 就能執行 Jasmine 單元測試，但在 WebStorm 內跑 Protractor，我們可以更明確知道哪些測試案例是 <code>紅燈綠燈</code>，也可享受圖形化介面的方便。</li>
+<li>是否要<strong>自動執行</strong>或<strong>手動執行</strong> Jasmine 因人而異，個人是比較喜歡用 <code>fit()</code> 與  <code>xit()</code>  控制要執行什麼測試，然後手動執行。</li>
+<li>Angular CLI  雖然提供了 <code>ng test</code>，讓我們在 terminal 就能執行 Jasmine 單元測試，但在 WebStorm 內跑 Jasmine，我們可以更明確知道哪些測試案例是 <code>紅燈綠燈</code>，也可享受圖形化介面的方便。</li>
 <li>目前唯一的遺憾是儘管設定了中斷點，在 Karma 下仍然無法停止，但 Protractor 下卻可以，有待 WebStorm 解決此 bug。</li>
 </ul>
 ]]></content>
