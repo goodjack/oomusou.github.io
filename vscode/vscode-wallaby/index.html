@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓 TypeScript 也能 Alive">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-12T16:45:42.000Z">
+<meta property="og:updated_time" content="2017-07-13T02:05:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 Visual Studio Code 執行 Wallaby 單元測試?">
 <meta name="twitter:description" content="讓 TypeScript 也能 Alive">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallaby"><span class="toc-article-text">安裝 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#src/tsconfig-app-json"><span class="toc-article-text">src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Wallaby"><span class="toc-article-text">安裝 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Angular_CLI"><span class="toc-article-text">設定 Angular CLI</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_wallaby-js"><span class="toc-article-text">新增 wallaby.js</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_src/wallabyTest-ts"><span class="toc-article-text">新增 src/wallabyTest.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#src/tsconfig-app-json"><span class="toc-article-text">src/tsconfig.app.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_Node-js_套件"><span class="toc-article-text">安裝 Node.js 套件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_Wallaby"><span class="toc-article-text">執行 Wallaby</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#顯示_Code_Coverage"><span class="toc-article-text">顯示 Code Coverage</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -110,7 +110,7 @@
 	    <p>很羨慕 Visual Studio 有 Alive 可以即時跑單元測試嗎？只要安裝了 Wallaby，在 Visual Studio Code 也可以如 Alive 一樣為 Angular 即時跑 TypeScript 與 Jasmine 單元測試。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Wallaby 1.0.52</p>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Wallaby 1.0.52<br>Visual Studio Code 1.14.0</p>
 <h2 id="安裝_Wallaby">安裝 Wallaby</h2><hr>
 <p><img src="/images/vscode/vscode-wallaby/vscode000.png" alt="vscode000"></p>
 <ol>
@@ -144,7 +144,8 @@
 <h3 id="安裝_Node-js_套件">安裝 Node.js 套件</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/<span class="type">MyProject</span>$ npm install wallaby-webpack angular2-<span class="keyword">template</span>-loader electron --save-dev</span><br></pre></td></tr></table></figure>
 <p>安裝 Wallaby 所需要的 Node.js 套件。</p>
 <p><img src="/images/vscode/vscode-wallaby/vscode005.png" alt="vscode005"></p>
-<h2 id="執行_Wallaby">執行 Wallaby</h2><ul>
+<h2 id="執行_Wallaby">執行 Wallaby</h2><hr>
+<ul>
 <li>Start：⌘ + ⇧ + R, R</li>
 <li>Stop：⌘ + ⇧ + R, S</li>
 </ul>
@@ -156,13 +157,27 @@
 <p>通過測試的案例，左側會出現<code>綠燈</code>，下方也會顯示目前通過測試案例的個數。</p>
 <p><img src="/images/vscode/vscode-wallaby/vscode009.png" alt="vscode009"></p>
 <p><strong>不用</strong>按存檔就可以立即跑測試顯示<code>紅燈</code>或<code>綠燈</code>，且立刻顯示實際值與期望值的差異。</p>
+<h2 id="顯示_Code_Coverage">顯示 Code Coverage</h2><hr>
+<p>寫單元測試的另外ㄧ件重大的事情，就是關心 code coverage 是否達到團隊目標。Wallaby 提供了 Wallaby App，只要輸入 <code>http://wallabyjs.com/app</code>，就可以顯示目前整個專案的 code coverage 狀況。</p>
+<blockquote>
+<p>不用擔心 <code>http://wallabyjs.com/app</code> 是連到外面，事實上它相當於 <code>http://localhost:51245</code>，還是跑在本機。</p>
+</blockquote>
+<p><img src="/images/vscode/vscode-wallaby/vscode010.png" alt="vscode010"></p>
+<ol>
+<li><code>App</code> 目錄顯示整個專案的 code coverage。</li>
+<li>也可以顯示單一檔案的 code coverage。</li>
+</ol>
+<blockquote>
+<p>Wallaby App 可貴的地方在於他不是靜態 HTML report，而是隨著測試結果自動改變，隨時顯示最新的 code coverage。</p>
+</blockquote>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>Wallaby 有各種版本，如 Visual Studio、WebStorm，甚至於 Sublime Text 與 Atom 也有支援。</li>
 <li>Wallaby 雖然是個付費軟體，但非常有其價值。</li>
 <li>TDD 會讓開發變慢，主要是因為工具不夠方便，Wallaby 讓我們寫單元測試的同時，就即時知道<code>紅燈</code>與<code>綠燈</code>測試結果，將大幅提升 TDD 開發效率。</li>
 </ul>
-<h2 id="Reference">Reference</h2><p><a href="http://dm.gl" target="_blank" rel="external">Wallaby.js Blog</a>, <a href="http://dm.gl/2015/11/26/wallaby-for-visual-studio-code/" target="_blank" rel="external">Wallaby.js for Visual Studio Code</a></p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://dm.gl" target="_blank" rel="external">Wallaby.js Blog</a>, <a href="http://dm.gl/2015/11/26/wallaby-for-visual-studio-code/" target="_blank" rel="external">Wallaby.js for Visual Studio Code</a><br><a href="https://wallabyjs.com" target="_blank" rel="external">Wallaby</a>, <a href="https://github.com/wallabyjs/ngCliWebpackSample#wallabyjs" target="_blank" rel="external">Angular.js 2 angular-cli (Webpack) generated project</a></p>
 	  
 	</div>
 
@@ -209,7 +224,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>17</span></a></li> <li><a href="/tags/TDD/">TDD<span>18</span></a></li> <li><a href="/tags/Visual-Studio-Code/">Visual Studio Code<span>1</span></a></li> <li><a href="/tags/Wallaby/">Wallaby<span>2</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>17</span></a></li> <li><a href="/tags/TDD/">TDD<span>18</span></a></li> <li><a href="/tags/VSCode/">VSCode<span>1</span></a></li> <li><a href="/tags/Wallaby/">Wallaby<span>2</span></a></li>
     </ul>
 	</div>
 		
