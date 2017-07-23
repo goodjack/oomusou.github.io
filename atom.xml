@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-23T02:24:23.000Z</updated>
+  <updated>2017-07-23T02:29:42.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/webstorm/webStorm-jasmine-template/"/>
     <id>http://oomusou.io/webstorm/webStorm-jasmine-template/</id>
     <published>2017-07-23T12:23:43.000Z</published>
-    <updated>2017-07-23T02:24:23.000Z</updated>
+    <updated>2017-07-23T02:29:42.000Z</updated>
     <content type="html"><![CDATA[<p>WebStorm 雖然提供自動產生 Jasmine Suite、Spec… 等功能，不過預設使用 ES5 的 anonymous function，當然可以自己重構成 arrow function，若能一開始就 arrow function 就更方便了。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -34,8 +34,8 @@
 <p><img src="/images/webstorm/webstorm-jasmine-template/jasmine001.png" alt="jasmine001"></p>
 <p>以 Jasmine Suite 為例，WebStorm 提供的 template 有 2 個缺點：</p>
 <ol>
-<li>suite name 使用單引號：但因為 suite 用來描述需求，因此可能再次使用單引號強調測試案例，若在單引號內使用雙引號，又變得不是很直接，因此希望 suite name 改用 backtick 寫法</li>
-<li>使用 anonymous function：在 TypeScript 與 ES6 都習慣使用 arrow function 取代 anonymous function，語法較簡潔</li>
+<li><strong>suite name 使用單引號</strong>：但因為 suite 用來描述需求，因此可能再次使用單引號強調測試案例，若在單引號內使用雙引號，又變得不是很直接，因此希望 suite name 改用 backtick 寫法</li>
+<li><strong>使用 anonymous function</strong>：在 TypeScript 與 ES6 都習慣使用 arrow function 取代 anonymous function，語法較簡潔</li>
 </ol>
 <p>Jasmine Spec 也有相同的問題。</p>
 <p>此外對於常用的 <code>expect()</code>，WebStorm 也沒提供 template。</p>
