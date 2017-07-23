@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-13T02:05:52.000Z</updated>
+  <updated>2017-07-23T02:14:31.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 WebStorm 自訂 Jasmine Live Template?]]></title>
+    <link href="http://oomusou.io/webstorm/webStorm-jasmine-template/"/>
+    <id>http://oomusou.io/webstorm/webStorm-jasmine-template/</id>
+    <published>2017-07-23T12:23:43.000Z</published>
+    <updated>2017-07-23T02:14:31.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm 雖然提供自動產生 Jasmine Suite、Suite… 等功能，不過預設不是使用 arrow function，而是使用 ES5 的 anonymous function，當然可以自己繼續將 anonymous function 重構成 arrow function，若能一開始就 arrow function 就更方便了。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.2</p>
+<h2 id="Symptons">Symptons</h2><hr>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine000.png" alt="jasmine000"></p>
+<p>WebStorm 內建提供了 4 個 Jasmine template，可使用熱鍵自動產生 Jasmine Suite、Jasmine Spec、Jasmine beforeEach 與 Jasmine afterEach。</p>
+<blockquote>
+<p>Windows：Alt + Insert</p>
+<p>macOS：⌘ + N</p>
+</blockquote>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine001.png" alt="jasmine001"></p>
+<p>以 Jasmine Suite 為例，WebStorm 提供的 template 有 2 個缺點：</p>
+<ol>
+<li>suite name 使用單引號：但因為 suite 用來描述需求，因此可能再次使用單引號強調測試案例，若在單引號內使用雙引號，又變得不是很直接，因此希望 suite name 改用 backtick 寫法</li>
+<li>使用 anonymous function：在 TypeScript 與 ES6 都習慣使用 arrow function 取代 anonymous function，語法較簡潔</li>
+</ol>
+<p>Jasmine Spec 也有相同的問題。</p>
+<p>此外對於常用的 <code>expect()</code>，WebStorm 也沒提供 template。</p>
+<h2 id="Recipes">Recipes</h2><hr>
+<p>我們將手動建立 3 個常用的 Jasmine live template，加速 ATDD 開發速度。</p>
+<h3 id="新增_Suite_Template">新增 Suite Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">describe(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine002.png" alt="jasmine002"></p>
+<p>將我們想要的 suite template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine003.png" alt="jasmine003"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine004.png" alt="jasmine004"></p>
+<ol>
+<li><strong>輸入 <code>des</code> 縮寫</strong>：將來只要輸入 <code>des</code>，並按下 <code>tab</code>，就會展開 suite template</li>
+<li><strong>輸入 description</strong>：對 <code>des</code> 加上 <code>Generate Jasmine Suite</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>des</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine005.png" alt="jasmine005"></p>
+<p>輸入 <code>des</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Suite</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine006.png" alt="jasmine006"></p>
+<p>輸入 <code>des</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 suite name 之處。</p>
+<h3 id="新增_Spec_Template">新增 Spec Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">it(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine007.png" alt="jasmine007"></p>
+<p>將我們想要的 spec template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine008.png" alt="jasmine008"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine009.png" alt="jasmine009"></p>
+<ol>
+<li><strong>輸入 <code>it</code> 縮寫</strong>：將來只要輸入 <code>it</code>，並按下 <code>tab</code>，就會展開 spec template</li>
+<li><strong>輸入 description</strong>：對 <code>it</code> 加上 <code>Generate Jasmine Spec</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>it</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine010.png" alt="jasmine010"></p>
+<p>輸入 <code>it</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Spec</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine011.png" alt="jasmine011"></p>
+<p>輸入 <code>it</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 spec name 之處。</p>
+<h3 id="新增_Expect_Template">新增 Expect Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect().toBe();</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine012.png" alt="jasmine012"></p>
+<p> 將我們想要的 expect template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine013.png" alt="jasmine013"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine014.png" alt="jasmine014"></p>
+<ol>
+<li><strong>輸入 <code>exp</code> 縮寫</strong>：將來只要輸入 <code>exp</code>，並按下 <code>tab</code>，就會展開 expect template</li>
+<li><strong>輸入 description</strong>：對 <code>exp</code> 加上 <code>Generate Jasmine Expect</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>exp</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine015.png" alt="jasmine015"></p>
+<p>輸入 <code>exp</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Expect</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine016.png" alt="jasmine016"></p>
+<p>輸入 <code>exp</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 <code>expect()</code> 之內。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>Save as Live Template</code> 是 JetBrains IntelliJ 平台都有的功能，在 PhpStorm、WebStorm 與 Rider 都可使用，可自行將常用的 code snippet 存下來，增加開發效率。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[自動 Jasmine Template 加速 ATDD 開發]]>
+    
+    </summary>
+    
+      <category term="ATDD" scheme="http://oomusou.io/tags/ATDD/"/>
+    
+      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何在 Visual Studio Code 執行 Wallaby 單元測試?]]></title>
@@ -1267,49 +1363,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1396,6 +1449,49 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1644,96 +1740,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[TypeScript/ES6 對 function 支援的擴展]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[TypeScript 之變數宣告與建立]]></title>
-    <link href="http://oomusou.io/typescript/typescript-variable/"/>
-    <id>http://oomusou.io/typescript/typescript-variable/</id>
-    <published>2017-06-16T12:23:43.000Z</published>
-    <updated>2017-06-15T07:34:22.000Z</updated>
-    <content type="html"><![CDATA[<p>變數宣告部分，除了 <code>var</code> 以外，在 ES6 增加了 <code>let</code> 與 <code>const</code>，在變數建立部分，則增加了 destructuring 與 spread，當然 TypeScript 也完全支援。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScript 2.3</p>
-<h2 id="var">var</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>var</code> 最經典的範例莫過於此，原本我們預期會輸出</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
-<p>結果輸出</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
-<p>這裡有兩個觀念：</p>
-<ul>
-<li><code>setTimeout()</code> 屬於非同步 function，JavaScript 的 event loop model 會在最後執行。</li>
-<li><code>var</code> 看似在 <code>{}</code> 內，但沒有 scope 概念，因為其 hoisting 機制，會將 <code>var</code> 提升到程式最前面，相當於全域變數，因此 <code>console.log()</code> 印出 for loop 執行完的 <code>10</code>。</li>
-</ul>
-<h2 id="let">let</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>將 <code>var</code> 改成 <code>let</code> 之後，結果就如預期了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
-<p><code>let</code> 對變數有 scope 概念，其生命週期只存在於 <code>{}</code> ，因此儘管非同步的 <code>setTimeout()</code> 最後執行，let 仍將 <code>i</code> 鎖住到最後，而不像 <code>var</code> 沒有 scope 概念，都是全域變數。</p>
-<blockquote>
-<p>實務上應該全面使用 let 取代 var，若你使用 var，language service 也會提出警告，要你改用 let。</p>
-</blockquote>
-<h2 id="const">const</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numLivesForCat = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
-<p> 若此變數不會再被修改，則應宣告成 const。</p>
-<blockquote>
-<p>傳統我們都是確定此變數不能被修改，才會宣告成 const，但在 TypeScript 中是反過來，<strong>變數應該盡量宣告成 const，除非要修改才宣告成 let</strong>，事實上，若 language service 發現變數從來沒被修改過，會主動提出警告，要求你改成 const，這是希望大家盡量寫出 immutable 的 pure function，減少不必要的 side effect。</p>
-</blockquote>
-<h2 id="Destructuring">Destructuring</h2><hr>
-<h3 id="Array_Destructing">Array Destructing</h3><p>ES6 允許我們直接將陣列加以解構成變數。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> first = input[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> second = input[<span class="number">1</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// outputs 2</span></span><br></pre></td></tr></table></figure>
-<p>在 ES5，我們必須使用 array index 方式，才能將值指定到變數。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> [first, second] = input;</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// outputs 2</span></span><br></pre></td></tr></table></figure>
-<p>ES6 我們可以直接使用 <code>[]</code> 將陣列加以解構。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swap variables</span></span><br><span class="line">[first, second] = [second, first];</span><br></pre></td></tr></table></figure>
-<p>交換變數，只要一行就可以寫出來。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">[first, second]: <span class="built_in">number</span>[]</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(first); <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br><span class="line">f([<span class="number">1</span>, <span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
-<p>若用在 function 的參數，可以接陣列解構成變數。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first, ...rest] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// outputs [ 2, 3, 4 ]</span></span><br></pre></td></tr></table></figure>
-<p>配合 <code>…</code>，將剩餘的值結構成陣列。</p>
-<p><code>first</code> 為單一變數，<code>rest</code> 為陣列。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [first] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(first); <span class="comment">// outputs 1</span></span><br></pre></td></tr></table></figure>
-<p><code>first</code> 為 <code>1</code>，其他值會忽略。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [, second, , fourth] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(second); <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(fourth); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
-<p>只有 <code>2</code> 與 <code>4</code> 會解構，其他值會忽略。</p>
-<h3 id="Object_Destructing">Object Destructing</h3><p>除了解構陣列外，ES6 還允許我們解構物件。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span>,</span><br><span class="line">  c: <span class="string">"bar"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; a, b &#125; = o;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
-<p> <code>c</code> 因為沒有變數解構，會自動忽略。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span>,</span><br><span class="line">  c: <span class="string">"bar"</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123; a, ...passthrough &#125; = o;</span><br><span class="line"><span class="keyword">let</span> total = passthrough.b + passthrough.c.length</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line"><span class="built_in">console</span>.log(total); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
-<p>配合 <code>…</code>，將剩餘的值結構成物件。</p>
-<p><code>a</code> 為單一變數，<code>passthrough</code> 為物件。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> C = &#123; a: <span class="built_in">string</span>, b: <span class="built_in">number</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">&#123;a, b&#125;: C</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// foo</span></span><br><span class="line">  <span class="built_in">console</span>.log(b); <span class="comment">// 12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="string">"foo"</span>,</span><br><span class="line">  b: <span class="number">12</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">f(o);</span><br></pre></td></tr></table></figure>
-<p>若用在 function 的參數，可以接物件解構成變數。</p>
-<h2 id="Spread">Spread</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> first = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="keyword">let</span> second = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> bothPlus = [<span class="number">0</span>, ...first, ...second, <span class="number">5</span>];</span><br></pre></td></tr></table></figure>
-<p><code>…</code> 會將陣列加以展開。</p>
-<p><code>bothPlus</code> 為 <code>[0, 1, 2, 3, 4, 5]</code> 。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> defaults = &#123; food: <span class="string">"spicy"</span>, price: <span class="string">"$$"</span>, ambiance: <span class="string">"noisy"</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> search = &#123; ...defaults, food: <span class="string">"rich"</span> &#125;;</span><br></pre></td></tr></table></figure>
-<p><code>…</code> 會將物件屬性加以展開。</p>
-<p><code>search</code> 為 <code>{ food: &quot;rich&quot;, price: &quot;$$&quot;, ambiance: &quot;noisy&quot; }</code></p>
-<blockquote>
-<p>若屬性有重複，將後面蓋前面。</p>
-</blockquote>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> C &#123;</span><br><span class="line">  p = <span class="number">12</span>;</span><br><span class="line">  m() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> C();</span><br><span class="line"><span class="keyword">let</span> clone = &#123; ...c &#125;;</span><br><span class="line">clone.p; <span class="comment">// ok</span></span><br><span class="line">clone.m(); <span class="comment">// error!</span></span><br></pre></td></tr></table></figure>
-<p><code>…</code> 只能展開 property，不能展開 method。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>實務上應該盡量使用 <code>const</code>，除非變數需要被修改才用 <code>let</code>。</li>
-<li>盡量寫出 pure function 減少 side effect。</li>
-<li>Destructuring 與 spread 非常好用，可以讓程式碼更精簡。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/variable-declarations.html" target="_blank" rel="external">Handbook : Variable Declaration</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[ES6 提供不少語法關於變數宣告與建立]]>
     
     </summary>
     

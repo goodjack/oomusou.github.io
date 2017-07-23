@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/webstorm/webStorm-jasmine-template/</loc>
+    <lastmod>2017-07-23T02:14:31.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/vscode/vscode-wallaby/</loc>
     <lastmod>2017-07-13T02:05:52.000Z</lastmod>
   </url>
@@ -302,7 +307,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-class-template/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -317,12 +322,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-completion/</loc>
+    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-class-template/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
