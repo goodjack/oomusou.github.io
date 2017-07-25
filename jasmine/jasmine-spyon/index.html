@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="spyOn() 的使用心得整理">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-25T16:20:24.000Z">
+<meta property="og:updated_time" content="2017-07-25T16:26:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討整合測試與 spyOn()">
 <meta name="twitter:description" content="spyOn() 的使用心得整理">
@@ -175,7 +175,7 @@
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>Jasmine 的 <code>spyOn()</code> 無法對 field 加以 spy，因此必須使用驗收測試的基本技巧：<strong>使用假值並測試假值</strong>，但 method 可直接 spy，建議直接使用 <code>toHaveBeenCalled()</code>。</li>
-<li>一般人大都在單元測試內使用 <code>spyOn()</code>，將相依物件加以隔離，但事實上在整合測試使用 <code>spyOn()</code> 配合 <code>toHaveBeenCalled()</code>，還可以驅動出相依物件的單元測試，這正是 ATDD 由整合測試<code>紅燈</code>，驅動出單元測試<code>綠燈</code>的關鍵技術。</li>
+<li>一般人大都在單元測試內使用 <code>spyOn()</code>，將相依物件加以隔離，但事實上在整合測試使用 <code>spyOn()</code> 配合 <code>toHaveBeenCalled()</code>，還可以驅動出相依物件的單元測試，這正是 ATDD 由整合測試<code>紅燈</code>，驅動出單元測試<code>紅燈</code>的關鍵技術。</li>
 </ul>
 	  
 	</div>
