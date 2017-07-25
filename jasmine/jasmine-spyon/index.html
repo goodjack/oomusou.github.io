@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="spyOn() 的使用心得整理">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-07-25T16:39:24.000Z">
+<meta property="og:updated_time" content="2017-07-25T16:42:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Angular 整合測試與 Jasmine 的 spyOn()">
 <meta name="twitter:description" content="spyOn() 的使用心得整理">
@@ -149,7 +149,7 @@
 </blockquote>
 <p><img src="/images/jasmine/jasmine-spyon/spyOn001.svg" alt="spyOn001"></p>
 <p>若使用 <code>spyOn()</code>，<code>spyOn()</code> 會對原本的 <code>getTitle()</code> 進行<strong>攔胡</strong>，HTML 將無法去呼叫原本 <code>TitleComponent.getTitle()</code>，而改呼叫 <code>Spy.getTitle()</code>。</p>
-<p><code>spyOn()</code> 另外一個特點，就是對不存在的相依物件進行 <code>spyOn()</code> 時，會測試<code>紅燈</code>，可藉此驅動相依物件的單元測試，這也是 ATDD 能 out side in 的精髓。</p>
+<p><code>spyOn()</code> 另外一個特點，就是對不存在的相依物件進行 <code>spyOn()</code> 時，會測試<code>紅燈</code>，可藉此驅動出相依物件的單元測試，這也是 ATDD 能 out side in 的關鍵。</p>
 <h3 id="callFake()">callFake()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'fake'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><code>callFake()</code> 會傳入 arrow function 回傳假資料，用來取代想 spy 的 function。</p>
 <p>最後 <code>expect()</code> 一樣測試假資料。</p>
