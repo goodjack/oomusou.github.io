@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入探討整合測試與 spyOn() | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="spyOn() 的使用心得整理">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="spyOn() 的使用心得整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探討整合測試與 spyOn()">
+<meta property="og:url" content="http://oomusou.io/jasmine/jasmine-spyon/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="spyOn() 的使用心得整理">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-07-25T16:20:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探討整合測試與 spyOn()">
+<meta name="twitter:description" content="spyOn() 的使用心得整理">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 深入探討整合測試與 spyOn()</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> spyOn() 的使用心得整理			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#定義"><span class="toc-article-text">定義</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試目的"><span class="toc-article-text">測試目的</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#整合測試"><span class="toc-article-text">整合測試</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SpyOn()"><span class="toc-article-text">SpyOn()</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#callFake()"><span class="toc-article-text">callFake()</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#returnValue"><span class="toc-article-text">returnValue</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#calls-any()"><span class="toc-article-text">calls.any()</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#toHaveBeenCalled()"><span class="toc-article-text">toHaveBeenCalled()</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SpyOn()_使用時機"><span class="toc-article-text">SpyOn() 使用時機</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>spyOn() 是整合測試與單元測試的關鍵，本文深入探討整合測試與 spyOn()。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
+<h2 id="定義">定義</h2><hr>
+<p><img src="/images/jasmine/jasmine-spyon/spyOn000.svg" alt="spyOn000"></p>
+<ul>
+<li><strong>驗收測試</strong>：以 HTML 與 CSS 的角度測試最後結果，配合<strong>真資料</strong>測試，與 Angular <strong>無關</strong></li>
+<li><strong>整合測試</strong>：以 Angular 角度測試元件與元件之間的關係，配合<strong>假資料</strong>測試，與 Angular <strong>有關</strong></li>
+<li><strong>單元測試</strong>：以 class 角度測試，配合<strong>假資料</strong>測試，與 Angular <strong>無關</strong></li>
+</ul>
+<blockquote>
+<p>最簡單的的是<strong>單元測試</strong>，常常一個 <code>expect()</code> 就可搞定</p>
+<p>其次是<strong>驗收測試</strong>，只要會寫 CSS selector 也不難</p>
+<p>最難寫的是<strong>整合測試</strong>，要對相依物件加以<strong>假設</strong>，<strong>並傳入假資料與驗證假資料</strong></p>
+</blockquote>
+<h2 id="測試目的">測試目的</h2><hr>
+<blockquote>
+<p>Q：驗收測試、整合測試與單元測試到底要測什麼？</p>
+</blockquote>
+<ul>
+<li><strong>驗收測試</strong>：測最終結果</li>
+<li><strong>整合測試</strong>：測之間關係</li>
+<li><strong>單元測試</strong>：測單一結果</li>
+</ul>
+<h2 id="整合測試">整合測試</h2><hr>
+<blockquote>
+<p>測試案例：<code>&lt;h1&gt;&lt;/h1&gt;</code> 內應該使用 <code>getTitle()</code> 函式</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  component.getTitle = () =&gt; <span class="string">'fake'</span>;</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在測試 <code>&lt;h1&gt;&lt;/h1&gt;</code> 內應使用 <code>title</code> field 時，我們曾經指定 <code>title</code> 為假資料 <code>fake</code>，並測試 <code>&lt;h1&gt;&lt;/h1&gt;</code> 內資料是否為 <code>fake</code>。</p>
+<p>同樣的技巧，我們也可以指定 <code>component.getTitle = () =&gt; &#39;fake&#39;</code>，並測試 <code>&lt;h1&gt;&lt;/h1&gt;</code> 內資料是否為 <code>fake</code>。</p>
+<blockquote>
+<p>將相依物件設定為<strong>假資料</strong>，並測試目前物件是否有相依物件的<strong>假資料</strong>，為整合測試的<strong>基本招式</strong>。</p>
+</blockquote>
+<h2 id="SpyOn()">SpyOn()</h2><hr>
+<p>以上方式雖然可行，算土法煉鋼，Jasmine 另外提供更方便的方式：<code>spyOn()</code>。</p>
+<blockquote>
+<p>Spy 英文為<strong>間諜</strong>，顧名思義，間諜就是假的，就是幫我們建立假物件、假資料。</p>
+</blockquote>
+<p><img src="/images/jasmine/jasmine-spyon/spyOn001.svg" alt="spyOn001"></p>
+<p>若使用 <code>spyOn()</code>，<code>spyOn()</code> 會對原本的 <code>getTitle()</code> 進行<strong>攔胡</strong>，HTML 將無法去呼叫原本 <code>TitleComponent.getTitle()</code>，而改呼叫 <code>Spy.getTitle()</code>。</p>
+<p><code>spyOn()</code> 另外一個特點，就是對不存在的相依物件進行 <code>spyOn()</code> 時，會測試<code>紅燈</code>，可藉此驅動相依物件的單元測試，這也是 ATDD 能 out side in 的精髓。</p>
+<h3 id="callFake()">callFake()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'fake'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>callFake()</code> 會傳入 arrow function 回傳假資料，用來取代想 spy 的 function。</p>
+<p>最後 <code>expect()</code> 一樣測試假資料。</p>
+<h3 id="returnValue">returnValue</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.returnValue(<span class="string">'fake'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>直接使用 <code>returnValue()</code> 回傳<strong>假資料</strong>，寫法比 <code>callFake()</code> 簡潔。</p>
+<p>最後 <code>expect()</code> 一樣測試假資料。</p>
+<h3 id="calls-any()">calls.any()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line">      </span><br><span class="line">  expect(spy.calls.any()).toBe(<span class="literal">true</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>整合測試重點是測試<strong>之間的關係</strong>，而測試假資料只是一種手段，若能直接測試 <code>getTitle()</code> 是有被呼叫到，會更符合整合測試的精神。</p>
+<p>使用 <code>spyOn()</code> 回傳一個物件，在 <code>expect()</code> 內測試 <code>spy.calls.any()</code>，若該 <code>spyOn()</code> 的 function 有被呼叫到則為 <code>true</code>。</p>
+<h3 id="toHaveBeenCalled()">toHaveBeenCalled()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(component.getTitle).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>以整合測試的角度，我們想測試的是<strong>之間的關係</strong>，也就是重點是<strong>有沒有被呼叫到</strong>，之前用<strong>假資料測試假資料</strong>只是一種手段，若 Jasmine 能直接 <code>expect()</code> 不就更理想？</p>
+<p>Jasmine 提供了 <code>expect().toHaveBeenCalled()</code>，若 <code>spyOn()</code> 的 function 被呼叫執行過，就會傳回 <code>true</code>。</p>
+<blockquote>
+<p><code>toHaveBeenCalled()</code> 是語意最佳的整合測試寫法，強烈推薦。</p>
+</blockquote>
+<h2 id="SpyOn()_使用時機">SpyOn() 使用時機</h2><hr>
+<ol>
+<li><strong>整合測試</strong>：用來對<strong>尚未實作</strong>的相依物件建立假物件，讓目前的整合測試<code>紅燈</code>，驅動出相依物件的單元測試<code>紅燈</code>。</li>
+<li><strong>單元測試</strong>：用來對<strong>已經實作</strong>的相依物件建立假物件，讓目前的單元測試<code>綠燈</code>。</li>
+</ol>
+<p><code>1</code> 是 ATDD 的理論基礎。</p>
+<p><code>2</code> 是 TDD 的理論基礎。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Jasmine 的 <code>spyOn()</code> 無法對 field 加以 spy，因此必須使用驗收測試的基本技巧：<strong>使用假值並測試假值</strong>，但 method 可直接 spy，建議直接使用 <code>toHaveBeenCalled()</code>。</li>
+<li>一般人大都在單元測試內使用 <code>spyOn()</code>，將相依物件加以隔離，但事實上在整合測試使用 <code>spyOn()</code> 配合 <code>toHaveBeenCalled()</code>，還可以驅動出相依物件的單元測試，這正是 ATDD 由整合測試<code>紅燈</code>，驅動出單元測試<code>綠燈</code>的關鍵技術。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webStorm-jasmine-template/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-26 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>18</span></a></li> <li><a href="/tags/Jasmine/">Jasmine<span>3</span></a></li> <li><a href="/tags/TDD/">TDD<span>20</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
