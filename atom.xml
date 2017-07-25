@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-25T16:47:40.000Z</updated>
+  <updated>2017-07-25T22:53:53.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/jasmine/jasmine-spyon/"/>
     <id>http://oomusou.io/jasmine/jasmine-spyon/</id>
     <published>2017-07-26T12:23:43.000Z</published>
-    <updated>2017-07-25T16:47:40.000Z</updated>
+    <updated>2017-07-25T22:53:53.000Z</updated>
     <content type="html"><![CDATA[<p><code>spyOn()</code> 是整合測試與單元測試的關鍵，本文深入探討 <code>spyOn()</code> 用於整合測試部分。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -32,7 +32,7 @@
 <li><strong>單元測試</strong>：以 class 角度測試，配合<strong>假資料</strong>測試，與 Angular <strong>無關</strong></li>
 </ul>
 <blockquote>
-<p>最簡單的的是<strong>單元測試</strong>，常常一個 <code>expect()</code> 就可搞定</p>
+<p>最簡單的是<strong>單元測試</strong>，常常一個 <code>expect()</code> 就可搞定</p>
 <p>其次是<strong>驗收測試</strong>，只要會寫 CSS selector 也不難</p>
 <p>最難寫的是<strong>整合測試</strong>，要對相依物件加以<strong>假設</strong>，<strong>並傳入假資料與驗證假資料</strong></p>
 </blockquote>
