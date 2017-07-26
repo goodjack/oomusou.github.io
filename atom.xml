@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-26T01:49:38.000Z</updated>
+  <updated>2017-07-26T01:58:12.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/jasmine/jasmine-spyon/"/>
     <id>http://oomusou.io/jasmine/jasmine-spyon/</id>
     <published>2017-07-26T12:23:43.000Z</published>
-    <updated>2017-07-26T01:49:38.000Z</updated>
+    <updated>2017-07-26T01:58:12.000Z</updated>
     <content type="html"><![CDATA[<p><code>spyOn()</code> 是整合測試與單元測試的關鍵，本文深入探討 <code>spyOn()</code> 用於整合測試部分。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -38,7 +38,7 @@
 </blockquote>
 <h2 id="測試目的">測試目的</h2><hr>
 <blockquote>
-<p>Q：驗收測試、整合測試與單元測試到底要測什麼？</p>
+<p>Q：驗收測試、整合測試與單元測試到底在測什麼？</p>
 </blockquote>
 <ul>
 <li><strong>驗收測試</strong>：測最終結果</li>
