@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-26T01:58:12.000Z</updated>
+  <updated>2017-07-26T02:13:28.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/jasmine/jasmine-spyon/"/>
     <id>http://oomusou.io/jasmine/jasmine-spyon/</id>
     <published>2017-07-26T12:23:43.000Z</published>
-    <updated>2017-07-26T01:58:12.000Z</updated>
+    <updated>2017-07-26T02:13:28.000Z</updated>
     <content type="html"><![CDATA[<p><code>spyOn()</code> 是整合測試與單元測試的關鍵，本文深入探討 <code>spyOn()</code> 用於整合測試部分。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -66,7 +66,7 @@
 <h3 id="callFake()">callFake()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'fake'</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><code>callFake()</code> 會傳入 arrow function 回傳假資料，用來取代想 <code>spyOn()</code> 的 function。</p>
 <p>最後 <code>expect()</code> 一樣測試<strong>假資料</strong>。</p>
-<h3 id="returnValue">returnValue</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.returnValue(<span class="string">'fake'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="returnValue()">returnValue()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.returnValue(<span class="string">'fake'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>直接使用 <code>returnValue()</code> 回傳<strong>假資料</strong>，寫法比 <code>callFake()</code> 簡潔。</p>
 <p>最後 <code>expect()</code> 一樣測試<strong>假資料</strong>。</p>
 <h3 id="calls-any()">calls.any()</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line">      </span><br><span class="line">  expect(spy.calls.any()).toBe(<span class="literal">true</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
