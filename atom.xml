@@ -525,109 +525,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何使用 Angular 實作下拉選單?]]></title>
-    <link href="http://oomusou.io/angular/angular-select/"/>
-    <id>http://oomusou.io/angular/angular-select/</id>
-    <published>2017-07-02T12:23:43.000Z</published>
-    <updated>2017-07-02T07:31:20.000Z</updated>
-    <content type="html"><![CDATA[<p><strong>下拉選單</strong>為常用的使用者介面，該如何優雅地將資料綁定在元件上，並且優雅地取得使用者的選擇資料呢？</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
-<h2 id="Introudction">Introudction</h2><hr>
-<p><img src="/images/angular/angular-select/select000.png" alt="select000"></p>
-<p>將實作出一下拉選單，其顯示資料來自於資料綁定，當使用者有不同的選擇，會將其值顯示在 select 下方。</p>
-<p>將示範 3 種實作方式：</p>
-<ul>
-<li>使用 DOM event</li>
-<li>使用 Template Reference Variable</li>
-<li>使用 Two-Way Binding</li>
-</ul>
-<h2 id="使用_DOM_event_物件">使用 DOM event 物件</h2><hr>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>第 2 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>使用 <code>*ngFor</code> 這個 structure directive 重複顯示 <code>&lt;option&gt;</code>，其中 <code>clouds</code> 型別為 <code>Cloud[]</code>，每一筆資料 <code>cloud</code> 為 <code>Cloud</code> ViewModel，有 <code>name</code> 與 <code>id</code> 兩個欄位，稍後會看到 <code>Cloud</code> ViewModel 的定義。</p>
-<p>第 1 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>(change)</code> 為 event binding，當 change event 被觸發時，執行 <code>onChange()</code> event handler。</p>
-<p><code>$event</code> 為 event object，若 event 為原生的 DOM event，則 <code>$event</code> 為 DOM event object，擁有 <code>target</code> 與 <code>target.value</code> 等 property。</p>
-<p>將 <code>$event</code> 以參數傳進 <code>onChange()</code>。</p>
-<blockquote>
-<p>在原生 JavaScript 中，<code>event</code> 物件可直接使用，不需要前面加上 <code>$</code>，但在 Angular 的 HTML template 中，若要使用 event object，Angular 規定要從 <code>event</code> 改成 <code>$event</code>，Angular 在底層另有處理，暫時只能當語法背起來。</p>
-</blockquote>
-<p>第 5 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>顯示 select 所選擇的 value，即 <code>cloud.id</code>。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(event: Event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clouds: Cloud[] = [</span><br><span class="line">  &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<p><code>clouds</code> 為 select 欲作 data binding 的資料，實務上此資料會透過 API 取得，在此為了簡化起見，先直接 hardcode 一個陣列。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectedId: <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
-<p>宣告 <code>selectedCloudId</code> 為 <code>number</code> 型別，雖然也可以宣告為 <code>string</code>，但因為 <code>id</code> 在 <code>cloud</code> 宣告為 <code>number</code> 型別，所以 <code>selectedId</code> 也宣告為 <code>number</code> 型別較合適。</p>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(event: Event) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectCloudId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onChange</code> 為 select change event 的 event handler，其中 <code>event</code> 為 HTML template 傳進來的 <code>$event</code>，型別為 <code>Event</code>。</p>
-<p><code>event.target</code> 在 <code>lib.es6.d.ts</code> 定義的型別為 <code>EventTarget</code>，但我們知道其本質型別為 <code>HTMLSelectElement</code>，因此使用 type assertion  加上 <code>&lt;HTMLSelectElement&gt;</code>將 <code>event target</code> 轉型成 <code>HTMLSelectElement</code>，則 intellisense 就會有 <code>value</code> 可選，不過 <code>value</code> 的型別為 <code>string</code>，因此要再加上 <code>+</code> 將 <code>string</code> 轉成 <code>number</code>。</p>
-<p><strong>src/app/cloud.ts</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/cloud.ts" target="_blank" rel="external">cloud.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Cloud </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>,</span><br><span class="line">  name: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>宣告 <code>Cloud</code> 的 ViewModel，<code>id</code> 為 <code>number</code>，<code>name</code> 為 <code>string</code>。</p>
-<h2 id="使用_Template_Reference_Variable">使用 Template Reference Variable</h2><hr>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>第 1 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>原本 <code>onChange()</code> 是傳進 <code>$event</code>，這裡改傳 <code>mySelect</code>。</p>
-<p><code>#</code> 為 template reference variable，我們可以在 HTML template 內，對任意 HTML element 加上 <code>#</code> 與變數名稱，Angular 會自動幫我們對該 element 建立物件。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onChange()</code> 改接收 template reference variable 後，因為我們確定 <code>onChange()</code> 為 select 的 event handler，所以傳進的 element 型別必為 <code>HTMLSelectElement</code>。</p>
-<p>由於 <code>element.value</code> 型別為 <code>string</code>，必須加上 <code>+</code> 轉型為 <code>number</code>。</p>
-<h2 id="使用_Two-Way_Binding">使用 Two-Way Binding</h2><hr>
-<p><strong>src/app/app.module.ts</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.module.ts" target="_blank" rel="external">app.module.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">"@angular/forms"</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-<p>要使用 two-way binding，必須在 <code>AppModule</code> 手動 import <code>FormsModule</code>。</p>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"selectedId"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>[(ngModel)]</code> 直接 two-way binding 到 <code>selectedId</code>，其他都可以拿掉。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Cloud&#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由於使用了 two-way binding，所有的 event handler 也可以拿掉，當 select 選擇改變時，自動會改變 <code>selectedId</code>。</p>
-<blockquote>
-<p>實務上該使用哪種寫法？</p>
-</blockquote>
-<p>雖然表面上 two-way binding 的寫法最精簡，若以<strong>物件導向</strong>與<strong>強型別</strong>觀點，template reference variable 的寫法<strong>語意較佳</strong>：</p>
-<ul>
-<li>明確將<strong>物件</strong>傳入 event handler 當中。</li>
-<li>Event handler 的參數可明確宣告物件<strong>型別</strong>加以檢查。</li>
-<li>取得物件的值較直觀，不必搭配 type assertion。</li>
-</ul>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>仍然可以在 HTML template 使用 DOM 的 event 物件，但必須加上<code>event</code> 前面加上 <code>$</code> 變成  <code>$event</code>。</li>
-<li>Template reference variable 技巧在實務上常常使用，可隨時在 HTML template 中將 HTML element 宣告成變數傳入 event handler。</li>
-<li>Two-way binding 實際上是個 syntax sugur，Angular 會展開實作 <code>(ngModelChange)</code> event handler。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4Select" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[介紹 3 種實務上常用的方法]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[Protractor 的 getText() 回傳型別到底是什麼?]]></title>
     <link href="http://oomusou.io/protractor/protractor-promise/"/>
     <id>http://oomusou.io/protractor/protractor-promise/</id>
@@ -1453,49 +1350,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1582,6 +1436,49 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1766,6 +1663,70 @@
 ]]></content>
     <summary type="html">
     <![CDATA[探討 ES6 的招牌菜 Arrow Function]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[TypeScript 之 Function]]></title>
+    <link href="http://oomusou.io/typescript/typescript-function/"/>
+    <id>http://oomusou.io/typescript/typescript-function/</id>
+    <published>2017-06-17T11:23:43.000Z</published>
+    <updated>2017-06-14T02:22:40.000Z</updated>
+    <content type="html"><![CDATA[<p>TypeScript 的 function 可對參數做強型別檢查與 function type，此外 ES6 還多了 optional / default / rest parameter，當然 TypeScript 也可使用。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.3</p>
+<h2 id="Parameter_with_Type">Parameter with Type</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// named function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// anonymous function</span></span><br><span class="line"><span class="keyword">let</span> myAdd = <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
+<p>無論是 named function 或者是 anonymous function，都可以在參數與回傳值明確指定 type，讓編譯器幫我們做檢查，一但型別錯誤，編譯將會失敗。</p>
+<h2 id="Function_Type">Function Type</h2><hr>
+<p>除了參數加上型別外，我們還可以對整個 function 也加上型別，讓編譯器幫我們檢查 function 是否符合這個型別。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd: (x: <span class="built_in">number</span>, y: <span class="built_in">number</span>)=&gt;<span class="built_in">number</span> =</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
+<p><code>myAdd</code> 的型別為 <code>(x: number, y: number)=&gt;number</code>，關於 function type，主要分成兩部分：</p>
+<ul>
+<li>參數型別</li>
+<li>回傳值型別</li>
+</ul>
+<p>因為宣告了 function type，在 <code>=</code> 之後的 anonymous function 就必須符合所規定的 function type，若 anonymous function 不符合 function type，編譯會錯誤。</p>
+<p>不過在實務上，我們不會真的這樣寫，因為實在太冗長了，只會寫成：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd = <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
+<p>TypeScript 編譯器會自動幫我們轉成</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd: (x: <span class="built_in">number</span>, y: <span class="built_in">number</span>)=&gt;<span class="built_in">number</span> =</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
+<p>TypeScript 會自動幫我們將 <code>myAdd</code> 加上型別，若之後再指定其他 function 給 <code>myAdd</code>，只要不符合 function type 就會報錯。</p>
+<blockquote>
+<p>TypeScript 在觀念上有 function type，不過實務上不用特別去指定 function type，只要將 anonymous function 指定給變數，就會自動幫我們加上 function type。</p>
+</blockquote>
+<h2 id="Optional_Parameters">Optional Parameters</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯錯誤，少 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
+<p>在 TypeScript 世界，既然宣告了參數，就代表傳入參數的個數與型別必須完全符合，過多或過少都不行。</p>
+<p>但  JavaScript 世界，每個變數都是 optional，若參數個數不對，只是 <code>undefined</code> 而已，為了讓 TypeScript 有強型別檢查，又能相容於 JavaScript 習慣，可在參數後加上 <code>?</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName?: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastName)</span><br><span class="line">        <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> firstName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯通過</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多一個</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
+<p>若使用 <code>?</code> optional parameter，記得將必要參數寫在最前面，後面才擺 optional parameter。</p>
+<h2 id="Default_Parameter">Default Parameter</h2><hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function buildName(firstName: string, lastName = "Smith") &#123;</span><br><span class="line">    return firstName + " " + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let result1 = buildName("Bob");                  // Bob Smith</span><br><span class="line">let result2 = buildName("Bob", undefined);       // Bob Smite</span><br><span class="line">let result3 = buildName("Bob", "Adams", "Sr.");  // 編譯錯誤，多一個參數</span><br><span class="line">let result4 = buildName("Bob", "Adams");         // Bob Adams</span><br></pre></td></tr></table></figure>
+<p>TypeScript 亦提供 default parameter，當傳入 <code>undefined</code> 時，則會以 default parameter 取代。</p>
+<p>Default parameter 若放在必要參數後面，則相當於 optional parameter 一樣，只是差別在有預設值。</p>
+<p>Default parameter 並不像 optional parameter 一樣，一定放在必要參數後面，若放在必要參數前面，則必須明確的指定 <code>undefined</code>，而不能省略。</p>
+<h2 id="Rest_Parameter">Rest Parameter</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, ...restOfName: <span class="built_in">string</span>[]</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + restOfName.join(<span class="string">" "</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> employeeName = buildName(<span class="string">"Kevin"</span>, <span class="string">"Jeff"</span>, <span class="string">"Jimmy"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(employeeName); <span class="comment">// Kevin Jeff Jimmy</span></span><br></pre></td></tr></table></figure>
+<p>無論是 optional parameter，或是 default paramter，討論的都是一個參數對應一個值，但實務上可能遇到參數個數不確定，希望參數以陣列接收。</p>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...restOfName: <span class="built_in">string</span>[]</span><br></pre></td></tr></table></figure>
+<p>以 <code>…</code> 宣告為 rest parameter，並明確宣告其型別為  string 陣列，則無論多少參數個數，最後都會塞進 <code>restOfName</code> 陣列。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Function 的參數加上型別檢查後，我們將可少撰寫很多檢查型別的程式碼，由 TypeScript 編譯器幫我們把關。</li>
+<li>有了 optioanl / default / rest parameter，參數將更加靈活。</li>
+</ul>
+<h2 id="References">References</h2><hr>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/functions.html" target="_blank" rel="external">Handbook : Functions</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[TypeScript/ES6 對 function 支援的擴展]]>
     
     </summary>
     
