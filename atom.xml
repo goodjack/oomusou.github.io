@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-05T09:21:45.000Z</updated>
+  <updated>2017-08-05T09:26:35.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/http/http-json-server/"/>
     <id>http://oomusou.io/http/http-json-server/</id>
     <published>2017-08-05T12:23:43.000Z</published>
-    <updated>2017-08-05T09:21:45.000Z</updated>
+    <updated>2017-08-05T09:26:35.000Z</updated>
     <content type="html"><![CDATA[<p>在前後端分離下，Angular 需要倚賴後端 API 才能對資料庫存取，在實務上，當 API 規格確立後，前端工程師不可能等後端工程師寫好 API 才開始開發，而是一起同時開發，因此前端工程師需要有假 API 才能開發測試。</p>
 <p>前端工程師不必為了假 API 安裝後端環境與資料庫，只要安裝 JSON Server，就能模擬出假 API。</p>
 <a id="more"></a>
