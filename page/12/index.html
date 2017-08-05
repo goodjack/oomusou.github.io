@@ -99,6 +99,74 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/ci/travis-ci-setup/" title="每次對GitHub push之後，Travis CI就會自動執行unit test">如何使用Travis CI自動測試?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/ci/travis-ci-setup/"><img src="/images/feature/travis_ci.png" alt="如何使用Travis CI自動測試?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>若一個專案由多人共同開發，你可能相依到別人的class，自己在local本機unit test測試通過，並不代表上線之後沒問題，因為很可能別人class的修改導致你的class 執行失敗。<br>Travis CI與GitHub高度整合，只要你對GitHub push之後，Travis CI就能自動從GitHub抓最新版的code，並執行PHPUnit，最後將測試結果email給你。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/ci/travis-ci-setup/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/phpstorm/phpstorm-markdown/" title="只要安裝Markdown Support Plugin就可以在PhpStorm編輯Markdown">如何使PhpStorm支援Markdown?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/phpstorm/phpstorm-markdown/"><img src="/images/feature/phpstorm.png" alt="如何使PhpStorm支援Markdown?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>由於Github的流行，越來越多人喜歡用markdown格式寫文件。使用Hexo寫blog時，我會使用Sublime Text寫markdown，但若寫專案的readme.md時，由於是在PhpStorm內工作，所以會希望也能在PhpStorm內寫markdown。可惜PhpStorm內建並沒有支援markdown格式，所幸JetBrains有另外開發plugin，讓我們也可以在PhpStorm寫markdown了。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/phpstorm/phpstorm-markdown/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/laravel/laravel42/laravel-42-phpunit/" title="Laravel 4.2一樣可以寫測試，只是有些地方要注意">如何在Laravel 4.2使用PHPUnit?</a></div>						
 		</h3>
 	
@@ -363,76 +431,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/php/php-cs/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/php/php-closure/" title="深入探討 PHP 5.3 的 Closure 觀念與用法">如何使用 Closure?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/php/php-closure/"><img src="/images/feature/php.png" alt="如何使用 Closure?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>在 PHP 4 最早稱 <code>callback</code>，PHP 5.3 引入 <code>closure</code> 與 <code>anonymous function</code> ，PHP 5.4 則新增 <code>callable</code> type hint。</p>
-<p>所以在 PHP 中，<code>callback</code>、<code>closure</code>、<code>anonymous function</code>，與 <code>callable</code>，事實上指的是同一件事情，但因為底層用的都是 <code>Closure</code> 物件，通常統稱為 closure。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/php/php-closure/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/php/php-generator/" title="深入探討PHP 5.5的Generator觀念與用法">如何使用Generator?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/php/php-generator/"><img src="/images/feature/php.png" alt="如何使用Generator?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>在物件導向時代，我們會使用<code>foreach</code>的方式遍訪每一個物件，傳統上我們會採用<code>Iterator Pattern</code>，去實作<code>Iterator</code> interface，簡單地說，generator就是更簡單的iterator。</p>
-<p>Generator讓你不須實踐<code>Iterator</code> interface，也不須將資料放在記憶體中，直到<code>foreach</code>要取值時，才及時產生資料使用<code>yield</code>傳回。 </p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/php/php-generator/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>

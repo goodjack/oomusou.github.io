@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-07-26T02:13:28.000Z</updated>
+  <updated>2017-08-05T09:21:45.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,211 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[JSON Server 簡介]]></title>
+    <link href="http://oomusou.io/http/http-json-server/"/>
+    <id>http://oomusou.io/http/http-json-server/</id>
+    <published>2017-08-05T12:23:43.000Z</published>
+    <updated>2017-08-05T09:21:45.000Z</updated>
+    <content type="html"><![CDATA[<p>在前後端分離下，Angular 需要倚賴後端 API 才能對資料庫存取，在實務上，當 API 規格確立後，前端工程師不可能等後端工程師寫好 API 才開始開發，而是一起同時開發，因此前端工程師需要有假 API 才能開發測試。</p>
+<p>前端工程師不必為了假 API 安裝後端環境與資料庫，只要安裝 JSON Server，就能模擬出假 API。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>JSON Server 0.12.0</p>
+<h2 id="安裝_JSON_Server">安裝 JSON Server</h2><hr>
+<h3 id="使用_NPM_安裝">使用 NPM 安裝</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">json</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
+<p>將 JSON Server 安裝在 global 環境。</p>
+<p><img src="/images/http/http-json-server/jsonserver000.png" alt="jsonserver000"></p>
+<h3 id="啟動_JSON_Server">啟動 JSON Server</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~$ cd MyProject</span><br><span class="line">~/MyProject$ mkdir json-<span class="keyword">server</span></span><br><span class="line">~/MyProject$ cd json-<span class="keyword">server</span></span><br><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json</span><br></pre></td></tr></table></figure>
+<ol>
+<li>進入 <code>MyProject</code> 專案目錄</li>
+<li>在專案目錄下建立 <code>json-server</code> 目錄</li>
+<li>啟動 JSON Server，指定 <code>db.json</code> 為資料庫檔案</li>
+</ol>
+<p>若 <code>db.json</code> 檔案存在，則 JSON Server 會以此檔案為資料庫，若不存在，則會建立新的 <code>db.json</code> 檔案。</p>
+<p><img src="/images/http/http-json-server/jsonserver001.png" alt="jsonserver001"></p>
+<ol>
+<li>建立 <code>json-server</code> 目錄</li>
+<li>進入 <code>json-server</code> 目錄</li>
+<li>在 <code>json-server</code> 目錄啟動 JSON Server，並將 <code>db.json</code> 檔案建立在 <code>json-server</code> 目錄下</li>
+<li>JSON Server 在 <code>json-server</code> 目錄下產生 <code>db.json</code> 檔案</li>
+<li><code>db.json</code> 預設已經有預設資料了</li>
+<li>JSON Server 預設提供了網址可供測試</li>
+</ol>
+<h3 id="測試_JSON_Server">測試 JSON Server</h3><p>預設 <code>db.json</code> 已經有資料，可藉此測試 JSON Server 是否有成功啟動。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/http/http-json-server/jsonserver002.png" alt="jsonserver002"></p>
+<p>使用 Postman 測試 <code>http://localhost:3000/posts</code>，確定能抓到資料。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/http/http-json-server/jsonserver003.png" alt="jsonserver003"></p>
+<p>使用瀏覽器測試 <code>http://localhost:3000</code>，確定 JSON Server 內建 Web server 已經成功啟動。</p>
+<h2 id="HTTP_Request_Method">HTTP Request Method</h2><hr>
+<p>JSON Server 支援開發中最常用的 <code>GET</code>、<code>POST</code>、<code>PUT</code>、<code>PATCH</code> 與 <code>DELETE</code> 等 request method。</p>
+<h3 id="GET">GET</h3><p>用於取得 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p>取得所有  <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver005.png" alt="jsonserver005"></p>
+<ol>
+<li>選擇 <code>GET</code></li>
+<li>輸入 <code>http://localhost:3000/posts</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳 JSON 物件陣列</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/1</span></span><br></pre></td></tr></table></figure>
+<p>取得 <code>id</code> 為 <code>1</code> 的 <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver006.png" alt="jsonserver006"></p>
+<ol>
+<li>選擇 <code>GET</code></li>
+<li>輸入 <code>http://localhost:3000/posts/1</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳 JSON 物件</li>
+</ol>
+<h3 id="POST">POST</h3><p>用於建立 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p>建立新的一筆 <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver007.png" alt="jsonserver007"></p>
+<ol>
+<li>選擇 <code>POST</code></li>
+<li>輸入 <code>http://localhost:3000/posts</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要新增的 JSON 物件</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳所新增的 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/http/http-json-server/jsonserver008.png" alt="jsonserver008"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛新增的 <code>post</code> 已經寫入 <code>db.json</code></li>
+</ol>
+<h3 id="PUT">PUT</h3><p>用於更新完整 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p>更新 <code>id</code> 為 <code>2</code> 的完整 <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver009.png" alt="jsonserver009"></p>
+<ol>
+<li>選擇 <code>PUT</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要更新的 JSON 物件 (不用含 <code>id</code>，要包含全部欄位)</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/http/http-json-server/jsonserver010.png" alt="jsonserver010"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code></li>
+</ol>
+<blockquote>
+<p>使用 <code>PUT</code> 要小心，他是將整個 JSON 物件寫入原來的 <code>id</code>，也就是說原本有 <code>3</code> 個欄位，若 <code>PUT</code> 時的 JSON 物件只有 2 個欄位，則 <code>PUT</code> 後就只剩下 <code>2</code> 個欄位。</p>
+</blockquote>
+<h3 id="PATCH">PATCH</h3><p>用於更新部分 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p>更新 <code>id</code> 為 <code>2</code> 的部分 <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver011.png" alt="jsonserver011"></p>
+<ol>
+<li>選擇 <code>PUT</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要更新的 JSON 物件 (不用含 <code>id</code>，不用包含全部欄位)</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/http/http-json-server/jsonserver012.png" alt="jsonserver012"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code>，且只更新 <code>1</code> 個欄位資料。</li>
+</ol>
+<h3 id="DELETE">DELETE</h3><p>用於刪除 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/http/http-json-server/jsonserver013.png" alt="jsonserver013"></p>
+<ol>
+<li>選擇 <code>DELETE</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳空的 JSON 物件</li>
+</ol>
+<p><img src="/images/http/http-json-server/jsonserver019.png" alt="jsonserver019"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 資料已經被刪除。</li>
+</ol>
+<h2 id="修改資料">修改資料</h2><hr>
+<p>JSON Server 並沒有搭配資料庫，因此也不需要 Sequel Pro 或 DataGrip 之類的工具連到資料庫，它只是個文字檔。</p>
+<p><strong>/json-server/db.json</strong></p>
+<p><img src="/images/http/http-json-server/jsonserver014.png" alt="jsonserver014"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>每個 field 相當於資料庫的 table 名稱，可自行修改，後面接的是 JSON 物件陣列，也可以自行修改 JSON 建立假資料</li>
+</ol>
+<h2 id="建立_Snapshot">建立 Snapshot</h2><hr>
+<p>在實務上有時會想將目前的資料先存起來做備份，當作 golden sample，JSON Server 可以幫我們將目前的所有資料備份成 snapshot。</p>
+<blockquote>
+<p>熱鍵：S + enter</p>
+</blockquote>
+<p><img src="/images/http/http-json-server/jsonserver015.png" alt="jsonserver015"></p>
+<ol>
+<li>在 terminal 下輸入熱鍵 <code>S + enter</code></li>
+<li>JSON Server 會亂數產生檔案，將目前的 <code>db.json</code> 做 snapshot</li>
+</ol>
+<h2 id="自訂新_Route">自訂新 Route</h2><hr>
+<p>JSON Server 預設是以 table 名稱作為 route，但實務上 API 的 route 可能不一樣，如 <code>/api/posts</code> 與 <code>api/posts/1</code>。</p>
+<h3 id="新增_routes-json">新增 routes.json</h3><p><strong>json-server/routes.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">/api/posts</span>": <span class="value"><span class="string">"/posts"</span></span>,</span><br><span class="line">  "<span class="attribute">/api/posts/:id</span>": <span class="value"><span class="string">"/posts/:id"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>/api/ports</code> 指向原本的 <code>/posts</code>。</p>
+<p>將 <code>/api/posts/1</code> 只像原本的 <code>/posts/1</code>。</p>
+<p><img src="/images/http/http-json-server/jsonserver004.png" alt="jsonserver004"></p>
+<ol>
+<li>新增 <code>json-server/routes.json</code></li>
+<li>編輯 routes 的對應規則</li>
+</ol>
+<h3 id="套用新_Route">套用新 Route</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json --routes routes.json</span><br></pre></td></tr></table></figure>
+<p>重新啟動 JSON Server，加上 <code>—-routes</code> 參數，指定套用 <code>routes.json</code>。</p>
+<p><img src="/images/http/http-json-server/jsonserver016.png" alt="jsonserver016"></p>
+<ol>
+<li><p>重新啟動 JSON Server，並加上 <code>—-routes</code> 參數與 <code>routes.json</code> </p>
+</li>
+<li><p>JSON Server 提示載入 <code>routes.json</code></p>
+</li>
+<li><p>顯示新增的 route</p>
+</li>
+</ol>
+<h3 id="測試新_Route">測試新 Route</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/api/posts</span></span><br></pre></td></tr></table></figure>
+<p>取得所有  <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver017.png" alt="jsonserver017"></p>
+<ol>
+<li>使用新的 <code>http://localhost/api/posts</code> 測試</li>
+<li>一樣回傳 JSON 物件陣列</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/localhost:3000/api</span><span class="regexp">/posts/</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>取得 id 為 <code>1</code> 的 <code>post</code> 資料。</p>
+<p><img src="/images/http/http-json-server/jsonserver018.png" alt="jsonserver018"></p>
+<ol>
+<li>使用新的 <code>http://localhost/api/posts/1</code> 測試</li>
+<li>一樣回傳 JSON 物件</li>
+</ol>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>JSON Server 讓我們不用安裝後端環境，也不用安裝資料庫，就可以快速建立前端開發測試用的 API。</li>
+<li><a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="external">JSONPlaceholder</a> 其實就是以 JSON Server 架設，若為了 demo 方便，可直接使用 JSONPlaceholder，但若在實務上使用，JSON Server 的彈性更高。</li>
+<li>本文僅針對實務上最常用的功能介紹 JSON Server，更進階的功能請參考 reference 部分。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://github.com/typicode/json-server" target="_blank" rel="external">typicode</a>, <a href="https://github.com/typicode/json-server" target="_blank" rel="external">JSON Server</a><br><a href="http://blog.miniasp.com" target="_blank" rel="external">保哥</a>, <a href="https://www.slideshare.net/WillHuangTW/use-json-server-as-a-fake-rest-api" target="_blank" rel="external">進擊的前端工程師：今天就自己打造 API 吧！</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[最簡單的方式建立假 API]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[深入探討 Angular 整合測試與 Jasmine 的 spyOn()]]></title>
@@ -521,6 +726,109 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何使用 Angular 實作下拉選單?]]></title>
+    <link href="http://oomusou.io/angular/angular-select/"/>
+    <id>http://oomusou.io/angular/angular-select/</id>
+    <published>2017-07-02T12:23:43.000Z</published>
+    <updated>2017-07-02T07:31:20.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>下拉選單</strong>為常用的使用者介面，該如何優雅地將資料綁定在元件上，並且優雅地取得使用者的選擇資料呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
+<h2 id="Introudction">Introudction</h2><hr>
+<p><img src="/images/angular/angular-select/select000.png" alt="select000"></p>
+<p>將實作出一下拉選單，其顯示資料來自於資料綁定，當使用者有不同的選擇，會將其值顯示在 select 下方。</p>
+<p>將示範 3 種實作方式：</p>
+<ul>
+<li>使用 DOM event</li>
+<li>使用 Template Reference Variable</li>
+<li>使用 Two-Way Binding</li>
+</ul>
+<h2 id="使用_DOM_event_物件">使用 DOM event 物件</h2><hr>
+<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>第 2 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用 <code>*ngFor</code> 這個 structure directive 重複顯示 <code>&lt;option&gt;</code>，其中 <code>clouds</code> 型別為 <code>Cloud[]</code>，每一筆資料 <code>cloud</code> 為 <code>Cloud</code> ViewModel，有 <code>name</code> 與 <code>id</code> 兩個欄位，稍後會看到 <code>Cloud</code> ViewModel 的定義。</p>
+<p>第 1 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>(change)</code> 為 event binding，當 change event 被觸發時，執行 <code>onChange()</code> event handler。</p>
+<p><code>$event</code> 為 event object，若 event 為原生的 DOM event，則 <code>$event</code> 為 DOM event object，擁有 <code>target</code> 與 <code>target.value</code> 等 property。</p>
+<p>將 <code>$event</code> 以參數傳進 <code>onChange()</code>。</p>
+<blockquote>
+<p>在原生 JavaScript 中，<code>event</code> 物件可直接使用，不需要前面加上 <code>$</code>，但在 Angular 的 HTML template 中，若要使用 event object，Angular 規定要從 <code>event</code> 改成 <code>$event</code>，Angular 在底層另有處理，暫時只能當語法背起來。</p>
+</blockquote>
+<p>第 5 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>顯示 select 所選擇的 value，即 <code>cloud.id</code>。</p>
+<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(event: Event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clouds: Cloud[] = [</span><br><span class="line">  &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><code>clouds</code> 為 select 欲作 data binding 的資料，實務上此資料會透過 API 取得，在此為了簡化起見，先直接 hardcode 一個陣列。</p>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectedId: <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>selectedCloudId</code> 為 <code>number</code> 型別，雖然也可以宣告為 <code>string</code>，但因為 <code>id</code> 在 <code>cloud</code> 宣告為 <code>number</code> 型別，所以 <code>selectedId</code> 也宣告為 <code>number</code> 型別較合適。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(event: Event) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectCloudId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>onChange</code> 為 select change event 的 event handler，其中 <code>event</code> 為 HTML template 傳進來的 <code>$event</code>，型別為 <code>Event</code>。</p>
+<p><code>event.target</code> 在 <code>lib.es6.d.ts</code> 定義的型別為 <code>EventTarget</code>，但我們知道其本質型別為 <code>HTMLSelectElement</code>，因此使用 type assertion  加上 <code>&lt;HTMLSelectElement&gt;</code>將 <code>event target</code> 轉型成 <code>HTMLSelectElement</code>，則 intellisense 就會有 <code>value</code> 可選，不過 <code>value</code> 的型別為 <code>string</code>，因此要再加上 <code>+</code> 將 <code>string</code> 轉成 <code>number</code>。</p>
+<p><strong>src/app/cloud.ts</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/cloud.ts" target="_blank" rel="external">cloud.ts</a></span></span></span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Cloud </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>,</span><br><span class="line">  name: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>Cloud</code> 的 ViewModel，<code>id</code> 為 <code>number</code>，<code>name</code> 為 <code>string</code>。</p>
+<h2 id="使用_Template_Reference_Variable">使用 Template Reference Variable</h2><hr>
+<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>原本 <code>onChange()</code> 是傳進 <code>$event</code>，這裡改傳 <code>mySelect</code>。</p>
+<p><code>#</code> 為 template reference variable，我們可以在 HTML template 內，對任意 HTML element 加上 <code>#</code> 與變數名稱，Angular 會自動幫我們對該 element 建立物件。</p>
+<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>onChange()</code> 改接收 template reference variable 後，因為我們確定 <code>onChange()</code> 為 select 的 event handler，所以傳進的 element 型別必為 <code>HTMLSelectElement</code>。</p>
+<p>由於 <code>element.value</code> 型別為 <code>string</code>，必須加上 <code>+</code> 轉型為 <code>number</code>。</p>
+<h2 id="使用_Two-Way_Binding">使用 Two-Way Binding</h2><hr>
+<p><strong>src/app/app.module.ts</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.module.ts" target="_blank" rel="external">app.module.ts</a></span></span></span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">"@angular/forms"</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>要使用 two-way binding，必須在 <code>AppModule</code> 手動 import <code>FormsModule</code>。</p>
+<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"selectedId"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>[(ngModel)]</code> 直接 two-way binding 到 <code>selectedId</code>，其他都可以拿掉。</p>
+<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Cloud&#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由於使用了 two-way binding，所有的 event handler 也可以拿掉，當 select 選擇改變時，自動會改變 <code>selectedId</code>。</p>
+<blockquote>
+<p>實務上該使用哪種寫法？</p>
+</blockquote>
+<p>雖然表面上 two-way binding 的寫法最精簡，若以<strong>物件導向</strong>與<strong>強型別</strong>觀點，template reference variable 的寫法<strong>語意較佳</strong>：</p>
+<ul>
+<li>明確將<strong>物件</strong>傳入 event handler 當中。</li>
+<li>Event handler 的參數可明確宣告物件<strong>型別</strong>加以檢查。</li>
+<li>取得物件的值較直觀，不必搭配 type assertion。</li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>仍然可以在 HTML template 使用 DOM 的 event 物件，但必須加上<code>event</code> 前面加上 <code>$</code> 變成  <code>$event</code>。</li>
+<li>Template reference variable 技巧在實務上常常使用，可隨時在 HTML template 中將 HTML element 宣告成變數傳入 event handler。</li>
+<li>Two-way binding 實際上是個 syntax sugur，Angular 會展開實作 <code>(ngModelChange)</code> event handler。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4Select" target="_blank" rel="external">GitHub</a> 上找到。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[介紹 3 種實務上常用的方法]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
   </entry>
   
@@ -1554,183 +1862,6 @@
     </summary>
     
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[TypeScript 之 Arrow Function]]></title>
-    <link href="http://oomusou.io/typescript/typescript-arrow-function/"/>
-    <id>http://oomusou.io/typescript/typescript-arrow-function/</id>
-    <published>2017-06-17T12:23:43.000Z</published>
-    <updated>2017-06-13T06:31:58.000Z</updated>
-    <content type="html"><![CDATA[<p>Arrow function 是 ES6 最重要的發明，讓 FRP 能以更簡潔的方式呈現，TypeScript 當然可使用，在 Angular 也隨處可見，如 RxJS 就必須大量使用 arrow function，是學習 Angular 一定要會的。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScript 2.3</p>
-<h2 id="以_=&gt;_取代_Anonymous_Function">以 =&gt; 取代 Anonymous Function</h2><hr>
-<p>Arrow function 可以用來取代 anonymous function。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = <span class="function"><span class="keyword">function</span> (<span class="params">firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span></span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> `Hello $&#123;firstName&#125; $&#123;lastName&#125;`;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">message = hello(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(message); <span class="comment">// Hello Sam Xiao</span></span><br></pre></td></tr></table></figure></p>
-<p>後面是 anonymous function，但我們可發現，<code>function</code> 事實上是個虛字。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = (firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span>): <span class="built_in">string</span> =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> `Hello $&#123;firstName&#125; $&#123;lastName&#125;`;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">message = hello(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(message); <span class="comment">// Hello Sam Xiao</span></span><br></pre></td></tr></table></figure>
-<p>將 <code>function</code> 省略，改以 <code>=&gt;</code> 取代。</p>
-<p>但又發現 <code>return</code> 也是虛字。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = (firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span>): <span class="built_in">string</span> =&gt; `Hello $&#123;firstName&#125; $&#123;lastName&#125;`;</span><br><span class="line"></span><br><span class="line">message = hello(<span class="string">'Sam'</span>, <span class="string">'Xiao'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(message); <span class="comment">// Hello Sam Xiao</span></span><br></pre></td></tr></table></figure>
-<p>因為只有單一 <code>return</code>，可將 <code>{return}</code> 一起省略。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = (firstName: <span class="built_in">string</span>): <span class="built_in">string</span> =&gt; `Hello $&#123;firstName&#125;`;</span><br><span class="line"></span><br><span class="line">message = hello(<span class="string">'Sam'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(message); <span class="comment">// Hello Sam</span></span><br></pre></td></tr></table></figure>
-<p>假如我們只保留 <code>firstName</code> 1 個參數。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = firstName =&gt; `Hello $&#123;firstName&#125;`;</span><br><span class="line"></span><br><span class="line">message = hello(<span class="string">'Sam'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(message); <span class="comment">// Hello Sam</span></span><br></pre></td></tr></table></figure>
-<p>因為只有單一參數，連 <code>()</code> 都可省略。</p>
-<h2 id="以_=&gt;_取代_Callback">以 =&gt; 取代 Callback</h2><hr>
-<p>Arrow function 可以用來取代 callback。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> angular = [</span><br><span class="line">  <span class="string">'Kevin'</span>,</span><br><span class="line">  <span class="string">'Jeff'</span>,</span><br><span class="line">  <span class="string">'Jimmy'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> length = angular.map(<span class="function"><span class="keyword">function</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> person.length;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(length); <span class="comment">// [5, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<p>如常用的 <code>map()</code>，會需要我們傳入 callback，決定要回傳的新陣列。</p>
-<p>但我們可發現，<code>function</code> 事實上是個虛字。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> angular = [</span><br><span class="line">  <span class="string">'Kevin'</span>,</span><br><span class="line">  <span class="string">'Jeff'</span>,</span><br><span class="line">  <span class="string">'Jimmy'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> length = angular.map((person) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> person.length;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(length); <span class="comment">// [5, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<p>可將 <code>function</code> 省略，改用 <code>=&gt;</code>。</p>
-<p>但又發現 <code>return</code> 也是虛字。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> angular = [</span><br><span class="line">  <span class="string">'Kevin'</span>,</span><br><span class="line">  <span class="string">'Jeff'</span>,</span><br><span class="line">  <span class="string">'Jimmy'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> length = angular.map((person) =&gt; person.length);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(length); <span class="comment">// [5, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<p>因為只有單一 <code>return</code>，可將 <code>{return}</code> 一起省略。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> angular = [</span><br><span class="line">  <span class="string">'Kevin'</span>,</span><br><span class="line">  <span class="string">'Jeff'</span>,</span><br><span class="line">  <span class="string">'Jimmy'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> length = angular.map(person =&gt; person.length);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(length);</span><br></pre></td></tr></table></figure>
-<p>因為只有單一參數，連 <code>()</code> 都可省略。</p>
-<h2 id="語法規則">語法規則</h2><hr>
-<h3 id="多參數">多參數</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(param1, param2, …, paramN) =&gt; &#123; statements &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>將 <code>function</code> 以 <code>=&gt;</code> 取代。</li>
-<li>若有多行程式，須以 <code>{}</code> 包起來。</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(param1, param2, …, paramN) =&gt; expression</span><br><span class="line">(param1, param2, …, paramN) =&gt; &#123; <span class="keyword">return</span> expression;&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>將 <code>function</code> 以 <code>=&gt;</code> 取代。</li>
-<li>若只有單一 <code>return</code>，可將 <code>{return }</code> 拿掉。</li>
-</ul>
-<h3 id="單一參數">單一參數</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(singleParam) =&gt; &#123; statements &#125;</span><br><span class="line">singleParam =&gt; &#123; statements &#125;</span><br><span class="line">singleParam =&gt; expression</span><br></pre></td></tr></table></figure>
-<ul>
-<li>將 <code>function</code> 以 <code>=&gt;</code> 取代。</li>
-<li>若有多行程式，須以 <code>{}</code> 包起來。</li>
-<li>若只有單一 <code>return</code>，可將 <code>{return }</code> 拿掉。</li>
-<li>單一參數，可連 <code>()</code> 都拿掉。</li>
-</ul>
-<h3 id="無參數">無參數</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">() =&gt; &#123; statements &#125;</span><br><span class="line">() =&gt; expression</span><br></pre></td></tr></table></figure>
-<ul>
-<li>將 <code>function</code> 以 <code>=&gt;</code> 取代。</li>
-<li>若有多行程式，須以 <code>{}</code> 包起來。</li>
-<li>若只有單一 <code>return</code>，可將 <code>{return }</code> 拿掉。</li>
-<li>無參數必須保留 <code>()</code>。</li>
-</ul>
-<h3 id="回傳物件">回傳物件</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params =&gt; (&#123;foo:bar&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>將 <code>function</code> 以 <code>=&gt;</code> 取代。</li>
-<li>多參數/單一參數/無參數的規則依舊。</li>
-<li>將回傳物件外面加上 <code>()</code></li>
-</ul>
-<blockquote>
-<p>因為 <code>{}</code> 已經被物件使用，只好改用 <code>()</code>。</p>
-</blockquote>
-<h2 id="Anonymous_Function_與_this">Anonymous Function 與 this</h2><hr>
-<p>在 ES5 時，anonymous function 搭配 this 時，總讓人很糾結。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo =&#123;</span><br><span class="line">  name: <span class="string">"Sam"</span>,</span><br><span class="line"></span><br><span class="line">  handleMessage: <span class="function"><span class="keyword">function</span> (<span class="params">message, callback</span>)</span>&#123;</span><br><span class="line">    callback(message);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  receive: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.handleMessage(<span class="string">"Hello, "</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.receive(); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<p>結果執行錯誤，<code>this.name</code> 為 undefined。</p>
-<p>因為 anonymous function 的 this，並不是指向 <code>Foo</code>，所以存取不到 <code>this.name</code>。</p>
-<p>在 ES5，我們會這用以下寫法：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo =&#123;</span><br><span class="line">  name: <span class="string">"Sam"</span>,</span><br><span class="line"></span><br><span class="line">  handleMessage: <span class="function"><span class="keyword">function</span> (<span class="params">message, callback</span>)</span>&#123;</span><br><span class="line">    callback(message);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  receive: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    that = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.handleMessage(<span class="string">"Hello, "</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(that.name);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.receive(); <span class="comment">// Hello Sam</span></span><br></pre></td></tr></table></figure>
-<p>第 9 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that = <span class="keyword">this</span>;</span><br></pre></td></tr></table></figure>
-<p>讓 <code>receive</code> scope 的 <code>that</code> 指向 <code>this</code>。</p>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(that.name);</span><br></pre></td></tr></table></figure>
-<p>改用 <code>that.name</code>，就可以正確顯示 <code>Hello Sam</code>。</p>
-<blockquote>
-<p>很多人搞不懂 this 是什麼，就乾脆都寫成 that = this。</p>
-</blockquote>
-<h2 id="Arrow_Function_與_this">Arrow Function 與 this</h2><hr>
-<p>我們剛剛知道，在ES6 可以使用 arrow function 取代 anonymous function。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo =&#123;</span><br><span class="line">  name: <span class="string">"Sam"</span>,</span><br><span class="line"></span><br><span class="line">  handleMessage: <span class="function"><span class="keyword">function</span> (<span class="params">message, callback</span>)</span>&#123;</span><br><span class="line">    callback(message);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  receive: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.handleMessage(<span class="string">"Hello, "</span>, () =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.receive(); <span class="comment">// Hello Sam</span></span><br></pre></td></tr></table></figure>
-<p>使用 arrow function 後，<code>this</code> 就能如預期的抓到 <code>this.name</code>，顯示 <code>Hello Sam</code>。</p>
-<p>透過 <a href="https://www.typescriptlang.org/play/" target="_blank" rel="external">TypeScript Playground</a>，我們來看看到底有什麼黑魔法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo = &#123;</span><br><span class="line">    name: <span class="string">"Sam"</span>,</span><br><span class="line">    handleMessage: <span class="function"><span class="keyword">function</span> (<span class="params">message, callback</span>) </span>&#123;</span><br><span class="line">        callback(message);</span><br><span class="line">    &#125;,</span><br><span class="line">    receive: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">this</span>.handleMessage(<span class="string">"Hello, "</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(_this.name);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Foo.receive(); <span class="comment">// Hello Sam</span></span><br></pre></td></tr></table></figure>
-<p>第 7 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br></pre></td></tr></table></figure>
-<p>原來編譯成 ES5 之後，TypeScript 自動幫我們加上 <code>_this = this</code>，因此我們可以抓到 <code>name</code>。</p>
-<blockquote>
-<p>雖然 anonymous function 與 arrow function 對 this 的觀點不同，但並沒有誰對誰錯，只是應用場合不同，當你比較需要類似 OOP 的方式，就使用 arrow function；若比較需要 FRP 的方式，就使用 anonymous function，當你手中不再只有錘子，所看的東西就不再只是釘子。</p>
-</blockquote>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Arrow function 是 FRP 的重要推手，讓我們可以使用更精簡的方式使用 callback，將更多的虛字拿掉，只留下商業邏輯中最關鍵的部分。</li>
-<li><code>this</code> 一直是 JavaScript 頗具爭議之處，arrow function 讓我們有另外一種方式使用 <code>this</code>，我們可以視需求決定該使用 arrow function 或 anonymous function。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/functions.html" target="_blank" rel="external">Handbook : Functions</a><br><a href="https://egghead.io" target="_blank" rel="external">Egghead.io</a>, <a href="https://egghead.io/lessons/ecmascript-6-arrow-function-in-es6" target="_blank" rel="external">Arrow Function =&gt; in ES6</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[探討 ES6 的招牌菜 Arrow Function]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[TypeScript 之 Function]]></title>
-    <link href="http://oomusou.io/typescript/typescript-function/"/>
-    <id>http://oomusou.io/typescript/typescript-function/</id>
-    <published>2017-06-17T11:23:43.000Z</published>
-    <updated>2017-06-14T02:22:40.000Z</updated>
-    <content type="html"><![CDATA[<p>TypeScript 的 function 可對參數做強型別檢查與 function type，此外 ES6 還多了 optional / default / rest parameter，當然 TypeScript 也可使用。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScript 2.3</p>
-<h2 id="Parameter_with_Type">Parameter with Type</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// named function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// anonymous function</span></span><br><span class="line"><span class="keyword">let</span> myAdd = <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
-<p>無論是 named function 或者是 anonymous function，都可以在參數與回傳值明確指定 type，讓編譯器幫我們做檢查，一但型別錯誤，編譯將會失敗。</p>
-<h2 id="Function_Type">Function Type</h2><hr>
-<p>除了參數加上型別外，我們還可以對整個 function 也加上型別，讓編譯器幫我們檢查 function 是否符合這個型別。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd: (x: <span class="built_in">number</span>, y: <span class="built_in">number</span>)=&gt;<span class="built_in">number</span> =</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
-<p><code>myAdd</code> 的型別為 <code>(x: number, y: number)=&gt;number</code>，關於 function type，主要分成兩部分：</p>
-<ul>
-<li>參數型別</li>
-<li>回傳值型別</li>
-</ul>
-<p>因為宣告了 function type，在 <code>=</code> 之後的 anonymous function 就必須符合所規定的 function type，若 anonymous function 不符合 function type，編譯會錯誤。</p>
-<p>不過在實務上，我們不會真的這樣寫，因為實在太冗長了，只會寫成：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd = <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
-<p>TypeScript 編譯器會自動幫我們轉成</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myAdd: (x: <span class="built_in">number</span>, y: <span class="built_in">number</span>)=&gt;<span class="built_in">number</span> =</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123; <span class="keyword">return</span> x+y; &#125;;</span><br></pre></td></tr></table></figure>
-<p>TypeScript 會自動幫我們將 <code>myAdd</code> 加上型別，若之後再指定其他 function 給 <code>myAdd</code>，只要不符合 function type 就會報錯。</p>
-<blockquote>
-<p>TypeScript 在觀念上有 function type，不過實務上不用特別去指定 function type，只要將 anonymous function 指定給變數，就會自動幫我們加上 function type。</p>
-</blockquote>
-<h2 id="Optional_Parameters">Optional Parameters</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯錯誤，少 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多 1 個參數</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
-<p>在 TypeScript 世界，既然宣告了參數，就代表傳入參數的個數與型別必須完全符合，過多或過少都不行。</p>
-<p>但  JavaScript 世界，每個變數都是 optional，若參數個數不對，只是 <code>undefined</code> 而已，為了讓 TypeScript 有強型別檢查，又能相容於 JavaScript 習慣，可在參數後加上 <code>?</code>。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, lastName?: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastName)</span><br><span class="line">        <span class="keyword">return</span> firstName + <span class="string">" "</span> + lastName;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> firstName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result1 = buildName(<span class="string">"Bob"</span>);                  <span class="comment">// 編譯通過</span></span><br><span class="line"><span class="keyword">let</span> result2 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>, <span class="string">"Sr."</span>);  <span class="comment">// 編譯錯誤，多一個</span></span><br><span class="line"><span class="keyword">let</span> result3 = buildName(<span class="string">"Bob"</span>, <span class="string">"Adams"</span>);         <span class="comment">// 編譯通過</span></span><br></pre></td></tr></table></figure>
-<p>若使用 <code>?</code> optional parameter，記得將必要參數寫在最前面，後面才擺 optional parameter。</p>
-<h2 id="Default_Parameter">Default Parameter</h2><hr>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function buildName(firstName: string, lastName = "Smith") &#123;</span><br><span class="line">    return firstName + " " + lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let result1 = buildName("Bob");                  // Bob Smith</span><br><span class="line">let result2 = buildName("Bob", undefined);       // Bob Smite</span><br><span class="line">let result3 = buildName("Bob", "Adams", "Sr.");  // 編譯錯誤，多一個參數</span><br><span class="line">let result4 = buildName("Bob", "Adams");         // Bob Adams</span><br></pre></td></tr></table></figure>
-<p>TypeScript 亦提供 default parameter，當傳入 <code>undefined</code> 時，則會以 default parameter 取代。</p>
-<p>Default parameter 若放在必要參數後面，則相當於 optional parameter 一樣，只是差別在有預設值。</p>
-<p>Default parameter 並不像 optional parameter 一樣，一定放在必要參數後面，若放在必要參數前面，則必須明確的指定 <code>undefined</code>，而不能省略。</p>
-<h2 id="Rest_Parameter">Rest Parameter</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildName</span>(<span class="params">firstName: <span class="built_in">string</span>, ...restOfName: <span class="built_in">string</span>[]</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> firstName + <span class="string">" "</span> + restOfName.join(<span class="string">" "</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> employeeName = buildName(<span class="string">"Kevin"</span>, <span class="string">"Jeff"</span>, <span class="string">"Jimmy"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(employeeName); <span class="comment">// Kevin Jeff Jimmy</span></span><br></pre></td></tr></table></figure>
-<p>無論是 optional parameter，或是 default paramter，討論的都是一個參數對應一個值，但實務上可能遇到參數個數不確定，希望參數以陣列接收。</p>
-<p>第 1 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...restOfName: <span class="built_in">string</span>[]</span><br></pre></td></tr></table></figure>
-<p>以 <code>…</code> 宣告為 rest parameter，並明確宣告其型別為  string 陣列，則無論多少參數個數，最後都會塞進 <code>restOfName</code> 陣列。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Function 的參數加上型別檢查後，我們將可少撰寫很多檢查型別的程式碼，由 TypeScript 編譯器幫我們把關。</li>
-<li>有了 optioanl / default / rest parameter，參數將更加靈活。</li>
-</ul>
-<h2 id="References">References</h2><hr>
-<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/functions.html" target="_blank" rel="external">Handbook : Functions</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[TypeScript/ES6 對 function 支援的擴展]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
     
   </entry>
   

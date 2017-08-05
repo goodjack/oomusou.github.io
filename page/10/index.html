@@ -99,6 +99,74 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/laravel/laravel-present-dateformat/" title="示範3種日期格式轉換的寫法">如何依各種語言顯示不同日期格式?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/laravel/laravel-present-dateformat/"><img src="/images/feature/laravel.png" alt="如何依各種語言顯示不同日期格式?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>由於多國語言的需求，不只有<strong>語言</strong>部分必須翻譯，連<strong>日期格式</strong>也必須符合當地習慣，最典型的如美國習慣<code>Dec 25, 2015</code>，而英國卻習慣<code>25 Dec, 2015</code>，台灣則習慣<code>2015/12/25</code>，不過在資料庫存的卻是同一份日期，只是因為<strong>顯示邏輯</strong>的不同，在view必須用不一樣的格式呈現。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/laravel/laravel-present-dateformat/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/laravel/laravel-presenter/" title="使用 Presenter 輔助 View">如何使用 Presenter 模式?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/laravel/laravel-presenter/"><img src="/images/feature/laravel.png" alt="如何使用 Presenter 模式?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>若將<strong>顯示邏輯</strong>都寫在 view，會造成 view 肥大而難以維護，基於 <strong>SOLID</strong> 原則，我們應該使用 <strong>Presenter</strong> 模式輔助 view，將相關的顯示邏輯封裝在不同的 presenter，方便中大型專案的維護。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/laravel/laravel-presenter/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/laravel/laravel-service/" title="使用 Service 輔助 Controller">如何使用 Service 模式?</a></div>						
 		</h3>
 	
@@ -361,74 +429,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/phpstorm/phpstorm-spellcheck/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/tdd/tdd-solid/" title="使用TDD實踐SOLID">使用TDD實踐SOLID</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/tdd/tdd-solid/"><img src="/images/feature/tdd.png" alt="使用TDD實踐SOLID"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>我們知道好的OOP並不是急著馬上套Design Pattern，而是先遵守SOLID原則；也知道TDD教我們先寫測試，將來可以安心的重構。但我們實務上該如何實踐SOLID呢？事實上，TDD不僅僅是<code>先寫測試</code>而已，伴隨著TDD的開發流程，會讓我們會不知不覺的實踐SOLID。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/tdd/tdd-solid/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/phpstorm/phpstorm-exception-inspection/" >如何檢查忘記寫try...catch的PHP程式碼?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/phpstorm/phpstorm-exception-inspection/"><img src="/images/feature/phpstorm.png" alt="如何檢查忘記寫try...catch的PHP程式碼?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>若外部API有throw exception，呼叫API的函式就必須加上<code>try...catch</code>做例外處理，如Java可以在編譯的時候幫你檢查是否忘了加try…catch，但因為PHP不用編譯，所以無法靠compiler幫我們檢查，但透過PHPDoc的<code>@thorws</code>與<code>PHP Inspections</code>這個外掛，可以讓我們寫code的當下，PhpStorm就自動幫我們檢查是否忘了加try…catch。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/phpstorm/phpstorm-exception-inspection/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>

@@ -99,6 +99,74 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/refactor/refactor-remove-assignments-to-parameters/" title="PhpStorm無法直接實現此重構，需搭配一些技巧">如何使用PhpStorm實現Move Assignments to Paramters?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/refactor/refactor-remove-assignments-to-parameters/"><img src="/images/feature/phpstorm.png" alt="如何使用PhpStorm實現Move Assignments to Paramters?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>若我們直接對參數做修改，會使得將來的<strong>Extract Method</strong>難度更高，因此在執行<strong>Extract Method</strong>之前，我們常常會執行<strong>Move Assignment to Parameters</strong>，先將參數指定給<strong>暫存變數</strong>，然後將後續的程式全部改成修改此<strong>暫存變數</strong>。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/refactor/refactor-remove-assignments-to-parameters/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/javascript/javascript-variable-object/" title="使用變數建立物件取代 if else">如何使用變數建立物件?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/javascript/javascript-variable-object/"><img src="/images/feature/javascript.png" alt="如何使用變數建立物件?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>傳統我們會使用 <code>if else</code> 判斷，建立不同的物件，但由於 JavaScript 與 PHP 動態語言的特性，我們可以將要建立的物件的 <strong>class 名稱</strong>以<strong>變數</strong>表示，直接以該變數建立物件。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/javascript/javascript-variable-object/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/javascript/javascript-variable-method/" title="使用變數執行 method 取代 if else">如何使用變數執行 method?</a></div>						
 		</h3>
 	
@@ -361,74 +429,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/laravel/laravel42/laravel-42-presenter/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/laravel/laravel-present-dateformat/" title="示範3種日期格式轉換的寫法">如何依各種語言顯示不同日期格式?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/laravel/laravel-present-dateformat/"><img src="/images/feature/laravel.png" alt="如何依各種語言顯示不同日期格式?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>由於多國語言的需求，不只有<strong>語言</strong>部分必須翻譯，連<strong>日期格式</strong>也必須符合當地習慣，最典型的如美國習慣<code>Dec 25, 2015</code>，而英國卻習慣<code>25 Dec, 2015</code>，台灣則習慣<code>2015/12/25</code>，不過在資料庫存的卻是同一份日期，只是因為<strong>顯示邏輯</strong>的不同，在view必須用不一樣的格式呈現。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/laravel/laravel-present-dateformat/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/laravel/laravel-presenter/" title="使用 Presenter 輔助 View">如何使用 Presenter 模式?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/laravel/laravel-presenter/"><img src="/images/feature/laravel.png" alt="如何使用 Presenter 模式?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>若將<strong>顯示邏輯</strong>都寫在 view，會造成 view 肥大而難以維護，基於 <strong>SOLID</strong> 原則，我們應該使用 <strong>Presenter</strong> 模式輔助 view，將相關的顯示邏輯封裝在不同的 presenter，方便中大型專案的維護。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/laravel/laravel-presenter/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
