@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-05T09:26:35.000Z</updated>
+  <updated>2017-08-06T01:28:53.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,255 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[COSCUP Workshop：使用 RESTful API]]></title>
+    <link href="http://oomusou.io/angular/angular-coscup-api/"/>
+    <id>http://oomusou.io/angular/angular-coscup-api/</id>
+    <published>2017-08-06T12:23:43.000Z</published>
+    <updated>2017-08-06T01:28:53.000Z</updated>
+    <content type="html"><![CDATA[<p>Angular 是前端 framework，若要讀寫後端資料庫，就要靠 RESTful API 與後端溝通。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular 4.3.3</p>
+<h2 id="任務說明">任務說明</h2><hr>
+<ul>
+<li>實作全選功能</li>
+<li>實作刪除功能</li>
+<li>安裝 JSON Server</li>
+<li>HTTP Request Method</li>
+<li>修改 JSON 資料</li>
+<li>設定 Angular Proxy</li>
+<li>注入 HttpClient</li>
+<li>使用 API</li>
+</ul>
+<h2 id="任務時間">任務時間</h2><hr>
+<ul>
+<li>60 分鐘</li>
+</ul>
+<h2 id="實作全選功能">實作全選功能</h2><hr>
+<p><strong>src/app.component.html</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="keyword">class</span>=<span class="string">"toggle-all"</span> <span class="keyword">type</span>=<span class="string">"checkbox"</span> (click)=<span class="string">"toggleAll(toggleInput)"</span> #toggleInput&gt;</span><br></pre></td></tr></table></figure>
+<p>將 <code>click</code> event 綁定到 <code>toggleAll()</code>，並將 <code>#toggleInput</code> 傳入 <code>toggleAll()</code>。</p>
+<p><strong>src/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">toggleAll(toggleInput: HTMLInputElement) &#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todos.map(todo  =&gt; &#123;</span><br><span class="line">    todo.completed = toggleInput.checked;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>todo.completed</code> 會跟據 <code>toggleInput.checked</code> 而改變，因此使用了 <code>map()</code>，將全部的 <code>completed</code> 根據 <code>checked</code> 改變。</p>
+<h2 id="實作刪除功能">實作刪除功能</h2><hr>
+<p><strong>src/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"destroy"</span> (<span class="attribute">click</span>)=<span class="value">"removeTodo(todo.id)"</span>&gt;</span><span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 <code>click</code> event 綁定到 <code>removeTodo()</code>，並將 <code>todo.id</code> 傳入 <code>removeTodo()</code>。</p>
+<p><strong>src/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todos.filter(todo =&gt; todo.id !== id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 id 刪除，也就是不等於此 id 則留下，相當於使用 <code>filter()</code>。</p>
+<h2 id="安裝_JSON_Server">安裝 JSON Server</h2><hr>
+<h3 id="使用_NPM_安裝">使用 NPM 安裝</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">json</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
+<p>將 JSON Server 安裝在 global 環境。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver000.png" alt="jsonserver000"></p>
+<h3 id="啟動_JSON_Server">啟動 JSON Server</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~$ cd MyProject</span><br><span class="line">~/MyProject$ mkdir json-<span class="keyword">server</span></span><br><span class="line">~/MyProject$ cd json-<span class="keyword">server</span></span><br><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json</span><br></pre></td></tr></table></figure>
+<ol>
+<li>進入 <code>MyProject</code> 專案目錄</li>
+<li>在專案目錄下建立 <code>json-server</code> 目錄</li>
+<li>啟動 JSON Server，指定 <code>db.json</code> 為資料庫檔案</li>
+</ol>
+<p>若 <code>db.json</code> 檔案存在，則 JSON Server 會以此檔案為資料庫，若不存在，則會建立新的 <code>db.json</code> 檔案。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver001.png" alt="jsonserver001"></p>
+<ol>
+<li>建立 <code>json-server</code> 目錄</li>
+<li>進入 <code>json-server</code> 目錄</li>
+<li>在 <code>json-server</code> 目錄啟動 JSON Server，並將 <code>db.json</code> 檔案建立在 <code>json-server</code> 目錄下</li>
+<li>JSON Server 在 <code>json-server</code> 目錄下產生 <code>db.json</code> 檔案</li>
+<li><code>db.json</code> 預設已經有預設資料了</li>
+<li>JSON Server 預設提供了網址可供測試</li>
+</ol>
+<h3 id="測試_JSON_Server">測試 JSON Server</h3><p>預設 <code>db.json</code> 已經有資料，可藉此測試 JSON Server 是否有成功啟動。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/angular/angular-coscup-api/jsonserver002.png" alt="jsonserver002"></p>
+<p>使用 Postman 測試 <code>http://localhost:3000/posts</code>，確定能抓到資料。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/angular/angular-coscup-api/jsonserver003.png" alt="jsonserver003"></p>
+<p>使用瀏覽器測試 <code>http://localhost:3000</code>，確定 JSON Server 內建 Web server 已經成功啟動。</p>
+<p>JSON Server 支援開發中最常用的 <code>GET</code>、<code>POST</code>、<code>PUT</code>、<code>PATCH</code> 與 <code>DELETE</code> 等 request method。</p>
+<h2 id="HTTP_Request_Method">HTTP Request Method</h2><hr>
+<h3 id="GET">GET</h3><p>用於取得 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p>取得所有  <code>post</code> 資料。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver005.png" alt="jsonserver005"></p>
+<ol>
+<li>選擇 <code>GET</code></li>
+<li>輸入 <code>http://localhost:3000/posts</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳 JSON 物件陣列</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/1</span></span><br></pre></td></tr></table></figure>
+<p>取得 <code>id</code> 為 <code>1</code> 的 <code>post</code> 資料。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver006.png" alt="jsonserver006"></p>
+<ol>
+<li>選擇 <code>GET</code></li>
+<li>輸入 <code>http://localhost:3000/posts/1</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳 JSON 物件</li>
+</ol>
+<h3 id="POST">POST</h3><p>用於建立 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
+<p>建立新的一筆 <code>post</code> 資料。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver007.png" alt="jsonserver007"></p>
+<ol>
+<li>選擇 <code>POST</code></li>
+<li>輸入 <code>http://localhost:3000/posts</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要新增的 JSON 物件</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳所新增的 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/angular/angular-coscup-api/jsonserver008.png" alt="jsonserver008"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛新增的 <code>post</code> 已經寫入 <code>db.json</code></li>
+</ol>
+<h3 id="PUT">PUT</h3><p>用於更新完整 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p>更新 <code>id</code> 為 <code>2</code> 的完整 <code>post</code> 資料。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver009.png" alt="jsonserver009"></p>
+<ol>
+<li>選擇 <code>PUT</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要更新的 JSON 物件 (不用含 <code>id</code>，要包含全部欄位)</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/angular/angular-coscup-api/jsonserver010.png" alt="jsonserver010"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code></li>
+</ol>
+<blockquote>
+<p>使用 <code>PUT</code> 要小心，他是將整個 JSON 物件寫入原來的 <code>id</code>，也就是說原本有 <code>3</code> 個欄位，若 <code>PUT</code> 時的 JSON 物件只有 2 個欄位，則 <code>PUT</code> 後就只剩下 <code>2</code> 個欄位。</p>
+</blockquote>
+<h3 id="PATCH">PATCH</h3><p>用於更新部分 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p>更新 <code>id</code> 為 <code>2</code> 的部分 <code>post</code> 資料。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver011.png" alt="jsonserver011"></p>
+<ol>
+<li>選擇 <code>PUT</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>選擇 <code>Body</code></li>
+<li>選擇 <code>raw</code> 格式</li>
+<li>選擇 <code>JSON (application/json)</code> 格式</li>
+<li>要更新的 JSON 物件 (不用含 <code>id</code>，不用包含全部欄位)</li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
+</ol>
+<p><img src="/images/angular/angular-coscup-api/jsonserver012.png" alt="jsonserver012"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code>，且只更新 <code>1</code> 個欄位資料。</li>
+</ol>
+<h3 id="DELETE">DELETE</h3><p>用於刪除 resource。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/angular/angular-coscup-api/jsonserver013.png" alt="jsonserver013"></p>
+<ol>
+<li>選擇 <code>DELETE</code></li>
+<li>輸入 <code>http://localhost:3000/posts/2</code></li>
+<li>按 <code>Send</code> 送出 request</li>
+<li>回傳空的 JSON 物件</li>
+</ol>
+<p><img src="/images/angular/angular-coscup-api/jsonserver019.png" alt="jsonserver019"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>剛剛更新的 <code>post</code> 資料已經被刪除。</li>
+</ol>
+<h2 id="建立假資料">建立假資料</h2><hr>
+<p>JSON Server 並沒有搭配資料庫，因此也不需要 Sequel Pro 或 DataGrip 之類的工具連到資料庫，它只是個文字檔。</p>
+<p>先建立一個 todos 的假資料。</p>
+<p><strong>/json-server/db.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">todos</span>": <span class="value">[</span><br><span class="line">    &#123;</span><br><span class="line">      "<span class="attribute">id</span>": <span class="value"><span class="number">2</span></span>,</span><br><span class="line">      "<span class="attribute">completed</span>": <span class="value"><span class="literal">false</span></span>,</span><br><span class="line">      "<span class="attribute">value</span>": <span class="value"><span class="string">"Study Angular"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>假設已經有一筆 todo 在資料庫。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver020.png" alt="jsonserver020"></p>
+<ol>
+<li>開啟 <code>/json-server/db.json</code></li>
+<li>建立一筆 todo</li>
+</ol>
+<h2 id="設定_Route">設定 Route</h2><hr>
+<p>JSON Server 預設是以 table 名稱作為 route，但實務上 API 的 route 可能不一樣，如 <code>/api/todos</code> 與 <code>api/todos/1</code>。</p>
+<p><strong>json-server/routes.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">/api/todos</span>": <span class="value"><span class="string">"/todos"</span></span>,</span><br><span class="line">  "<span class="attribute">/api/todos/:id</span>": <span class="value"><span class="string">"/todos/:id"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>/api/todos</code> 指向原本的 <code>/todos</code>。</p>
+<p>將 <code>/api/todos/1</code> 只像原本的 <code>/todos/1</code>。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver021.png" alt="jsonserver021"></p>
+<ol>
+<li>新增 <code>json-server/routes.json</code></li>
+<li>編輯 routes 的對應規則</li>
+</ol>
+<h2 id="重新啟動_JSON_Server">重新啟動 JSON Server</h2><hr>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json --routes routes.json</span><br></pre></td></tr></table></figure>
+<p>重新啟動 JSON Server，加上 <code>—-routes</code> 參數，指定套用 <code>routes.json</code>。</p>
+<h2 id="設定_Angular_Proxy">設定 Angular Proxy</h2><hr>
+<p><strong>proxy.conf.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">/api</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">target</span>": <span class="value"><span class="string">"http://localhost:3000"</span></span>,</span><br><span class="line">    "<span class="attribute">secure</span>": <span class="value"><span class="literal">false</span></span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>建立 <code>proxy.conf.json</code>，指定 Angular 使用 <code>/api</code> 時，會導到 JSON Server。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver022.png" alt="jsonserver022"></p>
+<ol>
+<li>在專案根目錄新增 <code>proxy.conf.json</code></li>
+<li>將 <code>/api</code> 導到 JSON Server 的 <code>http://localhost:3000</code></li>
+</ol>
+<h2 id="修改_package-json">修改 package.json</h2><hr>
+<p><strong>package.json</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "ng serve --proxy-config proxy.conf.json",</span><br></pre></td></tr></table></figure>
+<p>將 <code>start</code> 改成 <code>ng serve --proxy-config proxy.conf.json</code>。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver023.png" alt="jsonserver023"></p>
+<ol>
+<li>編輯 <code>package.json</code></li>
+<li>將 <code>start</code> 改成 <code>ng serve --proxy-config proxy.conf.json</code></li>
+</ol>
+<h2 id="重新啟動_Angular">重新啟動 Angular</h2><hr>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject$ <span class="built_in">npm</span> start</span><br></pre></td></tr></table></figure>
+<p>將原本使用 <code>ng serve</code> 啟動的 Angular 停止，改用 <code>npm start</code> 啟動 Angular。</p>
+<p><img src="/images/angular/angular-coscup-api/jsonserver024.png" alt="jsonserver024"></p>
+<ol>
+<li>改用 <code>npm start</code> 啟動 Angular</li>
+<li>實際上是執行 <code>ng serve —proxy-config proxy.conf.json</code></li>
+</ol>
+<h2 id="注入_HttpClient">注入 HttpClient</h2><hr>
+<p><strong>src/app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  HttpClientModule,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>加上 <code>HttpClientModule</code>。</p>
+<p><strong>src/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private httpClient: HttpClient) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用_API">使用 API</h2><hr>
+<h3 id="載入_Todo">載入 Todo</h3><p><strong>src/app.component</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.httpClient.get&lt;Todo[]&gt;(<span class="string">'/api/todos'</span>)</span><br><span class="line">    .subscribe(</span><br><span class="line">      todos =&gt; <span class="keyword">this</span>.todos = todos</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>HttpClient.get()</code> 從 <code>/api/todos</code> 載入所有 todo，在 <code>get()</code> 之後要加上 <code>&lt;Todo[]&gt;</code> 泛型，表示想下載的資料型別為 <code>Observable&lt;Todo[]&gt;</code> 。</p>
+<p>由於 <code>HttpClient.get()</code> 為 RxJS 的 <code>Observable</code>，所以必須加上 <code>subscribe()</code> 才會開始下載資料，並將 <code>todos</code> 陣列指定到 <code>this.todos</code> field。</p>
+<h3 id="新增_Todo">新增 Todo</h3><p><strong>src/app.component</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">addTodo(newTodo: HTMLInputElement) &#123;</span><br><span class="line">  <span class="keyword">const</span> todo = &#123;</span><br><span class="line">    id: <span class="keyword">this</span>.todos.length + <span class="number">1</span>,</span><br><span class="line">    completed: <span class="literal">false</span>,</span><br><span class="line">    value: newTodo.value</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.httpClient.post(<span class="string">'/api/todos'</span>, todo)</span><br><span class="line">    .subscribe();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.httpClient.get&lt;Todo[]&gt;(<span class="string">'/api/todos'</span>)</span><br><span class="line">    .subscribe(</span><br><span class="line">      todos =&gt; <span class="keyword">this</span>.todos = todos</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">   newTodo.value = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>HttpClient.post()</code> 新增 todo 。</p>
+<p>一樣使用 <code>HttpClient.get()</code> 將新增後的 todo 下載。</p>
+<h3 id="刪除_Todo">刪除 Todo</h3><p><strong>src/app.component</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">removeTodo(id: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.httpClient.delete(`/api/todos/$&#123;id&#125;`)</span><br><span class="line">    .subscribe();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.httpClient.get&lt;Todo[]&gt;(<span class="string">'/api/todos'</span>)</span><br><span class="line">    .subscribe(</span><br><span class="line">      todos =&gt; <span class="keyword">this</span>.todos = todos</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>HttpClient.delete()</code> 刪除 todo 。</p>
+<p>一樣使用 <code>HttpClient.get()</code> 將新增後的 todo 下載。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>JSON Server 讓我們不用安裝後端環境與資料庫，就能快速的建立假 API 開發測試。</li>
+<li>Angular 4.3 的 <code>HttpClient</code> 提供了更方便的方式存取後端 API。</li>
+<li><code>HttpClient</code> 回傳的是 RxJS 的 <code>observable</code>，藉由 RxJS 豐富的 operator，我們可以快速的將 API 回傳的資料加工。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[學習如何在 Angular 串 API]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="COSCUP" scheme="http://oomusou.io/tags/COSCUP/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[JSON Server 簡介]]></title>
@@ -1658,6 +1907,49 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
+    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
+    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
+    <published>2017-06-19T12:23:43.000Z</published>
+    <updated>2017-06-15T07:39:55.000Z</updated>
+    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
+<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
+<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
+<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
+<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
+<p>基本下都 <code>下一步</code> 即可。</p>
+<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
+<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
+<ul>
+<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
+</ul>
+<p>重新啟動 WebStorm。</p>
+<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
+<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
+<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
     <link href="http://oomusou.io/protractor/protractor-laravel/"/>
     <id>http://oomusou.io/protractor/protractor-laravel/</id>
@@ -1744,124 +2036,6 @@
       <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[TypeScript 之 Module]]></title>
-    <link href="http://oomusou.io/typescript/typescript-module/"/>
-    <id>http://oomusou.io/typescript/typescript-module/</id>
-    <published>2017-06-18T12:23:43.000Z</published>
-    <updated>2017-06-13T16:15:26.000Z</updated>
-    <content type="html"><![CDATA[<p>ES6 提出了 module 概念，讓我們將程式碼加以模組化，避免如 ES5 一樣常常寫出幾千行的程式碼，造成日後難以維護，TypeScript 也支援 ES6 的 module。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScrpit 2.3</p>
-<h2 id="Introduction">Introduction</h2><hr>
-<p>Module 有自己的 scope，不是 global scope，也就是說，在 module 內的變數、function、class 與 interface …，只有在同一個 module 內才看得到，除非特別加上 <code>export</code> 關鍵字，外界才能存取；同樣的，module 要使用其他 module 的變數、function、class 與 interface …，除非特別加上 <code>import</code> 關鍵字，才能存取外界。</p>
-<blockquote>
-<p>在 TypeScript，只要檔案中存在 <code>import</code> 或 <code>export</code> 關鍵字，都被視為 module。</p>
-</blockquote>
-<h2 id="Export">Export</h2><hr>
-<h3 id="直接_Export">直接 Export</h3><p><strong>Validation.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> StringValidator </span>&#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>): <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 <code>interface</code> 前面加上 <code>export</code>，則可直接 export 出去。</p>
-<p><strong>ZipCodeValidator.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> numberRegexp = <span class="regexp">/^[0-9]+$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 <code>const</code> 之前加上 <code>export</code>，則可直接 export 出去。</p>
-<p>在 <code>class</code> 之前加上 <code>export</code> ，則可直接 export 出去。</p>
-<blockquote>
-<p>要直接 export，只要在 <code>const</code>、<code>function</code> 、<code>class</code> 與 <code>interface</code> 之前加上 <code>export</code> 關鍵字即可。</p>
-</blockquote>
-<h3 id="以別名_Export">以別名 Export</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator as mainValidator &#125;;</span><br></pre></td></tr></table></figure>
-<p>第 6 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator &#125;;</span><br></pre></td></tr></table></figure>
-<p>相當於</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ZipCodeValidator <span class="keyword">implements</span> StringValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 7 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; ZipCodeValidator as mainValidator &#125;;</span><br></pre></td></tr></table></figure>
-<p>將原本 <code>ZipCodeValidator</code> 以 <code>mainValidator</code> 名稱 export 出去。</p>
-<blockquote>
-<p>實務上有可能原本要 export 的名稱太長，或者不夠貼近 domain，因此不適合使用者，需要用更簡短、更精準的名稱時，可以搭配 <code>as</code>。</p>
-</blockquote>
-<h3 id="重新_Export">重新 Export</h3><p><strong>ParseIntBasedZipCodeValidator.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ParseIntBasedZipCodeValidator &#123;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; <span class="built_in">parseInt</span>(s).toString() === s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Export original validator but rename it</span></span><br><span class="line"><span class="keyword">export</span> &#123;ZipCodeValidator as RegExpBasedZipCodeValidator&#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>export {} from</code> 可以從另外一個 module 間接的將另外一個 module 內的東西 export 出去。</p>
-<p>可明確指定要 export 什麼東西。</p>
-<p><strong>AllValidators.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * from <span class="string">"./StringValidator"</span>; <span class="comment">// exports interface 'StringValidator'</span></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">"./LettersOnlyValidator"</span>; <span class="comment">// exports class 'LettersOnlyValidator'</span></span><br><span class="line"><span class="keyword">export</span> * from <span class="string">"./ZipCodeValidator"</span>;  <span class="comment">// exports class 'ZipCodeValidator'</span></span><br></pre></td></tr></table></figure>
-<p>使用 <code>export * from</code> 明確另外一個 module 的<strong>所有東西</strong> export 出去。</p>
-<h2 id="Import">Import</h2><hr>
-<h3 id="單一_Import">單一 Import</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ZipCodeValidator &#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> ZipCodeValidator();</span><br></pre></td></tr></table></figure>
-<p>使用 <code>import {} from</code> 可以從一個 module 單一 import 一個東西。</p>
-<h3 id="以別名_Import">以別名 Import</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ZipCodeValidator as ZCV &#125; from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> ZCV();</span><br></pre></td></tr></table></figure>
-<p>使用 <code>import { as } from</code> 可以從一個 module 單一 import 後，並同時取別名。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * as validator from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> validator.ZipCodeValidator();</span><br></pre></td></tr></table></figure>
-<p>使用 <code>import * as from</code> 將一個 module 所有東西 import 成一個變數，並透過變數去存取所有 export 的東西。</p>
-<h2 id="Default_Export">Default Export</h2><hr>
-<p>一個 module 僅可以有一個 default export。</p>
-<p><strong>ZipCodeValidator.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> ZipCodeValidator &#123;</span><br><span class="line">    <span class="keyword">static</span> numberRegexp = <span class="regexp">/^[0-9]+$/</span>;</span><br><span class="line">    isAcceptable(s: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> s.length === <span class="number">5</span> &amp;&amp; ZipCodeValidator.numberRegexp.test(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 <code>export</code> 之後加上 <code>default</code>。</p>
-<p><strong>Test.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> validator from <span class="string">"./ZipCodeValidator"</span>;</span><br><span class="line"><span class="keyword">let</span> myValidator = <span class="keyword">new</span> validator();</span><br></pre></td></tr></table></figure>
-<p>使用 <code>import 名稱 from</code>，不需使用 <code>{}</code>，直接將 default export 成特定名稱。 </p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>透過 module，我們能將功能相近的變數、function、class 與 interface 放在同一個 module，讓程式碼更加模組化，避免一個檔案好幾千行而難以維護。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/modules.html" target="_blank" rel="external">Handbook : Modules</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[TypeScript 也支援 ES6 的 module]]>
-    
-    </summary>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
     
   </entry>
   

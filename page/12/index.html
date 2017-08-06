@@ -99,6 +99,75 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/laravel/laravel-package-hello-world/" title="建立一個Hello World Package並送上Packagist">如何開發自己的Package?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/laravel/laravel-package-hello-world/"><img src="/images/feature/laravel.png" alt="如何開發自己的Package?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>Service provider最主要的功能就是讓我們寫package，本文一步一步的介紹<code>最簡單</code>的package，僅有<code>Hello World</code>的功能，並包含route、controller與view，然後打包成package送上Github與Packagist，最後另外開一個專案，使用<code>composer require</code>下載，執行我們自己上傳的package。<br>實際寫過package之後，會讓我們對service provider與composer有更深刻的了解。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/laravel/laravel-package-hello-world/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/laravel/laravel-service-provider/" title="Service Provider是Laravel管理Package的核心技術">深入探討Service Provider</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/laravel/laravel-service-provider/"><img src="/images/feature/laravel.png" alt="深入探討Service Provider"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>Laravel提供了<code>service container</code>讓我們方便實現<strong>Dependency Injection</strong>，而<code>service provider</code>則是我們註冊及管理service container的地方。</p>
+<p>事實上Laravel內部所有的核心組件都是使用service provider統一管理，除了可以用來管理package外，也可以用來管理自己寫的物件。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/laravel/laravel-service-provider/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/ci/travis-ci-setup/" title="每次對GitHub push之後，Travis CI就會自動執行unit test">如何使用Travis CI自動測試?</a></div>						
 		</h3>
 	
@@ -361,76 +430,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/laravel/elixir/elixir-phpunit/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/php/php-psr2/" title="PHP Coding Style與工具整理">PSR-2 PHP Coding Style</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/php/php-psr2/"><img src="/images/feature/php.png" alt="PSR-2 PHP Coding Style"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>相較於其他Web後端技術，PHP的一大特色是有眾多framework支援，有macro framework如Symfony與Laravel，也有micro framework如Silex與Slim，更有較早期的CodeIgniter。</p>
-<p>PHP的各framework蓬勃發展是一種良性競爭，但也導致各framework一直在重新製造輪子。若能讓PHP的framework各展所長，彼此互相合作，就必須大家遵守一個共同的標準，這就是<code>PHP-FIG</code>的<code>PSR</code>。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/php/php-psr2/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/php/php-cs/" title="以語法角度快速比較PHP與C#">PHP與C#語法快速導覽</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/php/php-cs/"><img src="/images/feature/php.png" alt="PHP與C#語法快速導覽"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>理論上PHP與C#完全沒有關係，因為兩者都是後端開發語言，但因為<a href="https://www.facebook.com/groups/laravel.tw/">Laravel台灣</a>社團要一起參加<a href="https://www.facebook.com/hatelove">陳仕傑</a>老師的<a href="https://skilltree.my/events/ebg">自動測試與TDD實務開發(使用C#)</a>課程，而上課用的是C#，為了讓原本寫PHP的社友能快速看懂C#範例，進而將TDD用在PHP上，因此有了本文介紹。</p>
-<p>本文僅就物件導向與常用的部分快速導覽，並不包含PHP與C#語言部分的全部，目的只讓PHP開發者能快速看懂C#學習TDD。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/php/php-cs/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
