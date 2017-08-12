@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-12T07:50:55.000Z</updated>
+  <updated>2017-08-12T07:52:46.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/tdd/tdd-test-double/"/>
     <id>http://oomusou.io/tdd/tdd-test-double/</id>
     <published>2017-08-12T12:23:43.000Z</published>
-    <updated>2017-08-12T07:50:55.000Z</updated>
+    <updated>2017-08-12T07:52:46.000Z</updated>
     <content type="html"><![CDATA[<p>初學者在學習測試時，常被一些測試的專有名詞迷惑，而且常常不同 library 對同一個名次的定義還不一樣。</p>
 <p>本文以 Martin Fowler 在 <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a> 一文的定義為標準，並搭配 Jasmine 解釋。</p>
 <a id="more"></a>
@@ -65,7 +65,7 @@
 <p>Mocks are pre-programmed with expectations which form a specification of the calls they are expected to receive. </p>
 </blockquote>
 <p>白話：測試時不在乎 function 回傳值，只在乎該 function 有沒有被呼叫過。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use <span class="string">'onChange()'</span> on <span class="string">'change'</span> event`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'onChange'</span>);</span><br><span class="line">     debugElement.query(By.css(<span class="string">'#TDDSelect'</span>)).triggerEventHandler(<span class="string">'change'</span>, <span class="literal">null</span>);</span><br><span class="line">  </span><br><span class="line">  expect(component.onChange).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use <span class="string">'onChange()'</span> on <span class="string">'change'</span> event`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'onChange'</span>);</span><br><span class="line">  debugElement.query(By.css(<span class="string">'#TDDSelect'</span>)).triggerEventHandler(<span class="string">'change'</span>, <span class="literal">null</span>);</span><br><span class="line">  </span><br><span class="line">  expect(component.onChange).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>在測試時使用 <code>triggerEventHandler()</code> 觸發了 <code>change</code> event，因此我們要測試的是被 Mock 的 <code>onChange()</code> method 是否有被執行過，因此在 <code>expect()</code> 使用了 <code>toHaveBeenCalled()</code> 測試。</p>
 <blockquote>
 <p>Jasmine 這裏的 Spy 實質上是個 Mock，只是 Jasmine 用了 Spy 這個單字。</p>
