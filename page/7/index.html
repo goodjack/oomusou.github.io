@@ -99,40 +99,6 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
-			<div class="article-title"><a href="/phpstorm/phpstorm-collection-debug/" title="使用 Watches 替 Collection 除錯">如何使用 PhpStorm 對 Collection 除錯?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/phpstorm/phpstorm-collection-debug/"><img src="/images/feature/phpstorm.png" alt="如何使用 PhpStorm 對 Collection 除錯?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>Laravel 的 <code>Collection</code> 在實務上非常好用，除了 Eloquent 直接回傳 <code>Collection</code> 外，還擴充了很多 method，讓我們可以使用 higher order function 與 fluent 風格開發，讓程式可讀性更高。不過 <code>Collection</code> 的除錯就比較麻煩，本文使用 PhpStorm 內建的 <strong>Watches</strong>，讓我們可以在不用修改程式碼的前提下，快速對 <code>Collection</code> 除錯。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/phpstorm/phpstorm-collection-debug/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
 			<div class="article-title"><a href="/phpstorm/phpstorm-refactor-namespace/" title="使用 PhpStorm 自動幫我們重構 Namespace">如何使用 PhpStorm 重構 Namespace?</a></div>						
 		</h3>
 	
@@ -429,6 +395,41 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/laravel/elixir/elixir-browsersync/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/tdd/tdd-repository-testing-mysql/" title="直接使用 MySQL 與 Test Factory Generator 測試 Repository">如何測試 Repository 模式 (使用 MySQL)?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/tdd/tdd-repository-testing-mysql/"><img src="/images/feature/tdd.png" alt="如何測試 Repository 模式 (使用 MySQL)?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>使用 SQLite In-Memory 的方式雖然又快又方便，但若使用了 <code>DB::raw</code> 或 <code>whereRaw()</code> 的寫法，由於直接使用了 MySQL 的函式，可能 SQLite 並不支援，就必須直接在 MySQL 跑測試。</p>
+<p>雖然我們會另外開一個資料庫做測試，但也有可能我們想直接對正式有資料的資料庫做測試，我們該怎麼快速無痛切換呢?</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/tdd/tdd-repository-testing-mysql/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
