@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="釐清假資料的定義">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-08-12T11:51:12.000Z">
+<meta property="og:updated_time" content="2017-08-12T13:42:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Test Double、Dummy、Fake、Stub 、Mock 與 Spy">
 <meta name="twitter:description" content="釐清假資料的定義">
@@ -162,7 +162,7 @@
 <p>Spies are stubs that also record some information based on how they were called. </p>
 </blockquote>
 <p>白話：測試時當 Stub 與 Mock 無法滿足測試時，自己寫 Spy 埋入一段測試邏輯。</p>
-<p>實務上 Jasmine 提供的方法已經相當夠用，不太需要自己埋測試邏輯，不過當測試 arrow function 時，就會用到 Spy。</p>
+<p>實務上 Jasmine 提供的方法已經相當夠用，不太需要自己埋測試邏輯，不過當要 mock 沒有 class 的 function 或 arrow function 時，就會用到 Spy。</p>
 <p><strong>shipping.service.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ShippingService &#123;</span><br><span class="line">  calculateFee(weight: <span class="built_in">number</span>, logistics: (<span class="built_in">number</span>) =&gt; <span class="built_in">number</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> logistics(weight);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>計算運費，因為依賴反轉，我們希望 user 自己提供計算運費的邏輯，而非寫死在底層。</p>
@@ -177,7 +177,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(spy).toHaveBeenCalled();</span><br></pre></td></tr></table></figure>
 <p>判斷 Spy 是否有被呼叫到。</p>
 <blockquote>
-<p>實務上會自己建立 Spy 測試 arrow function。</p>
+<p>實務上會自己建立 Spy mock 沒有 class 的 function 或 arrow function。</p>
 </blockquote>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
