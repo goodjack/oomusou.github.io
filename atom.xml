@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-12T08:02:27.000Z</updated>
+  <updated>2017-08-12T08:06:43.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,106 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[深入探討 Test Double、Dummy、Fake、Stub 、Mock 與 Spy]]></title>
+    <link href="http://oomusou.io/jasmine/jasmine-test-double/"/>
+    <id>http://oomusou.io/jasmine/jasmine-test-double/</id>
+    <published>2017-08-12T12:23:43.000Z</published>
+    <updated>2017-08-12T08:06:43.000Z</updated>
+    <content type="html"><![CDATA[<p>初學者在學習測試時，常被一些測試的專有名詞迷惑，而且常常不同 library 對同一個名次的定義還不一樣。</p>
+<p>本文以 Martin Fowler 在 <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a> 一文的定義為標準，並搭配 Jasmine 解釋。</p>
+<a id="more"></a>
+<h2 id="Test_Double">Test Double</h2><hr>
+<blockquote>
+<p>Test Double is a generic term for any case where you replace a production object for testing purpose. There are various kinds of double list : Dummy、Fake、Stub、Mock and Spy.</p>
+</blockquote>
+<p>白話：</p>
+<p>Test Double 為<strong>假物件</strong>的統稱，Dummy、Fake、Stub、Mock 與 Spy 都算 Test Double。</p>
+<blockquote>
+<p>在 <a href="https://angular.io/guide/testing" target="_blank" rel="external">Angular Testing</a> 中，也是以 Test Double 統稱假物件。</p>
+</blockquote>
+<h2 id="Dummy">Dummy</h2><hr>
+<blockquote>
+<p>Objects are passed around but never actually used. Usually they are just used to fill parameter lists.</p>
+</blockquote>
+<p>白話：測試時為了通過編譯而傳進假物件給 function，但這個假物件在測試中從來都沒被使用過。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should have getTitle() to <span class="keyword">return</span> <span class="string">'todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> dummy = &#123;</span><br><span class="line">    lang: <span class="string">'en-us'</span></span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> target = <span class="keyword">new</span> TitleComponent();  </span><br><span class="line">  expect(target.getTitle(dummy)).toBe(<span class="string">'todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>getTitle()</code> 的參數要求傳入一物件，描述其顯示語系，不過目前語系並不是此次單元測試的重點，也就是邏輯根本不會跑到語系的部分。</p>
+<p>但因為 <code>getTitle()</code> 的參數要求，只好建立 Dummy 假物件滿足編譯要求。</p>
+<blockquote>
+<p>若參數允許 <code>null</code>，實務上也常常直接傳入 <code>null</code> 作為 Dummy。</p>
+</blockquote>
+<h2 id="Fake">Fake</h2><hr>
+<blockquote>
+<p>Objects actually have working implementations, but usually take some shortcut which makes them not suitable for production.</p>
+</blockquote>
+<p>白話：測試時自己重新實作 function 取代原 function。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; <span class="string">'fake'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  </span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>spyOn()</code> 提供 <code>and.callFake()</code>，可以對既有的 function 加以重新實作，在測試時，跑的就是假 function，而非原本的 function。</p>
+<h2 id="Stub">Stub</h2><hr>
+<blockquote>
+<p>Stub provide canned answers to calls made during the test.</p>
+</blockquote>
+<p>白話：測試時建立包含假資料的假物件，並測試假資料。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'onChange()'</span> to make <span class="string">'selectedId'</span> as selected value`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> stub = &lt;HTMLSelectElement&gt;&#123;</span><br><span class="line">    <span class="string">'value'</span>: <span class="string">'1'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> target = <span class="keyword">new</span> AppComponent();</span><br><span class="line">  target.onChange(stub);</span><br><span class="line">  expect(target.selectedId).toBe(<span class="string">'1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>onChange()</code> 要求傳入 <code>HTMLSelectElement</code> 物件，且測試也會用到 <code>HTMLSelectElement</code> 物件，此時可傳入包含假資料的 Stub 假物件，並在 <code>expect()</code> 測試回傳是否為 Stub 物件的假資料。</p>
+<blockquote>
+<p>Dummy 與 Stub 的差異在於：Dummy 只是個花瓶，不會真的拿來測試，但會拿 Stub 的假資料來測試。</p>
+</blockquote>
+<h2 id="Mock">Mock</h2><hr>
+<blockquote>
+<p>Mocks are pre-programmed with expectations which form a specification of the calls they are expected to receive. </p>
+</blockquote>
+<p>白話：測試時不在乎 function 回傳值，只在乎該 function 有沒有被呼叫過。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use <span class="string">'onChange()'</span> on <span class="string">'change'</span> event`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'onChange'</span>);</span><br><span class="line">  debugElement.query(By.css(<span class="string">'#TDDSelect'</span>)).triggerEventHandler(<span class="string">'change'</span>, <span class="literal">null</span>);</span><br><span class="line">  </span><br><span class="line">  expect(component.onChange).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在測試時使用 <code>triggerEventHandler()</code> 觸發了 <code>change</code> event，因此我們要測試的是被 Mock 的 <code>onChange()</code> method 是否有被執行過，因此在 <code>expect()</code> 使用了 <code>toHaveBeenCalled()</code> 測試。</p>
+<blockquote>
+<p>Jasmine 這裏的 Spy 實質上是個 Mock，只是 Jasmine 用了 Spy 這個單字。</p>
+</blockquote>
+<h2 id="Spy">Spy</h2><hr>
+<blockquote>
+<p>Spies are stubs that also record some information based on how they were called. </p>
+</blockquote>
+<p>白話：測試時當 Stub 與 Mock 無法滿足測試時，自己寫 Spy 埋入一段測試邏輯。</p>
+<p>實務上 Jasmine 提供的方法已經相當夠用，不太需要自己埋測試邏輯，不過當測試 arrow function 時，就會用到 Spy。</p>
+<p><strong>shipping.service.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ShippingService &#123;</span><br><span class="line">  calculateFee(weight: <span class="built_in">number</span>, logistics: (<span class="built_in">number</span>) =&gt; <span class="built_in">number</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> logistics(weight);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>計算運費，因為依賴反轉，我們希望 user 自己提供計算運費的邏輯，而非寫死在底層。</p>
+<p><strong>shipping.service.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should call arrow <span class="function"><span class="keyword">function</span>`, (<span class="params"></span>) =&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br><span class="line">  </span><br><span class="line">  target.calculateFee(<span class="literal">null</span>, spy);</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Service 的單元測試，因為運算邏輯由 user 提供，因此只要測試到使用到 arrow function 即可。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>jasmine.createSpy()</code> 建立了 arrow function 的 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target.calculateFee(<span class="literal">null</span>, spy);</span><br></pre></td></tr></table></figure>
+<p>執行 service 的 <code>calculateFee()</code> method，因為不是要測試結果，因此 <code>weight</code> 參數並不重要，第 1 個參數傳入 <code>null</code> 即可，此時的 <code>null</code> 就是 Dummy。</p>
+<p>第 2 個餐數就是我們要測試的重點，判斷是否有被呼叫到，因此傳入 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(spy).toHaveBeenCalled();</span><br></pre></td></tr></table></figure>
+<p>判斷 Spy 是否有被呼叫到。</p>
+<blockquote>
+<p>實務上會自己建立 Spy 測試 arrow function。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>一般人習慣稱為 Mock，但實際上 Test Double 才是觀念上的統稱。</li>
+<li>Dummy 主要是提供測試用不到的假資料，但 Stub 是測試用得到的假資料。</li>
+<li>Jasmine 將 Mock 與 Spy 統稱為 Spy，不過嚴格來說，Mock 與 Spy 觀念上仍然不同。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io/" target="_blank" rel="external">Angular</a>,  <a href="https://angular.io/guide/testing" target="_blank" rel="external">Angular Testing</a><br><a href="https://martinfowler.com/" target="_blank" rel="external">Martin Fowler</a>,  <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a><br><a href="https://martinfowler.com/" target="_blank" rel="external">Martin Fowler</a>,  <a href="https://martinfowler.com/articles/mocksArentStubs.html" target="_blank" rel="external">Mocks Aren’t Stubs</a><br><a href="https://dev.to/milipski" target="_blank" rel="external">Michal Lipski</a>, <a href="https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs" target="_blank" rel="external">Test Doubles - Fakes, Mocks and Stubs</a><br><a href="https://dotblogs.com.tw/hatelove/" target="_blank" rel="external">91</a>, <a href="https://dotblogs.com.tw/hatelove/2012/11/29/learning-tdd-in-30-days-day7-unit-testing-stub-mock-and-fake-object-introduction" target="_blank" rel="external">Stub, Mock, Fake 簡介</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[釐清假資料的定義]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
+    
+      <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[深入探討 Test Double、Dummy、Fake、Stub 、Mock 與 Spy]]></title>
@@ -2003,96 +2103,6 @@
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Protractor 對 Laravel 進行驗收測試?]]></title>
-    <link href="http://oomusou.io/protractor/protractor-laravel/"/>
-    <id>http://oomusou.io/protractor/protractor-laravel/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-19T23:03:58.000Z</updated>
-    <content type="html"><![CDATA[<p><strong>驗收測試</strong>是以使用者角度對網站做測試，屬於<strong>黑箱測試</strong>，既然是黑箱測試，原本使用 PHP/Laravel 所開發的網站，就不一定要使用 PHP/Laravel 後端技術來做驗收測試，也可以使用前端的技術來做；透過 Angular CLI，我們可使用 TypeScript + Protractor + Jasmine + Webpack 對 PHP/Laravel 做驗收測試。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.15<br>Laravel 5.4.27<br>Angular CLI 1.1.2<br>Angular 4.2.3<br>TypeScript 2.3.3<br>Protractor 5.1.2<br>Jasmine 2.6.2</p>
-<h2 id="建立_Laravel_專案">建立 Laravel 專案</h2><hr>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer <span class="operator"><span class="keyword">create</span>-<span class="keyword">project</span> laravel/laravel Laravel54 <span class="comment">--prefer-dist</span></span></span><br></pre></td></tr></table></figure>
-<p>使用 Composer 建立 Laravel 專案。</p>
-<h2 id="執行_Laravel">執行 Laravel</h2><hr>
-<p><img src="/images/protractor/protractor-laravel/laravel000.png" alt="laravel000"></p>
-<p>執行 <code>php artisan serve</code> 啟動內建的 PHP web server，預設執行在 <code>http://127.0.0.1:8000</code>。</p>
-<p><img src="/images/protractor/protractor-laravel/laravel001.png" alt="laravel001"></p>
-<p>在 <code>http://127.0.0.1:8000</code>，我們看到了首頁有斗大的 <code>Laravel</code>。</p>
-<h2 id="安裝_Angular_CLI">安裝 Angular CLI</h2><hr>
-<p>我們即將使用 Protractor 對 Laravel 做驗收測試，在 Angular CLI 中，已經將 TypeScript + Protractor + Jasmine + Webpack 都整合好了，因此我們要安裝 Angular CLI，由 Angular CLI 建立 Angular 專案後，再修改專案內的 <code>e2e</code> 目錄的測試程式，由 Protractor 對 Laravel 做驗收測試。</p>
-<p><strong>安裝 Node.js</strong></p>
-<p>(略)</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> install -g <span class="property">@angular</span>/cli</span><br></pre></td></tr></table></figure>
-<p>由 NPM 安裝 Angular CLI。</p>
-<ul>
-<li><strong>-g</strong>  : 表 global，將 Angular CLI 安裝在系統全域環境，整個 macOS 都能用。</li>
-</ul>
-<h2 id="建立_Angular_專案">建立 Angular 專案</h2><hr>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng <span class="keyword">new</span> NG4Protractor</span><br></pre></td></tr></table></figure>
-<p>使用 Angular CLI 建立 Angular 專案。</p>
-<h2 id="修改_Page_Object">修改 Page Object</h2><hr>
-<p><strong>e2e/app.po.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4ProtractorPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    browser.waitForAngularEnabled(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'http://127.0.0.1:8000/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.className(<span class="string">'title m-b-md'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>app.po.ts</code> 為 page object，目的讓我們的驗收測試不用直接面對容易變動的 HTML 與 CSS，若將來 HTML 與 CSS 有任何修改，只要統一的修改 <code>app.po.ts</code> 檔案即可，不用修改驗收測試。</p>
-<p>第 4 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">navigateTo() &#123;</span><br><span class="line">  browser.waitForAngularEnabled(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> browser.get(<span class="string">'http://127.0.0.1:8000/'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Angular 的 Protractor，預設會判斷網頁是否由 Angular 開發，但目前我們要測的不是 Angular，而是 Laravel，因此必須加上 <code>browser.waitForAngularEnabled(false)</code>，避免測試失敗。</p>
-<p>由於 Laravel 預設的網址為 <code>http://127.0.0.1:8000/</code>，因此在 <code>browser.get()</code> 加上網址。</p>
-<p>第 9 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> getParagraphText() &#123;</span><br><span class="line">   <span class="keyword">return</span> element(by.className(<span class="string">'title m-b-md'</span>)).getText();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我們想要測試的<strong>首頁是否有 Laravel</strong>。</p>
-<p><img src="/images/protractor/protractor-laravel/laravel002.png" alt="laravel002"></p>
-<p>根據 <code>welcome.blade.php</code>，我們發現 <code>Laravel</code> 的 <code>&lt;div&gt;</code> 的 CSS class 是 <code>title m-b-md</code>，因此使用 Protractor 的 <code>by.className(&#39;title m-b-md&#39;)</code> 抓到該 element，再由 <code>getText()</code> 抓到 <code>Laravel</code>。</p>
-<h2 id="修改驗收測試">修改驗收測試</h2><hr>
-<p><strong>e2e/app.e2e-spec.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NG4ProtractorPage &#125; from <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'ng4-protractor App'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> page: NG4ProtractorPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    page = <span class="keyword">new</span> NG4ProtractorPage();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should display Laravel'</span>, () =&gt; &#123;</span><br><span class="line">    page.navigateTo();</span><br><span class="line">    expect(page.getParagraphText()).toEqual(<span class="string">'Laravel'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><code>app.e2e-spec.ts</code> 才是真正的驗收測試，如同使用 Jasmine 寫單元測試一樣。</p>
-<p>第 6 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(() =&gt; &#123;</span><br><span class="line">  page = <span class="keyword">new</span> NG4ProtractorPage();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>在每個驗收測試執行之前，先建立 page object 物件。</p>
-<p>第 10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'should display Laravel'</span>, () =&gt; &#123;</span><br><span class="line">  page.navigateTo();</span><br><span class="line">  expect(page.getParagraphText()).toEqual(<span class="string">'Laravel'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試案例，想要測試是否在首頁看到 <code>Laravel</code> ，使用 page object 的 <code>getParagraphText()</code> 抓到值，再由 <code>expect().toEqual(&#39;Laravel&#39;)</code> 判斷是否為 <code>Laravel</code>。</p>
-<h2 id="執行驗收測試">執行驗收測試</h2><hr>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ng e2e --serve=<span class="keyword">false</span></span><br></pre></td></tr></table></figure>
-<p>預設 <code>ng e2e</code> 會重新編譯整個 Angular，但目前我們並沒有寫 Angular，只是想藉由 Angular CLI 的 Protractor 環境測試 Laravel 而已，因此要加上 <code>—serve=false</code>，則 Angular CLI 將只會編譯 Protractor 部分的驗收測試而已，速度會快很多。 </p>
-<p><img src="/images/protractor/protractor-laravel/laravel003.png" alt="laravel003"></p>
-<p><code>綠燈</code> 通過 Protractor 驗收測試。</p>
-<blockquote>
-<p>若在公司的 proxy 內，Protractor 將無法正常執行，必須自行設定 NPM proxy。</p>
-</blockquote>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br><span class="line">$ npm config -<span class="keyword">g</span> <span class="keyword">set</span> https-proxy http:<span class="comment">//xxx.xxx.xxx.xxx.xxx:80</span></span><br></pre></td></tr></table></figure>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Protractor 原本是 Google 為 Angular 量身定做的 E2E testing framework，專門用來測試 Angular 所開發的網站，但也能用來測試任何以後端為主的網站，不侷限於 Laravel。</li>
-<li>藉由 Angular CLI 所建立的 Angular 專案，我們將不用再手動整理 TypeScript + Protractor + Jasmine + Webpack 環境，Angular CLI 已經幫我們搞定了。</li>
-<li>若將來想將 MVC 專案重構成前後端分離的專案，可藉由此方式先將 MVC 的驗收測試先用 Protractor 寫好，然後重構 MVC 專案，達到商業邏輯與後端 framework 解耦合後，將來再將後端的商業邏輯移植到前後端分離的後端 framework，下一步再使用 Angular 接後端 API，最後再使用同一份 Protractor 驗收測試來測試 Angular，由於驗收測試是同一份，更能確保從 MVC 重構成前後端分離後，功能是否完全正常。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou" target="_blank" rel="external">GitHub</a> 上找到</p>
-<ul>
-<li><a href="https://github.com/oomusou/Laravel54" target="_blank" rel="external">Laravel</a></li>
-<li><a href="https://github.com/oomusou/NG4Protractor" target="_blank" rel="external">Protractor</a></li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://coryrylan.com" target="_blank" rel="external">Cory Rylan</a>, <a href="https://coryrylan.com/blog/introduction-to-e2e-testing-with-the-angular-cli-and-protractor" target="_blank" rel="external">Introduction to E2E Testing with the Angular CLI and Protractor</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[使用前端技術對後端做驗收測試]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Laravel" scheme="http://oomusou.io/tags/Laravel/"/>
-    
-      <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
     
   </entry>
   
