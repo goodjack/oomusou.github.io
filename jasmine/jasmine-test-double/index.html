@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="釐清假資料的定義">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-08-12T08:06:43.000Z">
+<meta property="og:updated_time" content="2017-08-12T11:44:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 Test Double、Dummy、Fake、Stub 、Mock 與 Spy">
 <meta name="twitter:description" content="釐清假資料的定義">
@@ -107,7 +107,7 @@
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>初學者在學習測試時，常被一些測試的專有名詞迷惑，而且常常不同 library 對同一個名次的定義還不一樣。</p>
+	    <p>初學者在學習測試時，常被一些測試的專有名詞迷惑，而且常常不同 library 對同一個名詞的定義還不一樣。</p>
 <p>本文以 Martin Fowler 在 <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a> 一文的定義為標準，並搭配 Jasmine 解釋。</p>
 <a id="more"></a>
 <h2 id="Test_Double">Test Double</h2><hr>
@@ -173,7 +173,7 @@
 <p>使用 <code>jasmine.createSpy()</code> 建立了 arrow function 的 Spy。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target.calculateFee(<span class="literal">null</span>, spy);</span><br></pre></td></tr></table></figure>
 <p>執行 service 的 <code>calculateFee()</code> method，因為不是要測試結果，因此 <code>weight</code> 參數並不重要，第 1 個參數傳入 <code>null</code> 即可，此時的 <code>null</code> 就是 Dummy。</p>
-<p>第 2 個餐數就是我們要測試的重點，判斷是否有被呼叫到，因此傳入 Spy。</p>
+<p>第 2 個參數就是我們要測試的重點，判斷是否有被呼叫到，因此傳入 Spy。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(spy).toHaveBeenCalled();</span><br></pre></td></tr></table></figure>
 <p>判斷 Spy 是否有被呼叫到。</p>
 <blockquote>
