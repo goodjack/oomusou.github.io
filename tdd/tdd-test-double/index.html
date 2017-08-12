@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入探討 Test Double、Dummay、Fake、Stub 、Mock 與 Spy | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="釐清假資料的定義">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="釐清假資料的定義">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探討 Test Double、Dummay、Fake、Stub 、Mock 與 Spy">
+<meta property="og:url" content="http://oomusou.io/tdd/tdd-test-double/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="釐清假資料的定義">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-08-12T07:50:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探討 Test Double、Dummay、Fake、Stub 、Mock 與 Spy">
+<meta name="twitter:description" content="釐清假資料的定義">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 深入探討 Test Double、Dummay、Fake、Stub 、Mock 與 Spy</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 釐清假資料的定義			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Test_Double"><span class="toc-article-text">Test Double</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Dummy"><span class="toc-article-text">Dummy</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Fake"><span class="toc-article-text">Fake</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Stub"><span class="toc-article-text">Stub</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Mock"><span class="toc-article-text">Mock</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Spy"><span class="toc-article-text">Spy</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>初學者在學習測試時，常被一些測試的專有名詞迷惑，而且常常不同 library 對同一個名次的定義還不一樣。</p>
+<p>本文以 Martin Fowler 在 <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a> 一文的定義為標準，並搭配 Jasmine 解釋。</p>
+<a id="more"></a>
+<h2 id="Test_Double">Test Double</h2><hr>
+<blockquote>
+<p>Test Double is a generic term for any case where you replace a production object for testing purpose. There are various kinds of double list : Dummy、Fake、Stub、Mock and Spy.</p>
+</blockquote>
+<p>白話：</p>
+<p>Test Double 為<strong>假物件</strong>的統稱，Dummy、Fake、Stub、Mock 與 Spy 都算 Test Double。</p>
+<blockquote>
+<p>在 <a href="https://angular.io/guide/testing" target="_blank" rel="external">Angular Testing</a> 中，也是以 Test Double 統稱假物件。</p>
+</blockquote>
+<h2 id="Dummy">Dummy</h2><hr>
+<blockquote>
+<p>Objects are passed around but never actually used. Usually they are just used to fill parameter lists.</p>
+</blockquote>
+<p>白話：測試時為了通過編譯而傳進假物件給 function，但這個假物件在測試中從來都沒被使用過。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should have getTitle() to <span class="keyword">return</span> <span class="string">'todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> dummy = &#123;</span><br><span class="line">    lang: <span class="string">'en-us'</span></span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> target = <span class="keyword">new</span> TitleComponent();  </span><br><span class="line">  expect(target.getTitle(dummy)).toBe(<span class="string">'todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>getTitle()</code> 的參數要求傳入一物件，描述其顯示語系，不過目前語系並不是此次單元測試的重點，也就是邏輯根本不會跑到語系的部分。</p>
+<p>但因為 <code>getTitle()</code> 的參數要求，只好建立 Dummy 假物件滿足編譯要求。</p>
+<blockquote>
+<p>若參數允許 <code>null</code>，實務上也常常直接傳入 <code>null</code> 作為 Dummy。</p>
+</blockquote>
+<h2 id="Fake">Fake</h2><hr>
+<blockquote>
+<p>Objects actually have working implementations, but usually take some shortcut which makes them not suitable for production.</p>
+</blockquote>
+<p>白話：測試時自己重新實作 function 取代原 function。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; <span class="string">'fake'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  </span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'fake'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>spyOn()</code> 提供 <code>and.callFake()</code>，可以對既有的 function 加以重新實作，在測試時，跑的就是假 function，而非原本的 function。</p>
+<h2 id="Stub">Stub</h2><hr>
+<blockquote>
+<p>Stub provide canned answers to calls made during the test.</p>
+</blockquote>
+<p>白話：測試時建立包含假資料的假物件，並測試假資料。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'onChange()'</span> to make <span class="string">'selectedId'</span> as selected value`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> stub = &lt;HTMLSelectElement&gt;&#123;</span><br><span class="line">    <span class="string">'value'</span>: <span class="string">'1'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> target = <span class="keyword">new</span> AppComponent();</span><br><span class="line">  target.onChange(stub);</span><br><span class="line">  expect(target.selectedId).toBe(<span class="string">'1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>onChange()</code> 要求傳入 <code>HTMLSelectElement</code> 物件，且測試也會用到 <code>HTMLSelectElement</code> 物件，此時可傳入包含假資料的 Stub 假物件，並在 <code>expect()</code> 測試回傳是否為 Stub 物件的假資料。</p>
+<blockquote>
+<p>Dummy 與 Stub 的差異在於：Dummy 只是個花瓶，不會真的拿來測試，但會拿 Stub 的假資料來測試。</p>
+</blockquote>
+<h2 id="Mock">Mock</h2><hr>
+<blockquote>
+<p>Mocks are pre-programmed with expectations which form a specification of the calls they are expected to receive. </p>
+</blockquote>
+<p>白話：測試時不在乎 function 回傳值，只在乎該 function 有沒有被呼叫過。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use <span class="string">'onChange()'</span> on <span class="string">'change'</span> event`, () =&gt; &#123;</span><br><span class="line">  spyOn(component, <span class="string">'onChange'</span>);</span><br><span class="line">     debugElement.query(By.css(<span class="string">'#TDDSelect'</span>)).triggerEventHandler(<span class="string">'change'</span>, <span class="literal">null</span>);</span><br><span class="line">  </span><br><span class="line">  expect(component.onChange).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在測試時使用 <code>triggerEventHandler()</code> 觸發了 <code>change</code> event，因此我們要測試的是被 Mock 的 <code>onChange()</code> method 是否有被執行過，因此在 <code>expect()</code> 使用了 <code>toHaveBeenCalled()</code> 測試。</p>
+<blockquote>
+<p>Jasmine 這裏的 Spy 實質上是個 Mock，只是 Jasmine 用了 Spy 這個單字。</p>
+</blockquote>
+<h2 id="Spy">Spy</h2><hr>
+<blockquote>
+<p>Spies are stubs that also record some information based on how they were called. </p>
+</blockquote>
+<p>白話：測試時當 Stub 與 Mock 無法滿足測試時，自己寫 Spy 埋入一段測試邏輯。</p>
+<p>實務上 Jasmine 提供的方法已經相當夠用，不太需要自己埋測試邏輯，不過當測試 arrow function 時，就會用到 Spy。</p>
+<p><strong>shipping.service.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ShippingService &#123;</span><br><span class="line">  calculateFee(weight: <span class="built_in">number</span>, logistics: (<span class="built_in">number</span>) =&gt; <span class="built_in">number</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> logistics(weight);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>計算運費，因為依賴反轉，我們希望 user 自己提供計算運費的邏輯，而非寫死在底層。</p>
+<p><strong>shipping.service.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should call arrow <span class="function"><span class="keyword">function</span>`, (<span class="params"></span>) =&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br><span class="line">  </span><br><span class="line">  target.calculateFee(<span class="literal">null</span>, spy);</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Service 的單元測試，因為運算邏輯由 user 提供，因此只要測試到使用到 arrow function 即可。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>jasmine.createSpy()</code> 建立了 arrow function 的 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target.calculateFee(<span class="literal">null</span>, spy);</span><br></pre></td></tr></table></figure>
+<p>執行 service 的 <code>calculateFee()</code> method，因為不是要測試結果，因此 <code>weight</code> 參數並不重要，第 1 個參數傳入 <code>null</code> 即可，此時的 <code>null</code> 就是 Dummy。</p>
+<p>第 2 個餐數就是我們要測試的重點，判斷是否有被呼叫到，因此傳入 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(spy).toHaveBeenCalled();</span><br></pre></td></tr></table></figure>
+<p>判斷 Spy 是否有被呼叫到。</p>
+<blockquote>
+<p>實務上會自己建立 Spy 測試 arrow function。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>一般人習慣稱為 Mock，但實際上 Test Double 才是觀念上的統稱。</li>
+<li>Dummy 主要是提供測試用不到的假資料，但 Stub 是測試用得到的假資料。</li>
+<li>Jasmine 將 Mock 與 Spy 統稱為 Spy，不過嚴格來說，Mock 與 Spy 觀念上仍然不同。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io/" target="_blank" rel="external">Angular</a>,  <a href="https://angular.io/guide/testing" target="_blank" rel="external">Angular Testing</a><br><a href="https://martinfowler.com/" target="_blank" rel="external">Martin Fowler</a>,  <a href="https://martinfowler.com/bliki/TestDouble.html" target="_blank" rel="external">TestDouble</a><br><a href="https://martinfowler.com/" target="_blank" rel="external">Martin Fowler</a>,  <a href="https://martinfowler.com/articles/mocksArentStubs.html" target="_blank" rel="external">Mocks Aren’t Stubs</a><br><a href="https://dev.to/milipski" target="_blank" rel="external">Michal Lipski</a>, <a href="https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs" target="_blank" rel="external">Test Doubles - Fakes, Mocks and Stubs</a><br><a href="https://dotblogs.com.tw/hatelove/" target="_blank" rel="external">91</a>, <a href="https://dotblogs.com.tw/hatelove/2012/11/29/learning-tdd-in-30-days-day7-unit-testing-stub-mock-and-fake-object-introduction" target="_blank" rel="external">Stub, Mock, Fake 簡介</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/angular-coscup-api/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-08-12 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>21</span></a></li> <li><a href="/tags/Jasmine/">Jasmine<span>4</span></a></li> <li><a href="/tags/TDD/">TDD<span>21</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
