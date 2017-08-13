@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-13T06:37:29.000Z</updated>
+  <updated>2017-08-13T06:43:13.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/jasmine/jasmine-spy/"/>
     <id>http://oomusou.io/jasmine/jasmine-spy/</id>
     <published>2017-08-13T12:23:43.000Z</published>
-    <updated>2017-08-13T06:37:29.000Z</updated>
+    <updated>2017-08-13T06:43:13.000Z</updated>
     <content type="html"><![CDATA[<p>Jasmine 是個 mock 與 assertion 合一的 testing framework，語法優美，寫起來程式碼的可讀性很高，重點是不複雜，學習曲線平緩，Spy 為 Jasmine 最重要的部分，本文針對最常在 Angular 使用的 Spy 做整理。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -109,7 +109,7 @@
 <p>測試 Spy 是否被呼叫過 <code>1</code> 次。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>Jasmine 的 Spy 本質比較接近 Mock，提供單元測試與整合測試夠用的武器，在單元測試可以藉由 Spy 隔離相依物件，在整合測試可以藉由 Spy 驗證物件之間的關係。</li>
+<li>Jasmine 的 Spy 算是 Mock 與 Spy 的合體，提供單元測試與整合測試夠用的武器，在單元測試可以藉由 Spy 隔離相依物件，在整合測試可以藉由 Spy 驗證物件之間的關係。</li>
 </ul>
 <h2 id="Reference">Reference</h2><hr>
 <p><a href="http://keenwon.com" target="_blank" rel="external">KeenWon</a>, <a href="http://keenwon.com/1218.html" target="_blank" rel="external">Javascript测试框架Jasmine (五)：Spies</a><br><a href="https://github.com/jasmine/jasmine" target="_blank" rel="external">Jasmine</a>, <a href="https://jasmine.github.io/2.6/introduction.html" target="_blank" rel="external">Jasmine Introduction</a></p>
