@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-12T13:42:49.000Z</updated>
+  <updated>2017-08-13T06:37:29.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,119 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[深入探討 Jasmine 的 Spy]]></title>
+    <link href="http://oomusou.io/jasmine/jasmine-spy/"/>
+    <id>http://oomusou.io/jasmine/jasmine-spy/</id>
+    <published>2017-08-13T12:23:43.000Z</published>
+    <updated>2017-08-13T06:37:29.000Z</updated>
+    <content type="html"><![CDATA[<p>Jasmine 是個 mock 與 assertion 合一的 testing framework，語法優美，寫起來程式碼的可讀性很高，重點是不複雜，學習曲線平緩，Spy 為 Jasmine 最重要的部分，本文針對最常在 Angular 使用的 Spy 做整理。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Jasmine 2.6.2<br>Angular 4.3</p>
+<h2 id="建立_Spy">建立 Spy</h2><hr>
+<h3 id="spyOn()">spyOn()</h3><blockquote>
+<p>spyOn<t>(object: T, method: keyof T): Spy</t></p>
+</blockquote>
+<p>對於 class 的 method 建立 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() method`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試在 HTML <code>getTitle()</code> 是否 binding 正確。</p>
+<h3 id="spyOnProperty()">spyOnProperty()</h3><blockquote>
+<p>spyOnProperty<t>(object:T, property: keyof T, accessType: string): Spy</t></p>
+</blockquote>
+<p>對於 class 的 property 建立 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use title <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOnProperty(component, <span class="string">'title'</span>, <span class="string">'get'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試在 HTML <code>title</code> 是否 binding 正確。</p>
+<h3 id="jasmine-createSpy()">jasmine.createSpy()</h3><blockquote>
+<p>createSpy(name: string, originalFn?: Function): Spy</p>
+</blockquote>
+<p>對於 function 或 arrow function 建立 Spy。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should call arrow <span class="function"><span class="keyword">function</span>`, (<span class="params"></span>) =&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br><span class="line">  target.calculateFee(<span class="literal">null</span>, spy);</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試 function 或 arrow function 是否被呼叫。</p>
+<blockquote>
+<p>若要建立在 class 內的假 method，要用 <code>spyOn()</code>；若要建立沒有 class 的假 function 或 arrow function，則要使用 <code>jasmine.createSpy()</code>。</p>
+</blockquote>
+<h2 id="Spy#and">Spy#and</h2><hr>
+<h3 id="returnValue()">returnValue()</h3><blockquote>
+<p>returnValue(val: any): Spy</p>
+</blockquote>
+<p>建立假 function 的假回傳值。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.returnValue(<span class="string">'My Todos'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'My Todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>spyOn()</code> 搭配 <code>returnValue()</code> 回傳假值，然後測試結果是否為假值。實務上有 2 個場景會使用 <code>returnValue()</code>。</p>
+<ol>
+<li>單元測試時，想要隔離相依物件，使用 <code>returnValue()</code> 建立假回傳值。</li>
+<li>整合測試時，想要測試<strong>關係</strong>，不是測試結果，藉由假資料測試 function 是否被呼叫到。</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>若只是測試關係，那有更簡單的寫法，使用 <code>spyOn()</code> 建立 Spy 之後，測試 Spy 的 <code>toHaveBeenCalled()</code> 即可，不需使用 <code>returnValue()</code>。</p>
+<h3 id="callFake()">callFake()</h3><blockquote>
+<p>callFake(fn: Function): Spy</p>
+</blockquote>
+<p>建立假 function 的假實作。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() and result is <span class="string">'my todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; <span class="string">'My Todos'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'My Todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>一般來說，<code>spyOn()</code> 搭配 <code>returnValue()</code> 已經非常夠用，若你想自行建立 Fake 取代原本 function 實作，則可使用 <code>callFake()</code>。</p>
+<h3 id="callThrough()">callThrough()</h3><blockquote>
+<p>callThrough(): Spy</p>
+</blockquote>
+<p>依然使用原本 function，但會針對此 function 做 Spy 監測。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() and result is <span class="string">'todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.callThrough();</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">   htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">      </span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'todos'</span>);</span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>一般我們使用了 <code>spyOn()</code> 之後，就會搭配 <code>toHaveBeenCalled()</code> 測試有沒有被呼叫到即可，若你想除了驗證<strong>關係</strong>外，還順便<strong>結果</strong>，則可搭配 <code>callThrough()</code>，此時會執行實際的 function，所以可使用 <code>toBe()</code> 測試結果，但仍然保有 Spy 功能，因此也可使用 <code>toHaveBeenCalled()</code> 測試關係。</p>
+<h3 id="throwError()">throwError()</h3><blockquote>
+<p>throwError(msg: string): Spy</p>
+</blockquote>
+<p>建立假 function 的假 error。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">it(`should <span class="keyword">throw</span> error on <span class="string">'getTodos()'</span> method`, () =&gt; &#123;</span><br><span class="line">  spyOn(target, <span class="string">'getTodos'</span>).and.throwError(<span class="string">'My Error'</span>);</span><br><span class="line"></span><br><span class="line">  expect(() =&gt; &#123; target.getTodos() &#125;).toThrowError(<span class="string">'My Error'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>throwError()</code> 建立假 error。</p>
+<p>比較特別的是，要測試 error 時，待測 method 要放在 <code>expect()</code> 的 arrow function 內，最後用 <code>toThrowError()</code> 測試 error 是否被觸發。</p>
+<h2 id="Spy#calls">Spy#calls</h2><hr>
+<h3 id="any()">any()</h3><blockquote>
+<p>any(): boolean</p>
+</blockquote>
+<p>若 Spy 被呼叫一次以上，則傳回 <code>true</code>，否則傳回 <code>false</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy.calls.any()).toBeTruthy();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試 <code>spy.calls.any()</code>，若曾被呼叫過為 <code>true</code>，否則為 <code>false</code>。</p>
+<p>這種寫法等效於：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="count()">count()</h3><blockquote>
+<p>count(): boolean</p>
+</blockquote>
+<p>傳回 Spy 被呼叫的次數。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy.calls.count()).toBe(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試 <code>spy.calls.count()</code>，可精確測試 Spy 被呼叫的次數。</p>
+<p>這種寫法等效於：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalledTimes(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Matcher">Matcher</h2><hr>
+<h3 id="toHaveBeenCalled()">toHaveBeenCalled()</h3><blockquote>
+<p>toHaveBeenCalled(): boolean</p>
+</blockquote>
+<p>測試 function 是否被呼叫過。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試 Spy 是否被呼叫過。</p>
+<h3 id="toHaveBeenCalledTimes()">toHaveBeenCalledTimes()</h3><blockquote>
+<p>toHaveBeenCalledTimes(expected: number): boolean</p>
+</blockquote>
+<p>測試 function 是否被呼叫過 n 次。 </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalledTimes(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>測試 Spy 是否被呼叫過 <code>1</code> 次。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Jasmine 的 Spy 本質比較接近 Mock，提供單元測試與整合測試夠用的武器，在單元測試可以藉由 Spy 隔離相依物件，在整合測試可以藉由 Spy 驗證物件之間的關係。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="http://keenwon.com" target="_blank" rel="external">KeenWon</a>, <a href="http://keenwon.com/1218.html" target="_blank" rel="external">Javascript测试框架Jasmine (五)：Spies</a><br><a href="https://github.com/jasmine/jasmine" target="_blank" rel="external">Jasmine</a>, <a href="https://jasmine.github.io/2.6/introduction.html" target="_blank" rel="external">Jasmine Introduction</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[整理最常用的 Jasmine Spy]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
+    
+      <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[深入探討 Test Double、Dummy、Fake、Stub 、Mock 與 Spy]]></title>
@@ -2001,49 +2114,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何將 Git Bash 整合進 WebStorm？]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-git-bash/"/>
-    <id>http://oomusou.io/webstorm/webstorm-git-bash/</id>
-    <published>2017-06-19T12:23:43.000Z</published>
-    <updated>2017-06-15T07:39:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm for Windows 的 terminal 預設是使用 Windows 內建的 Command Prompt，但可惜內建的 Command Prompt 不強，而 Git Bash 是 Git for Windows 所提供的 git 文字介面，讓我們可以直接對 git 下指令，並顯示當前的 branch，重點是能在 Windows 使用 Bash，且整合進 WebStorm 的 terminal。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.1.4<br>Git for Windows 2.13.1</p>
-<h2 id="下載_Git_Bash">下載 Git Bash</h2><hr>
-<p>到 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git for Windows</a> 下載 Git Bash。</p>
-<p><img src="/images/webstorm/webstorm-git-bash/bash000.png" alt="bash000"></p>
-<h2 id="安裝_Git_Bash">安裝 Git Bash</h2><hr>
-<p>基本下都 <code>下一步</code> 即可。</p>
-<h2 id="設定_WebStorm">設定 WebStorm</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash001.png" alt="bash001"></p>
-<p><strong><em>File -&gt; Settings -&gt; Tools -&gt; Terminal</em></strong></p>
-<ul>
-<li><strong>Shell path</strong> : <code>&quot;C:\Program Files\Git\bin\sh.exe&quot; -login -i</code></li>
-</ul>
-<p>重新啟動 WebStorm。</p>
-<h2 id="執行_Git_Bash">執行 Git Bash</h2><hr>
-<p><img src="/images/webstorm/webstorm-git-bash/bash002.png" alt="bash002"></p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Git Bash 算是在 Windows 下最接近 Linux 血統的 terminal，實務上完全可以取代 Windows 內建的 Command Prompt。</li>
-<li>WebStorm 的 terminal 也能順利跑 Git Bash。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<ul>
-<li><a href="https://bobsguides.com/" target="_blank" rel="external">Bob’s Guide</a>, <a href="https://bobsguides.com/blog.html/2014/10/23/git-bash-inside-phpstorm/" target="_blank" rel="external">Git Bash Inside PhpStorm</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Git Bash 也能跑在 WebStorm 的 terminal]]>
-    
-    </summary>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
