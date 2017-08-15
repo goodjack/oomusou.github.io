@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="以推導的方式解釋 Two-Way Binding">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-08-15T02:24:04.000Z">
+<meta property="og:updated_time" content="2017-08-15T02:25:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入淺出 Angular 的 Two-Way Binding">
 <meta name="twitter:description" content="以推導的方式解釋 Two-Way Binding">
@@ -177,7 +177,7 @@
 <li><code>selectedId</code> field 被修改，引發 interpolation binding 自動更新 HTML</li>
 </ol>
 <blockquote>
-<p>步驟 4 就是將 $event.target.value 轉成 field 的黑魔法所在</p>
+<p>步驟 4 就是將 <code>$event.target.value</code> 轉成 field 的黑魔法所在</p>
 </blockquote>
 <h2 id="是否該使用_Two-Way_Binding？">是否該使用 Two-Way Binding？</h2><hr>
 <p>Two-way binding 是 AngularJS 的招牌菜，但因為底層使用 dirty check 方式，只要頁面 two-way binding 用得過多，效率就會明顯變慢，因此 ReactJS 改用 one-way binding ，在效能上完全打趴 AngularJS。</p>
