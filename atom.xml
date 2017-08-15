@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-15T02:19:08.000Z</updated>
+  <updated>2017-08-15T02:24:04.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-two-way-binding/"/>
     <id>http://oomusou.io/angular/angular-two-way-binding/</id>
     <published>2017-08-15T12:23:43.000Z</published>
-    <updated>2017-08-15T02:19:08.000Z</updated>
+    <updated>2017-08-15T02:24:04.000Z</updated>
     <content type="html"><![CDATA[<p>Interpolation binding 與 property binding 都當 class 的 field 有變動時，會自動反應到 class 的 field，若 HTML 有任何變動也能反應到 class 的 field，這就是 two-way binding 了。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -77,7 +77,7 @@
 <h2 id="Recap">Recap</h2><hr>
 <ol>
 <li>原本的 <code>value</code> attribute 抽象化成 <code>ngModel</code> directive。</li>
-<li>原本的 <code>input</code> event 抽象化成 <code>ngModelChange</code> event，<code>input</code> 會觸發 <code>ngModelChange</code> event </li>
+<li>原本的 <code>input</code> event 抽象化成 <code>ngModelChange</code> event，<code>input</code> event 會觸發 <code>ngModelChange</code> event </li>
 <li>原本的 <code>$event.target.value</code> 簡化成 <code>$event</code>，Angular 會在內部處理</li>
 </ol>
 <h2 id="ngModel_內部運行機制">ngModel 內部運行機制</h2><hr>
