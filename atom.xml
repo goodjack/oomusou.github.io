@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-13T06:43:13.000Z</updated>
+  <updated>2017-08-15T02:19:08.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,104 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[深入淺出 Angular 的 Two-Way Binding]]></title>
+    <link href="http://oomusou.io/angular/angular-two-way-binding/"/>
+    <id>http://oomusou.io/angular/angular-two-way-binding/</id>
+    <published>2017-08-15T12:23:43.000Z</published>
+    <updated>2017-08-15T02:19:08.000Z</updated>
+    <content type="html"><![CDATA[<p>Interpolation binding 與 property binding 都當 class 的 field 有變動時，會自動反應到 class 的 field，若 HTML 有任何變動也能反應到 class 的 field，這就是 two-way binding 了。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular 4.3</p>
+<h2 id="One-Way_Binding">One-Way Binding</h2><hr>
+<p>在 <a href="http://oomusou.io/angular/angular-select/">如何使用 Angular 實作下拉選單?</a> 一文中，我們使用了 HTML template reference varible 方式，也使用 DOM event 方式，無論哪種方法，使用的是 one-way binding 的技術。</p>
+<p><img src="/images/angular/angular-two-way-binding/twoway000.svg" alt="twoway000"></p>
+<ol>
+<li><strong>Interpolation Binding</strong>：當 class 的 field 資料改變，HTML 會自動改變</li>
+<li><strong>Event Binding</strong>：當 HTML 資料改變，發動 event，由 class 的 method 去修改  field</li>
+</ol>
+<h2 id="Two-Way_Binding">Two-Way Binding</h2><hr>
+<p><img src="/images/angular/angular-two-way-binding/twoway001.svg" alt="twoway001"></p>
+<ol>
+<li><strong>Two Way Binding</strong>：資料不用透過 method 修改，field 與 HTML 直接互相綁定</li>
+</ol>
+<h2 id="土炮_Two-Way_Binding">土炮 Two-Way Binding</h2><hr>
+<p>Two-way binding 理念很棒，利用既有的 property binding、event binding、interpolation binding，該如何寫出 two-way binding 呢？</p>
+<p><strong>src/app/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> [<span class="attribute">value</span>]=<span class="value">"selectedId"</span> (<span class="attribute">input</span>)=<span class="value">"selectedId = $event.target.value"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>&#123;&#123; selectedId &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[value]="selectedId"</span><br></pre></td></tr></table></figure>
+<p>使用 property binding 將 <code>value</code> 直接綁定到 <code>selectedId</code> field，也就是當 <code>selectedId</code> field  有任何修改，都會反應到 <code>selectedId</code> 的 <code>value</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(input)="selectedId = $event.target.value"</span><br></pre></td></tr></table></figure>
+<p>使用 event binding 將 <code>input</code> event 直接綁定到雙引號內的 statement，也就是將 <code>$event.target.value</code> 直接指定給 <code>selectedId</code> field。</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">p</span>&gt;</span></span><span class="expression">&#123;&#123; <span class="variable">selectedId</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>使用 interpolation binding 當 <code>selectedId</code> field 有任何變動，HTML 會自動跟著變化。</p>
+<p><strong>src/app/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  selectedId = <span class="string">'0'</span>;</span><br><span class="line"></span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Class 部份完全不用任何 method 幫忙，只剩下 field 部分。</p>
+<blockquote>
+<p>這樣就完成了我們土炮的 two-way binding 了。</p>
+</blockquote>
+<h2 id="使用_ngModel">使用 ngModel</h2><hr>
+<p>雖然土炮的方式可行，Angular 為了讓我們更方便，特別設計了 <code>ngModel</code> directive，讓我們使用更簡單的語法就能完成 two-way binding。</p>
+<p><strong>src/app/app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p><code>ngModel</code> directive 需要使用 <code>FormsModule</code>，而 Angular CLI 預設沒有載入，必須手動加上。</p>
+<p><strong>src/app/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> [<span class="attribute">ngModel</span>]=<span class="value">"selectedId"</span> (<span class="attribute">ngModelChange</span>)=<span class="value">"selectedId = $event"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>&#123;&#123; selectedId &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>[ngModel]=&quot;selectedId&quot;</code> ：使用 property binding，將 <code>selectedId</code> field 綁定到 <code>ngModel</code> directive</li>
+<li><code>(ngModelChange)=&quot;selectedId = $event&quot;</code>：使用 event binding，當 <code>ngModelChange</code> event 時，執行 <code>selectedId = $event</code></li>
+</ol>
+<p>由 <code>value</code> attribute 換 <code>ngModel</code> directive 較無感，但由 <code>input</code> event 換 <code>ngModelChange</code> event 就比較有感了，因為 <code>$event.target.value</code> 換成 <code>$event</code> 更為精簡了。</p>
+<blockquote>
+<p>這也意味著 Angular 內部會自己將處理 <code>$event.target.value</code>。</p>
+</blockquote>
+<p>若仔細去看，會發現 <code>(ngModelChange)</code> 與 <code>$event</code> 是贅字，因此可以再次簡化。</p>
+<p><strong>src/app/app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"selectedId"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>&#123;&#123; selectedId &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>(ngModelChange)</code> 與 <code>$event</code> 再次被簡化，僅留下 <code>()</code>，就變成了 <code>[(ngModel)]=&quot;selectedId&quot;</code> 了。</p>
+<p><code>[()]</code> 語法稱為 <strong>Banana in a Box</strong>，將 property binding 與 event binding 合而為一。</p>
+<h2 id="Recap">Recap</h2><hr>
+<ol>
+<li>原本的 <code>value</code> attribute 抽象化成 <code>ngModel</code> directive。</li>
+<li>原本的 <code>input</code> event 抽象化成 <code>ngModelChange</code> event，<code>input</code> 會觸發 <code>ngModelChange</code> event </li>
+<li>原本的 <code>$event.target.value</code> 簡化成 <code>$event</code>，Angular 會在內部處理</li>
+</ol>
+<h2 id="ngModel_內部運行機制">ngModel 內部運行機制</h2><hr>
+<p><img src="/images/angular/angular-two-way-binding/twoway002.svg" alt="twoway002"></p>
+<ol>
+<li>在 HTML 修改觸發 DOM 的 <code>input</code> event </li>
+<li><code>input</code> event 觸發了 Angular 的 <code>ngModelChange</code> event</li>
+<li>將 <code>$event</code> 傳給 <code>selectedId</code> field</li>
+<li><code>ControlValueAccessor</code> 將 <code>$event.target.value</code> 指定給 <code>selectedId</code> field</li>
+<li><code>selectedId</code> field 被修改，引發 interpolation binding 自動更新 HTML</li>
+</ol>
+<blockquote>
+<p>步驟 4 就是將 $event.target.value 轉成 field 的黑魔法所在</p>
+</blockquote>
+<h2 id="是否該使用_Two-Way_Binding？">是否該使用 Two-Way Binding？</h2><hr>
+<p>Two-way binding 是 AngularJS 的招牌菜，但因為底層使用 dirty check 方式，只要頁面 two-way binding 用得過多，效率就會明顯變慢，因此 ReactJS 改用 one-way binding ，在效能上完全打趴 AngularJS。</p>
+<p>在 Angular 2 一開始時，的確聽到不少反對再用 Two-way binding 的聲音，不過深入了解之後，會發現在 Angular 2 的<code>[(ngModel)]</code> 雖然表面上看起來是 two-way binding，但其實內部用的依然是 one-way binding，也就是 <code>[(ngModel)]</code> 只是個 syntax sugar 而已，因此可以放心大膽使用 <code>[(ngModel)]</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>ngModel</code> 在實務上非常好用，語法也很精簡，但 <strong>Banana in a Box</strong> 語法很特殊，一般人都是背下來，經由本文的推導，應該更能體會 <code>[()]</code> 語法的由來。</li>
+<li><code>ngModel</code> 雖然表面上看起來是 two-way binding，但底層用的仍然是 one-way binding，因此沒有效能上的問題，請放心使用。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/template-syntax#two-way-binding---" target="_blank" rel="external">Two-way binding</a><br><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/template-syntax#ngmodel---two-way-binding-to-form-elements-with-ngmodel" target="_blank" rel="external">NgModel</a><br><a href="http://thoughtram.io" target="_blank" rel="external">Throughtram</a>, <a href="https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html#understanding-ngmodel" target="_blank" rel="external">Two-Way Data Binding in Angular</a><br><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>, <a href="https://blog.kevinyang.net/2017/08/14/angular-two-way-binding/" target="_blank" rel="external">[Angular] Two-way Binding 的運作方式</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[以推導的方式解釋 Two-Way Binding]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[深入探討 Jasmine 的 Spy]]></title>
@@ -2049,71 +2147,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 WebStorm 執行 Protractor E2E 測試?]]></title>
-    <link href="http://oomusou.io/webstorm/webstorm-protractor/"/>
-    <id>http://oomusou.io/webstorm/webstorm-protractor/</id>
-    <published>2017-06-21T12:23:43.000Z</published>
-    <updated>2017-06-22T07:21:16.000Z</updated>
-    <content type="html"><![CDATA[<p>Angular CLI 已經將 Protractor 整好，我們可以直接在 terminal  下 <code>ng e2e</code> 執行 E2E 測試；WebStorm 亦整合了 Protractor，讓我們可以在 IDE 內直接跑 Protractor。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2<br>Jasamine 2.6.2<br>WebStorm 2017.1.4</p>
-<h2 id="設定_Protractor_執行環境">設定 Protractor 執行環境</h2><hr>
-<h3 id="啟動_Angular_內建_Web_Server">啟動 Angular 內建 Web Server</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ng serve</span><br></pre></td></tr></table></figure>
-<p>使用 <code>ng e2e</code> 跑 E2E testing 時，不用事先啟動 web server，因為 Angular CLI 會在測試前先啟動 web server，然後執行驗收測試，最後再關閉 web server，但若使用 WebStorm 跑 Protractor，則必須在背景先執行 <code>ng serve</code> 啟動 web server。</p>
-<p><img src="/images/webstorm/webstorm-protractor/pro000.png" alt="pro000"></p>
-<h3 id="新增_Protractor_設定">新增 Protractor 設定</h3><p><img src="/images/webstorm/webstorm-protractor/pro001.png" alt="pro001"></p>
-<p><strong><em>Run -&gt; Edit Configurations</em></strong></p>
-<p><img src="/images/webstorm/webstorm-protractor/pro002.png" alt="pro002"></p>
-<p>按左上角 <code>+</code> 新增 <code>Protractor</code> 設定。</p>
-<p><img src="/images/webstorm/webstorm-protractor/pro003.png" alt="pro003"></p>
-<p>將 Name 取名為 <code>Protractor</code>，其他設定 WebStorm 會自動抓到，接受預設值即可。</p>
-<h3 id="執行_Protractor">執行 Protractor</h3><p><img src="/images/webstorm/webstorm-protractor/pro005.png" alt="pro005"></p>
-<p>上方選擇 <code>Protractor</code>，按右側的<code>綠色三角形</code>執行測試。</p>
-<p><img src="/images/webstorm/webstorm-protractor/pro006.png" alt="pro006"></p>
-<p>Protractor 會自動啟動瀏覽器在 <code>http://localhost:4200</code>，執行完測試後自動關閉瀏覽器。</p>
-<p>到目前為止，已經設定好 Protractor 在 WebStorm 的執行環境。</p>
-<h2 id="自動執行_Protractor">自動執行 Protractor</h2><hr>
-<p><img src="/images/webstorm/webstorm-protractor/pro007.png" alt="pro007"></p>
-<p>若你希望寫完測試後，WebStorm 可自動存檔並執行 Protractor 測試，可按下左側的 <code>Toggle auto-test</code>，日後只要修改測試，Protractor 會自動執行。</p>
-<blockquote>
-<p>不需存檔，WebStorm 會自動存檔並執行 Protractor 測試。</p>
-</blockquote>
-<h2 id="手動執行_Protractor">手動執行 Protractor</h2><hr>
-<p><img src="/images/webstorm/webstorm-protractor/pro008.png" alt="pro008"></p>
-<p>實務上會有很多測試案例，但可能目前只想執行單一測試案例，可在 <code>it</code> 前加上 <code>f</code>，表示 <code>focus</code>，再按下上方或左側的 <code>綠色三角形</code> 執行測試，則 Protractor 將只執行 <code>fit()</code> 的測試案例，其他測試案例將忽略不執行。</p>
-<p><img src="/images/webstorm/webstorm-protractor/pro009.png" alt="pro009"></p>
-<p>實務上若某些測試案例暫時不想執行，可在 <code>if</code> 前加上 <code>x</code>，表示 <code>exclude</code>，再按下上方或左側的 <code>綠色三角形</code> 執行測試，則 Protractor 將不執行 <code>xit()</code> 的測試案例，其他測試案例則繼續執行。</p>
-<h2 id="快速建立測試">快速建立測試</h2><hr>
-<p><img src="/images/webstorm/webstorm-protractor/pro010.png" alt="pro010"></p>
-<p>WebStorm 已經內建 Jasmine 樣板，按熱鍵可產生 <code>Jasmine Suite</code> 、<code>Jasmine Spec</code>、<code>Jasmine beforeEach</code> 與 <code>Jasmine afterEach</code>，讓我們更快速產生驗收測試，節省開發時間。</p>
-<blockquote>
-<p>Windows : Ctrl + N</p>
-<p>macOS : ⌘ + N</p>
-</blockquote>
-<h2 id="對測試下中斷點">對測試下中斷點</h2><hr>
-<p><img src="/images/webstorm/webstorm-protractor/pro011.png" alt="pro011"></p>
-<p>若要對測試程式下中斷點，也可以直接在程式碼左側加上 <code>紅色</code> 中斷點，按上方的 <code>綠色瓢蟲</code> 執行 debug 模式，則 WebStorm 會自動停在中斷點進行 debug。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>是否要<strong>自動執行</strong>或<strong>手動執行</strong> Protractor 因人而異，個人是比較喜歡用 <code>fit()</code> 與  <code>xit()</code>  控制要執行什麼測試，然後手動執行。</li>
-<li>Angular CLI  雖然提供了 <code>ng e2e</code>，讓我們在 terminal 就能執行 Protractor E2E 測試，但在 WebStorm 內跑 Protractor，我們可以更明確知道哪些測試案例是 <code>紅燈綠燈</code>，還可以對測試下中斷點，直接 step into 做 debug。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[不用透過 Angular CLI 也能執行 Protractor]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
