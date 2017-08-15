@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-15T02:25:56.000Z</updated>
+  <updated>2017-08-15T03:31:35.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-two-way-binding/"/>
     <id>http://oomusou.io/angular/angular-two-way-binding/</id>
     <published>2017-08-15T12:23:43.000Z</published>
-    <updated>2017-08-15T02:25:56.000Z</updated>
+    <updated>2017-08-15T03:31:35.000Z</updated>
     <content type="html"><![CDATA[<p>Interpolation binding 與 property binding 都當 class 的 field 有變動時，會自動反應到 class 的 field，若 HTML 有任何變動也能反應到 class 的 field，這就是 two-way binding 了。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -92,7 +92,7 @@
 <blockquote>
 <p>步驟 4 就是將 <code>$event.target.value</code> 轉成 field 的黑魔法所在</p>
 </blockquote>
-<h2 id="是否該使用_Two-Way_Binding？">是否該使用 Two-Way Binding？</h2><hr>
+<h2 id="是否該使用_ngModel？">是否該使用 ngModel？</h2><hr>
 <p>Two-way binding 是 AngularJS 的招牌菜，但因為底層使用 dirty check 方式，只要頁面 two-way binding 用得過多，效率就會明顯變慢，因此 ReactJS 改用 one-way binding ，在效能上完全打趴 AngularJS。</p>
 <p>在 Angular 2 一開始時，的確聽到不少反對再用 Two-way binding 的聲音，不過深入了解之後，會發現在 Angular 2 的<code>[(ngModel)]</code> 雖然表面上看起來是 two-way binding，但其實內部用的依然是 one-way binding，也就是 <code>[(ngModel)]</code> 只是個 syntax sugar 而已，因此可以放心大膽使用 <code>[(ngModel)]</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>

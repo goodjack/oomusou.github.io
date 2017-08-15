@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="以推導的方式解釋 Two-Way Binding">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-08-15T02:25:56.000Z">
+<meta property="og:updated_time" content="2017-08-15T03:31:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入淺出 Angular 的 Two-Way Binding">
 <meta name="twitter:description" content="以推導的方式解釋 Two-Way Binding">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#One-Way_Binding"><span class="toc-article-text">One-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Two-Way_Binding"><span class="toc-article-text">Two-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#土炮_Two-Way_Binding"><span class="toc-article-text">土炮 Two-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_ngModel"><span class="toc-article-text">使用 ngModel</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Recap"><span class="toc-article-text">Recap</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#ngModel_內部運行機制"><span class="toc-article-text">ngModel 內部運行機制</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#是否該使用_Two-Way_Binding？"><span class="toc-article-text">是否該使用 Two-Way Binding？</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#One-Way_Binding"><span class="toc-article-text">One-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Two-Way_Binding"><span class="toc-article-text">Two-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#土炮_Two-Way_Binding"><span class="toc-article-text">土炮 Two-Way Binding</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_ngModel"><span class="toc-article-text">使用 ngModel</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Recap"><span class="toc-article-text">Recap</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#ngModel_內部運行機制"><span class="toc-article-text">ngModel 內部運行機制</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#是否該使用_ngModel？"><span class="toc-article-text">是否該使用 ngModel？</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -179,7 +179,7 @@
 <blockquote>
 <p>步驟 4 就是將 <code>$event.target.value</code> 轉成 field 的黑魔法所在</p>
 </blockquote>
-<h2 id="是否該使用_Two-Way_Binding？">是否該使用 Two-Way Binding？</h2><hr>
+<h2 id="是否該使用_ngModel？">是否該使用 ngModel？</h2><hr>
 <p>Two-way binding 是 AngularJS 的招牌菜，但因為底層使用 dirty check 方式，只要頁面 two-way binding 用得過多，效率就會明顯變慢，因此 ReactJS 改用 one-way binding ，在效能上完全打趴 AngularJS。</p>
 <p>在 Angular 2 一開始時，的確聽到不少反對再用 Two-way binding 的聲音，不過深入了解之後，會發現在 Angular 2 的<code>[(ngModel)]</code> 雖然表面上看起來是 two-way binding，但其實內部用的依然是 one-way binding，也就是 <code>[(ngModel)]</code> 只是個 syntax sugar 而已，因此可以放心大膽使用 <code>[(ngModel)]</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
