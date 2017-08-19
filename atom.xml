@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-19T10:52:12.000Z</updated>
+  <updated>2017-08-19T11:10:26.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-ngmodel-testing/"/>
     <id>http://oomusou.io/angular/angular-ngmodel-testing/</id>
     <published>2017-08-19T12:23:43.000Z</published>
-    <updated>2017-08-19T10:52:12.000Z</updated>
+    <updated>2017-08-19T11:10:26.000Z</updated>
     <content type="html"><![CDATA[<p>Two-way Binding 的 <code>ngModel</code>非常方便，但因為這是 syntax sugar，該如何測試呢？</p>
 <a id="more"></a>
 <h2 id="Requirement">Requirement</h2><hr>
@@ -92,7 +92,7 @@
 <blockquote>
 <p>測試案例 : <code>ngModel</code> 應該使用 <code>selectedId</code> field</p>
 </blockquote>
-<p><code>ngModel</code> 就是要將 HTML element 直接綁訂到 field，因此最重要的就是測試有沒有綁定到正確的 field。</p>
+<p><code>ngModel</code> 就是要將 HTML element 直接綁定到 field，因此最重要的就是測試有沒有綁定到正確的 field。</p>
 <p>Two-way binding 的重點在於當 HTML 改變時，class 的 field 會自動跟著改變，因此我們測試的手法就是改變 HTML，並測試 field 是否跟著 HTML 變化。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugElement.query(By.css(<span class="string">'#TDDSelect'</span>)).triggerEventHandler(<span class="string">'change'</span>, &#123;target: &#123;value: <span class="string">'2'</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
 <p>在整合測試時，我們慣用 <code>triggerEventHandler()</code> 去觸發 event，由於 DOM 的 <code>change</code> event 會觸發 <code>ngModelChange</code> event，因此我們使用 <code>triggerEventHandler()</code> 去觸發 <code>change</code> event。</p>
