@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-19T11:52:45.000Z</updated>
+  <updated>2017-08-19T12:00:31.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,9 +19,11 @@
     <link href="http://oomusou.io/angular/angular-ngmodel-testing/"/>
     <id>http://oomusou.io/angular/angular-ngmodel-testing/</id>
     <published>2017-08-19T12:23:43.000Z</published>
-    <updated>2017-08-19T11:52:45.000Z</updated>
+    <updated>2017-08-19T12:00:31.000Z</updated>
     <content type="html"><![CDATA[<p>Two-way Binding 的 <code>ngModel</code>非常方便，但因為這是 syntax sugar，該如何測試呢？</p>
 <a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angalar 4.3</p>
 <h2 id="Requirement">Requirement</h2><hr>
 <p><img src="/images/angular/angular-ngmodel-testing/select000.png" alt="select000"></p>
 <p>畫面有一個下拉選單。</p>
