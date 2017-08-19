@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-08-19T12:00:31.000Z</updated>
+  <updated>2017-08-19T13:51:24.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/angular-ngmodel-testing/"/>
     <id>http://oomusou.io/angular/angular-ngmodel-testing/</id>
     <published>2017-08-19T12:23:43.000Z</published>
-    <updated>2017-08-19T12:00:31.000Z</updated>
+    <updated>2017-08-19T13:51:24.000Z</updated>
     <content type="html"><![CDATA[<p>Two-way Binding 的 <code>ngModel</code>非常方便，但因為這是 syntax sugar，該如何測試呢？</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -78,7 +78,7 @@
 <li>編輯 e2e/app.po.ts</li>
 <li>加入 page object</li>
 </ol>
-<p><img src="/images/angular/angular-ngmodel-testing/select008.png" alt="select007"></p>
+<p><img src="/images/angular/angular-ngmodel-testing/select007.png" alt="select007"></p>
 <p>因為我們還沒實作此功能，得到預期的驗收測試 <code>紅燈</code>。</p>
 <h2 id="Integration_Test_(紅燈)">Integration Test (紅燈)</h2><p>測試案例</p>
 <blockquote>
@@ -129,6 +129,11 @@
 <h2 id="Integration_Test_(綠燈)">Integration Test (綠燈)</h2><blockquote>
 <p>測試案例 : <code>ngModel</code> 應該使用 <code>selectedId</code> field</p>
 </blockquote>
+<p><strong>src/app/app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p><code>ngModel</code> directive 需要使用 <code>FormsModule</code>，而 Angular CLI 預設沒有載入，必須手動加上。</p>
 <p><strong>src/app/app.component.html</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"selectedId"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>在 <code>&lt;select&gt;</code> 加上 <code>[(ngModel)]=&quot;selectedId&quot;</code>。</p>
@@ -167,7 +172,7 @@
 <h2 id="Sample_Code">Sample Code</h2><p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG43ATDDSelect" target="_blank" rel="external">GitHub</a> 上找到。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[ngModel 的測試手法稍有不同]]>
+    <![CDATA[使用 ATDD 驅動出 ngModel]]>
     
     </summary>
     
