@@ -3,12 +3,12 @@
   
   <url>
     <loc>http://oomusou.io/angular/angular-ngmodel-testing/</loc>
-    <lastmod>2017-08-19T13:51:24.000Z</lastmod>
+    <lastmod>2017-08-22T10:33:15.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/angular/angular-two-way-binding/</loc>
-    <lastmod>2017-08-15T03:31:35.000Z</lastmod>
+    <loc>http://oomusou.io/angular/angular-ngmodel/</loc>
+    <lastmod>2017-08-22T10:21:03.000Z</lastmod>
   </url>
   
   <url>
@@ -262,12 +262,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
+    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -292,17 +292,17 @@
   </url>
   
   <url>
+    <loc>http://oomusou.io/laravel/laravel-repository/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/laravel/laravel-service/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -337,12 +337,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -362,27 +362,22 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
+    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
+    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -392,7 +387,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
