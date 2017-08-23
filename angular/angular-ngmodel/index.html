@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="以推導的方式解釋 Two-Way Binding">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-08-22T10:21:03.000Z">
+<meta property="og:updated_time" content="2017-08-23T04:33:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入淺出 Angular 的 Two-Way Binding">
 <meta name="twitter:description" content="以推導的方式解釋 Two-Way Binding">
@@ -113,13 +113,13 @@
 <p>Angular 4.3</p>
 <h2 id="One-Way_Binding">One-Way Binding</h2><hr>
 <p>在 <a href="http://oomusou.io/angular/angular-select/">如何使用 Angular 實作下拉選單?</a> 一文中，我們使用了 HTML template reference varible 方式，也使用 DOM event 方式，無論哪種方法，使用的是 one-way binding 的技術。</p>
-<p><img src="images/twoway000.svg" alt="twoway000"></p>
+<p><img src="/images/angular/angular-ngmodel/twoway000.svg" alt="twoway000"></p>
 <ol>
 <li><strong>Interpolation Binding</strong>：當 class 的 field 資料改變，HTML 會自動改變</li>
 <li><strong>Event Binding</strong>：當 HTML 資料改變，發動 event，由 class 的 method 去修改  field</li>
 </ol>
 <h2 id="Two-Way_Binding">Two-Way Binding</h2><hr>
-<p><img src="images/twoway001.svg" alt="twoway001"></p>
+<p><img src="/images/angular/angular-ngmodel/twoway001.svg" alt="twoway001"></p>
 <ol>
 <li><strong>Two Way Binding</strong>：資料不用透過 method 修改，當 HTML 改變時，field 會跟著改變；且當 field 改變時，HTML 也會隨之改變。</li>
 </ol>
@@ -172,7 +172,7 @@
 <li><code>()</code> 與 <code>[]</code> 合一成為 <code>[()]</code></li>
 </ol>
 <h2 id="ngModel_內部運行機制">ngModel 內部運行機制</h2><hr>
-<p><img src="images/twoway002.svg" alt="twoway002"></p>
+<p><img src="/images/angular/angular-ngmodel/twoway002.svg" alt="twoway002"></p>
 <ol>
 <li>在 HTML 修改觸發 DOM 的 <code>change</code> event </li>
 <li><code>change</code> event 觸發了 Angular 的 <code>ngModelChange</code> event</li>
