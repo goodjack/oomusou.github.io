@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/protractor/protrator-checkbox/</loc>
+    <lastmod>2017-08-27T12:55:47.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/protractor/protractor-radio/</loc>
     <lastmod>2017-08-27T12:42:47.000Z</lastmod>
   </url>
@@ -272,7 +277,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -282,7 +287,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -292,12 +297,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
+    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -307,12 +312,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-where-and-or/</loc>
+    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -347,7 +352,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-relation-one-to-one/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -362,7 +367,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
+    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -377,17 +382,17 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
