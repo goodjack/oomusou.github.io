@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-10-15T15:36:40.843Z</updated>
+  <updated>2017-10-15T15:38:28.517Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[如何使用 Protractor 寫 Checkbox 的驗收 ?]]></title>
+    <title><![CDATA[如何使用 Protractor 寫 Checkbox 的驗收測試 ?]]></title>
     <link href="http://oomusou.io/protractor/protrator-checkbox/"/>
     <id>http://oomusou.io/protractor/protrator-checkbox/</id>
     <published>2017-08-23T12:23:43.000Z</published>
-    <updated>2017-10-15T15:36:40.843Z</updated>
+    <updated>2017-10-15T15:38:28.517Z</updated>
     <content type="html"><![CDATA[<p>HTML 的 <code>&lt;input type=&quot;checkbox&quot;&gt;</code> 是常見的控制項，該如何使用 Protractor 對 checkbox 寫驗收測試 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
