@@ -3,7 +3,7 @@
   
   <url>
     <loc>http://oomusou.io/protractor/protrator-checkbox/</loc>
-    <lastmod>2017-08-27T12:55:47.000Z</lastmod>
+    <lastmod>2017-10-15T06:36:13.661Z</lastmod>
   </url>
   
   <url>
@@ -123,12 +123,12 @@
   
   <url>
     <loc>http://oomusou.io/webstorm/webstorm-iterm2-slow/</loc>
-    <lastmod>2017-06-26T03:15:57.000Z</lastmod>
+    <lastmod>2017-06-26T03:15:51.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/angular/angular-http-get/</loc>
-    <lastmod>2017-06-26T02:44:34.000Z</lastmod>
+    <lastmod>2017-06-26T02:43:58.000Z</lastmod>
   </url>
   
   <url>
@@ -144,11 +144,6 @@
   <url>
     <loc>http://oomusou.io/typescript/typescript101/</loc>
     <lastmod>2017-06-17T08:27:25.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/refactor/refactor-in-action/</loc>
-    <lastmod>2017-06-17T08:26:35.000Z</lastmod>
   </url>
   
   <url>
@@ -219,6 +214,11 @@
   <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-refactoring/</loc>
     <lastmod>2017-04-18T15:39:52.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/refactor/refactor-in-action/</loc>
+    <lastmod>2017-04-18T15:39:37.000Z</lastmod>
   </url>
   
   <url>
