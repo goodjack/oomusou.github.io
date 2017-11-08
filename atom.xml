@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-08T07:26:04.524Z</updated>
+  <updated>2017-11-08T07:35:22.650Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <link href="http://oomusou.io/typescript/typescript-iterator/"/>
     <id>http://oomusou.io/typescript/typescript-iterator/</id>
     <published>2017-11-08T12:23:43.000Z</published>
-    <updated>2017-11-08T07:26:04.524Z</updated>
-    <content type="html"><![CDATA[<p>在 C# 有著名的 IEnumerable 與 IEnumerator interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做出 iterator 呢 ?</p>
+    <updated>2017-11-08T07:35:22.650Z</updated>
+    <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做出 iterator 呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>TypeScript 2.6</p>
@@ -31,7 +31,7 @@
 <p><code>for of</code> 為 ES6 的新語法，可以想像成是 C# 的 <code>foreach()</code>。</p>
 </blockquote>
 <h2 id="Task">Task</h2><hr>
-<p>TypeScript 提供了 <code>IterableIterator&lt;T&gt;</code> 與 <code>IteratorResult&lt;T&gt;</code> 2 個 interface，class 只要 implement <code>IterableIterator&lt;T&gt;</code> interface，並由 <code>next()</code> 回傳 <code>`IteratorResult&lt;T&gt;</code> interface，就可以實做出 iterator，提供 <code>for of</code> 功能。</p>
+<p>TypeScript 提供了 <code>IterableIterator&lt;T&gt;</code> 與 <code>IteratorResult&lt;T&gt;</code> 2 個 interface，class 只要 implement <code>IterableIterator&lt;T&gt;</code> interface，並由 <code>next()</code> 回傳 <code>IteratorResult&lt;T&gt;</code> interface，就可以實做出 iterator，提供 <code>for of</code> 功能。</p>
 <p><strong>Iterator<t> Interface</t></strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    next(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">return</span>?(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">throw</span>?(e?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
