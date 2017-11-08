@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 TypeScript 實踐 Iterator? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="標題描述">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="標題描述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 TypeScript 實踐 Iterator?">
+<meta property="og:url" content="http://oomusou.io/typescript/typescript-iterator/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="標題描述">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-11-08T07:26:04.524Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 TypeScript 實踐 Iterator?">
+<meta name="twitter:description" content="標題描述">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 TypeScript 實踐 Iterator?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 標題描述			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#FAQ"><span class="toc-article-text">FAQ</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>在 C# 有著名的 IEnumerable 與 IEnumerator interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做出 iterator 呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.6</p>
+<h2 id="User_Story">User Story</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> school = <span class="keyword">new</span> School&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> student of school) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(student.Name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>School</code> 內包含很多 <code>Student</code>，我們希望直接使用 <code>for of</code> 對 <code>School</code> 抓到所有 <code>Student</code>。</p>
+<blockquote>
+<p><code>for of</code> 為 ES6 的新語法，可以想像成是 C# 的 <code>foreach()</code>。</p>
+</blockquote>
+<h2 id="Task">Task</h2><hr>
+<p>TypeScript 提供了 <code>IterableIterator&lt;T&gt;</code> 與 <code>IteratorResult&lt;T&gt;</code> 2 個 interface，class 只要 implement <code>IterableIterator&lt;T&gt;</code> interface，並由 <code>next()</code> 回傳 <code>`IteratorResult&lt;T&gt;</code> interface，就可以實做出 iterator，提供 <code>for of</code> 功能。</p>
+<p><strong>Iterator<t> Interface</t></strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    next(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">return</span>?(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">throw</span>?(e?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>定義 Iterator 該有的 method</p>
+</blockquote>
+<p>一個 iterator 一定要有 <code>next()</code>，而 <code>return()</code> 與 <code>throw()</code> 則可是需求決定是否 implement。</p>
+<p><strong>IterableIterator<t> Interface</t></strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> IterableIterator&lt;T&gt; <span class="keyword">extends</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    [Symbol.iterator](): IterableIterator&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>定義 Iterator 該有的 property</p>
+</blockquote>
+<p>由於 <code>IterableIterable&lt;T&gt;</code> 繼承了 <code>Iterator&lt;T&gt;</code>，也就是 <code>next()</code>、<code>return()</code> 與 <code>throw()</code> 3 個 method 都會存在於 <code>IterableIterator&lt;T&gt;</code>，另外還多了自己的 <code>Symbol.iterator</code> property。</p>
+<p>簡單的說，一個 class 要成為 iterator，必須 implement <code>IterableIterator&lt;T&gt;</code> :</p>
+<ul>
+<li><code>Symbol.iterator</code> property : 回傳的型別為 <code>IterableIterator&lt;T&gt;</code></li>
+<li><code>next()</code>、<code>return()</code> 與 <code>throw()</code> : 3 個 method</li>
+</ul>
+<p>才可稱為 iterator 被 <code>for of</code> 所使用。</p>
+<blockquote>
+<p><code>Iterator&lt;T&gt;</code> 與  <code>IterableIterator&lt;T&gt;</code> 可視為因為 <code>界面隔離原則</code>，所以拆成 2 個 interface，但因為最後由 <code>IterableIterator&lt;T&gt;</code> 繼承了 <code>Iterator&lt;T&gt;</code>，所以對於使用端而言，只要知道 <code>IterableIterator&lt;T&gt;</code> 即可，符合 <code>最小知識原則</code>。</p>
+</blockquote>
+<p><strong>IteratorResult<t> Interface</t></strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> IteratorResult&lt;T&gt; </span>&#123;</span><br><span class="line">    done: <span class="built_in">boolean</span>;</span><br><span class="line">    value: T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>定義 next() 的回傳結果</p>
+</blockquote>
+<p><code>next()</code> 回傳的 object，一定要有 <code>done</code> 與 <code>value</code> 兩個 property。</p>
+<ul>
+<li><code>done</code> : <code>false</code> 不是最後一筆資料，<code>true</code> 為最後一筆資料</li>
+<li><code>value</code> : 要傳回的 itertator 資料</li>
+</ul>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/typescript/typescript-iterator/iterator000.svg" alt="ts000"></p>
+<p><code>Schoool</code> implement 了 <code>IterableIterator&lt;T&gt;</code> interface，且 <code>next()</code> 回傳了 <code>IteratorResult&lt;T&gt;</code> interface。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><strong>Student.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Student </span>&#123;</span><br><span class="line">  Name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義資料類型為 <code>Student</code> interface，只有 <code>Name</code> public field。</p>
+<p><strong>School.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Student &#125; from <span class="string">'./student'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> IterableIterator&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">private</span> students: T[];</span><br><span class="line">  <span class="keyword">private</span> index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.students = [</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">    ];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  [Symbol.iterator](): IterableIterator&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  next(): IteratorResult&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.index &lt; <span class="keyword">this</span>.students.length) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        done: <span class="literal">false</span>,</span><br><span class="line">        value: <span class="keyword">this</span>.students[<span class="keyword">this</span>.index++]</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      done: <span class="literal">true</span>,</span><br><span class="line">      value: <span class="literal">undefined</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 3 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> IterableIterator&lt;T&gt; &#123;</span><br></pre></td></tr></table></figure>
+<p>為了 <code>School</code> 實踐 iterator，使其 implement <code>IterableIterator&lt;T&gt;</code>，但這個 <code>T</code> 並不是任意的 <code>T</code>，被限定只能繼承於 <code>Student</code> interface。</p>
+<p>第 4 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> students: T[];</span><br></pre></td></tr></table></figure>
+<p><code>School</code> 的內部資料 <code>Student[]</code>，其中 <code>Student</code> 以 <code>T</code> 取代。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> index = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>儲存目前 <code>students</code> 的 index 位置。</p>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.students = [</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 constructor 將目前的 <code>students</code> 資料建立起來。</p>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Symbol.iterator](): IterableIterator&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>Symbol.iterator</code>  property 回傳一個 <code>IterableIterator&lt;T&gt;</code> 物件供使用端操作</p>
+</blockquote>
+<p>根據 <code>IterableIterator&lt;T&gt;</code> 規定，一定要提供 <code>Symbol.iterator</code> property，且回傳型別 <code>IterableIterator&lt;T&gt;</code>，而 <code>School</code> 正是 implement <code>IterableIterator&lt;T&gt;</code>，因此可直接回傳。</p>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">next(): IteratorResult&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.index &lt; <span class="keyword">this</span>.students.length) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      done: <span class="literal">false</span>,</span><br><span class="line">      value: <span class="keyword">this</span>.students[<span class="keyword">this</span>.index++]</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    done: <span class="literal">true</span>,</span><br><span class="line">    value: <span class="literal">undefined</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>next()</code> method 回傳 <code>IteratorResult&lt;T&gt;</code> 物件供使用端取值</p>
+</blockquote>
+<p>根據 <code>Iterator&lt;T&gt;</code> 規定，一定要提供 <code>next()</code>，且回傳值型態為 <code>IteratorResult&lt;T&gt;</code>。</p>
+<p>若目前的 index 還在範圍內，則 <code>done</code> 為 <code>false</code>，<code>value</code> 為 <code>students</code> 目前 index 的資料。</p>
+<p>若 index 已經到最後一筆，則 <code>done</code> 為 <code>true</code>，<code>value</code> 為 <code>undefined</code>。</p>
+<h2 id="FAQ">FAQ</h2><blockquote>
+<p>Q : 為什麼要使用 <code>for of</code> 就要 implement <code>IterableIterator&lt;T&gt;</code> interface ?</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> school = <span class="keyword">new</span> School&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> student of school) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(student.Name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>經過編譯後會變成</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> school = <span class="keyword">new</span> School&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterator = school.next();</span><br><span class="line"><span class="keyword">while</span> (!iterator.done) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(iterator.value.Name);</span><br><span class="line">  iterator = school.next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這也是為什麼我們必須 implement <code>IterableIterator&lt;T&gt;</code> interface 的原因，因為真的會用到  <code>IterableIterator&lt;T&gt;</code> 的 <code>next()</code> 與 <code>IteratorResult&lt;T&gt;</code> 的 <code>done</code> 與 <code>value</code>。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>Iterator Pattern 讓我們不用暴露 object 內部資料，卻又可以讓使用端以 <code>for of</code> 方式訪問內部資料。</li>
+<li>Iterator Pattern 在實物上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/protractor/protrator-checkbox/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-11-08 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>12</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
