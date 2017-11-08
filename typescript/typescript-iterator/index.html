@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何使用 TypeScript 實踐 Iterator? | 點燈坊</title>
+  <title>如何使用 TypeScript 實踐 Iterator Pattern? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="標題描述">
+  <meta name="description" content="TypeScript 也可以實做出 Iterator">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="標題描述">
+ <meta name="description" content="TypeScript 也可以實做出 Iterator">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何使用 TypeScript 實踐 Iterator?">
+<meta property="og:title" content="如何使用 TypeScript 實踐 Iterator Pattern?">
 <meta property="og:url" content="http://oomusou.io/typescript/typescript-iterator/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="標題描述">
+<meta property="og:description" content="TypeScript 也可以實做出 Iterator">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-11-08T07:35:22.650Z">
+<meta property="og:updated_time" content="2017-11-08T08:08:11.557Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何使用 TypeScript 實踐 Iterator?">
-<meta name="twitter:description" content="標題描述">
+<meta name="twitter:title" content="如何使用 TypeScript 實踐 Iterator Pattern?">
+<meta name="twitter:description" content="TypeScript 也可以實做出 Iterator">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 如何使用 TypeScript 實踐 Iterator?</h1>
+			<h1> 如何使用 TypeScript 實踐 Iterator Pattern?</h1>
 		</div>		
 	
 
@@ -95,7 +95,7 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 標題描述			
+			<i class="fa fa-info-circle"></i> TypeScript 也可以實做出 Iterator			
 		</div> <!-- alert -->
 		
 
@@ -107,7 +107,7 @@
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做出 iterator 呢 ?</p>
+	    <p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>TypeScript 2.6</p>
@@ -194,7 +194,7 @@
 <p>這也是為什麼我們必須 implement <code>IterableIterator&lt;T&gt;</code> interface 的原因，因為真的會用到  <code>IterableIterator&lt;T&gt;</code> 的 <code>next()</code> 與 <code>IteratorResult&lt;T&gt;</code> 的 <code>done</code> 與 <code>value</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><ul>
 <li>Iterator Pattern 讓我們不用暴露 object 內部資料，卻又可以讓使用端以 <code>for of</code> 方式訪問內部資料。</li>
-<li>Iterator Pattern 在實物上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
+<li>Iterator Pattern 在實務上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
 </ul>
 	  
 	</div>

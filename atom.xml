@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-08T07:35:22.650Z</updated>
+  <updated>2017-11-08T08:08:11.557Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,12 +15,12 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[如何使用 TypeScript 實踐 Iterator?]]></title>
+    <title><![CDATA[如何使用 TypeScript 實踐 Iterator Pattern?]]></title>
     <link href="http://oomusou.io/typescript/typescript-iterator/"/>
     <id>http://oomusou.io/typescript/typescript-iterator/</id>
     <published>2017-11-08T12:23:43.000Z</published>
-    <updated>2017-11-08T07:35:22.650Z</updated>
-    <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做出 iterator 呢 ?</p>
+    <updated>2017-11-08T08:08:11.557Z</updated>
+    <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>TypeScript 2.6</p>
@@ -107,11 +107,11 @@
 <p>這也是為什麼我們必須 implement <code>IterableIterator&lt;T&gt;</code> interface 的原因，因為真的會用到  <code>IterableIterator&lt;T&gt;</code> 的 <code>next()</code> 與 <code>IteratorResult&lt;T&gt;</code> 的 <code>done</code> 與 <code>value</code>。</p>
 <h2 id="Conclusion">Conclusion</h2><ul>
 <li>Iterator Pattern 讓我們不用暴露 object 內部資料，卻又可以讓使用端以 <code>for of</code> 方式訪問內部資料。</li>
-<li>Iterator Pattern 在實物上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
+<li>Iterator Pattern 在實務上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[標題描述]]>
+    <![CDATA[TypeScript 也可以實做出 Iterator]]>
     
     </summary>
     
