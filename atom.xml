@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-08T08:08:11.557Z</updated>
+  <updated>2017-11-08T13:04:13.106Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-iterator/"/>
     <id>http://oomusou.io/typescript/typescript-iterator/</id>
     <published>2017-11-08T12:23:43.000Z</published>
-    <updated>2017-11-08T08:08:11.557Z</updated>
+    <updated>2017-11-08T13:04:13.106Z</updated>
     <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -37,7 +37,7 @@
 <blockquote>
 <p>定義 Iterator 該有的 method</p>
 </blockquote>
-<p>一個 iterator 一定要有 <code>next()</code>，而 <code>return()</code> 與 <code>throw()</code> 則可是需求決定是否 implement。</p>
+<p>一個 iterator 一定要有 <code>next()</code>，而 <code>return()</code> 與 <code>throw()</code> 可視需求決定是否 implement。</p>
 <p><strong>IterableIterator<t> Interface</t></strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> IterableIterator&lt;T&gt; <span class="keyword">extends</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    [Symbol.iterator](): IterableIterator&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>

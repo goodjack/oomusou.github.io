@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="TypeScript 也可以實做出 Iterator">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-11-08T08:08:11.557Z">
+<meta property="og:updated_time" content="2017-11-08T13:04:13.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 TypeScript 實踐 Iterator Pattern?">
 <meta name="twitter:description" content="TypeScript 也可以實做出 Iterator">
@@ -124,7 +124,7 @@
 <blockquote>
 <p>定義 Iterator 該有的 method</p>
 </blockquote>
-<p>一個 iterator 一定要有 <code>next()</code>，而 <code>return()</code> 與 <code>throw()</code> 則可是需求決定是否 implement。</p>
+<p>一個 iterator 一定要有 <code>next()</code>，而 <code>return()</code> 與 <code>throw()</code> 可視需求決定是否 implement。</p>
 <p><strong>IterableIterator<t> Interface</t></strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> IterableIterator&lt;T&gt; <span class="keyword">extends</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    [Symbol.iterator](): IterableIterator&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
