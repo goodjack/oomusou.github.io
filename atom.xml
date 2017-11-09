@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-08T16:01:29.955Z</updated>
+  <updated>2017-11-09T01:55:06.807Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-iterator/"/>
     <id>http://oomusou.io/typescript/typescript-iterator/</id>
     <published>2017-11-08T12:23:43.000Z</published>
-    <updated>2017-11-08T16:01:29.955Z</updated>
+    <updated>2017-11-09T01:55:06.807Z</updated>
     <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -33,7 +33,7 @@
 <h2 id="Task">Task</h2><hr>
 <p>TypeScript 提供了 <code>IterableIterator&lt;T&gt;</code> 與 <code>IteratorResult&lt;T&gt;</code> 2 個 interface，class 只要 implement <code>IterableIterator&lt;T&gt;</code> interface，並由 <code>next()</code> 回傳 <code>IteratorResult&lt;T&gt;</code> interface，就可以實做出 iterator，提供 <code>for of</code> 功能。</p>
 <h2 id="Architecture">Architecture</h2><hr>
-<p><img src="/images/typescript/typescript-iterator/Iterator000.svg" alt="ts000"></p>
+<p><img src="/images/typescript/typescript-iterator/Iterator006.svg" alt="ts000"></p>
 <p><code>Schoool</code> implement 了 <code>IterableIterator&lt;T&gt;</code> interface，且 <code>next()</code> 回傳了 <code>IteratorResult&lt;T&gt;</code> interface。</p>
 <h2 id="Implementation">Implementation</h2><hr>
 <p><strong>Iterator<t> Interface</t></strong><br><img src="/images/typescript/typescript-iterator/Iterator001.svg" alt="ts000">  </p>
