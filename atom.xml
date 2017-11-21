@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-21T09:38:37.428Z</updated>
+  <updated>2017-11-21T12:47:27.101Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/typescript-generator/"/>
     <id>http://oomusou.io/typescript/typescript-generator/</id>
     <published>2017-11-21T12:23:43.000Z</published>
-    <updated>2017-11-21T09:38:37.428Z</updated>
+    <updated>2017-11-21T12:47:27.101Z</updated>
     <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -42,7 +42,7 @@
 <p>定義 Iterator 該有的 method</p>
 </blockquote>
 <p>一個 iterator 一定要有 <code>[Symbol.iterator]()</code>，並且回傳  <code>Iterator&lt;T&gt;</code>，其中 <code>yield</code> 可直接回傳 <code>Iterator&lt;T&gt;</code>。</p>
-<p><img src="/images/typescript/typescript-generator/Generator002.svg" alt="Iterator003"></p>
+<p><img src="/images/typescript/typescript-generator/generator002.svg" alt="Iterator003"></p>
 <p><strong>Iterator<t> Interface</t></strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    next(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">return</span>?(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">throw</span>?(e?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>定義 <code>[Symbol.iterator]()</code> 回傳結果的 interface</p>
