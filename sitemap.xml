@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/typescript-generator/</loc>
+    <lastmod>2017-11-21T09:38:37.428Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/typescript-iterator/</loc>
     <lastmod>2017-11-09T01:55:06.807Z</lastmod>
   </url>

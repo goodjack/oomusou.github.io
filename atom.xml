@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-09T01:55:06.807Z</updated>
+  <updated>2017-11-21T09:38:37.428Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何使用 TypeScript 實踐 Iterator Pattern? (使用 Generator)]]></title>
+    <link href="http://oomusou.io/typescript/typescript-generator/"/>
+    <id>http://oomusou.io/typescript/typescript-generator/</id>
+    <published>2017-11-21T12:23:43.000Z</published>
+    <updated>2017-11-21T09:38:37.428Z</updated>
+    <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.6</p>
+<h2 id="User_Story">User Story</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> school = <span class="keyword">new</span> School&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> student of school) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(student.Name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>School</code> 內包含很多 <code>Student</code>，我們希望直接使用 <code>for of</code> 對 <code>School</code> 抓到所有 <code>Student</code>。</p>
+<blockquote>
+<p><code>for of</code> 為 ES6 的新語法，可以想像成是 C# 的 <code>foreach()</code>。</p>
+</blockquote>
+<h2 id="Task">Task</h2><hr>
+<p><code>yield</code> 本身回傳就是 iterator，因此若使用 <code>yield</code> 將更精簡。</p>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/typescript/typescript-generator/generator000.svg" alt="generator000"></p>
+<p><code>Schoool</code> implement 了 <code>Iterable&lt;T&gt;</code> interface，且必須回傳 <code>Iterator&lt;T&gt;</code> interface。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><img src="/images/typescript/typescript-generator/generator001.svg" alt="generator001"></p>
+<p><strong>Iterable<t> Interface</t></strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterable&lt;T&gt; </span>&#123;</span><br><span class="line">    [Symbol.iterator](): Iterator&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>定義 Iterator 該有的 method</p>
+</blockquote>
+<p>一個 iterator 一定要有 <code>[Symbol.iterator]()</code>，並且回傳  <code>Iterator&lt;T&gt;</code>，其中 <code>yield</code> 可直接回傳 <code>Iterator&lt;T&gt;</code>。</p>
+<p><img src="/images/typescript/typescript-generator/Generator002.svg" alt="Iterator003"></p>
+<p><strong>Iterator<t> Interface</t></strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    next(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">return</span>?(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">throw</span>?(e?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>定義 <code>[Symbol.iterator]()</code> 回傳結果的 interface</p>
+</blockquote>
+<p>不用擔心要實作這個 interface 很困難，<code>yield</code> 回傳的正是 <code>Iterator&lt;T&gt;</code>，只要簡單使用 <code>yield</code> 即可。</p>
+<p><img src="/images/typescript/typescript-generator/generator003.svg" alt="Iterator004"></p>
+<p><strong>Student.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Student </span>&#123;</span><br><span class="line">  Name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定義資料類型為 <code>Student</code> interface，只有 <code>Name</code> public field。</p>
+<p><img src="/images/typescript/typescript-generator/generator004.svg" alt="Iterator005"></p>
+<p><strong>School.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Student &#125; from <span class="string">'./student'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> Iterable&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">private</span> students: T[];</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.students = [</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">    ];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  *[Symbol.iterator]() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">yield</span> iter;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第 3 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> Iterable&lt;T&gt; &#123;</span><br></pre></td></tr></table></figure>
+<p>為了 <code>School</code> 實踐 iterator，使其 implement <code>IterableIterator&lt;T&gt;</code>，但這個 <code>T</code> 並不是任意的 <code>T</code>，被限定只能繼承於 <code>Student</code> interface。</p>
+<p>第 4 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> students: T[];</span><br></pre></td></tr></table></figure>
+<p><code>School</code> 的內部資料 <code>Student[]</code>，其中 <code>Student</code> 以 <code>T</code> 取代。</p>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.students = [</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 constructor 將目前的 <code>students</code> 資料建立起來。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*[Symbol.iterator]() &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">yield</span> iter;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>Symbol.iterator</code>  property 回傳一個 <code>Iterator&lt;T&gt;</code> 物件供使用端操作</p>
+</blockquote>
+<p>根據 <code>Iterable&lt;T&gt;</code> 規定，一定要提供 <code>Symbol.iterator</code> property，且回傳型別 <code>Iterator&lt;T&gt;</code>，而 <code>yield</code> 回傳的正是 <code>Iterator&lt;T&gt;</code>。</p>
+<p><code>yield</code> 與 <code>return</code> 不同的是 : 執行到 <code>yield</code> 會立即中止，當一個 <code>for...of</code> 執行時，會繼續下一個 <code>yield</code>，因此不像 <code>return</code> 是回傳一個陣列，然後使用端又不須再一次 <code>for..of</code>。    </p>
+<blockquote>
+<p>使用 <code>yield</code> 前後只有一次 <code>for...of</code>。</p>
+</blockquote>
+<p>另外 ES6 規定，只要回傳的是 iterator，則 function 之前要加 <code>*</code>。</p>
+<p>除此之外，ES6 提供更精簡的寫法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*[Symbol.iterator]() &#123;</span><br><span class="line">  <span class="keyword">yield</span>* <span class="keyword">this</span>.students;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要 <code>yield*</code>，後面加上 array，編譯展開相當於</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">yield</span> iter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Iterator Pattern 讓我們不用暴露 object 內部資料，卻又可以讓使用端以 <code>for of</code> 方式訪問內部資料。</li>
+<li>Iterator Pattern 在實務上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
+<li>若使用 generator，則程式碼更短，意圖也更明顯，還可以使用更精簡的 <code>yield*</code> 寫法。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[TypeScript 也可以實做出 Iterator]]>
+    
+    </summary>
+    
+      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使用 TypeScript 實踐 Iterator Pattern? (使用 IterableIterator<T>)]]></title>
@@ -2252,69 +2331,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Protractor 的 getText() 回傳型別到底是什麼?]]></title>
-    <link href="http://oomusou.io/protractor/protractor-promise/"/>
-    <id>http://oomusou.io/protractor/protractor-promise/</id>
-    <published>2017-06-30T12:23:43.000Z</published>
-    <updated>2017-06-29T16:28:58.000Z</updated>
-    <content type="html"><![CDATA[<p>使用了 TypeScript 之後，對於型別就非常敏感，都會要求自己要將傳入參數的型別與回傳型別明確指定，但 Protractor 在 page object 常用的 <code>getText()</code>，到底回傳型別是什麼呢？</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><p>Angular CLI 1.1.2<br>Angular 4.2.3<br>Protractor 5.1.2</p>
-<h2 id="Symptoms">Symptoms</h2><hr>
-<p><strong>e2e/app.po.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> NG4DemoPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getParagraphText() &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'app-root h1'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 Angular CLI 專案預設的 Protractor 範例，其 page object 的 <code>nagivateTo()</code> 與 <code>getParagraphText()</code> 並沒有加上回傳型別，既然使用了 TypeScript，就希望能盡量加上型別，由編譯器替我們檢查與保護。</p>
-<p><img src="/images/protractor/protractor-promise/promise000.png" alt="promise000"></p>
-<p>有 <code>get()</code> 我們得知其回傳型別為 <code>wdpromise.Promise&lt;any&gt;</code>。</p>
-<p><img src="/images/protractor/protractor-promise/promise001.png" alt="promise001"></p>
-<p>但實際替回傳型別加上 <code>wdpromise.Promise&lt;any&gt;</code> 之後，language service 會抱怨找不到 <code>wdpromise</code> namespace。</p>
-<p><img src="/images/protractor/protractor-promise/promise002.png" alt="promise002"></p>
-<p><code>getText()</code> 則完全沒提供任何回傳型別資訊，則 <code>getParagraphText()</code> 該回傳什麼型別呢？</p>
-<p><img src="/images/protractor/protractor-promise/promise005.png" alt="promise005"></p>
-<p>實際執行 <code>ng e2e</code>，結果當然也是編譯失敗。</p>
-<h2 id="Recipes">Recipes</h2><hr>
-<p>由於 <code>getText()</code> 之後可以用 <code>then()</code>，在觀念上知道 <code>getText()</code> 回傳的是 <code>Promise</code>。</p>
-<p><img src="/images/protractor/protractor-promise/promise004.png" alt="promise004"></p>
-<p>實際加上回傳型別 <code>Promise&lt;string&gt;</code>，language service 抱怨 <code>promise.Promise&lt;string&gt;</code> 與 <code>Promise&lt;string&gt;</code> 不相容，試試看回傳 <code>promise.Promise&lt;string&gt;</code> 看看。</p>
-<p><img src="/images/protractor/protractor-promise/promise006.png" alt="promise006"></p>
-<p>改成回傳 <code>promise.Promise&lt;string&gt;</code> 之後，另外加上 <code>import { promise } from &#39;selenium-webdriver&#39;;</code> 之後，language service 就不再抱怨了。</p>
-<blockquote>
-<p>promise.Promise<string> 看起來很怪，不像我們常用的 TypeScript 寫法，事實上，小寫的 <code>promise</code> 為 namespace，而 <code>Promise&lt;string&gt;</code> 才是我們所熟悉的 <code>Promise</code>。</string></p>
-</blockquote>
-<p><img src="/images/protractor/protractor-promise/promise007.png" alt="promise007"></p>
-<p>藉由剛剛的經驗，將 <code>wdpromise.Promise&lt;any&gt;</code> 改成 <code>promise.Promise&lt;any&gt;</code> 試試看，結果 language service 完全不再抱怨了。</p>
-<p><img src="/images/protractor/protractor-promise/promise008.png" alt="promise008"></p>
-<p>實際跑 <code>ng e2e</code>，TypeScript 編譯成功，也可以成功跑完測試。</p>
-<blockquote>
-<p>實務上真的要這樣寫回傳型別嗎？</p>
-</blockquote>
-<p><a href="https://github.com/angular/protractor/blob/master/exampleTypescript/angularPage.ts" target="_blank" rel="external">protractor/exampleTypescript/angularPage.ts</a></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Because this file references protractor, you'll need to have it as a project</span></span><br><span class="line"><span class="comment">// dependency to use 'protractor/globals'. Here is the full list of imports:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// import &#123;browser, element, by, By, $, $$, ExpectedConditions&#125;</span></span><br><span class="line"><span class="comment">//   from 'protractor/globals';</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">import</span> &#123;browser, element, by&#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AngularHomepage &#123;</span><br><span class="line">  nameInput = element(by.model(<span class="string">'yourName'</span>));</span><br><span class="line">  greeting = element(by.binding(<span class="string">'yourName'</span>));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    browser.get(<span class="string">'http://www.angularjs.org'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setName(name: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.nameInput.sendKeys(name);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// getGreeting returns a webdriver.promise.Promise.&lt;string&gt;. For simplicity</span></span><br><span class="line">  <span class="comment">// setting the return value to any</span></span><br><span class="line">  getGreeting(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.greeting.getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 Protractor 官網實際示範了應該如何用 TypeScript 寫 page object。</p>
-<p>21 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// getGreeting returns a webdriver.promise.Promise.&lt;string&gt;. For simplicity</span></span><br><span class="line"><span class="comment">// setting the return value to any</span></span><br><span class="line">getGreeting(): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.greeting.getText();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>getGreeting()</code> 用的正是 <code>getText()</code>，Protractor 官方也認為 <code>webdriver.promise.Promise.&lt;string&gt;</code> 實在太麻煩了，用 <code>any</code> 即可。</p>
-<p><img src="/images/protractor/protractor-promise/promise009.png" alt="promise009"></p>
-<p>若你跟我一樣有型別強迫症，回傳 <code>any</code> 即可。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>雖然 TypeScript 是強型別，但 <code>any</code> 也不是不能用，除非能說出理由，在這裡就是因為  <code>webdriver.promise.Promise.&lt;string&gt;</code> 實在太麻煩了，連 Protractor 官網也建議直接用 <code>any</code> 即可。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://github.com/angular/protractor" target="_blank" rel="external">Protractor</a>, <a href="https://github.com/angular/protractor/blob/master/exampleTypescript/angularPage.ts" target="_blank" rel="external">angularPage.ts</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[必要時也可以用 any]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
     
   </entry>
   
