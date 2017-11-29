@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 .NET Core 的 Console App 使用 DI ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="在 .NET Core 簡單的使用 DI">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="在 .NET Core 簡單的使用 DI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 .NET Core 的 Console App 使用 DI ?">
+<meta property="og:url" content="http://oomusou.io/netcore/netcore-di/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="在 .NET Core 簡單的使用 DI">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-11-29T12:46:03.101Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 .NET Core 的 Console App 使用 DI ?">
+<meta name="twitter:description" content="在 .NET Core 簡單的使用 DI">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 .NET Core 的 Console App 使用 DI ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 在 .NET Core 簡單的使用 DI			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_NuGet_套件"><span class="toc-article-text">安裝 NuGet 套件</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GUI_安裝"><span class="toc-article-text">GUI 安裝</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#指令安裝"><span class="toc-article-text">指令安裝</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IService2"><span class="toc-article-text">IService2</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Service2"><span class="toc-article-text">Service2</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IService1"><span class="toc-article-text">IService1</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Service1"><span class="toc-article-text">Service1</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Program"><span class="toc-article-text">Program</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Visual Studio 在 ASP.NET Core Web Application 的 template 中，預設已經可使用 DI，若要在 console app 也使用 DI，需要另外設定。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Visual Studio 2017 15.4.5<br>.NET Core 2.0<br>Microsoft.Extensions.DependencyInjection 2.0.0</p>
+<h2 id="安裝_NuGet_套件">安裝 NuGet 套件</h2><hr>
+<h3 id="GUI_安裝">GUI 安裝</h3><p><img src="/images/netcore/netcore-di/di000.png" alt="di000"></p>
+<ol>
+<li>在 project 選擇 <code>Dependencies</code></li>
+<li>按滑鼠右鍵選擇 <code>Manage NuGet Packages...</code></li>
+</ol>
+<p>DI 主要是在 <code>Microsoft.Extensions.DependencyInjection</code> 套件裡，console app 預設沒有安裝，需要手動自行安裝。</p>
+<p><img src="/images/netcore/netcore-di/di001.png" alt="di001"></p>
+<ol>
+<li>選擇 <code>Browse</code></li>
+<li>輸入 <code>DependencyInjection</code></li>
+<li>選擇 <code>Microsoft.Extensions.DependencyInjection</code> 套件</li>
+<li>按 <code>Install</code> 安裝套件</li>
+</ol>
+<p><img src="/images/netcore/netcore-di/di002.png" alt="di002"></p>
+<p>安裝完成後，在 <code>Dependencies</code> 下的 <code>NuGet</code> 會看到 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<h3 id="指令安裝">指令安裝</h3><p><img src="/images/netcore/netcore-di/di003.png" alt="di003"></p>
+<p><strong><em>Tools -&gt; NuGet Package Manager -&gt; Package Manager Console</em></strong></p>
+<p>啟動 package manager console</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PM&gt; Install-Package Microsoft<span class="class">.Extensions</span><span class="class">.DependencyInjection</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/netcore/netcore-di/di004.png" alt="di004"></p>
+<p>使用 <code>Install-Package</code> 指令安裝 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<p><img src="/images/netcore/netcore-di/di002.png" alt="di002"></p>
+<p>安裝完成後，在 <code>Dependencies</code> 下的 <code>NuGet</code> 會看到 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/netcore/netcore-di/di005.svg" alt="di005"></p>
+<p><code>Service1</code> 使用 delagation 手法，將 <code>Execute()</code> 轉發給 <code>Service2.SayHello()</code>，其中 <code>Service2</code> 是 <code>Service1</code> 的 dependency。</p>
+<p>傳統寫法我們會在 <code>Service1</code> 內去 <code>new</code> <code>Service2</code>，也就是高階模組 <code>Service1</code> 直接相依於低階模組 <code>Service2</code>，這就違反了 <code>依賴反轉原則</code>。</p>
+<blockquote>
+<p>依賴反轉原則 </p>
+<p>DIP : Dependency Inversion Principle</p>
+<p>高階模組不應該相依於低階模組；低階模組應該相依於高階模組所定義的抽象</p>
+<p>白話 : 原本是高層依賴於底層，現在是反過來底層依賴於高層所定義的 interface</p>
+</blockquote>
+<p>所以高階模組 <code>Program</code> 與 <code>Service1</code> 定義出  <code>IService1</code> 與 <code>IService2</code> interface，由低階模組 <code>Service1</code> 與 <code>Service2</code> 去實現，此時高階模組 <code>Program</code> 與 <code>Service1</code> 不再直接相依於 <code>Service1</code> 與 <code>Service2</code>，而是反過來相依於 <code>Program</code> 與 <code>Service1</code> 所定義的 <code>IService1</code> 與 <code>IService2</code>，符合 <code>依賴反轉原則</code>。</p>
+<p>因此我們改用 <code>依賴注入</code> 方式，由 <code>Service1</code> 的 constructor 將符合 <code>IService2</code> interface 的 <code>Service2</code> 注入進去。</p>
+<p>而 DI Container 就是負責幫我們 <code>new</code> 物件，然後由 constructor 注入。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="IService2">IService2</h3><p><img src="/images/netcore/netcore-di/di009.svg" alt="di009"></p>
+<p><strong>IService2.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title">IService2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SayHello</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Service1</code> 為 <code>Service2</code> 的高階模組，由 <code>Service1</code> 定義出 <code>IService2</code>，由 <code>Service2</code> 所依賴。</p>
+<h3 id="Service2">Service2</h3><p><img src="/images/netcore/netcore-di/di006.svg" alt="di006"></p>
+<p><strong>Service2.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Service2</span> : <span class="title">IService2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SayHello</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"Hello World"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>Service2</code> 實現 (依賴) <code>IService2</code>。</p>
+<h3 id="IService1">IService1</h3><p><img src="/images/netcore/netcore-di/di010.svg" alt="di010"></p>
+<p><strong>IService1.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title">IService1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Program</code> 為 <code>Service1</code> 的高階模組，由 <code>Program</code> 定義出 <code>IService1</code>，由 <code>Service1</code> 所依賴。</p>
+<h3 id="Service1">Service1</h3><p><img src="/images/netcore/netcore-di/di007.svg" alt="di007"></p>
+<p><strong>Service1.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Service1</span> : <span class="title">IService1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params">IService2 service2</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.service2 = service2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.service2.SayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>Service1</code> 實現 (依賴) <code>IService1</code>。</p>
+<p>第 3 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params">IService2 service2</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.service2 = service2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>傳統我們都會在 <code>Service1</code> 的 constructor 去 <code>new Service2</code>，</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.service2 = <span class="keyword">new</span> Service2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣 <code>Service1</code> 就直接耦合了 <code>Service2</code>，現在我們改用在 constructor <code>依賴注入</code> <code>IService2</code> 型別的 <code>Service2</code>。</p>
+<p>這樣做有幾個優點 :</p>
+<ul>
+<li>由原本相依於 <code>Service2</code>，改相依於 <code>IService2</code> interface，符合 <code>依賴反轉原則</code></li>
+<li>原本直接在 constructor 去 <code>new</code>，高階模組無法抽換低階模組，現在高階模組可透過 constructor 直接換掉低階模組，原來的 <code>Service1</code> 程式碼不用變動，符合 <code>開放封閉原則</code></li>
+<li>單元測試時，可直接透過 constructor 注入 mock 物件隔離測試</li>
+</ul>
+<blockquote>
+<p>OOP 心法</p>
+<p>若使用 DI 寫法，則不須再使用 <code>new</code>，讓程式碼更為乾淨，類似 static class 只要一行程式碼就可解決</p>
+</blockquote>
+<h3 id="Program">Program</h3><p><img src="/images/netcore/netcore-di/di008.svg" alt="di008"></p>
+<p><strong>Program.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">        services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">        services.AddTransient&lt;IService2, Service2&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">        IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br><span class="line">        service1.Execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Service1</code> 已經用了 <code>依賴注入</code>，讓我們可以在 constructor 注入相依的 <code>Service2</code>，傳統我們會這樣建立 <code>Service1</code> :</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> service1 = <span class="keyword">new</span> Service1(<span class="keyword">new</span> Service2());</span><br><span class="line">        service1.Execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接使用 <code>new</code>，並在其 constructor 傳進 <code>new Service2()</code>。</p>
+<p>但實務上 service 與 service 間的關係會更複雜，因此 constructor 寫法不會這麼簡單。</p>
+<p>而 DI container 就是幫我們不用在 constructor 寫複雜的 <code>new</code>。</p>
+<p>第 5 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">services.AddTransient&lt;IService2, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>要讓 DI container 幫我們 <code>new</code>，首先必須告訴 DI container :</p>
+<blockquote>
+<p>當遇到 xxx interface 時，請幫我注入 yyy class</p>
+</blockquote>
+<p>.NET 提供了 <code>ServiceCollection</code>，由它負責蒐集所有 interface 與 class 的 mapping。</p>
+<ul>
+<li><code>AddTrasient()</code> : 每次注入時，都重新 <code>new</code> 一個新的 instance</li>
+<li><code>AddScoped()</code> : 每個 request 都重新 <code>new</code> 一個新的instance</li>
+<li><code>AddSingleton()</code> : 程式啟動後會 <code>new</code> 一個 instance，之後會重複使用，也就是運行期間只有一個 instance</li>
+</ul>
+<p>泛型參數部份 :</p>
+<ul>
+<li>第一個參數為 interface</li>
+<li>第二個參數為 class</li>
+</ul>
+<p>也就是告訴 <code>ServiceCollection</code>，當 constructor 的型別為此 interface 時，請幫我 new 這個 class。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static IServiceCollection AddTransient&lt;TService, TImplementation&gt;(this IServiceCollection services) </span><br><span class="line">    where TService : class</span><br><span class="line">    where TImplementation : class, TService;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>TImplementation</code> 的 constraint 為 <code>TService</code>，也就是若你這樣寫</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">services.AddTransient&lt;IService1, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Service2</code> 根本沒有實作  <code>IService1</code>，編譯會錯誤。</p>
+<blockquote>
+<p>OOP 心法</p>
+<p>在使用泛型時，一定要搭配 constraint，才會發揮泛型的威力</p>
+</blockquote>
+<p>第 9 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br></pre></td></tr></table></figure>
+<p>DI container 要靠 service provider 來建立 object，所以下一步要靠 <code>ServiceCollection.BuildServiceProvider()</code> 來產生 <code>ServiceProvider</code>。</p>
+<p>之後就可用 <code>ServiceProvider.GetService()</code> 來建立 object，而不須使用 <code>new Service1(new Service2())</code>。</p>
+<p><code>GetService()</code> 泛型參數要傳的是 interface，而不是 class，因為 constructor 宣告的是 interface 型別，不是 class 型別。</p>
+<blockquote>
+<p>Q : 使用 service provider 建立 object，與自己 <code>new</code> object，差別在哪裡 ?</p>
+</blockquote>
+<p>A : 你只須用 service provider 建立最外層的 object 即可，剩下相依物件，DI container 會幫你建立；但若你使用 <code>new</code>，怎每一層的相依物件都要自己處理。</p>
+<p>11 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service1.Execute();</span><br></pre></td></tr></table></figure>
+<p>Object 已經被 DI container 建立，就可以使用一般的方式使用 method。</p>
+<blockquote>
+<p>Q : 依賴注入與 DI container 除了讓我們不用複雜的 <code>new</code> ，還有其他優點嗎 ?</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> service1 = <span class="keyword">new</span> Service1();</span><br><span class="line">        service1.Execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在沒有使用 <code>依賴注入</code> 與 DI container 之前，<code>Program</code> 只能去 <code>new Service1()</code>，至於 <code>Service1</code> 用了哪些相依物件，<code>Program</code> 高階模組無法決定，也就是高階模組已經被低階模組綁死了，無從決定低階模組到底用了什麼相依物件。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">        services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">        services.AddTransient&lt;IService2, Service2&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">        IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br><span class="line">        service1.Execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 5 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">services.AddTransient&lt;IService2, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>高階模組 <code>Program</code> 可以決定低階模組 <code>Service1</code> 相依什麼物件，只要在 <code>ServiceCollection</code> 加以定義即可。</p>
+<p>也就是高階模組不再相依於低階模組，而是高階模組可以自行定義低階模組的相依物件，符合 <code>依賴反轉原則</code>。</p>
+<blockquote>
+<p>Q : 高階模組能決定低階模組有什麼意義呢 ?</p>
+</blockquote>
+<p>一旦高階模組可以決定低階模組，就可以在程式一開始 <code>if else</code> 就決定使用那些低階模組，決定之後，程式就可以很簡單的執行，不須再 <code>if else</code> 判斷。</p>
+<p>但若高階模組無法決定低階模組，則在低階模組勢必增加很多 <code>if else</code> 判斷，判斷在什麼條件下，使用什麼低階模組，而且 <code>if else</code> 會分散在各低階模組，程式複雜度會提高很多。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Console app 無法使用 DI container，須自行安裝 <code>Microsoft.Extensions.DependencyInjection</code>，可使用 GUI 安裝，可以使用指令安裝</li>
+<li>DI 可以讓程式碼更乾淨，用起來類似 static 只要一行</li>
+<li>DI container 讓 <code>依賴注入</code> 更容易實現，也符合 <code>依賴反轉原則</code>。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/typescript/typescript-generator/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-11-29 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/NET-Core/">.NET Core<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

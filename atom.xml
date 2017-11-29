@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-21T12:47:27.101Z</updated>
+  <updated>2017-11-29T12:46:03.101Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,164 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 .NET Core 的 Console App 使用 DI ?]]></title>
+    <link href="http://oomusou.io/netcore/netcore-di/"/>
+    <id>http://oomusou.io/netcore/netcore-di/</id>
+    <published>2017-11-29T12:23:43.000Z</published>
+    <updated>2017-11-29T12:46:03.101Z</updated>
+    <content type="html"><![CDATA[<p>Visual Studio 在 ASP.NET Core Web Application 的 template 中，預設已經可使用 DI，若要在 console app 也使用 DI，需要另外設定。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Visual Studio 2017 15.4.5<br>.NET Core 2.0<br>Microsoft.Extensions.DependencyInjection 2.0.0</p>
+<h2 id="安裝_NuGet_套件">安裝 NuGet 套件</h2><hr>
+<h3 id="GUI_安裝">GUI 安裝</h3><p><img src="/images/netcore/netcore-di/di000.png" alt="di000"></p>
+<ol>
+<li>在 project 選擇 <code>Dependencies</code></li>
+<li>按滑鼠右鍵選擇 <code>Manage NuGet Packages...</code></li>
+</ol>
+<p>DI 主要是在 <code>Microsoft.Extensions.DependencyInjection</code> 套件裡，console app 預設沒有安裝，需要手動自行安裝。</p>
+<p><img src="/images/netcore/netcore-di/di001.png" alt="di001"></p>
+<ol>
+<li>選擇 <code>Browse</code></li>
+<li>輸入 <code>DependencyInjection</code></li>
+<li>選擇 <code>Microsoft.Extensions.DependencyInjection</code> 套件</li>
+<li>按 <code>Install</code> 安裝套件</li>
+</ol>
+<p><img src="/images/netcore/netcore-di/di002.png" alt="di002"></p>
+<p>安裝完成後，在 <code>Dependencies</code> 下的 <code>NuGet</code> 會看到 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<h3 id="指令安裝">指令安裝</h3><p><img src="/images/netcore/netcore-di/di003.png" alt="di003"></p>
+<p><strong><em>Tools -&gt; NuGet Package Manager -&gt; Package Manager Console</em></strong></p>
+<p>啟動 package manager console</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PM&gt; Install-Package Microsoft<span class="class">.Extensions</span><span class="class">.DependencyInjection</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/netcore/netcore-di/di004.png" alt="di004"></p>
+<p>使用 <code>Install-Package</code> 指令安裝 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<p><img src="/images/netcore/netcore-di/di002.png" alt="di002"></p>
+<p>安裝完成後，在 <code>Dependencies</code> 下的 <code>NuGet</code> 會看到 <code>Microsoft.Extensions.DependencyInjection</code> 套件。</p>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/netcore/netcore-di/di005.svg" alt="di005"></p>
+<p><code>Service1</code> 使用 delagation 手法，將 <code>Execute()</code> 轉發給 <code>Service2.SayHello()</code>，其中 <code>Service2</code> 是 <code>Service1</code> 的 dependency。</p>
+<p>傳統寫法我們會在 <code>Service1</code> 內去 <code>new</code> <code>Service2</code>，也就是高階模組 <code>Service1</code> 直接相依於低階模組 <code>Service2</code>，這就違反了 <code>依賴反轉原則</code>。</p>
+<blockquote>
+<p>依賴反轉原則 </p>
+<p>DIP : Dependency Inversion Principle</p>
+<p>高階模組不應該相依於低階模組；低階模組應該相依於高階模組所定義的抽象</p>
+<p>白話 : 原本是高層依賴於底層，現在是反過來底層依賴於高層所定義的 interface</p>
+</blockquote>
+<p>所以高階模組 <code>Program</code> 與 <code>Service1</code> 定義出  <code>IService1</code> 與 <code>IService2</code> interface，由低階模組 <code>Service1</code> 與 <code>Service2</code> 去實現，此時高階模組 <code>Program</code> 與 <code>Service1</code> 不再直接相依於 <code>Service1</code> 與 <code>Service2</code>，而是反過來相依於 <code>Program</code> 與 <code>Service1</code> 所定義的 <code>IService1</code> 與 <code>IService2</code>，符合 <code>依賴反轉原則</code>。</p>
+<p>因此我們改用 <code>依賴注入</code> 方式，由 <code>Service1</code> 的 constructor 將符合 <code>IService2</code> interface 的 <code>Service2</code> 注入進去。</p>
+<p>而 DI Container 就是負責幫我們 <code>new</code> 物件，然後由 constructor 注入。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="IService2">IService2</h3><p><img src="/images/netcore/netcore-di/di009.svg" alt="di009"></p>
+<p><strong>IService2.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title">IService2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SayHello</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Service1</code> 為 <code>Service2</code> 的高階模組，由 <code>Service1</code> 定義出 <code>IService2</code>，由 <code>Service2</code> 所依賴。</p>
+<h3 id="Service2">Service2</h3><p><img src="/images/netcore/netcore-di/di006.svg" alt="di006"></p>
+<p><strong>Service2.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Service2</span> : <span class="title">IService2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SayHello</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"Hello World"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>Service2</code> 實現 (依賴) <code>IService2</code>。</p>
+<h3 id="IService1">IService1</h3><p><img src="/images/netcore/netcore-di/di010.svg" alt="di010"></p>
+<p><strong>IService1.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title">IService1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Program</code> 為 <code>Service1</code> 的高階模組，由 <code>Program</code> 定義出 <code>IService1</code>，由 <code>Service1</code> 所依賴。</p>
+<h3 id="Service1">Service1</h3><p><img src="/images/netcore/netcore-di/di007.svg" alt="di007"></p>
+<p><strong>Service1.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Service1</span> : <span class="title">IService1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params">IService2 service2</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.service2 = service2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.service2.SayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>Service1</code> 實現 (依賴) <code>IService1</code>。</p>
+<p>第 3 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params">IService2 service2</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.service2 = service2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>傳統我們都會在 <code>Service1</code> 的 constructor 去 <code>new Service2</code>，</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IService2 service2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Service1</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.service2 = <span class="keyword">new</span> Service2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣 <code>Service1</code> 就直接耦合了 <code>Service2</code>，現在我們改用在 constructor <code>依賴注入</code> <code>IService2</code> 型別的 <code>Service2</code>。</p>
+<p>這樣做有幾個優點 :</p>
+<ul>
+<li>由原本相依於 <code>Service2</code>，改相依於 <code>IService2</code> interface，符合 <code>依賴反轉原則</code></li>
+<li>原本直接在 constructor 去 <code>new</code>，高階模組無法抽換低階模組，現在高階模組可透過 constructor 直接換掉低階模組，原來的 <code>Service1</code> 程式碼不用變動，符合 <code>開放封閉原則</code></li>
+<li>單元測試時，可直接透過 constructor 注入 mock 物件隔離測試</li>
+</ul>
+<blockquote>
+<p>OOP 心法</p>
+<p>若使用 DI 寫法，則不須再使用 <code>new</code>，讓程式碼更為乾淨，類似 static class 只要一行程式碼就可解決</p>
+</blockquote>
+<h3 id="Program">Program</h3><p><img src="/images/netcore/netcore-di/di008.svg" alt="di008"></p>
+<p><strong>Program.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">        services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">        services.AddTransient&lt;IService2, Service2&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">        IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br><span class="line">        service1.Execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Service1</code> 已經用了 <code>依賴注入</code>，讓我們可以在 constructor 注入相依的 <code>Service2</code>，傳統我們會這樣建立 <code>Service1</code> :</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> service1 = <span class="keyword">new</span> Service1(<span class="keyword">new</span> Service2());</span><br><span class="line">        service1.Execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接使用 <code>new</code>，並在其 constructor 傳進 <code>new Service2()</code>。</p>
+<p>但實務上 service 與 service 間的關係會更複雜，因此 constructor 寫法不會這麼簡單。</p>
+<p>而 DI container 就是幫我們不用在 constructor 寫複雜的 <code>new</code>。</p>
+<p>第 5 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">services.AddTransient&lt;IService2, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>要讓 DI container 幫我們 <code>new</code>，首先必須告訴 DI container :</p>
+<blockquote>
+<p>當遇到 xxx interface 時，請幫我注入 yyy class</p>
+</blockquote>
+<p>.NET 提供了 <code>ServiceCollection</code>，由它負責蒐集所有 interface 與 class 的 mapping。</p>
+<ul>
+<li><code>AddTrasient()</code> : 每次注入時，都重新 <code>new</code> 一個新的 instance</li>
+<li><code>AddScoped()</code> : 每個 request 都重新 <code>new</code> 一個新的instance</li>
+<li><code>AddSingleton()</code> : 程式啟動後會 <code>new</code> 一個 instance，之後會重複使用，也就是運行期間只有一個 instance</li>
+</ul>
+<p>泛型參數部份 :</p>
+<ul>
+<li>第一個參數為 interface</li>
+<li>第二個參數為 class</li>
+</ul>
+<p>也就是告訴 <code>ServiceCollection</code>，當 constructor 的型別為此 interface 時，請幫我 new 這個 class。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static IServiceCollection AddTransient&lt;TService, TImplementation&gt;(this IServiceCollection services) </span><br><span class="line">    where TService : class</span><br><span class="line">    where TImplementation : class, TService;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>TImplementation</code> 的 constraint 為 <code>TService</code>，也就是若你這樣寫</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">services.AddTransient&lt;IService1, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>因為 <code>Service2</code> 根本沒有實作  <code>IService1</code>，編譯會錯誤。</p>
+<blockquote>
+<p>OOP 心法</p>
+<p>在使用泛型時，一定要搭配 constraint，才會發揮泛型的威力</p>
+</blockquote>
+<p>第 9 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br></pre></td></tr></table></figure>
+<p>DI container 要靠 service provider 來建立 object，所以下一步要靠 <code>ServiceCollection.BuildServiceProvider()</code> 來產生 <code>ServiceProvider</code>。</p>
+<p>之後就可用 <code>ServiceProvider.GetService()</code> 來建立 object，而不須使用 <code>new Service1(new Service2())</code>。</p>
+<p><code>GetService()</code> 泛型參數要傳的是 interface，而不是 class，因為 constructor 宣告的是 interface 型別，不是 class 型別。</p>
+<blockquote>
+<p>Q : 使用 service provider 建立 object，與自己 <code>new</code> object，差別在哪裡 ?</p>
+</blockquote>
+<p>A : 你只須用 service provider 建立最外層的 object 即可，剩下相依物件，DI container 會幫你建立；但若你使用 <code>new</code>，怎每一層的相依物件都要自己處理。</p>
+<p>11 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service1.Execute();</span><br></pre></td></tr></table></figure>
+<p>Object 已經被 DI container 建立，就可以使用一般的方式使用 method。</p>
+<blockquote>
+<p>Q : 依賴注入與 DI container 除了讓我們不用複雜的 <code>new</code> ，還有其他優點嗎 ?</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> service1 = <span class="keyword">new</span> Service1();</span><br><span class="line">        service1.Execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在沒有使用 <code>依賴注入</code> 與 DI container 之前，<code>Program</code> 只能去 <code>new Service1()</code>，至於 <code>Service1</code> 用了哪些相依物件，<code>Program</code> 高階模組無法決定，也就是高階模組已經被低階模組綁死了，無從決定低階模組到底用了什麼相依物件。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">        services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">        services.AddTransient&lt;IService2, Service2&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> serviceProvider = services.BuildServiceProvider();</span><br><span class="line">        IService1 service1 = serviceProvider.GetService&lt;IService1&gt;();</span><br><span class="line">        service1.Execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 5 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> services = <span class="keyword">new</span> ServiceCollection();</span><br><span class="line">services.AddTransient&lt;IService1, Service1&gt;();</span><br><span class="line">services.AddTransient&lt;IService2, Service2&gt;();</span><br></pre></td></tr></table></figure>
+<p>高階模組 <code>Program</code> 可以決定低階模組 <code>Service1</code> 相依什麼物件，只要在 <code>ServiceCollection</code> 加以定義即可。</p>
+<p>也就是高階模組不再相依於低階模組，而是高階模組可以自行定義低階模組的相依物件，符合 <code>依賴反轉原則</code>。</p>
+<blockquote>
+<p>Q : 高階模組能決定低階模組有什麼意義呢 ?</p>
+</blockquote>
+<p>一旦高階模組可以決定低階模組，就可以在程式一開始 <code>if else</code> 就決定使用那些低階模組，決定之後，程式就可以很簡單的執行，不須再 <code>if else</code> 判斷。</p>
+<p>但若高階模組無法決定低階模組，則在低階模組勢必增加很多 <code>if else</code> 判斷，判斷在什麼條件下，使用什麼低階模組，而且 <code>if else</code> 會分散在各低階模組，程式複雜度會提高很多。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Console app 無法使用 DI container，須自行安裝 <code>Microsoft.Extensions.DependencyInjection</code>，可使用 GUI 安裝，可以使用指令安裝</li>
+<li>DI 可以讓程式碼更乾淨，用起來類似 static 只要一行</li>
+<li>DI container 讓 <code>依賴注入</code> 更容易實現，也符合 <code>依賴反轉原則</code>。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[在 .NET Core 簡單的使用 DI]]>
+    
+    </summary>
+    
+      <category term=".NET Core" scheme="http://oomusou.io/tags/NET-Core/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使用 TypeScript 實踐 Iterator Pattern? (使用 Generator)]]></title>
@@ -2228,109 +2386,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Angular 實作下拉選單?]]></title>
-    <link href="http://oomusou.io/angular/angular-select/"/>
-    <id>http://oomusou.io/angular/angular-select/</id>
-    <published>2017-07-02T12:23:43.000Z</published>
-    <updated>2017-07-02T07:31:20.000Z</updated>
-    <content type="html"><![CDATA[<p><strong>下拉選單</strong>為常用的使用者介面，該如何優雅地將資料綁定在元件上，並且優雅地取得使用者的選擇資料呢？</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
-<h2 id="Introudction">Introudction</h2><hr>
-<p><img src="/images/angular/angular-select/select000.png" alt="select000"></p>
-<p>將實作出一下拉選單，其顯示資料來自於資料綁定，當使用者有不同的選擇，會將其值顯示在 select 下方。</p>
-<p>將示範 3 種實作方式：</p>
-<ul>
-<li>使用 DOM event</li>
-<li>使用 Template Reference Variable</li>
-<li>使用 Two-Way Binding</li>
-</ul>
-<h2 id="使用_DOM_event_物件">使用 DOM event 物件</h2><hr>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>第 2 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>使用 <code>*ngFor</code> 這個 structure directive 重複顯示 <code>&lt;option&gt;</code>，其中 <code>clouds</code> 型別為 <code>Cloud[]</code>，每一筆資料 <code>cloud</code> 為 <code>Cloud</code> ViewModel，有 <code>name</code> 與 <code>id</code> 兩個欄位，稍後會看到 <code>Cloud</code> ViewModel 的定義。</p>
-<p>第 1 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange($event)"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>(change)</code> 為 event binding，當 change event 被觸發時，執行 <code>onChange()</code> event handler。</p>
-<p><code>$event</code> 為 event object，若 event 為原生的 DOM event，則 <code>$event</code> 為 DOM event object，擁有 <code>target</code> 與 <code>target.value</code> 等 property。</p>
-<p>將 <code>$event</code> 以參數傳進 <code>onChange()</code>。</p>
-<blockquote>
-<p>在原生 JavaScript 中，<code>event</code> 物件可直接使用，不需要前面加上 <code>$</code>，但在 Angular 的 HTML template 中，若要使用 event object，Angular 規定要從 <code>event</code> 改成 <code>$event</code>，Angular 在底層另有處理，暫時只能當語法背起來。</p>
-</blockquote>
-<p>第 5 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>顯示 select 所選擇的 value，即 <code>cloud.id</code>。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(event: Event) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clouds: Cloud[] = [</span><br><span class="line">  &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<p><code>clouds</code> 為 select 欲作 data binding 的資料，實務上此資料會透過 API 取得，在此為了簡化起見，先直接 hardcode 一個陣列。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectedId: <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
-<p>宣告 <code>selectedCloudId</code> 為 <code>number</code> 型別，雖然也可以宣告為 <code>string</code>，但因為 <code>id</code> 在 <code>cloud</code> 宣告為 <code>number</code> 型別，所以 <code>selectedId</code> 也宣告為 <code>number</code> 型別較合適。</p>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(event: Event) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectCloudId = +(&lt;HTMLSelectElement&gt;event.target).value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onChange</code> 為 select change event 的 event handler，其中 <code>event</code> 為 HTML template 傳進來的 <code>$event</code>，型別為 <code>Event</code>。</p>
-<p><code>event.target</code> 在 <code>lib.es6.d.ts</code> 定義的型別為 <code>EventTarget</code>，但我們知道其本質型別為 <code>HTMLSelectElement</code>，因此使用 type assertion  加上 <code>&lt;HTMLSelectElement&gt;</code>將 <code>event target</code> 轉型成 <code>HTMLSelectElement</code>，則 intellisense 就會有 <code>value</code> 可選，不過 <code>value</code> 的型別為 <code>string</code>，因此要再加上 <code>+</code> 將 <code>string</code> 轉成 <code>number</code>。</p>
-<p><strong>src/app/cloud.ts</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/cd6626875abb6066d515ba53840c532b52b6a651/src/app/cloud.ts" target="_blank" rel="external">cloud.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Cloud </span>&#123;</span><br><span class="line">  id: <span class="built_in">number</span>,</span><br><span class="line">  name: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>宣告 <code>Cloud</code> 的 ViewModel，<code>id</code> 為 <code>number</code>，<code>name</code> 為 <code>string</code>。</p>
-<h2 id="使用_Template_Reference_Variable">使用 Template Reference Variable</h2><hr>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>第 1 行</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>原本 <code>onChange()</code> 是傳進 <code>$event</code>，這裡改傳 <code>mySelect</code>。</p>
-<p><code>#</code> 為 template reference variable，我們可以在 HTML template 內，對任意 HTML element 加上 <code>#</code> 與變數名稱，Angular 會自動幫我們對該 element 建立物件。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/f835c3cf5881885df555486b19fc4c0a1be1c826/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectedId = +element.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onChange()</code> 改接收 template reference variable 後，因為我們確定 <code>onChange()</code> 為 select 的 event handler，所以傳進的 element 型別必為 <code>HTMLSelectElement</code>。</p>
-<p>由於 <code>element.value</code> 型別為 <code>string</code>，必須加上 <code>+</code> 轉型為 <code>number</code>。</p>
-<h2 id="使用_Two-Way_Binding">使用 Two-Way Binding</h2><hr>
-<p><strong>src/app/app.module.ts</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.module.ts" target="_blank" rel="external">app.module.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">"@angular/forms"</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  BrowserModule,</span><br><span class="line">  FormsModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-<p>要使用 two-way binding，必須在 <code>AppModule</code> 手動 import <code>FormsModule</code>。</p>
-<p><strong>src/app/app.component.html</strong><span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.html" target="_blank" rel="external">app.component.html</a></span></span></span></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"selectedId"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; selectedId &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>[(ngModel)]</code> 直接 two-way binding 到 <code>selectedId</code>，其他都可以拿掉。</p>
-<p><strong>src/app/app.component.ts</strong><span class="margin-note-marker"><sup>6</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">6</span>GitHub Commit : <a href="https://github.com/oomusou/NG4Select/blob/88e34459383692af9080b7b61c75dcc1b087d528/src/app/app.component.ts" target="_blank" rel="external">app.component.ts</a></span></span></span></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;Cloud&#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="number">0</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">1</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="number">2</span>, name: <span class="string">'Aliyun'</span>&#125;,</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  selectedId: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由於使用了 two-way binding，所有的 event handler 也可以拿掉，當 select 選擇改變時，自動會改變 <code>selectedId</code>。</p>
-<blockquote>
-<p>實務上該使用哪種寫法？</p>
-</blockquote>
-<p>雖然表面上 two-way binding 的寫法最精簡，若以<strong>物件導向</strong>與<strong>強型別</strong>觀點，template reference variable 的寫法<strong>語意較佳</strong>：</p>
-<ul>
-<li>明確將<strong>物件</strong>傳入 event handler 當中。</li>
-<li>Event handler 的參數可明確宣告物件<strong>型別</strong>加以檢查。</li>
-<li>取得物件的值較直觀，不必搭配 type assertion。</li>
-</ul>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>仍然可以在 HTML template 使用 DOM 的 event 物件，但必須加上<code>event</code> 前面加上 <code>$</code> 變成  <code>$event</code>。</li>
-<li>Template reference variable 技巧在實務上常常使用，可隨時在 HTML template 中將 HTML element 宣告成變數傳入 event handler。</li>
-<li>Two-way binding 實際上是個 syntax sugur，Angular 會展開實作 <code>(ngModelChange)</code> event handler。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG4Select" target="_blank" rel="external">GitHub</a> 上找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[介紹 3 種實務上常用的方法]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
   </entry>
   
