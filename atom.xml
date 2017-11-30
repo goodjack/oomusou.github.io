@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-11-30T05:56:03.294Z</updated>
+  <updated>2017-11-30T06:59:21.475Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/netcore/netcore-di/"/>
     <id>http://oomusou.io/netcore/netcore-di/</id>
     <published>2017-11-29T12:23:43.000Z</published>
-    <updated>2017-11-30T05:56:03.294Z</updated>
+    <updated>2017-11-30T06:59:21.475Z</updated>
     <content type="html"><![CDATA[<p>.NET Core 已經內建 DI，讓我們可以享受 DI container 實現 <code>依賴注入</code> 的方便，Visual Studio 2017 在 ASP.NET Core Web Application 的 template 中，預設已經可直接使用 DI，若要在 console app 也使用 DI，則需另外設定。<br><a id="more"></a></p>
 <h2 id="Version">Version</h2><hr>
 <p>Visual Studio 2017 15.4.5<br>.NET Core 2.0<br>Microsoft.Extensions.DependencyInjection 2.0.0</p>
@@ -50,7 +50,7 @@
 <p>依賴反轉原則 </p>
 <p>DIP : Dependency Inversion Principle</p>
 <p>高階模組不應該相依於低階模組；低階模組應該相依於高階模組所定義的抽象</p>
-<p>白話 : 原本是高層依賴於底層，現在是反過來底層依賴於高層所定義的 interface</p>
+<p>白話 : 原本是高階模組依賴於低階模組，現在是反過來低階模組依賴於高階模組所定義的 interface</p>
 </blockquote>
 <p>所以高階模組 <code>Program</code> 與 <code>Service1</code> 定義出  <code>IService1</code> 與 <code>IService2</code> interface，由低階模組 <code>Service1</code> 與 <code>Service2</code> 去實現，此時高階模組 <code>Program</code> 與 <code>Service1</code> 不再直接相依於 <code>Service1</code> 與 <code>Service2</code>，而是反過來相依於 <code>Program</code> 與 <code>Service1</code> 所定義的 <code>IService1</code> 與 <code>IService2</code>，符合 <code>依賴反轉原則</code>。</p>
 <p>因此我們改用 <code>依賴注入</code> 方式，用戶端能透過 <code>Service1</code> 的 constructor ，將 <code>Service1</code> 相依的 <code>Service2</code> 傳進去，而不是直接 <code>new</code> 死在 <code>Service1</code> 的 constructor 內。</p>

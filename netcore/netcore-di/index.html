@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="在 .NET Core 也能優雅地使用 DI">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-11-30T05:56:03.294Z">
+<meta property="og:updated_time" content="2017-11-30T06:59:21.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 .NET Core 使用 DI ?">
 <meta name="twitter:description" content="在 .NET Core 也能優雅地使用 DI">
@@ -137,7 +137,7 @@
 <p>依賴反轉原則 </p>
 <p>DIP : Dependency Inversion Principle</p>
 <p>高階模組不應該相依於低階模組；低階模組應該相依於高階模組所定義的抽象</p>
-<p>白話 : 原本是高層依賴於底層，現在是反過來底層依賴於高層所定義的 interface</p>
+<p>白話 : 原本是高階模組依賴於低階模組，現在是反過來低階模組依賴於高階模組所定義的 interface</p>
 </blockquote>
 <p>所以高階模組 <code>Program</code> 與 <code>Service1</code> 定義出  <code>IService1</code> 與 <code>IService2</code> interface，由低階模組 <code>Service1</code> 與 <code>Service2</code> 去實現，此時高階模組 <code>Program</code> 與 <code>Service1</code> 不再直接相依於 <code>Service1</code> 與 <code>Service2</code>，而是反過來相依於 <code>Program</code> 與 <code>Service1</code> 所定義的 <code>IService1</code> 與 <code>IService2</code>，符合 <code>依賴反轉原則</code>。</p>
 <p>因此我們改用 <code>依賴注入</code> 方式，用戶端能透過 <code>Service1</code> 的 constructor ，將 <code>Service1</code> 相依的 <code>Service2</code> 傳進去，而不是直接 <code>new</code> 死在 <code>Service1</code> 的 constructor 內。</p>
