@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2017-12-02T02:39:36.822Z</updated>
+  <updated>2017-12-02T03:07:05.753Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/netcore/netcore-di/"/>
     <id>http://oomusou.io/netcore/netcore-di/</id>
     <published>2017-11-29T12:23:43.000Z</published>
-    <updated>2017-12-02T02:39:36.822Z</updated>
+    <updated>2017-12-02T03:07:05.753Z</updated>
     <content type="html"><![CDATA[<p>.NET Core 已經內建 DI，讓我們可以享受 DI container 實現 <code>依賴注入</code> 的方便，Visual Studio 2017 在 ASP.NET Core Web Application 的 template 中，預設已經可直接使用 DI，若要在 console app 也使用 DI，則需另外設定。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -206,6 +206,8 @@
 </ul>
 <h2 id="Reference">Reference</h2><hr>
 <p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NETCore2MVCDI" target="_blank" rel="external">GitHub</a> 找到。</p>
 ]]></content>
     <summary type="html">
     <![CDATA[在 .NET Core 也能優雅地使用 DI]]>
