@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="在 .NET Core 也能優雅地使用 DI">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2017-12-03T02:54:58.660Z">
+<meta property="og:updated_time" content="2017-12-03T03:11:06.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 .NET Core 使用 DI ?">
 <meta name="twitter:description" content="在 .NET Core 也能優雅地使用 DI">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_DependencyInjnection_套件"><span class="toc-article-text">安裝 DependencyInjnection 套件</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#GUI_安裝"><span class="toc-article-text">GUI 安裝</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#指令安裝"><span class="toc-article-text">指令安裝</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IPaymentService"><span class="toc-article-text">IPaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PaymentService"><span class="toc-article-text">PaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IOrderService"><span class="toc-article-text">IOrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderService"><span class="toc-article-text">OrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderController"><span class="toc-article-text">OrderController</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Program"><span class="toc-article-text">Program</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_DependencyInjnection_套件"><span class="toc-article-text">安裝 DependencyInjnection 套件</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#GUI_安裝"><span class="toc-article-text">GUI 安裝</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#指令安裝"><span class="toc-article-text">指令安裝</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IPaymentService"><span class="toc-article-text">IPaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PaymentService"><span class="toc-article-text">PaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IOrderService"><span class="toc-article-text">IOrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderService"><span class="toc-article-text">OrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderController"><span class="toc-article-text">OrderController</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Program"><span class="toc-article-text">Program</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -291,10 +291,10 @@
 <li>DI 可以讓程式碼更乾淨，用起來類似 static 只要一行</li>
 <li>DI container 讓 <code>依賴注入</code> 更容易實現，尤其在用戶端可以完全掌握 <code>低階模組</code> 的相依物件，完全符合 <code>依賴反轉原則</code></li>
 </ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NETCore2MVCDI" target="_blank" rel="external">GitHub</a> 找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
 	  
 	</div>
 
@@ -303,9 +303,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+    	<li class="prev"><a href="/netcore/netcore-webapi-di/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -341,7 +341,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/NET-Core/">.NET Core<span>1</span></a></li>
+  <li><a href="/tags/NET-Core/">.NET Core<span>2</span></a></li>
     </ul>
 	</div>
 		

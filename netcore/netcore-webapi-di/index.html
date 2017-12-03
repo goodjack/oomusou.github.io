@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 .NET Core Web API 使用 DI ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="在 ASP.NET Core 也能優雅地使用 DI">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="在 ASP.NET Core 也能優雅地使用 DI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 .NET Core Web API 使用 DI ?">
+<meta property="og:url" content="http://oomusou.io/netcore/netcore-webapi-di/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="在 ASP.NET Core 也能優雅地使用 DI">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-12-03T03:20:39.933Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 .NET Core Web API 使用 DI ?">
+<meta name="twitter:description" content="在 ASP.NET Core 也能優雅地使用 DI">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 .NET Core Web API 使用 DI ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 在 ASP.NET Core 也能優雅地使用 DI			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IPaymentService"><span class="toc-article-text">IPaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PaymentService"><span class="toc-article-text">PaymentService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IOrderService"><span class="toc-article-text">IOrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderService"><span class="toc-article-text">OrderService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#OrderController"><span class="toc-article-text">OrderController</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Startup"><span class="toc-article-text">Startup</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>.NET Core 已經內建 DI，讓我們可以享受 DI container 實現 <code>依賴注入</code> 的方便，Visual Studio 2017 在 ASP.NET Core Web Application 的 template 中，預設已經可直接使用 DI，不需另外設定。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Visual Studio 2017 15.4.5<br>.NET Core 2.0<br>Microsoft.Extensions.DependencyInjection 2.0.0</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/netcore/netcore-webapi-di/di012.svg" alt="di012"></p>
+<p>一個常見的分層架構，除了 <code>OrderController</code> 外，常見我們還會依 <code>職責</code> 拆分 <code>OrderService</code> 與 <code>PaymentService</code> … 等。</p>
+<p><code>OrderController.Index()</code> 呼叫 <code>OrderService.CreateOrder()</code>，然後 <code>OrderService.CreateOrder()</code> 再去呼叫 <code>PaymentService.PayCreditCard()</code>。</p>
+<p>傳統我們會這樣寫 code :</p>
+<p><strong>OrderController.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">OrderController</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> OrderService orderService;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">OrderController</span>(<span class="params"></span>)</span><br><span class="line">  </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.orderService = <span class="keyword">new</span> OrderService();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Index</span>(<span class="params"></span>)</span><br><span class="line">  </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.orderService.CreateOrder();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>OrderService.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">OrderService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> PaymentService paymentService;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OrderService</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.paymentService = <span class="keyword">new</span> PaymentService();      </span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">CreateOrder</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.paymentService.payCreditCard();      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>PaymentService.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">PaymentService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PayCreditCard</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這是傳統 OOP 寫法，但這有幾個問題 :</p>
+<ul>
+<li><code>PaymentService</code> 直接被 <code>OrderService</code> <code>new</code> 在裡面，因此 <code>OrderController</code> 只要用了 <code>OrderService</code> 就必須得用 <code>PaymentService</code>，完全沒有改變 <code>PaymentService</code> 的空間，也就是 <code>OrderController</code> 直接耦合 <code>PaymentService</code> ，無法替換 <code>PaymentService</code></li>
+<li>無法對 <code>OrderService</code> 做單元測試，因為 <code>PaymentService</code> 直接 <code>new</code> 在 <code>OrderService</code> 內，無法對 <code>PaymentService</code> 做 mock</li>
+</ul>
+<blockquote>
+<p>這就是典型的 <code>耦合</code>，也就是 高階模組 直接相依於低階模組，然後高階模組就被低階模組綁死了，無法抽換，也無法單元測試。</p>
+</blockquote>
+<h2 id="Task">Task</h2><hr>
+<p>目前 <code>OrderController</code> 與 <code>PaymentService</code> 直接偶合在一起，也就是用戶端只要用了 <code>OrderController</code>，就一定得使用 <code>PaymentService</code>，別無選擇。</p>
+<p>現在用戶端希望使用 <code>OrderController</code> 時，還能決定 <code>OrderController</code> 的相依物件，不見的一定要 <code>PaymentService</code>，完全由用戶端決定，也就是對用戶端與 <code>PaymentService</code> 解耦合。</p>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/netcore/netcore-webapi-di/di000.svg" alt="di000"></p>
+<p><code>OrderController</code>、<code>OrderService</code> 與 <code>PaymentService</code> 已經符合 <code>依賴反轉原則</code>，也使用了 <code>依賴注入</code>，但要如何設定 <code>依賴注入容器</code> 呢 ?</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="IPaymentService">IPaymentService</h3><p><img src="/images/netcore/netcore-webapi-di/di001.svg" alt="di001"></p>
+<p><strong>IPayment.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IPaymentService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">string</span> <span class="title">PayCreditCard</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>OrderService</code> 為 <code>PaymentService</code> 的高階模組，由 <code>OrderService</code> 定義出 <code>IPaymentService</code>，由 <code>PaymentService</code> 所依賴。</p>
+<h3 id="PaymentService">PaymentService</h3><p><img src="/images/netcore/netcore-webapi-di/di002.svg" alt="di002"></p>
+<p><strong>PaymentService.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PaymentService</span> : <span class="title">IPaymentService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">PayCreditCard</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"PaymentService.PayCreditCard()"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>PaymentService</code> 實現 (依賴) <code>IPaymentService</code>。</p>
+<h3 id="IOrderService">IOrderService</h3><p><img src="/images/netcore/netcore-webapi-di/di003.svg" alt="di003"></p>
+<p><strong>IOrderService.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IOrderService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">string</span> <span class="title">CreateOrder</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>OrderController</code> 為 <code>OrderService</code> 的高階模組，由 <code>OrderController</code> 定義出 <code>IOrderService</code>，由 <code>OrderService</code> 所依賴。</p>
+<h3 id="OrderService">OrderService</h3><p><img src="/images/netcore/netcore-webapi-di/di004.svg" alt="di004"></p>
+<p><strong>OrderService.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderService</span> : <span class="title">IOrderService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> IPaymentService paymentService;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OrderService</span>(<span class="params">IPaymentService paymentService</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.paymentService = paymentService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">CreateOrder</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.paymentService.PayCreditCard();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>低階模組 <code>OrderService</code> 實現 (依賴) <code>IOrderService</code>。</p>
+<p>第 3 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IPaymentService paymentService;</span><br></pre></td></tr></table></figure>
+<p>我們宣告了 <code>IPaymentService</code> 型別的 field，注意此為抽象型別 interface，而非具體型別，所以 <code>OrderService</code> 不會直接依賴 <code>PaymentService</code>，而是依賴 <code>IPaymentService</code>，符合 <code>依賴反轉原則</code> : <code>高階模組不直接依賴低階模組，而是依賴抽象</code>。</p>
+<p>第 5 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OrderService</span>(<span class="params">IPaymentService paymentService</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.paymentService = paymentService;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>PaymentService</code> 由 constructor 的參數傳進來，而不是直接 <code>new</code> 在 constructor 內。</p>
+<p>如此 <code>OrderService</code> 的相依物件，就可透過 constructor 傳進來，從此高階模組 <code>OrderService</code> 就不再直接相依於低階模組 <code>PaymentService</code>，而是由更高階模組 <code>OrderController</code> 決定 <code>OrderService</code> 該依賴什麼物件，再由 constructor 參數傳進來，這就是 <code>依賴注入</code>。</p>
+<p>注意 constructor 參數的型別是 <code>IPaymentService</code>，而不是 <code>PaymentService</code>，如此才會符合 <code>依賴反轉原則</code> : <code>高階模組不直接依賴低階模組，而是依賴抽象</code>。</p>
+<p>我們改用 <code>依賴注入</code> 後有幾個優點 :</p>
+<ul>
+<li>由原本相依於 <code>PaymentService</code>，改相依於 <code>IPaymentService</code> interface，符合 <code>依賴反轉原則</code></li>
+<li>原本直接在 constructor 去 <code>new</code>，高階模組無法抽換低階模組，現在高階模組可透過 constructor 直接換掉低階模組，原來的 <code>OrderService</code> 程式碼不用變動，符合 <code>開放封閉原則</code></li>
+<li>單元測試時，可直接透過 constructor 注入 mock 物件隔離測試</li>
+</ul>
+<blockquote>
+<p>OOP 心法</p>
+<p>若使用 DI 寫法，則不須再使用 <code>new</code>，讓程式碼更為乾淨，類似 static class 只要一行程式碼就可解決</p>
+</blockquote>
+<p>10 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">CreateOrder</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.paymentService.PayCreditCard();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由 <code>CreateOrder()</code> 去呼叫 <code>PaymentService.PayCreditCard()</code>，其中也因為要呼叫 <code>PaymentService</code> 的 <code>PayCreditCard()</code>，根據 <code>界面隔離原則</code>，因此 <code>IPaymentService</code> 有 <code>PayCreditCard()</code>。</p>
+<h3 id="OrderController">OrderController</h3><p><img src="/images/netcore/netcore-webapi-di/di005.svg" alt="di005"></p>
+<p><strong>OrderController.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Mvc;</span><br><span class="line"><span class="keyword">using</span> NETCoreAPIDI.Services;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">NETCoreAPIDI.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">    [Route(<span class="string">"api/[controller]"</span>)]</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderController</span> : <span class="title">Controller</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> IOrderService orderService;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">OrderController</span>(<span class="params">IOrderService orderService</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// GET api/order</span></span><br><span class="line">        [HttpGet]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Get</span>(<span class="params"></span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.orderService.CreateOrder();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>13 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> IOrderService orderService;</span><br></pre></td></tr></table></figure>
+<p>我們宣告了 <code>IOrderService</code> 型別的 field，注意此為抽象型別 interface，而非具體型別，所以 <code>OrderController</code> 不會直接依賴 <code>OrderService</code>，而是依賴 <code>IOrderService</code>，符合 <code>依賴反轉原則</code> : <code>高階模組不直接依賴低階模組，而是依賴抽象</code>。</p>
+<p>15 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OrderController</span>(<span class="params">IOrderService orderService</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>OrderService</code> 由 constructor 的參數傳進來，而不是直接 <code>new</code> 在 constructor 內。</p>
+<p>如此 <code>OrderController</code> 的相依物件，就可透過 constructor 傳進來，從此高階模組 <code>OrderController</code> 就不再直接相依於低階模組 <code>OrderService</code>，而是由更高階模組決定 <code>OrderController</code> 該依賴什麼物件，再由 constructor 參數傳進來，這就是 <code>依賴注入</code>。</p>
+<p>注意 constructor 參數的型別是 <code>IOrderService</code>，而不是 <code>OrderService</code>，如此才會符合 <code>依賴反轉原則</code> : <code>高階模組不直接依賴低階模組，而是依賴抽象</code>。</p>
+<p>20 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GET api/order</span></span><br><span class="line">[HttpGet]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Get</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.orderService.CreateOrder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當 <code>GET</code> 時，執行 <code>OrderService.CreateOrder()</code>。</p>
+<h3 id="Startup">Startup</h3><p><strong>Startup.cs</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Builder;</span><br><span class="line"><span class="keyword">using</span> Microsoft.AspNetCore.Hosting;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Configuration;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.DependencyInjection;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Logging;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Extensions.Options;</span><br><span class="line"><span class="keyword">using</span> NETCoreAPIDI.Services;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">NETCoreAPIDI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Startup</span>(<span class="params">IConfiguration configuration</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            Configuration = configuration;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> IConfiguration Configuration &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This method gets called by the runtime. Use this method to add services to the container.</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            services.AddMvc();</span><br><span class="line">            services.AddTransient&lt;IOrderService, OrderService&gt;();</span><br><span class="line">            services.AddTransient&lt;IPaymentService, PaymentService&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Configure</span>(<span class="params">IApplicationBuilder app, IHostingEnvironment env</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">            &#123;</span><br><span class="line">                app.UseDeveloperExceptionPage();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            app.UseMvc();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 console app 時，若我們要使用 DI，還要自己建立 <code>ServiceCollection</code> 與 <code>ServiceProvider</code>，但在 ASP.NET Core，我們有更簡單的方法。</p>
+<p>25 行</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    services.AddMvc();</span><br><span class="line">    services.AddTransient&lt;IOrderService, OrderService&gt;();</span><br><span class="line">    services.AddTransient&lt;IPaymentService, PaymentService&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 ASP.NET Core 要設定 DI 很簡單，不用自己建立 <code>ServiceCollection</code> 與 <code>ServiceProvider</code>，只要在 <code>ConfigureServices()</code> 下使用 <code>AddTrasient()</code> 建立 interface 與 class 的 mapping 即可。</p>
+<ul>
+<li><code>AddTrasient()</code> : 每次注入時，都重新 <code>new</code> 一個新的 instance</li>
+<li><code>AddScoped()</code> : 每個 request 都重新 <code>new</code> 一個新的instance</li>
+<li><code>AddSingleton()</code> : 程式啟動後會 <code>new</code> 一個 instance，之後會重複使用，也就是運行期間只有一個 instance</li>
+</ul>
+<p>泛型參數部份 :</p>
+<ul>
+<li>若只有 class，沒有 interface，如 <code>OrderController</code> :<ul>
+<li>只須傳入第一個參數為 class</li>
+</ul>
+</li>
+<li>若有 interface 與對應 class<ul>
+<li>第一個參數為 interface</li>
+<li>第二個參數為 class</li>
+</ul>
+</li>
+</ul>
+<p>也就是告訴 <code>ServiceCollection</code>，當 constructor 的型別為此 interface 時，請幫我 new 這個 class。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static IServiceCollection AddTransient&lt;TService, TImplementation&gt;(this IServiceCollection services)</span><br><span class="line">        where TService : class</span><br><span class="line">        where TImplementation : class, TService;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>TImplementation</code> 的 constraint 為 <code>TService</code>，也就是若你這樣寫</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">services.AddTransient&lt;IPaymentService, OrderService&gt;();</span><br></pre></td></tr></table></figure>
+<p>因為 <code>OrderService</code> 根本沒有實作  <code>IPaymentService</code>，編譯會錯誤。</p>
+<blockquote>
+<p>OOP 心法</p>
+<p>在使用泛型時，一定要搭配 constraint，才會發揮泛型的威力</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>ASP.NET Core 已經將 DI container 準備好，可直接使用</li>
+<li>DI 可以讓程式碼更乾淨，用起來類似 static 只要一行</li>
+<li>DI container 讓 <code>依賴注入</code> 更容易實現，尤其在用戶端可以完全掌握 <code>低階模組</code> 的相依物件，完全符合 <code>依賴反轉原則</code></li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NETCoreAPIDI" target="_blank" rel="external">GitHub</a> 找到。</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://blog.johnwu.cc/" target="_blank" rel="external">John Wu</a>, <a href="https://blog.johnwu.cc/article/asp-net-core-dependency-injection.html" target="_blank" rel="external">ASP.NET Core 教學 - Dependency Injection</a><br><a href="https://www.microsoft.com/en-us/" target="_blank" rel="external">Microsoft</a>, <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="external">Introduction to Dependency Injection in ASP.NET Core</a><br><a href="https://joonasw.net/" target="_blank" rel="external">Joonas W</a>, <a href="https://joonasw.net/view/aspnet-core-di-deep-dive" target="_blank" rel="external">ASP.NET Core Dependency Injection Deep Dive</a><br><a href="http://asp.net-hacker.rocks/" target="_blank" rel="external">ASP.NET Hacker</a>, <a href="http://asp.net-hacker.rocks/2017/02/08/using-dependency-injection-in-dotnet-core-console-apps.html" target="_blank" rel="external">Using Dependency Injection in .NET Core Console Apps</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/netcore/netcore-di/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-12-02 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/NET-Core/">.NET Core<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
