@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-07T11:31:50.252Z</updated>
+  <updated>2018-01-07T11:40:26.205Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[使用 Observable Data Service 作為 Component 間共用變數]]></title>
+    <title><![CDATA[使用 Observable Data Service 儲存 Component 間共用變數]]></title>
     <link href="http://oomusou.io/angular/observable-data-service-counter/"/>
     <id>http://oomusou.io/angular/observable-data-service-counter/</id>
     <published>2018-01-07T12:23:43.000Z</published>
-    <updated>2018-01-07T11:31:50.252Z</updated>
+    <updated>2018-01-07T11:40:26.205Z</updated>
     <content type="html"><![CDATA[<p>Component 間共用的資料有兩類，一類是來自 API 的資料，將來還會寫回 server，另一類是 component 間自己的狀態資料，不必寫回 server；事實上這種不必寫回 server 的共用資料，也可以使用 Observable Data Service 實作。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
