@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在執行階段對 Angular 除錯? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="不用擔心 TypeScript 編譯後會很難除錯">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="不用擔心 TypeScript 編譯後會很難除錯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在執行階段對 Angular 除錯?">
+<meta property="og:url" content="http://oomusou.io/angular/runtime-debug/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="不用擔心 TypeScript 編譯後會很難除錯">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-07-05T01:32:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在執行階段對 Angular 除錯?">
+<meta name="twitter:description" content="不用擔心 TypeScript 編譯後會很難除錯">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在執行階段對 Angular 除錯?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 不用擔心 TypeScript 編譯後會很難除錯			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Runtime_Error"><span class="toc-article-text">Runtime Error</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#關於_undefined"><span class="toc-article-text">關於 undefined</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>由於 TypeScript 是編譯語言，很多人擔心該如何 debug Angular，尤其是 TypeScript 編譯沒錯，但在瀏覽器執行卻錯了，但因為 TypeScript 已經編譯成 JavaScript，我該怎麼知道錯在 TypeScript 哪一行呢？</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.1.2<br>Angular 4.2.3</p>
+<h2 id="Runtime_Error">Runtime Error</h2><hr>
+<p><strong>src/app/app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.title = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.title.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'app'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>title</code> 設為 <code>undefined</code> 後，再取得 <code>title.length</code> 當然會錯誤，不過 TypeScript 在編譯階段不會報錯。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug000.png" alt="debug000"></p>
+<p>若 Angular 執行階段錯誤，在 Chrome 的 Developer Tools 的 Console 會出現錯誤訊息。</p>
+<p>Chrome 明確顯示 <code>Cannot read property &#39;length&#39; of undefined</code>，因為 <code>title</code> 為 <code>undefined</code>。</p>
+<p>重要的是，Chrome 明確告訴我們錯在 <code>app.component.ts</code>，是 TypeScript 而不是 JavaScript。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug001.png" alt="debug001"></p>
+<p>點 <code>app.component.ts</code> 後，會進入 TypeScript 程式碼錯的那一行，因此不用擔心是編譯過的 JavaScript 而無從 debug。</p>
+<blockquote>
+<p>不是已經編譯成 JavaScript 了嗎？為什麼 Chrome 知道錯在 TypeScript 哪一行？</p>
+</blockquote>
+<p><img src="/images/angular/angular-runtime-debug/debug005.png" alt="debug005"></p>
+<p>事實上在 <code>ng serve</code> 編譯時，還同時產生了各 <code>js</code> 對應的 <code>js.map</code>，Chrome 就是靠這些 <code>map</code> 檔得知錯誤的 JavaScript 對應到 TypeScript 哪一行。</p>
+<blockquote>
+<p>可是我不希望正式上線主機也包含這些 <code>map</code> 檔怎麼辦？</p>
+</blockquote>
+<p><img src="/images/angular/angular-runtime-debug/debug006.png" alt="debug006"></p>
+<p>下 <code>ng build —-prod</code> ，則編譯後將不包含 <code>map</code> 檔，且 <code>js</code> size 也小很多，可安心放在正式上線主機上。</p>
+<h2 id="關於_undefined">關於 undefined</h2><hr>
+<p>關於 undefined 問題，其實 TypeScript 另有解法，只要啟動 StrictNullCheck，就可由 TypeScript 編譯器幫我們擋掉這個錯誤。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug002.png" alt="debug002"></p>
+<p>在 <code>tsconfig.json</code> 加上  <code>strictNullChecks: true</code>，強迫 TypeScript 檢查 <code>null</code> 與 <code>undefined</code> 的型別檢查。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug003.png" alt="debug003"></p>
+<p>Language service 會提出警告，不可將 <code>undefined</code> 指定給 <code>string</code> 型別。</p>
+<p><img src="/images/angular/angular-runtime-debug/debug004.png" alt="debug004"></p>
+<p>TypeScript 實際編譯也是會報錯。</p>
+<blockquote>
+<p>啟動 StrictNullCheck 後，TypeScript 會將 <code>null</code> 與 <code>undefined</code> 視為一種型別，因此不可將 <code>null</code> 與 <code>undefined</code> 指定給 <code>string</code> 型別。</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>其實我一開始也很擔心 TypeScript 經過編譯後，會很難 debug，但所幸有 <code>map</code> 檔配套方案，讓 Chrome 能從 JavaScript 對應到 TypeScript，直接將錯誤顯示在 TypeScript 的正確行數。</li>
+<li>實務上 Angular 的除錯，第一步是看 TypeScript 是否編譯錯誤，第二部是用 Chrome Developer Tools 看是否有執行上的錯誤，然後對應到相對應的 TypeScript 檔案。</li>
+<li>Angular 為 Chrome 提供非常清楚的 TypeScript 錯誤訊息，不用擔心編譯過的 JavaScript 看不懂而無從 debug。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/webstorm/webstorm-wallaby/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/webstorm/webstorm-whitespace/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>27</span></a></li> <li><a href="/tags/TypeScript/">TypeScript<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
