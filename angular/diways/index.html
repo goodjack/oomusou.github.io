@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 Angular 由 Interface 注入 Object ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="3 種方式都屬 Angular 官方作法">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="3 種方式都屬 Angular 官方作法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Angular 由 Interface 注入 Object ?">
+<meta property="og:url" content="http://oomusou.io/angular/diways/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="3 種方式都屬 Angular 官方作法">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-09T15:35:42.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 Angular 由 Interface 注入 Object ?">
+<meta name="twitter:description" content="3 種方式都屬 Angular 官方作法">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 Angular 由 Interface 注入 Object ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 3 種方式都屬 Angular 官方作法			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#String_Token"><span class="toc-article-text">String Token</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Injection_Token"><span class="toc-article-text">Injection Token</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Abstract_Class"><span class="toc-article-text">Abstract Class</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>根據 <code>依賴反轉原則</code> ，component 與 service，或 service 與 service 的相依，引僅限於 interface，而不該直接相依於另一個 service。但真正在 Angular 使用 interface 解耦合後，又會發現因為 JavaScript 天生沒有 interface，因此 TypeScript 與 Angular DI 必須在實務上妥協，本文整理出 3 種 Angular 官方認可 interface 注入 Object 方式。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.1.2</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/diways/di001.png" alt="di001"></p>
+<ul>
+<li><code>counter</code> 初始值為 <code>2</code></li>
+<li>按 <code>+</code> 則 <code>counter</code> + 1，按 <code>-</code> 則 <code>counter</code> -1</li>
+</ul>
+<h2 id="Task">Task</h2><hr>
+<p><img src="/images/angular/diways/di002.png" alt="di002"></p>
+<ul>
+<li>將 <code>+</code> 與 <code>-</code> 放在 <code>CounterComponent</code></li>
+<li><code>counter</code> 顯示仍在 <code>AppComponent</code></li>
+</ul>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/angular/diways/di000.svg" alt="di000"></p>
+<ul>
+<li><code>CounterComponent</code> 負責 <code>+</code> 與 <code>-</code> 的 button；而 <code>CounterService</code> 負責計算 <code>counter</code> 與保存共用的 counter，為一 <code>BehaviorSubject</code></li>
+<li>根據 <code>依賴反轉原則</code>，<code>CounterComponent</code> 不應該直接相依於 <code>CounterService</code>，而是兩者相依於 interface</li>
+<li>根據 <code>介面隔離原則</code>，<code>ConterComponent</code> 只相依於它所需要的 interface，因此以 <code>CounterComponent</code> 的角度訂出 <code>ChangeCounterInterface</code>，且 <code>CounterSerive</code> 必須實踐此 interface</li>
+<li>因為 <code>CounterComponent</code> 與 <code>CounterService</code> 都相依於 <code>ChangeCounterInterface</code>，兩者都只知道 <code>ChangeCounterInterface</code> 而已，而不知道彼此，因此 <code>CounterComponent</code> 與 <code>CounterService</code> 徹底解耦合</li>
+<li>透過 DI container 將實作 <code>ChangeCounterInterface</code> 的 <code>CounterService</code> 注入進 <code>CounterComponent</code></li>
+</ul>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><strong>change-counter.interface.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> ChangeCounterInterface </span>&#123;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">  setInitialCount(initialValue: <span class="built_in">number</span>);</span><br><span class="line">  addOne(): <span class="built_in">void</span>;</span><br><span class="line">  minusOne(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code>，我們訂出了 <code>ChangeCounterInterface</code>。</p>
+<p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>AppModule</code> 需定義 interface 與 class 的對應關係。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
+<p>當使用 <code>ChangeCounterInterface</code> 時，請 DI container 幫我們注入 <code>CounterService</code>。</p>
+<p>其中 <code>provide</code> 為 token，DI container 會以此 token 為識別。</p>
+<p><img src="/images/angular/diways/di003.png" alt="di003"></p>
+<p>以一般使用 DI 的經驗，如此的設定完全合乎邏輯，但 Language Service 已經提出警告。</p>
+<ol>
+<li>開啟 <code>app.module.ts</code></li>
+<li><code>provide</code> 使用的是 <code>ChangeCounterInterface</code></li>
+<li>Language Service 已經提出警告，表示 <code>ChangeCounterInterface</code> 是個 value，而不是 type 型別</li>
+</ol>
+<p><code>interface</code> 在 TypeScript 的認知與傳統強型別語言不同，因為 JavaScript 沒有 interface，因此 TypeScript 的 interface 只拿來當 <code>編譯檢查</code> 用，不算是一個 type，而 <code>provide</code> 要求的是一個 type，如 class，interface 在此只當成 value 看待。</p>
+<blockquote>
+<p>我們無法在 Angular DI 直接使用 interface 當 token，觀念上仍是 interface，但作法上必須有所妥協</p>
+</blockquote>
+<h3 id="String_Token">String Token</h3><p>Angular DI 雖然不允許我們用 interface 當 token，卻允許我們使用 string 當 token。</p>
+<p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: <span class="string">'ChangeCounterInterface'</span>, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: <span class="string">'ChangeCounterInterface'</span>, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>provide</code> 的 token 改成 <code>ChangeCounterInterface</code> 字串。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  initialCount = <span class="number">2</span>;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(@Inject('ChangeCounterInterface') private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(@Inject('ChangeCounterInterface') private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原本的 <code>private counterService: ChangeCounterInterface</code> 前面加上 <code>@Inject()</code> decorator，並傳入剛剛定義的 <code>ChangeCounterInterface</code> 字串。</p>
+<p>原本 DI container 是以 constructor 參數的型別作為 DI 注入的依歸，但若加上 <code>@Inject()</code> decorator 後，會接管所有的 DI 型別，也就是改用 <code>@Inject()</code> 的參數作為 token。</p>
+<p>剛剛在 <code>AppModule</code> 定義 <code>ChangeCounterInterface</code> string token，其對應的 class 為 <code>CounterService</code>，因此在 <code>CounterComponent</code> 會將 <code>CounterService</code> 注入。</p>
+<p><strong>優點</strong></p>
+<ol>
+<li>仍然可使用 <code>interface</code></li>
+</ol>
+<p><strong>缺點</strong></p>
+<ol>
+<li>String token 可能重複，尤其若跟 Angular 或 3rd Party 使用相同 string token 時，將會後蓋前</li>
+<li>在 constructor 內必須加上 <code>@Inject()</code> decorator，程式碼比較冗長</li>
+</ol>
+<h3 id="Injection_Token">Injection Token</h3><p><code>change-counter.interface.ts</code> 仍然保持不變，也就是仍然使用 interface。</p>
+<p><strong>injection-token.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; InjectionToken &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'./change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CounterInterfaceToken = <span class="keyword">new</span> InjectionToken&lt;CounterInterface&gt;(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
+<p>第 4 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CounterInterfaceToken = <span class="keyword">new</span> InjectionToken&lt;CounterInterface&gt;(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
+<p>有鑑於 string token 可能重複，因此 Angular 4 提出 <code>InjectToken</code>，簡單的說，就是由 <code>string</code> 換成 <code>InjectionToken</code> 物件，由於每次 <code>new</code> 的物件都不會重複，因此儘管 token 名稱相同，但實質上仍然是不同的物件。</p>
+<p><code>InjectionToken</code> 可帶泛型，也就是我們原本的 interface，初始值可帶一字串當 description，傳入空字串即可。</p>
+<p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterfaceToken &#125; from <span class="string">'./interface/interface-token'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: CounterInterfaceToken, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: CounterInterfaceToken, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
+<p><code>provide</code> 由 string token 改成剛剛所建立的 <code>InjectionToken</code>。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterfaceToken &#125; from <span class="string">'../../interface/interface-token'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCount;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(@Inject(CounterInterfaceToken) private counterService: CounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.setInitialCount(<span class="keyword">this</span>.initialCount);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onIncrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onDecrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(@Inject(CounterInterfaceToken) private counterService: CounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一樣使用 <code>@Inject()</code> decorator，只是帶入改換成 <code>CounterInterfaceToken</code>，不再是字串，而是個 <code>InjectionToken</code> 物件。</p>
+<p><strong>優點</strong></p>
+<ol>
+<li>仍然可使用 <code>interface</code></li>
+<li>每個 <code>InjectionToken</code> 都獨一無二，不再會有後蓋前的問題</li>
+</ol>
+<p><strong>缺點</strong></p>
+<ol>
+<li>在 constructor 內必須加上 <code>@Inject()</code> decorator，程式碼比較冗長</li>
+</ol>
+<h3 id="Abstract_Class">Abstract Class</h3><p><strong>change-counter.interface.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> CounterInterface &#123;</span><br><span class="line">  abstract counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">  abstract setInitialCount(initialValue: <span class="built_in">number</span>);</span><br><span class="line">  abstract addOne(): <span class="built_in">void</span>;</span><br><span class="line">  abstract minusOne(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將原本的 interface 寫法，全部改用 abstract class 寫法。</p>
+<p>Interface 與 abstract class，在 OOP 的觀念上，皆屬於 <code>抽象</code>，兩者地位幾乎一樣；但在 TypeScript，interface 僅用於 <code>編譯檢查</code> 用，並不會實際編譯成 JavaScript，而 <code>abstract class</code> 卻會編譯成對應的 JavaScript。</p>
+<p>另外在 TypeScript，class 也可以被 <code>implement</code> ，稱為 <code>class interface</code>，這也是 TypeScript 與傳統 OOP 語言不同之處，因此我們可以借用 <code>abstract class</code> 當成 interface 被 service 拿去 <code>implement</code>。</p>
+<blockquote>
+<p>可自行到 TypeScript Playground 實際貼上 interface 與 abstract class 寫法，就會發現兩者的 JavaScript 是不一樣的</p>
+</blockquote>
+<p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: CounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: CounterInterface, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
+<p>因為改用 <code>abstract class</code> 後，此時已是個 type，可光明正大在 <code>provide</code> 當 token 使用。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCount;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: CounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.setInitialCount(<span class="keyword">this</span>.initialCount);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onIncrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onDecrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: CounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不必使用 <code>@Inject()</code> decorator，DI container 會自動使用參數的型別作為 DI 注入的依據，這也於其他 OOP 語言的經驗一樣。</p>
+<p><strong>優點</strong></p>
+<ol>
+<li>不必使用 <code>InjectionToken</code></li>
+<li>不必使用 <code>@Inject()</code> decorator，用法與一般 OOP 寫法一樣</li>
+</ol>
+<p><strong>缺點</strong></p>
+<ol>
+<li>必須由 <code>interface</code> 改用 <code>abstract class</code></li>
+<li><code>abstract class</code> 可以被 <code>implement</code>，與一般 OOP 的觀念不一樣</li>
+</ol>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>3 種寫法都在 Angular 官網出現過，都屬官方寫法</li>
+<li>基於程式碼的精簡，個人偏好第三種寫法，也就是將 <code>interface</code> 改成 <code>abstract class</code>，而不必使用 string token 或 <code>InjectionToken</code></li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在 <a href="https://github.com/oomusou/NG51InputOutputDecorator" target="_blank" rel="external">GitHub</a>上找到</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/observable-data-service-counter/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-09 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>28</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
