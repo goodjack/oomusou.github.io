@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="以最基本的方式建立 Route">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-12T08:50:02.976Z">
+<meta property="og:updated_time" content="2018-01-12T08:57:50.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 Angular CLI 建立 Route ?">
 <meta name="twitter:description" content="以最基本的方式建立 Route">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立專案時一併建立_Route"><span class="toc-article-text">建立專案時一併建立 Route</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立專案後事後加上_Route"><span class="toc-article-text">建立專案後事後加上 Route</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#將_app-module-ts_暫時改名"><span class="toc-article-text">將 app.module.ts 暫時改名</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#重新建立有_Route_的_AppModule"><span class="toc-article-text">重新建立有 Route 的 AppModule</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#刪除_app-module-ts"><span class="toc-article-text">刪除 app.module.ts</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#將_app-module-ts-bak_改為_app-module-ts"><span class="toc-article-text">將 app.module.ts.bak 改為 app.module.ts</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#修改_AppModule"><span class="toc-article-text">修改 AppModule</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#修改_AppRoutingModule"><span class="toc-article-text">修改 AppRoutingModule</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立專案時一併建立_Route"><span class="toc-article-text">建立專案時一併建立 Route</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立專案後事後加上_Route"><span class="toc-article-text">建立專案後事後加上 Route</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#將_app-module-ts_暫時改名"><span class="toc-article-text">將 app.module.ts 暫時改名</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#重新建立有_Route_的_AppModule"><span class="toc-article-text">重新建立有 Route 的 AppModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#刪除_app-module-ts"><span class="toc-article-text">刪除 app.module.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#將_app-module-ts-bak_改為_app-module-ts"><span class="toc-article-text">將 app.module.ts.bak 改為 app.module.ts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#修改_AppModule"><span class="toc-article-text">修改 AppModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#修改_AppRoutingModule"><span class="toc-article-text">修改 AppRoutingModule</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -141,14 +141,14 @@
 <blockquote>
 <p>Angular CLI 並沒有提供單獨建立 route 的指令，只能在建立 module 時，順便加上 <code>--routing</code> 參數建立 route</p>
 </blockquote>
-<h4 id="將_app-module-ts_暫時改名">將 app.module.ts 暫時改名</h4><p><img src="/images/angular/route101/route002.png" alt="route002"></p>
+<h3 id="將_app-module-ts_暫時改名">將 app.module.ts 暫時改名</h3><p><img src="/images/angular/route101/route002.png" alt="route002"></p>
 <ol>
 <li>將 <code>app.module.ts</code> 暫時改名為 <code>app.module.ts.bak</code></li>
 </ol>
 <blockquote>
 <p>因為我們即將重建 <code>app.module.ts</code>，所以先將目前的 <code>app.module.ts</code> 改名避開</p>
 </blockquote>
-<h4 id="重新建立有_Route_的_AppModule">重新建立有 Route 的 AppModule</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
+<h3 id="重新建立有_Route_的_AppModule">重新建立有 Route 的 AppModule</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
 <p><code>m</code> : module 的縮寫</p>
 <p><code>--flat</code> : 不要將 <code>AppRouting</code> 建立在目前目錄下，而是建立在 <code>src/app</code> 目錄下</p>
 <p><code>--routing</code> : 一併建立 <code>AppRoutingModule</code></p>
@@ -158,23 +158,23 @@
 <li>Angular CLI 會替我們建立 <code>app.module.ts</code> 與 <code>app-routing.module.ts</code> 兩個檔案</li>
 <li>在 <code>AppModule</code> 中，會自動幫我們 <code>import</code> <code>AppRoutingModule</code></li>
 </ol>
-<h4 id="刪除_app-module-ts">刪除 app.module.ts</h4><p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
+<h3 id="刪除_app-module-ts">刪除 app.module.ts</h3><p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
 <blockquote>
 <p>因為我們目的是要 Angular CLI 幫我們建立 <code>app-routing.module.ts</code>，<code>app.module.ts</code> 沒有利用價值需刪除</p>
 </blockquote>
-<h4 id="將_app-module-ts-bak_改為_app-module-ts">將 app.module.ts.bak 改為 app.module.ts</h4><p><img src="/images/angular/route101/route004.png" alt="route004"></p>
+<h3 id="將_app-module-ts-bak_改為_app-module-ts">將 app.module.ts.bak 改為 app.module.ts</h3><p><img src="/images/angular/route101/route004.png" alt="route004"></p>
 <ol>
 <li>將 <code>app.module.ts</code> 刪除，再將 <code>app.module.ts.bak</code> 重新命名為 <code>app.module.ts</code></li>
 </ol>
 <blockquote>
 <p><code>app.module.ts.bak</code> 才是我們原本的 <code>app.module.ts</code></p>
 </blockquote>
-<h4 id="修改_AppModule">修改 AppModule</h4><p><img src="/images/angular/route101/route005.png" alt="route005"></p>
+<h3 id="修改_AppModule">修改 AppModule</h3><p><img src="/images/angular/route101/route005.png" alt="route005"></p>
 <ol>
 <li>選擇 <code>app.module.ts</code></li>
 <li>在 <code>imports</code> 加上剛剛建立的 <code>AppRoutingModule</code></li>
 </ol>
-<h4 id="修改_AppRoutingModule">修改 AppRoutingModule</h4><p><img src="/images/angular/route101/route006.png" alt="route006"></p>
+<h3 id="修改_AppRoutingModule">修改 AppRoutingModule</h3><p><img src="/images/angular/route101/route006.png" alt="route006"></p>
 <ol>
 <li>選擇 <code>app-routing.module.ts</code></li>
 <li>將 <code>forChild()</code> 改成 <code>forRoot()</code><blockquote>

@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-12T08:50:02.976Z</updated>
+  <updated>2018-01-12T08:57:50.993Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/route101/"/>
     <id>http://oomusou.io/angular/route101/</id>
     <published>2018-01-12T12:23:43.000Z</published>
-    <updated>2018-01-12T08:50:02.976Z</updated>
+    <updated>2018-01-12T08:57:50.993Z</updated>
     <content type="html"><![CDATA[<p>傳統以後端為主的 MVC 寫法，route 會寫在後端；前後端分離的 SPA 寫法，前後端 有各自的 route，前端的 route 負責切換 component，而後端的 route 則負責 API。</p>
 <p>Angular CLI 無法單獨建立 route，而是將 route 視為 module，透過建立 module 來建立 route。</p>
 <a id="more"></a>
@@ -54,14 +54,14 @@
 <blockquote>
 <p>Angular CLI 並沒有提供單獨建立 route 的指令，只能在建立 module 時，順便加上 <code>--routing</code> 參數建立 route</p>
 </blockquote>
-<h4 id="將_app-module-ts_暫時改名">將 app.module.ts 暫時改名</h4><p><img src="/images/angular/route101/route002.png" alt="route002"></p>
+<h3 id="將_app-module-ts_暫時改名">將 app.module.ts 暫時改名</h3><p><img src="/images/angular/route101/route002.png" alt="route002"></p>
 <ol>
 <li>將 <code>app.module.ts</code> 暫時改名為 <code>app.module.ts.bak</code></li>
 </ol>
 <blockquote>
 <p>因為我們即將重建 <code>app.module.ts</code>，所以先將目前的 <code>app.module.ts</code> 改名避開</p>
 </blockquote>
-<h4 id="重新建立有_Route_的_AppModule">重新建立有 Route 的 AppModule</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
+<h3 id="重新建立有_Route_的_AppModule">重新建立有 Route 的 AppModule</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
 <p><code>m</code> : module 的縮寫</p>
 <p><code>--flat</code> : 不要將 <code>AppRouting</code> 建立在目前目錄下，而是建立在 <code>src/app</code> 目錄下</p>
 <p><code>--routing</code> : 一併建立 <code>AppRoutingModule</code></p>
@@ -71,23 +71,23 @@
 <li>Angular CLI 會替我們建立 <code>app.module.ts</code> 與 <code>app-routing.module.ts</code> 兩個檔案</li>
 <li>在 <code>AppModule</code> 中，會自動幫我們 <code>import</code> <code>AppRoutingModule</code></li>
 </ol>
-<h4 id="刪除_app-module-ts">刪除 app.module.ts</h4><p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
+<h3 id="刪除_app-module-ts">刪除 app.module.ts</h3><p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
 <blockquote>
 <p>因為我們目的是要 Angular CLI 幫我們建立 <code>app-routing.module.ts</code>，<code>app.module.ts</code> 沒有利用價值需刪除</p>
 </blockquote>
-<h4 id="將_app-module-ts-bak_改為_app-module-ts">將 app.module.ts.bak 改為 app.module.ts</h4><p><img src="/images/angular/route101/route004.png" alt="route004"></p>
+<h3 id="將_app-module-ts-bak_改為_app-module-ts">將 app.module.ts.bak 改為 app.module.ts</h3><p><img src="/images/angular/route101/route004.png" alt="route004"></p>
 <ol>
 <li>將 <code>app.module.ts</code> 刪除，再將 <code>app.module.ts.bak</code> 重新命名為 <code>app.module.ts</code></li>
 </ol>
 <blockquote>
 <p><code>app.module.ts.bak</code> 才是我們原本的 <code>app.module.ts</code></p>
 </blockquote>
-<h4 id="修改_AppModule">修改 AppModule</h4><p><img src="/images/angular/route101/route005.png" alt="route005"></p>
+<h3 id="修改_AppModule">修改 AppModule</h3><p><img src="/images/angular/route101/route005.png" alt="route005"></p>
 <ol>
 <li>選擇 <code>app.module.ts</code></li>
 <li>在 <code>imports</code> 加上剛剛建立的 <code>AppRoutingModule</code></li>
 </ol>
-<h4 id="修改_AppRoutingModule">修改 AppRoutingModule</h4><p><img src="/images/angular/route101/route006.png" alt="route006"></p>
+<h3 id="修改_AppRoutingModule">修改 AppRoutingModule</h3><p><img src="/images/angular/route101/route006.png" alt="route006"></p>
 <ol>
 <li>選擇 <code>app-routing.module.ts</code></li>
 <li>將 <code>forChild()</code> 改成 <code>forRoot()</code><blockquote>
