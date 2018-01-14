@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="Observable Data Service 也能用來儲存不寫回 server 的資料">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-08T14:17:48.415Z">
+<meta property="og:updated_time" content="2018-01-14T07:16:30.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Observable Data Service 儲存 Component 間共用變數">
 <meta name="twitter:description" content="Observable Data Service 也能用來儲存不寫回 server 的資料">
@@ -188,7 +188,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCounterInterface &#125; from <span class="string">'../../interface/show-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BehaviorSubject &#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface &#123;</span><br><span class="line">  <span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.store$;</span><br><span class="line"></span><br><span class="line">  addOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第 8 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code>，因此 <code>CounterService</code> 必須概括城市實現這些 interface。</p>
+<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code>，因此 <code>CounterService</code> 必須概括承受實現這些 interface。</p>
 <p>第 9 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p>本文關鍵在此，使用 <code>BehaviorSubject</code> 當作 <code>CounterService</code> 內部的資料庫，儲存共用的 <code>counter</code>。</p>
@@ -300,7 +300,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>29</span></a></li> <li><a href="/tags/RxJS/">RxJS<span>3</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>30</span></a></li> <li><a href="/tags/RxJS/">RxJS<span>3</span></a></li>
     </ul>
 	</div>
 		

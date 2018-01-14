@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-12T08:57:50.993Z</updated>
+  <updated>2018-01-14T08:07:13.471Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,218 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 Component 間交換資料 ?]]></title>
+    <link href="http://oomusou.io/angular/component-interaction/"/>
+    <id>http://oomusou.io/angular/component-interaction/</id>
+    <published>2018-01-14T12:23:43.000Z</published>
+    <updated>2018-01-14T08:07:13.471Z</updated>
+    <content type="html"><![CDATA[<p>若只有一個 component，就沒有交換資料的問題，反正資料都在 class 的 field；但一旦切成多 component 之後，parent component 與 child component 要怎麼交換資料就成為不可避免的課題，本文介紹 3 種方法。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/component-interaction/counter000.png" alt="counter000"></p>
+<ul>
+<li><code>counter</code> 初始值為 <code>3</code></li>
+<li>按 <code>+</code> 則 <code>counter</code> + 1，按 <code>-</code> 則 <code>counter</code> -1</li>
+</ul>
+<h2 id="Task">Task</h2><hr>
+<p>有以下面 3 種實作方式</p>
+<ul>
+<li><code>@Input()</code> + <code>@Output()</code> decorator</li>
+<li><code>@ViewChild()</code> decorator</li>
+<li>Observable Data Service</li>
+</ul>
+<h2 id="@Input()_&amp;_@Output()_Decorator">@Input() &amp; @Output() Decorator</h2><hr>
+<h3 id="Architecture">Architecture</h3><p><img src="/images/angular/component-interaction/counter001.svg" alt="counter001"></p>
+<ul>
+<li><code>AppComponent</code> 負責顯示 <code>counter</code>；<code>CounterComponent</code> 負責處理 <code>&lt;button/&gt;</code></li>
+<li><code>AppComponent</code> 相當於 parent component，<code>CounterComponent</code> 相當於 child component</li>
+<li><code>AppComponent</code> 須向 <code>CounterComponent</code> 傳入 counter 初始值；<code>CounterComponent</code> 須向 <code>AppComponent</code> 傳出最新 counter 結果</li>
+</ul>
+<h3 id="Implementation">Implementation</h3><h4 id="AppComponent">AppComponent</h4><p><img src="/images/angular/component-interaction/counter008.svg" alt="counter008"></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">app-counter</span> (<span class="attribute">counterChange</span>)=<span class="value">"onCounterChange($event)"</span> [<span class="attribute">initialCounter</span>]=<span class="value">"initialCounter"</span>&gt;</span><span class="tag">&lt;/<span class="title">app-counter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; counter &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AppComponent</code> 透過 <code>InitialCounter</code> 將 <code>counter</code> 的初始值傳進 <code>CounterComponent</code>，另外由 <code>onCounterChange()</code> 接受 <code>CounterComponent</code> 傳出的 <code>counterChange</code> event。</p>
+<p>由 <code>AppComponent</code> 顯示實際的 <code>counter</code>。</p>
+<blockquote>
+<p><code>onCounterChange($event)</code> 的參數一定要用 <code>$event</code>，Angular 底層另有處理</p>
+</blockquote>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  initialCounter = <span class="number">3</span>;</span><br><span class="line">  counter: <span class="built_in">number</span> = <span class="keyword">this</span>.initialCounter;</span><br><span class="line"></span><br><span class="line">  onCounterChange(counter: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter = counter;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter: <span class="built_in">number</span> = <span class="keyword">this</span>.initialCounter;</span><br></pre></td></tr></table></figure>
+<p><code>counter</code> 的初始值，除了顯示外，也傳進 <code>CounterComponent</code>。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onCounterChange(counter: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.counter = counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由 <code>onCounterChange()</code> 接受 <code>counterChange</code> event，雖然傳進的是 <code>$event</code>，但在 method 內可使用自己容易閱讀的參數。</p>
+<h4 id="CounterComponent">CounterComponent</h4><p><img src="/images/angular/component-interaction/counter009.svg" alt="counter009"></p>
+<p><strong>counter.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAdd1Click()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onMinus1Click()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 2 個 <code>&lt;button/&gt;</code> 封裝在 <code>CounterComponent</code> 內。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, EventEmitter, Input, OnInit, Output &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCounter;</span><br><span class="line">  @Output() counterChange: EventEmitter&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> EventEmitter&lt;<span class="built_in">number</span>&gt;();</span><br><span class="line">  <span class="keyword">private</span> counter: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter = <span class="keyword">this</span>.initialCounter;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onAdd1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter++;</span><br><span class="line">    <span class="keyword">this</span>.counterChange.emit(<span class="keyword">this</span>.counter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMinus1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter--;</span><br><span class="line">    <span class="keyword">this</span>.counterChange.emit(<span class="keyword">this</span>.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Input() initialCounter;</span><br></pre></td></tr></table></figure>
+<p>將 field 加上 <code>@Input()</code> decorator 後，parent component 就可以透過 <code>@Input()</code> 將資料傳進 child component。</p>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Output() counterChange: EventEmitter&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> EventEmitter&lt;<span class="built_in">number</span>&gt;();</span><br></pre></td></tr></table></figure>
+<p>將 field 加上 <code>@Output()</code> decorator 後，child component 就可透過 event 方式將資料傳到 parent component。</p>
+<p><code>EventEmitter</code> 可接受泛型，將要傳出的資料型別以泛型表示。</p>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.counter = <span class="keyword">this</span>.initialCounter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>凡透過 <code>@Input()</code> 傳進的資料，必須在 <code>ngOnInit()</code> lifecycle hook 才可抓到資料。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">onAdd1Click() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counter++;</span><br><span class="line">  <span class="keyword">this</span>.counterChange.emit(<span class="keyword">this</span>.counter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>onAdd1Click()</code> 接受 DOM 原生的 <code>click</code> event。</p>
+<p>透過 <code>EventEmitter.emit()</code> 將資料由 child component 傳到上層的 parent component。</p>
+<h3 id="Summary">Summary</h3><p><img src="/images/angular/component-interaction/counter005.svg" alt="counter005"></p>
+<ul>
+<li>當 parent component 要將資料傳給 child component 時，使用 <code>@Input()</code> decorator</li>
+<li>當 child component 要將資料傳給 parent component 時，使用 <code>@Output()</code> decorator</li>
+</ul>
+<h2 id="@ViewChild()_Decorator">@ViewChild() Decorator</h2><hr>
+<h3 id="Architecture-1">Architecture</h3><p>同樣是 <code>AppComponent</code> 與 <code>CounterComponent</code>，但這次是反過來，將 <code>counter</code> 包進 <code>CounterComponent</code>，卻將 <code>&lt;button/&gt;</code> 留在 <code>AppComponent</code>。</p>
+<p><img src="/images/angular/component-interaction/counter002.svg" alt="counter002"></p>
+<ul>
+<li><code>AppComponent</code> 負責處理 <code>&lt;button/&gt;</code>；<code>CounterComponent</code> 負責顯示 <code>counter</code></li>
+<li><code>AppComponent</code> 相當於 parent component，<code>CounterComponent</code> 相當於 child component</li>
+<li><code>AppComponent</code> 直接呼叫 <code>CounterComponent</code> 的 method 改變 <code>counter</code>；<code>AppComponent</code> 也可直接讀取 <code>CounterComponent</code> 的 property</li>
+</ul>
+<h3 id="Implementation-1">Implementation</h3><h4 id="AppComponent-1">AppComponent</h4><p><img src="/images/angular/component-interaction/counter010.svg" alt="counter010"></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAdd1Click()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onMinus1Click()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-counter</span> [<span class="attribute">initialCounter</span>]=<span class="value">"initialCounter"</span>&gt;</span><span class="tag">&lt;/<span class="title">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 2 個 <code>&lt;button/&gt;</code> 留在 <code>AppComponent</code> 內。</p>
+<p><code>AppComponent</code> 透過 <code>InitialCounter</code> 將 <code>counter</code> 的初始值傳進 <code>CounterComponent</code>，實際的 <code>counter</code> 值將由 <code>CounterComponent</code> 顯示。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AfterViewInit, Component, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  @ViewChild(CounterComponent) counterComponent: CounterComponent;</span><br><span class="line">  initialCounter = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onAdd1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.add1();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMinus1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.minus1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(CounterComponent) counterComponent: CounterComponent;</span><br></pre></td></tr></table></figure>
+<p>Angular 允許我們在 parent component 透過 <code>@ViewChild()</code> decorator 宣告 child component，藉此存取 child component 的 public field 與 method。</p>
+<p><code>@ViewChild()</code> 第一個參數傳入 child component 的型別。</p>
+<p>第 9 行</p>
+ <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public field，則必須在 <code>ngAfterViewInit()</code> lifecycle hook 才可抓的到，不可以在 <code>ngOnInit()</code>。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onAdd1Click() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterComponent.add1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public method，則無此限制。</p>
+<h4 id="CounterComponent-1">CounterComponent</h4><p><img src="/images/angular/component-interaction/counter011.svg" alt="counter011"></p>
+<p><strong>counter.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; counter &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>負責顯示 <code>counter</code>。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCounter;</span><br><span class="line">  counter: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter = <span class="keyword">this</span>.initialCounter;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  add1() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minus1() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Input() initialCounter;</span><br></pre></td></tr></table></figure>
+<p>將 field 加上 <code>@Input()</code> decorator 後，parent component 就可以透過 <code>@Input()</code> 將資料傳進 child component。</p>
+<h3 id="Summary-1">Summary</h3><p><img src="/images/angular/component-interaction/counter006.svg" alt="counter006"></p>
+<ul>
+<li>當 parent component 要存取 child component 時，使用 <code>@ViewChild()</code> 宣告 child decorator，public field 可在 <code>ngAfterViewInit()</code> 存取，public method 則無此限制</li>
+</ul>
+<h2 id="Observable_Data_Service">Observable Data Service</h2><hr>
+<p>一樣維持 <code>AppComponent</code> 包含 <code>&lt;button/&gt;</code>，而 <code>CounterComponent</code> 顯示 <code>counter</code>，但這次將 <code>counter</code> 獨立放在 <code>CounterService</code> 內。</p>
+<h3 id="Architecture-2">Architecture</h3><p><img src="/images/angular/component-interaction/counter003.svg" alt="counter003"></p>
+<ul>
+<li><code>AppComponent</code> 負責處理 <code>&lt;button/&gt;</code>；<code>CounterComponent</code> 負責顯示 <code>counter</code></li>
+<li><code>AppComponent</code> 相當於 parent component，<code>CounterComponent</code> 相當於 child component</li>
+<li>將 <code>counter</code> 變數改放在 <code>CounterService</code> 的 <code>BehaviorSubject</code>，再以 <code>Observable</code> 型態給其他 component 訂閱<br><img src="/images/angular/component-interaction/counter004.svg" alt="counter004"></li>
+</ul>
+<ul>
+<li>根據 <code>依賴反轉原則</code>，component 不直接相依於 <code>CounterService</code>，而是兩者相依於 interface</li>
+<li>根據 <code>介面隔離原則</code>，component 只相依於它所需要的 interface，因此 <code>AppComponent</code> 訂出 <code>InitialCounterInterface</code>，而 <code>CounterComponent</code> 訂出 <code>ChangeCounterInterface</code>， <code>CounterService</code> 必須實踐此 2 個 interface</li>
+<li><code>AppComponent</code> 、 <code>CounterComponent</code> 與 <code>CounterService</code> 都只相依於 <code>InitialCounterInterface</code> 與 <code>ChangeCounterInterface</code>，如此 component 與 service 將徹底解耦合</li>
+<li><code>CounterComponent</code> 只負責訂閱 <code>CounterService</code>；當資料改變時，<code>CounterService</code> 會自動更新 <code>CounterComponent</code></li>
+</ul>
+<h3 id="Implementation-2">Implementation</h3><h4 id="AppComponent-2">AppComponent</h4><p><img src="/images/angular/component-interaction/counter012.svg" alt="counter012"></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAdd1Click()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onMinus1Click()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-counter</span> [<span class="attribute">initialCounter</span>]=<span class="value">"initialCounter"</span>&gt;</span><span class="tag">&lt;/<span class="title">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 2 個 <code>&lt;button/&gt;</code> 留在 <code>AppComponent</code> 內。</p>
+<p><code>AppComponent</code> 透過 <code>InitialCounter</code> 將 <code>counter</code> 的初始值傳進 <code>CounterComponent</code>，實際的 <code>counter</code> 值將由 <code>CounterComponent</code> 顯示</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  initialCounter = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onAdd1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.add1();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMinus1Click() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minus1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onAdd1Click() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterService.add1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>CounterService</code> 提供的 <code>add1()</code> 將 <code>counter</code> + 1。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>onAdd1Click()</code> 與 <code>onMinus1Click()</code> 都使用了 <code>CounterService</code>，因此需要 DI 注入 <code>CounterService</code>。</p>
+<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>CounterService</code>，而應該相依於根據 <code>ApppComponent</code> 需求所定義出的 <code>ChangeCounterInterface</code>。</p>
+<p><strong>change.counter.interface</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> ChangeCounterInterface &#123;</span><br><span class="line">  abstract add1(): <span class="built_in">void</span>;</span><br><span class="line">  abstract minus1(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據 <code>介面隔離原則</code>，因為 <code>AppComponent</code> 只使用了 <code>add1()</code> 與 <code>minus1()</code>，因此 <code>ChangeCounterInterface</code> 也應該只有 <code>add1()</code> 與 <code>minus1()</code>。</p>
+<h4 id="CounterComponent-2">CounterComponent</h4><p><img src="/images/angular/component-interaction/counter013.svg" alt="counter013"></p>
+<p><strong>counter.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; counter$ | async &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>只負責顯示 <code>counter$</code> 的 component。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; InitialCounterInterface &#125; from <span class="string">'../../interface/initial-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCounter;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: InitialCounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.setInitialCounter(<span class="keyword">this</span>.initialCounter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br></pre></td></tr></table></figure>
+<p><code>counter$</code> 為 <code>Observable</code>，直接使用 <code>CounterService.counter$</code> property。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterService.setInitialCounter(<span class="keyword">this</span>.initialCounter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由 <code>CounterService.setInitialCounter()</code> 設定 <code>counter</code> 的初始值。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: InitialCounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>ngOnInit()</code> 使用了 <code>CounterService</code>，因此需要 DI 注入 <code>CounterService</code>。</p>
+<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>CounterService</code>，而應該相依於根據 <code>CounterComponent</code> 需求所定義出的 <code>InitialCounterInterface</code>。</p>
+<p><strong>initial-counter.interface.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> InitialCounterInterface &#123;</span><br><span class="line">  abstract counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">  abstract setInitialCounter(initialCounter: <span class="built_in">any</span>): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據 <code>介面隔離原則</code>，因為 <code>CounterComponent</code> 只使用了 <code>counter$</code> 與 <code>setInitialCounter()</code>，因此 <code>ShowCounterInterface</code> 也應該只有 <code>counter$</code> 與 <code>setInitialCounter()</code>。</p>
+<h4 id="CounterService">CounterService</h4><p><img src="/images/angular/component-interaction/counter014.svg" alt="counter014"></p>
+<p><strong>counter.service.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BehaviorSubject &#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; InitialCounterInterface &#125; from <span class="string">'../interface/initial-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'../interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> InitialCounterInterface, ChangeCounterInterface &#123;</span><br><span class="line">  <span class="keyword">private</span> counterStore$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterStore$;</span><br><span class="line"></span><br><span class="line">  setInitialCounter(initialCounter: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterStore$.next(initialCounter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  add1() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterStore$.next(<span class="keyword">this</span>.counterStore$.getValue() + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minus1() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterStore$.next(<span class="keyword">this</span>.counterStore$.getValue() - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> InitialCounterInterface, ChangeCounterInterface</span><br></pre></td></tr></table></figure>
+<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>InitialCounterInterface</code> 與 <code>ChangeCounterInterface</code>，因此 <code>CounterService</code> 必須概括承受實現這些 interface。</p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> counterStore$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 <code>BehaviorSubject</code> 當作 <code>CounterService</code> 內部的資料庫，儲存共用的 <code>counter</code>。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setInitialCounter(initialCounter: <span class="built_in">number</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterStore$.next(initialCounter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>BehaviorSubject.next()</code> 儲存 <code>counter</code> 的初始值。</p>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add1() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterStore$.next(<span class="keyword">this</span>.counterStore$.getValue() + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>this.counterStore$.getValue()</code> 獲得目前 <code>counterStore$</code> 最新一筆資料，也就是目前的 counter 值，然後 <code>+1</code>。</p>
+<p>最後使用 <code>this.counterStore$.next()</code> 將最新的 counter 寫入 <code>BehaviorSubject</code>。</p>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterStore$;</span><br></pre></td></tr></table></figure>
+<p>已經都自己維護一份 <code>BehaviorSubject</code> 的 <code>counterStore$</code>，我們希望當 <code>BehaviorSubject</code> 使用 <code>next()</code> 改變資料時，能通知所有 <code>subscribe()</code> 的 component 都能自動更新，這也是我們使用 Observable Data Service 的初衷。</p>
+<p>既然 <code>BehaviorSubject</code> 繼承於 <code>Observable</code>，理論上我們也可直接將 <code>store$</code> 設定為 <code>public</code>，直接被 component <code>subscribe()</code>，但因為 <code>BehaviorSubject</code> 提供 <code>next()</code>，因此也可能被 component 誤用 <code>next()</code> 而新增資料，因此我們改用真的 <code>Observable</code> 給 component 訂閱，確保 <code>store$</code> 不會被 component 新增資料。</p>
+<p>由於 <code>store$</code> 也是一種 <code>Observable</code>，根據 <code>里式替換原則</code>，父類別可被子類別取代，因此不需要特別傳型。</p>
+<h4 id="AppModule">AppModule</h4><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; InitialCounterInterface &#125; from <span class="string">'./interface/initial-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: InitialCounterInterface, useExisting: CounterService&#125;,</span><br><span class="line">    &#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由於我們 component 與 service 都是基於 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code> 所設計，因此必須藉由 DI container 幫我們將相對應的 service 注入。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CounterService,</span><br><span class="line">&#123;provide: InitialCounterInterface, useExisting: CounterService&#125;,</span><br><span class="line">&#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
+<p>一般我們使用普通 service 時，都是每個 component 注入新的 service，但使用 Observable Data Service 時不可如此，因為我們就是希望各 component 共用一份資料，只要在 provider 使用 <code>useExisting</code>，Angular DI container 就會以 Singleton 方式建立 service，各 component 才能共用同一份 <code>counterStore$</code> 。</p>
+<h3 id="Summary-2">Summary</h3><p><img src="/images/angular/component-interaction/counter007.svg" alt="counter007"></p>
+<ul>
+<li>當 component 之間有 parent / child 架構時，尚有 <code>@Input()</code>、<code>@Output()</code>、<code>@ViewChild()</code> 等方法可用；但當 component 之間為 sibling 架構時，就只剩下 Observable Data Service 可用</li>
+<li>Parent / child 架構算 sibling 架構的特例，當然也可以使用 Observable Data Service</li>
+<li>當 sibling component 越多，越適合 Observable Data Service</li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>@Input()</code> &amp; <code>@Output()</code> : component 之間的資料是靠傳遞的，透過 <code>@Input()</code> 傳入，透過 <code>@Output()</code> 傳出；若 child component 的改變必須及時通知 parent component，則適合 <code>@Output()</code> </li>
+<li><code>@ViewChild()</code> : 由 parent component 直接存取 child component 的資料；若 child component 不會改變，則適合 <code>@ViewChild()</code></li>
+<li><code>Observable Data Service</code> : 將 component 相關的資料獨立成 service，DI 注入到 component，透過 RxJS，只要訂閱 component，將來資料若異動會自動更新；若 component 之間的互動與資料關係複雜，則適合 Observable Data Service</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52ComponentInteraction" target="_blank" rel="external">GitHub</a>上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io/" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/component-interaction" target="_blank" rel="external">Component Interaction</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[3 種 component 交換資料的方法]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使用 Angular CLI 建立 Route ?]]></title>
@@ -263,7 +475,7 @@
     <link href="http://oomusou.io/angular/observable-data-service-counter/"/>
     <id>http://oomusou.io/angular/observable-data-service-counter/</id>
     <published>2018-01-07T12:23:43.000Z</published>
-    <updated>2018-01-08T14:17:48.415Z</updated>
+    <updated>2018-01-14T07:16:30.403Z</updated>
     <content type="html"><![CDATA[<p>Component 間共用的資料有兩類，一類是來自 API 的資料，將來還會寫回 server，另一類是 component 間自己的狀態資料，不必寫回 server；事實上這種不必寫回 server 的共用資料，也可以使用 Observable Data Service 實作。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -345,7 +557,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCounterInterface &#125; from <span class="string">'../../interface/show-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BehaviorSubject &#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface &#123;</span><br><span class="line">  <span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.store$;</span><br><span class="line"></span><br><span class="line">  addOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第 8 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code>，因此 <code>CounterService</code> 必須概括城市實現這些 interface。</p>
+<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code>，因此 <code>CounterService</code> 必須概括承受實現這些 interface。</p>
 <p>第 9 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p>本文關鍵在此，使用 <code>BehaviorSubject</code> 當作 <code>CounterService</code> 內部的資料庫，儲存共用的 <code>counter</code>。</p>
@@ -2829,102 +3041,6 @@
       <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
     
       <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 WebStorm 自訂 Jasmine Live Template?]]></title>
-    <link href="http://oomusou.io/webstorm/webStorm-jasmine-template/"/>
-    <id>http://oomusou.io/webstorm/webStorm-jasmine-template/</id>
-    <published>2017-07-23T12:23:43.000Z</published>
-    <updated>2017-07-23T13:30:55.000Z</updated>
-    <content type="html"><![CDATA[<p>WebStorm 雖然提供自動產生 Jasmine Suite、Spec… 等功能，不過預設使用 ES5 的 anonymous function，當然可以自己重構成 arrow function，若能一開始就 arrow function 就更方便了。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.2</p>
-<h2 id="Symptons">Symptons</h2><hr>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine000.png" alt="jasmine000"></p>
-<p>WebStorm 內建提供了 4 個 Jasmine template，可使用熱鍵自動產生 Jasmine Suite、Jasmine Spec、Jasmine beforeEach 與 Jasmine afterEach。</p>
-<blockquote>
-<p>Windows：Alt + Insert</p>
-<p>macOS：⌘ + N</p>
-</blockquote>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine001.png" alt="jasmine001"></p>
-<p>以 Jasmine Suite 為例，WebStorm 提供的 template 有 2 個缺點：</p>
-<ol>
-<li><strong>suite name 使用單引號</strong>：但因為 suite 用來描述需求，因此可能再次使用單引號強調測試案例，若在單引號內使用雙引號，又變得不是很直接，因此希望 suite name 改用 backtick 寫法</li>
-<li><strong>使用 anonymous function</strong>：在 TypeScript 與 ES6 都習慣使用 arrow function 取代 anonymous function，語法較簡潔</li>
-</ol>
-<p>Jasmine Spec 也有相同的問題。</p>
-<p>此外對於常用的 <code>expect()</code>，WebStorm 也沒提供 template。</p>
-<h2 id="Recipes">Recipes</h2><hr>
-<p>我們將手動建立 3 個常用的 Jasmine live template，加速 ATDD 開發速度。</p>
-<h3 id="新增_Suite_Template">新增 Suite Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">describe(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine002.png" alt="jasmine002"></p>
-<p>將我們想要的 suite template 先打好，選起來反白。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine003.png" alt="jasmine003"></p>
-<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine004.png" alt="jasmine004"></p>
-<ol>
-<li><strong>輸入 <code>des</code> 縮寫</strong>：將來只要輸入 <code>des</code>，並按下 <code>tab</code>，就會展開 suite template</li>
-<li><strong>輸入 description</strong>：對 <code>des</code> 加上 <code>Generate Jasmine Suite</code> 描述</li>
-<li><strong><code>user</code> 顯示 <code>des</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
-<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
-<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
-</ol>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine005.png" alt="jasmine005"></p>
-<p>輸入 <code>des</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Suite</code> 描述。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine006.png" alt="jasmine006"></p>
-<p>輸入 <code>des</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 suite name 之處。</p>
-<h3 id="新增_Spec_Template">新增 Spec Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">it(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine007.png" alt="jasmine007"></p>
-<p>將我們想要的 spec template 先打好，選起來反白。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine008.png" alt="jasmine008"></p>
-<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine009.png" alt="jasmine009"></p>
-<ol>
-<li><strong>輸入 <code>it</code> 縮寫</strong>：將來只要輸入 <code>it</code>，並按下 <code>tab</code>，就會展開 spec template</li>
-<li><strong>輸入 description</strong>：對 <code>it</code> 加上 <code>Generate Jasmine Spec</code> 描述</li>
-<li><strong><code>user</code> 顯示 <code>it</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
-<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
-<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
-</ol>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine010.png" alt="jasmine010"></p>
-<p>輸入 <code>it</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Spec</code> 描述。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine011.png" alt="jasmine011"></p>
-<p>輸入 <code>it</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 spec name 之處。</p>
-<h3 id="新增_Expect_Template">新增 Expect Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect().toBe();</span><br></pre></td></tr></table></figure>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine012.png" alt="jasmine012"></p>
-<p> 將我們想要的 expect template 先打好，選起來反白。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine013.png" alt="jasmine013"></p>
-<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine014.png" alt="jasmine014"></p>
-<ol>
-<li><strong>輸入 <code>exp</code> 縮寫</strong>：將來只要輸入 <code>exp</code>，並按下 <code>tab</code>，就會展開 expect template</li>
-<li><strong>輸入 description</strong>：對 <code>exp</code> 加上 <code>Generate Jasmine Expect</code> 描述</li>
-<li><strong><code>user</code> 顯示 <code>exp</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
-<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
-<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
-</ol>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine015.png" alt="jasmine015"></p>
-<p>輸入 <code>exp</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Expect</code> 描述。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine016.png" alt="jasmine016"></p>
-<p>輸入 <code>exp</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 <code>expect()</code> 之內。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li><code>Save as Live Template</code> 是 JetBrains IntelliJ 平台都有的功能，在 PhpStorm、WebStorm 與 Rider 都可使用，可自行將常用的 code snippet 存下來，增加開發效率。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[自訂 Jasmine Live Template 加速 ATDD 開發]]>
-    
-    </summary>
-    
-      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
-    
-      <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
