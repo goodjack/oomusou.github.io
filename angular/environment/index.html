@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何設定 Angular 環境變數 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 Angualr CLI 內建的機制使用環境變數">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 Angualr CLI 內建的機制使用環境變數">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何設定 Angular 環境變數 ?">
+<meta property="og:url" content="http://oomusou.io/angular/environment/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 Angualr CLI 內建的機制使用環境變數">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-15T13:49:32.749Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何設定 Angular 環境變數 ?">
+<meta name="twitter:description" content="使用 Angualr CLI 內建的機制使用環境變數">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何設定 Angular 環境變數 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 Angualr CLI 內建的機制使用環境變數			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Angular_CLI_預設_Environments"><span class="toc-article-text">Angular CLI 預設 Environments</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#新增_Lab_與_Stage_環境設定"><span class="toc-article-text">新增 Lab 與 Stage 環境設定</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Lab_環境"><span class="toc-article-text">Lab 環境</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Stage_環境"><span class="toc-article-text">Stage 環境</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#修改_-angular-cli-json"><span class="toc-article-text">修改 .angular-cli.json</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用環境變數"><span class="toc-article-text">使用環境變數</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#切換環境變數"><span class="toc-article-text">切換環境變數</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#以_Angular_CLI_執行"><span class="toc-article-text">以 Angular CLI 執行</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_dev_執行"><span class="toc-article-text">使用 dev 執行</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_lab_執行"><span class="toc-article-text">使用 lab 執行</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_stg_執行"><span class="toc-article-text">使用 stg 執行</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_prod_執行"><span class="toc-article-text">使用 prod 執行</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#以實際_Web_Server_執行"><span class="toc-article-text">以實際 Web Server 執行</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_http-server"><span class="toc-article-text">安裝 http-server</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_stg_編譯"><span class="toc-article-text">使用 stg 編譯</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_prod_編譯"><span class="toc-article-text">使用 prod 編譯</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>實務上會有不同 Angular 執行環境，如開發用的 <code>dev</code> 環境，測試用的 <code>lab</code> 與 <code>stg</code> 環境，正式上線用的 <code>prod</code> 環境，不同的環境會有不同的 <code>環境變數</code>，如 API server 、S3 server 的設定 … 等，Angular CLI 提供了很方便的機制處理環境變數問題，讓我們切換不同環境時，完全不用改 code，只要在 Angular CLI 編譯時使用不同的參數切換即可。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="Angular_CLI_預設_Environments">Angular CLI 預設 Environments</h2><hr>
+<p>一個乾淨的 Angular 專案，已經提供了預設的 environment 設定。</p>
+<p><img src="/images/angular/environment/env001.png" alt="env001"></p>
+<ol>
+<li>選擇專案根目錄的 <code>.angular-cli.json</code></li>
+<li>在 <code>environments</code> property 下，已經有 <code>dev</code> 與 <code>prod</code> 兩個設定，分別對應到 <code>environments</code> 目錄下的 <code>environment.ts</code> 與  <code>environment.prod.ts</code></li>
+</ol>
+<p><img src="/images/angular/environment/env000.png" alt="env000"></p>
+<ol>
+<li><p><code>environment.prod.ts</code> 為 <code>prod</code> 環境所使用的設定檔；而 <code>environment.ts</code> 為 <code>dev</code> 環境所使用的設定檔</p>
+</li>
+<li><p>以 <code>environment.prod.ts</code> 為例，設定了 <code>production: true</code>；而 <code>environment.ts</code> 則設定了 <code>production: false</code></p>
+</li>
+</ol>
+<blockquote>
+<p>Q : <code>production</code> property 設定為 <code>true</code> 或 <code>false</code> 有什麼影響 ?</p>
+</blockquote>
+<ul>
+<li><strong>production: true</strong>  : JavaScript 與 CSS 都會壓縮，且不提供 source  map，因此最後的 JavaScript 與 CSS 會較小，適合 <code>stg</code> 與 <code>prod</code> 環境使用，但不利於 debug</li>
+<li><strong>production: false</strong> : JavaScript 與 CSS 不會壓縮，會提供 source map，因此最後的 JavaScript 與 CSS 會較大，適合 <code>dev</code> 與 <code>lab</code> 環境使用，方便 debug</li>
+</ul>
+<h2 id="新增_Lab_與_Stage_環境設定">新增 Lab 與 Stage 環境設定</h2><hr>
+<p>Angular CLI 預設只提供了 <code>dev</code> 與 <code>prod</code> 兩個環境變數，但實務上最少還有 <code>lab</code> 與 <code>stage</code> 兩個環境，這必須手動建立。</p>
+<h3 id="Lab_環境">Lab 環境</h3><p><img src="/images/angular/environment/env002.png" alt="env002"></p>
+<ol>
+<li>在 <code>src/app/environments</code> 目錄下新增 <code>environment.lab.ts</code></li>
+<li>將 <code>environment.ts</code> 內容複製到 <code>environment.lab.ts</code></li>
+</ol>
+<blockquote>
+<p>目前 Angular CLI 尚未提供指令建立 environment，必須手動建立，Angular CLI 的 naming convention 是 <code>environment.</code> + <code>環境名稱</code> + <code>.ts</code></p>
+</blockquote>
+<p><strong>environment.lab.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">expot <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  production: <span class="literal">false</span>,</span><br><span class="line">  envName: <span class="string">'lab'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>production: false</strong> : <code>lab</code> 環境不提供 JavaScript 壓縮與最佳化，方便 debug</li>
+<li><strong>envName: <code>lab</code></strong> : 可自行設定自己的變數</li>
+</ul>
+<h3 id="Stage_環境">Stage 環境</h3><p><img src="/images/angular/environment/env003.png" alt="env003"></p>
+<ol>
+<li>在 <code>src/app/environments</code> 目錄下新增 <code>environment.stg.ts</code></li>
+<li>將 <code>environment.prod.ts</code> 內容複製到 <code>environment.stg.ts</code></li>
+</ol>
+<p><strong>environment.stg.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  production: <span class="literal">true</span>,</span><br><span class="line">  envName: <span class="string">'stg'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>production: true</strong> : <code>stg</code> 環境提供 JavaScript 壓縮與最佳化，與 <code>prod</code> 環境相同</li>
+<li><strong>envName: <code>stg</code></strong> : 可自行設定自己的變數</li>
+</ul>
+<blockquote>
+<p>為了測試方便，請在 <code>environment.ts</code> 加上 <code>envName: &#39;dev&#39;</code>，<code>environment.prod.ts</code> 加上 <code>envName: &#39;prod&#39;</code></p>
+</blockquote>
+<h3 id="修改_-angular-cli-json">修改 .angular-cli.json</h3><p><img src="/images/angular/environment/env004.png" alt="env004"></p>
+<ol>
+<li>選擇專案根目錄的 <code>.angular-cli.jsonv</code></li>
+<li>新增 <code>lab</code> 與 <code>stg</code> 設定</li>
+</ol>
+<p><strong>.angular-cli.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">$schema</span>": <span class="value"><span class="string">"./node_modules/@angular/cli/lib/config/schema.json"</span></span>,</span><br><span class="line">  "<span class="attribute">project</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">name</span>": <span class="value"><span class="string">"ng52-environment"</span></span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">apps</span>": <span class="value">[</span><br><span class="line">    &#123;</span><br><span class="line">      "<span class="attribute">root</span>": <span class="value"><span class="string">"src"</span></span>,</span><br><span class="line">      "<span class="attribute">outDir</span>": <span class="value"><span class="string">"dist"</span></span>,</span><br><span class="line">      "<span class="attribute">assets</span>": <span class="value">[</span><br><span class="line">        <span class="string">"assets"</span>,</span><br><span class="line">        <span class="string">"favicon.ico"</span></span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">index</span>": <span class="value"><span class="string">"index.html"</span></span>,</span><br><span class="line">      "<span class="attribute">main</span>": <span class="value"><span class="string">"main.ts"</span></span>,</span><br><span class="line">      "<span class="attribute">polyfills</span>": <span class="value"><span class="string">"polyfills.ts"</span></span>,</span><br><span class="line">      "<span class="attribute">test</span>": <span class="value"><span class="string">"test.ts"</span></span>,</span><br><span class="line">      "<span class="attribute">tsconfig</span>": <span class="value"><span class="string">"tsconfig.app.json"</span></span>,</span><br><span class="line">      "<span class="attribute">testTsconfig</span>": <span class="value"><span class="string">"tsconfig.spec.json"</span></span>,</span><br><span class="line">      "<span class="attribute">prefix</span>": <span class="value"><span class="string">"app"</span></span>,</span><br><span class="line">      "<span class="attribute">styles</span>": <span class="value">[</span><br><span class="line">        <span class="string">"styles.css"</span></span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">scripts</span>": <span class="value">[]</span>,</span><br><span class="line">      "<span class="attribute">environmentSource</span>": <span class="value"><span class="string">"environments/environment.ts"</span></span>,</span><br><span class="line">      "<span class="attribute">environments</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">dev</span>": <span class="value"><span class="string">"environments/environment.ts"</span></span>,</span><br><span class="line">        "<span class="attribute">lab</span>": <span class="value"><span class="string">"environments/environment.lab.ts"</span></span>,</span><br><span class="line">        "<span class="attribute">stg</span>": <span class="value"><span class="string">"environments/environment.stg.ts"</span></span>,</span><br><span class="line">        "<span class="attribute">prod</span>": <span class="value"><span class="string">"environments/environment.prod.ts"</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">  ]</span>,</span><br><span class="line">  "<span class="attribute">e2e</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">protractor</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">config</span>": <span class="value"><span class="string">"./protractor.conf.js"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">lint</span>": <span class="value">[</span><br><span class="line">    &#123;</span><br><span class="line">      "<span class="attribute">project</span>": <span class="value"><span class="string">"src/tsconfig.app.json"</span></span>,</span><br><span class="line">      "<span class="attribute">exclude</span>": <span class="value"><span class="string">"**/node_modules/**"</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      "<span class="attribute">project</span>": <span class="value"><span class="string">"src/tsconfig.spec.json"</span></span>,</span><br><span class="line">      "<span class="attribute">exclude</span>": <span class="value"><span class="string">"**/node_modules/**"</span></span><br><span class="line">    </span>&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      "<span class="attribute">project</span>": <span class="value"><span class="string">"e2e/tsconfig.e2e.json"</span></span>,</span><br><span class="line">      "<span class="attribute">exclude</span>": <span class="value"><span class="string">"**/node_modules/**"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  ]</span>,</span><br><span class="line">  "<span class="attribute">test</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">karma</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">config</span>": <span class="value"><span class="string">"./karma.conf.js"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">defaults</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">styleExt</span>": <span class="value"><span class="string">"css"</span></span>,</span><br><span class="line">    "<span class="attribute">component</span>": <span class="value">&#123;&#125;</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>26 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"environments": &#123;</span><br><span class="line">  "dev": "environments/environment.ts",</span><br><span class="line">  "lab": "environments/environment.lab.ts",</span><br><span class="line">  "stg": "environments/environment.stg.ts",</span><br><span class="line">  "prod": "environments/environment.prod.ts"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增 <code>lab</code> 與 <code>stg</code>，與其對應的 <code>environments/environment.lab.ts</code> 與 <code>environments/environment.stg.ts</code>。</p>
+<h2 id="使用環境變數">使用環境變數</h2><hr>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--The content below is only a placeholder and can be replaced.--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">style</span>=<span class="value">"text-align:center"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">h1</span>&gt;</span></span><br><span class="line">    Welcome to &#123;&#123; title &#125;&#125;!</span><br><span class="line">  <span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">h1</span>&gt;</span></span><br><span class="line">    &#123;&#123; environmentName &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">width</span>=<span class="value">"300"</span> <span class="attribute">alt</span>=<span class="value">"Angular Logo"</span></span><br><span class="line">       <span class="attribute">src</span>=<span class="value">"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">h2</span>&gt;</span>Here are some links to help you start: <span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">target</span>=<span class="value">"_blank"</span> <span class="attribute">rel</span>=<span class="value">"noopener"</span> <span class="attribute">href</span>=<span class="value">"https://angular.io/tutorial"</span>&gt;</span>Tour of Heroes<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">target</span>=<span class="value">"_blank"</span> <span class="attribute">rel</span>=<span class="value">"noopener"</span> <span class="attribute">href</span>=<span class="value">"https://github.com/angular/angular-cli/wiki"</span>&gt;</span>CLI Documentation<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">target</span>=<span class="value">"_blank"</span> <span class="attribute">rel</span>=<span class="value">"noopener"</span> <span class="attribute">href</span>=<span class="value">"https://blog.angular.io/"</span>&gt;</span>Angular blog<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">h1</span>&gt;</span></span><br><span class="line">  &#123;&#123; environmentName &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 Angular 專案預設的 <code>app.component.html</code> 加上 <code></code>，用來讀取 <code>環境變數</code>。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; environment &#125; from <span class="string">'../environments/environment'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line">  environmentName = environment.envName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">environmentName = environment.envName;</span><br></pre></td></tr></table></figure>
+<p>直接讀取剛剛 export 的 <code>environment.envName</code>。</p>
+<h2 id="切換環境變數">切換環境變數</h2><hr>
+<p>理想上，無論我們怎麼切換環境，都不應該去改 code，這才符合 <code>開放封閉原則</code> 的要求。</p>
+<p><strong>package.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">name</span>": <span class="value"><span class="string">"ng52-environment"</span></span>,</span><br><span class="line">  "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.0"</span></span>,</span><br><span class="line">  "<span class="attribute">license</span>": <span class="value"><span class="string">"MIT"</span></span>,</span><br><span class="line">  "<span class="attribute">scripts</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">ng</span>": <span class="value"><span class="string">"ng"</span></span>,</span><br><span class="line">    "<span class="attribute">start</span>": <span class="value"><span class="string">"ng serve"</span></span>,</span><br><span class="line">    "<span class="attribute">start-lab</span>": <span class="value"><span class="string">"ng serve --environment=lab"</span></span>,</span><br><span class="line">    "<span class="attribute">start-stg</span>": <span class="value"><span class="string">"ng serve --environment=stg"</span></span>,</span><br><span class="line">    "<span class="attribute">start-prod</span>": <span class="value"><span class="string">"ng serve --environment=prod"</span></span>,</span><br><span class="line">    "<span class="attribute">build</span>": <span class="value"><span class="string">"ng build --prod"</span></span>,</span><br><span class="line">    "<span class="attribute">build-stg</span>": <span class="value"><span class="string">"ng build --environment=stg"</span></span>,</span><br><span class="line">    "<span class="attribute">test</span>": <span class="value"><span class="string">"ng test"</span></span>,</span><br><span class="line">    "<span class="attribute">lint</span>": <span class="value"><span class="string">"ng lint"</span></span>,</span><br><span class="line">    "<span class="attribute">e2e</span>": <span class="value"><span class="string">"ng e2e"</span></span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">private</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">  "<span class="attribute">dependencies</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">@angular/animations</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/common</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/compiler</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/core</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/forms</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/http</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/platform-browser</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/platform-browser-dynamic</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/router</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">core-js</span>": <span class="value"><span class="string">"^2.4.1"</span></span>,</span><br><span class="line">    "<span class="attribute">rxjs</span>": <span class="value"><span class="string">"^5.5.2"</span></span>,</span><br><span class="line">    "<span class="attribute">zone.js</span>": <span class="value"><span class="string">"^0.8.14"</span></span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">devDependencies</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">@angular/cli</span>": <span class="value"><span class="string">"1.6.2"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/compiler-cli</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@angular/language-service</span>": <span class="value"><span class="string">"^5.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">@types/jasmine</span>": <span class="value"><span class="string">"~2.5.53"</span></span>,</span><br><span class="line">    "<span class="attribute">@types/jasminewd2</span>": <span class="value"><span class="string">"~2.0.2"</span></span>,</span><br><span class="line">    "<span class="attribute">@types/node</span>": <span class="value"><span class="string">"~6.0.60"</span></span>,</span><br><span class="line">    "<span class="attribute">codelyzer</span>": <span class="value"><span class="string">"^4.0.1"</span></span>,</span><br><span class="line">    "<span class="attribute">jasmine-core</span>": <span class="value"><span class="string">"~2.6.2"</span></span>,</span><br><span class="line">    "<span class="attribute">jasmine-spec-reporter</span>": <span class="value"><span class="string">"~4.1.0"</span></span>,</span><br><span class="line">    "<span class="attribute">karma</span>": <span class="value"><span class="string">"~1.7.0"</span></span>,</span><br><span class="line">    "<span class="attribute">karma-chrome-launcher</span>": <span class="value"><span class="string">"~2.1.1"</span></span>,</span><br><span class="line">    "<span class="attribute">karma-cli</span>": <span class="value"><span class="string">"~1.0.1"</span></span>,</span><br><span class="line">    "<span class="attribute">karma-coverage-istanbul-reporter</span>": <span class="value"><span class="string">"^1.2.1"</span></span>,</span><br><span class="line">    "<span class="attribute">karma-jasmine</span>": <span class="value"><span class="string">"~1.1.0"</span></span>,</span><br><span class="line">    "<span class="attribute">karma-jasmine-html-reporter</span>": <span class="value"><span class="string">"^0.2.2"</span></span>,</span><br><span class="line">    "<span class="attribute">protractor</span>": <span class="value"><span class="string">"~5.1.2"</span></span>,</span><br><span class="line">    "<span class="attribute">ts-node</span>": <span class="value"><span class="string">"~3.2.0"</span></span>,</span><br><span class="line">    "<span class="attribute">tslint</span>": <span class="value"><span class="string">"~5.7.0"</span></span>,</span><br><span class="line">    "<span class="attribute">typescript</span>": <span class="value"><span class="string">"~2.4.2"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>第 5 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "ng": "ng",</span><br><span class="line">  "start": "ng serve",</span><br><span class="line">  "start-lab": "ng serve --environment=lab",</span><br><span class="line">  "start-stg": "ng serve --environment=stg",</span><br><span class="line">  "start-prod": "ng serve --environment=prod",</span><br><span class="line">  "build": "ng build --prod",</span><br><span class="line">  "build-stg": "ng build --prod --environment=stg",</span><br><span class="line">  "test": "ng test",</span><br><span class="line">  "lint": "ng lint",</span><br><span class="line">  "e2e": "ng e2e"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>原本的 <code>scripts</code> 加上 <code>start-lab</code>、<code>start-stg</code>、<code>start-prod</code> 與 <code>build-stg</code>。</p>
+<p>第 7 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "ng serve",</span><br></pre></td></tr></table></figure>
+<p>Angular CLI 原本內建的 <code>start</code>，不加任何參數，預設就是跑 <code>dev</code> 環境變數。</p>
+<p>第 8 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start-lab": "ng serve --environment=lab",</span><br></pre></td></tr></table></figure>
+<p>新增 <code>starrt-lab</code>，<code>ng serve</code> 時執行 <code>lab</code> 環境變數。</p>
+<p>第  9 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start-stg": "ng serve --environment=stg",</span><br></pre></td></tr></table></figure>
+<p>新增 <code>starrt-stg</code>，<code>ng serve</code> 時執行 <code>stg</code> 環境變數。</p>
+<p>10 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start-prod": "ng serve --environment=prod",</span><br></pre></td></tr></table></figure>
+<p>新增 <code>starrt-prod</code>，<code>ng serve</code> 時執行 <code>prod</code> 環境變數。</p>
+<p>11 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"build": "ng build --prod",</span><br></pre></td></tr></table></figure>
+<p>Angular CLI 原本內建的 <code>build</code>，不加任何參數，預設就是跑 <code>prod</code> 環境變數。</p>
+<p>12 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"build-stg": "ng build --prod --environment=stg",</span><br></pre></td></tr></table></figure>
+<p>新增 <code>build-stg</code>，<code>ng build</code> 除了如同 <code>prod</code> 編譯 JavaScript 外，同時跑 <code>stg</code> 環境變數。</p>
+<h2 id="以_Angular_CLI_執行">以 Angular CLI 執行</h2><hr>
+<p>執行 <code>ng serve</code> 時，跑的是 Angular CLI 內建的 web server。</p>
+<h3 id="使用_dev_執行">使用 <code>dev</code> 執行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="command">run</span> start</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>npm run start</code>。</p>
+<p><img src="/images/angular/environment/env011.png" alt="env011"></p>
+<p><img src="/images/angular/environment/env005.png" alt="env005"></p>
+<p>Angular 首頁顯示 <code>dev</code> 環境。</p>
+<h3 id="使用_lab_執行">使用 <code>lab</code> 執行</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="keyword">run</span> start-<span class="keyword">lab</span></span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>npm run start-lab</code>。</p>
+<p><img src="/images/angular/environment/env012.png" alt="env012"></p>
+<p><img src="/images/angular/environment/env006.png" alt="env006"></p>
+<p>Angular 首頁顯示 <code>lab</code> 環境。</p>
+<h3 id="使用_stg_執行">使用 <code>stg</code> 執行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="command">run</span> start-stg</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>npm run start-stg</code>。</p>
+<p><img src="/images/angular/environment/env013.png" alt="env013"></p>
+<p><img src="/images/angular/environment/env007.png" alt="env007"></p>
+<p>Angular 首頁顯示 <code>stg</code> 環境。</p>
+<h3 id="使用_prod_執行">使用 <code>prod</code> 執行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject$ npm <span class="command">run</span> start-prod</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>npm run start-prod</code>。</p>
+<p><img src="/images/angular/environment/env014.png" alt="env014"></p>
+<p><img src="/images/angular/environment/env008.png" alt="env008"></p>
+<p>Angular 首頁顯示 <code>prod</code> 環境。</p>
+<h2 id="以實際_Web_Server_執行">以實際 Web Server 執行</h2><hr>
+<p>Angular CLI 雖然內建 web server，但你或許覺得要實際跑過 <code>ng build</code> 的結果，較接近 <code>stg</code> 與 <code>prod</code> 環境。</p>
+<h3 id="安裝_http-server">安裝 http-server</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">http</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
+<p>另外安裝 <code>http-server</code> 執行 <code>ng build</code> 結果，不透過 Angular CLI。</p>
+<ul>
+<li><strong>-g</strong> : 安裝 <code>http-server</code> 在 global</li>
+</ul>
+<h3 id="使用_stg_編譯">使用 <code>stg</code> 編譯</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="command">run</span> build-stg</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 npm run build-stg。</p>
+<p><img src="/images/angular/environment/env015.png" alt="env015"></p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject/dist</span> <span class="variable">$ </span>http-server</span><br></pre></td></tr></table></figure>
+<p><code>ng build</code> 會將編譯後的檔案放到 <code>dist</code> 目錄下，在 <code>dist</code> 目錄下執行 <code>http-server</code>。</p>
+<p><img src="/images/angular/environment/env016.png" alt="env016"></p>
+<p><code>http-server</code> 會啟動在 <code>http://172.20.10.12:8080</code>。</p>
+<p><img src="/images/angular/environment/env010.png" alt="env010"></p>
+<p>Angular 首頁顯示 <code>stg</code> 環境。</p>
+<h3 id="使用_prod_編譯">使用 <code>prod</code> 編譯</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="command">run</span> build</span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 npm run build。<br><img src="/images/angular/environment/env017.png" alt="env017"></p>
+<p><code>ng build</code> 會將編譯後的檔案放到 <code>dist</code> 目錄下，在 <code>dist</code> 目錄下執行 <code>http-server</code>。</p>
+<p><img src="/images/angular/environment/env016.png" alt="env016"></p>
+<p><code>http-server</code> 會啟動在 <code>http://172.20.10.12:8080</code>。</p>
+<p><img src="/images/angular/environment/env009.png" alt="env009"></p>
+<p>Angular 首頁顯示 <code>prod</code> 環境。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Angular CLI 已經幫我們設計好完整的 <code>環境變數</code> 機制，只要配合 Angular CLI 的架構，可以在完全不用修改任何一行 code 的狀態下，透過指令切換環境變數</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52Environment" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://tattoocoder.com/me/" target="_blank" rel="external">Shayne Boyer</a>, <a href="http://tattoocoder.com/angular-cli-using-the-environment-option/" target="_blank" rel="external">Angular 2: Application Settings using the CLI Environment Option</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/component-interaction/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-15 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>31</span></a></li> <li><a href="/tags/Angular-CLI/">Angular CLI<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

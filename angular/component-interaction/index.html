@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="3 種 component 交換資料的方法">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-14T14:19:58.846Z">
+<meta property="og:updated_time" content="2018-01-15T01:58:34.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 Component 間交換資料 ?">
 <meta name="twitter:description" content="3 種 component 交換資料的方法">
@@ -303,9 +303,9 @@
 </ul>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li><code>@Input()</code> &amp; <code>@Output()</code> : component 之間的資料是靠傳遞的，透過 <code>@Input()</code> 傳入，透過 <code>@Output()</code> 傳出；若 child component 的改變必須及時通知 parent component，則適合 <code>@Output()</code> </li>
-<li><code>@ViewChild()</code> : 由 parent component 直接存取 child component 的資料；若 child component 不會改變，則適合 <code>@ViewChild()</code></li>
-<li><code>Observable Data Service</code> : 將 component 相關的資料獨立成 service，DI 注入到 component，透過 RxJS，只要訂閱 component，將來資料若異動會自動更新；若 component 之間的互動與資料關係複雜，則適合 Observable Data Service</li>
+<li><strong>@Input() &amp; @Output()</strong> : component 之間的資料是靠傳遞的，透過 <code>@Input()</code> 傳入，透過 <code>@Output()</code> 傳出；若 child component 的改變必須及時通知 parent component，則適合 <code>@Output()</code> </li>
+<li><strong>@ViewChild()</strong> : 由 parent component 直接存取 child component 的資料；若 child component 不會改變，則適合 <code>@ViewChild()</code></li>
+<li><strong>Observable Data Service</strong> : 將 component 相關的資料獨立成 service，DI 注入到 component，透過 RxJS，只要訂閱 component，將來資料若異動會自動更新；若 component 之間的互動與資料關係複雜，則適合 Observable Data Service</li>
 </ul>
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52ComponentInteraction" target="_blank" rel="external">GitHub</a>上找到</p>
@@ -319,9 +319,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+    	<li class="prev"><a href="/angular/environment/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -357,7 +357,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>30</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>31</span></a></li>
     </ul>
 	</div>
 		

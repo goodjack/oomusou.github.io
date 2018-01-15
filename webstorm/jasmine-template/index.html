@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 WebStorm 自訂 Jasmine Live Template? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="自訂 Jasmine Live Template 加速 ATDD 開發">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="自訂 Jasmine Live Template 加速 ATDD 開發">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 WebStorm 自訂 Jasmine Live Template?">
+<meta property="og:url" content="http://oomusou.io/webstorm/jasmine-template/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="自訂 Jasmine Live Template 加速 ATDD 開發">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2017-07-23T13:30:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 WebStorm 自訂 Jasmine Live Template?">
+<meta name="twitter:description" content="自訂 Jasmine Live Template 加速 ATDD 開發">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 WebStorm 自訂 Jasmine Live Template?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 自訂 Jasmine Live Template 加速 ATDD 開發			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Symptons"><span class="toc-article-text">Symptons</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Recipes"><span class="toc-article-text">Recipes</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_Suite_Template"><span class="toc-article-text">新增 Suite Template</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_Spec_Template"><span class="toc-article-text">新增 Spec Template</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_Expect_Template"><span class="toc-article-text">新增 Expect Template</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>WebStorm 雖然提供自動產生 Jasmine Suite、Spec… 等功能，不過預設使用 ES5 的 anonymous function，當然可以自己重構成 arrow function，若能一開始就 arrow function 就更方便了。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>WebStorm 2017.2</p>
+<h2 id="Symptons">Symptons</h2><hr>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine000.png" alt="jasmine000"></p>
+<p>WebStorm 內建提供了 4 個 Jasmine template，可使用熱鍵自動產生 Jasmine Suite、Jasmine Spec、Jasmine beforeEach 與 Jasmine afterEach。</p>
+<blockquote>
+<p>Windows：Alt + Insert</p>
+<p>macOS：⌘ + N</p>
+</blockquote>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine001.png" alt="jasmine001"></p>
+<p>以 Jasmine Suite 為例，WebStorm 提供的 template 有 2 個缺點：</p>
+<ol>
+<li><strong>suite name 使用單引號</strong>：但因為 suite 用來描述需求，因此可能再次使用單引號強調測試案例，若在單引號內使用雙引號，又變得不是很直接，因此希望 suite name 改用 backtick 寫法</li>
+<li><strong>使用 anonymous function</strong>：在 TypeScript 與 ES6 都習慣使用 arrow function 取代 anonymous function，語法較簡潔</li>
+</ol>
+<p>Jasmine Spec 也有相同的問題。</p>
+<p>此外對於常用的 <code>expect()</code>，WebStorm 也沒提供 template。</p>
+<h2 id="Recipes">Recipes</h2><hr>
+<p>我們將手動建立 3 個常用的 Jasmine live template，加速 ATDD 開發速度。</p>
+<h3 id="新增_Suite_Template">新增 Suite Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">describe(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine002.png" alt="jasmine002"></p>
+<p>將我們想要的 suite template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine003.png" alt="jasmine003"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine004.png" alt="jasmine004"></p>
+<ol>
+<li><strong>輸入 <code>des</code> 縮寫</strong>：將來只要輸入 <code>des</code>，並按下 <code>tab</code>，就會展開 suite template</li>
+<li><strong>輸入 description</strong>：對 <code>des</code> 加上 <code>Generate Jasmine Suite</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>des</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine005.png" alt="jasmine005"></p>
+<p>輸入 <code>des</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Suite</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine006.png" alt="jasmine006"></p>
+<p>輸入 <code>des</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 suite name 之處。</p>
+<h3 id="新增_Spec_Template">新增 Spec Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">it(``, () =&gt; &#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine007.png" alt="jasmine007"></p>
+<p>將我們想要的 spec template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine008.png" alt="jasmine008"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine009.png" alt="jasmine009"></p>
+<ol>
+<li><strong>輸入 <code>it</code> 縮寫</strong>：將來只要輸入 <code>it</code>，並按下 <code>tab</code>，就會展開 spec template</li>
+<li><strong>輸入 description</strong>：對 <code>it</code> 加上 <code>Generate Jasmine Spec</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>it</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine010.png" alt="jasmine010"></p>
+<p>輸入 <code>it</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Spec</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine011.png" alt="jasmine011"></p>
+<p>輸入 <code>it</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 spec name 之處。</p>
+<h3 id="新增_Expect_Template">新增 Expect Template</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect().toBe();</span><br></pre></td></tr></table></figure>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine012.png" alt="jasmine012"></p>
+<p> 將我們想要的 expect template 先打好，選起來反白。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine013.png" alt="jasmine013"></p>
+<p><strong><em>Tools -&gt; Save as Live Template</em></strong></p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine014.png" alt="jasmine014"></p>
+<ol>
+<li><strong>輸入 <code>exp</code> 縮寫</strong>：將來只要輸入 <code>exp</code>，並按下 <code>tab</code>，就會展開 expect template</li>
+<li><strong>輸入 description</strong>：對 <code>exp</code> 加上 <code>Generate Jasmine Expect</code> 描述</li>
+<li><strong><code>user</code> 顯示 <code>exp</code></strong>：<code>user</code> 將顯示目前所有自訂的 live template</li>
+<li><strong>游標預設停止處</strong>：在 backtick 內加入 <code>$END$</code>，則 live template 展開後，預設游標會停在此</li>
+<li><strong>儲存設定</strong>：按 <code>OK</code> 儲存目前設定</li>
+</ol>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine015.png" alt="jasmine015"></p>
+<p>輸入 <code>exp</code>，在 Intellisense 也找到了，並且顯示 <code>Generate Jasmine Expect</code> 描述。</p>
+<p><img src="/images/webstorm/webstorm-jasmine-template/jasmine016.png" alt="jasmine016"></p>
+<p>輸入 <code>exp</code> 按下 <code>tab</code> 後，會自動展開剛剛建立的 live template，並將游標停在 <code>expect()</code> 之內。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>Save as Live Template</code> 是 JetBrains IntelliJ 平台都有的功能，在 PhpStorm、WebStorm 與 Rider 都可使用，可自行將常用的 code snippet 存下來，增加開發效率。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/jasmine/jasmine-spyon/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/vscode/vscode-wallaby/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-23 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Jasmine/">Jasmine<span>6</span></a></li> <li><a href="/tags/TDD/">TDD<span>23</span></a></li> <li><a href="/tags/WebStorm/">WebStorm<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

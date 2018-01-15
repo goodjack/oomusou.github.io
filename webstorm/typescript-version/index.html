@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何設定 WebStorm 的 TypeScript 與 TSLint ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="讓 WebStorm 支援 TypeScript 與 TSLint">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="讓 WebStorm 支援 TypeScript 與 TSLint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何設定 WebStorm 的 TypeScript 與 TSLint ?">
+<meta property="og:url" content="http://oomusou.io/webstorm/typescript-version/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="讓 WebStorm 支援 TypeScript 與 TSLint">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-11-11T08:34:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何設定 WebStorm 的 TypeScript 與 TSLint ?">
+<meta name="twitter:description" content="讓 WebStorm 支援 TypeScript 與 TSLint">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何設定 WebStorm 的 TypeScript 與 TSLint ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 讓 WebStorm 支援 TypeScript 與 TSLint			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#TypeScript"><span class="toc-article-text">TypeScript</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_TypeScript"><span class="toc-article-text">安裝 TypeScript</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_WebStorm"><span class="toc-article-text">設定 WebStorm</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#TSLint"><span class="toc-article-text">TSLint</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#安裝_TSList"><span class="toc-article-text">安裝 TSList</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_WebStorm-1"><span class="toc-article-text">設定 WebStorm</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>WebStorm 已經內建 TypeScript，只要安裝完 WebStorm 就可以開始寫 TypeScript，但由於 TypeScript 更新快速，你可能會想自己更新 TypeScript 版本，此外，WebStorm 並沒有內建 TSLint，需另外安裝設定。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.0.9<br>WebStorm 2016.2.4</p>
+<h2 id="TypeScript">TypeScript</h2><hr>
+<h3 id="安裝_TypeScript">安裝 TypeScript</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g typescript</span><br></pre></td></tr></table></figure>
+<h3 id="設定_WebStorm">設定 WebStorm</h3><p><img src="/images/webstorm/webstorm-typescript-version/version000.png" alt=""></p>
+<p><strong><em> PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; TypeScript </em></strong></p>
+<p>WebStorm 內建已安裝 TypeScript 1.8.10，按 <code>Edit</code> 設定其他版本。</p>
+<p><img src="/images/webstorm/webstorm-typescript-version/version001.png" alt=""></p>
+<p>在 <code>Custom directory</code> 輸入 TypeScript 目錄。</p>
+<p>TypeScript 預設會安裝在該 Node.js 版本下的 <code>lib/node_modules/typescript/lib</code> 。</p>
+<p>以 Node.js 6.5 為例，TypeScript 會安裝在 <code>/Users/oomusou/.nvm/versions/node/v6.5.0/lib/node_modules/typescript/lib</code> 。</p>
+<h2 id="TSLint">TSLint</h2><hr>
+<h3 id="安裝_TSList">安裝 TSList</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g tslint typescript</span><br></pre></td></tr></table></figure>
+<h3 id="設定_WebStorm-1">設定 WebStorm</h3><p><img src="/images/webstorm/webstorm-typescript-version/version002.png" alt=""></p>
+<p><strong><em> PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; TypeScript -&gt; TSLint </em></strong></p>
+<p>TSLint 預設會安裝在該 Node.js 版本下的 <code>lib/node_modules/tslint</code>。</p>
+<ul>
+<li>將 <code>Enable</code> 打勾。</li>
+<li><strong>TSLint package</strong> : 以 Node.js 6.5 為例，TSLint 會安裝在 <code>/Users/oomusou/.nvm/versions/node/v6.5.0/lib/node_modules/tslint</code> 。</li>
+</ul>
+<p>安裝好 TSLint 之後，當你在寫 TypeScript 時，WebStorm 就會整合 Code Inspection，在編譯前就會顯示警告。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 非常適合開發 TypeScript，只要設定好環境，就可以發揮 WebStorm 的威力。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p>Microsoft, <a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a><br>Palantir, <a href="https://palantir.github.io/tslint/" target="_blank" rel="external">TSLint</a><br>WebStorm Online Help, <a href="https://www.jetbrains.com/help/webstorm/2016.2/using-tslint-code-quality-tool.html" target="_blank" rel="external">Using TSLint Code Quality Tool</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/webstorm/angular-cli/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/typescript/typescript-this/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-11-11 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PhpStorm/">PhpStorm<span>38</span></a></li> <li><a href="/tags/TypeScript/">TypeScript<span>13</span></a></li> <li><a href="/tags/WebStorm/">WebStorm<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
