@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-15T14:46:35.125Z</updated>
+  <updated>2018-01-15T14:57:07.304Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/http-server/"/>
     <id>http://oomusou.io/angular/http-server/</id>
     <published>2018-01-16T12:23:43.000Z</published>
-    <updated>2018-01-15T14:46:35.125Z</updated>
+    <updated>2018-01-15T14:57:07.304Z</updated>
     <content type="html"><![CDATA[<p>Angular CLI 雖然可以直接 <code>ng serve</code> 執行 Angular，不過畢竟不是  <code>ng build --prod</code> 的最終結果，你曾懷疑 <code>ng build --prod</code> 後的結果真的能跑嗎 ? 可以先在本機測試 <code>ng build --prod</code> 編譯後的結果嗎 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -51,9 +51,7 @@
 </blockquote>
 <h2 id="使用瀏覽器測試">使用瀏覽器測試</h2><hr>
 <p><img src="/images/angular/http-server/http002.png" alt="http002"></p>
-<ul>
-<li>Angular 不再跑在 <code>localhost:4200</code>，而是跑在 <code>192.168.11.4:8080</code></li>
-</ul>
+<p>Angular 不再跑在 <code>localhost:4200</code>，而是跑在 <code>192.168.11.4:8080</code></p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>只要安裝了 <code>http-server</code> 之後，就可以在本機測試 <code>ng build --prod</code> 編譯後的結果，不必再額外安裝其他 server</li>
