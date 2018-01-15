@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在本機執行 ng build 後的結果 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在本機執行 ng build 後的結果 ?">
+<meta property="og:url" content="http://oomusou.io/angular/http-server/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-15T14:46:35.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在本機執行 ng build 後的結果 ?">
+<meta name="twitter:description" content="不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在本機執行 ng build 後的結果 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_http-server"><span class="toc-article-text">安裝 http-server</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_ng_build_-prod_編譯"><span class="toc-article-text">使用 ng build --prod 編譯</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#啟動_http-server"><span class="toc-article-text">啟動 http-server</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用瀏覽器測試"><span class="toc-article-text">使用瀏覽器測試</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Angular CLI 雖然可以直接 <code>ng serve</code> 執行 Angular，不過畢竟不是  <code>ng build --prod</code> 的最終結果，你曾懷疑 <code>ng build --prod</code> 後的結果真的能跑嗎 ? 可以先在本機測試 <code>ng build --prod</code> 編譯後的結果嗎 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="安裝_http-server">安裝 http-server</h2><hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">http</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
+<p>另外安裝 <code>http-server</code> 執行 <code>ng build --prod</code> 結果，不透過 Angular CLI。</p>
+<ul>
+<li><strong>-g</strong> : 安裝 <code>http-server</code> 在 global</li>
+</ul>
+<h2 id="使用_ng_build_-prod_編譯">使用 <code>ng build --prod</code> 編譯</h2><hr>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng build <span class="comment">--prod</span></span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>ng build --prod</code>。</p>
+<p><img src="/images/angular/http-server/http000.png" alt="http000"></p>
+<ol>
+<li>執行 <code>ng build --prod</code></li>
+<li>編譯後的檔案會放在 <code>dist</code> 目錄下</li>
+</ol>
+<h2 id="啟動_http-server">啟動 http-server</h2><hr>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject/dist</span> <span class="variable">$ </span>http-server</span><br></pre></td></tr></table></figure>
+<p><code>ng build --prod</code> 會將編譯後的檔案放到 <code>dist</code> 目錄下，在 <code>dist</code> 目錄下執行 <code>http-server</code>。</p>
+<p><img src="/images/angular/http-server/http001.png" alt="http001"></p>
+<ol>
+<li>在 <code>dist</code> 目錄下啟動 <code>http-server</code></li>
+<li><code>http-server</code> 預設啟動在 <code>http://192.168.11.4:8080</code></li>
+</ol>
+<blockquote>
+<p>IP 並不固定，請以實際的 IP 為準</p>
+</blockquote>
+<h2 id="使用瀏覽器測試">使用瀏覽器測試</h2><hr>
+<p><img src="/images/angular/http-server/http002.png" alt="http002"></p>
+<ul>
+<li>Angular 不再跑在 <code>localhost:4200</code>，而是跑在 <code>192.168.11.4:8080</code></li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>只要安裝了 <code>http-server</code> 之後，就可以在本機測試 <code>ng build --prod</code> 編譯後的結果，不必再額外安裝其他 server</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/environment/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-16 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>32</span></a></li> <li><a href="/tags/Angular-CLI/">Angular CLI<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

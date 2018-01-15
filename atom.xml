@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-15T13:49:32.749Z</updated>
+  <updated>2018-01-15T14:46:35.125Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在本機執行 ng build 後的結果 ?]]></title>
+    <link href="http://oomusou.io/angular/http-server/"/>
+    <id>http://oomusou.io/angular/http-server/</id>
+    <published>2018-01-16T12:23:43.000Z</published>
+    <updated>2018-01-15T14:46:35.125Z</updated>
+    <content type="html"><![CDATA[<p>Angular CLI 雖然可以直接 <code>ng serve</code> 執行 Angular，不過畢竟不是  <code>ng build --prod</code> 的最終結果，你曾懷疑 <code>ng build --prod</code> 後的結果真的能跑嗎 ? 可以先在本機測試 <code>ng build --prod</code> 編譯後的結果嗎 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="安裝_http-server">安裝 http-server</h2><hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">http</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
+<p>另外安裝 <code>http-server</code> 執行 <code>ng build --prod</code> 結果，不透過 Angular CLI。</p>
+<ul>
+<li><strong>-g</strong> : 安裝 <code>http-server</code> 在 global</li>
+</ul>
+<h2 id="使用_ng_build_-prod_編譯">使用 <code>ng build --prod</code> 編譯</h2><hr>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng build <span class="comment">--prod</span></span><br></pre></td></tr></table></figure>
+<p>在專案目錄下執行 <code>ng build --prod</code>。</p>
+<p><img src="/images/angular/http-server/http000.png" alt="http000"></p>
+<ol>
+<li>執行 <code>ng build --prod</code></li>
+<li>編譯後的檔案會放在 <code>dist</code> 目錄下</li>
+</ol>
+<h2 id="啟動_http-server">啟動 http-server</h2><hr>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject/dist</span> <span class="variable">$ </span>http-server</span><br></pre></td></tr></table></figure>
+<p><code>ng build --prod</code> 會將編譯後的檔案放到 <code>dist</code> 目錄下，在 <code>dist</code> 目錄下執行 <code>http-server</code>。</p>
+<p><img src="/images/angular/http-server/http001.png" alt="http001"></p>
+<ol>
+<li>在 <code>dist</code> 目錄下啟動 <code>http-server</code></li>
+<li><code>http-server</code> 預設啟動在 <code>http://192.168.11.4:8080</code></li>
+</ol>
+<blockquote>
+<p>IP 並不固定，請以實際的 IP 為準</p>
+</blockquote>
+<h2 id="使用瀏覽器測試">使用瀏覽器測試</h2><hr>
+<p><img src="/images/angular/http-server/http002.png" alt="http002"></p>
+<ul>
+<li>Angular 不再跑在 <code>localhost:4200</code>，而是跑在 <code>192.168.11.4:8080</code></li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>只要安裝了 <code>http-server</code> 之後，就可以在本機測試 <code>ng build --prod</code> 編譯後的結果，不必再額外安裝其他 server</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[不用等佈署到 lab 後，就可在本機測試 ng build 編譯後的結果]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="Angular CLI" scheme="http://oomusou.io/tags/Angular-CLI/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何設定 Angular 環境變數 ?]]></title>
@@ -2928,211 +2984,6 @@
       <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
     
       <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[JSON Server 簡介]]></title>
-    <link href="http://oomusou.io/http/http-json-server/"/>
-    <id>http://oomusou.io/http/http-json-server/</id>
-    <published>2017-08-05T12:23:43.000Z</published>
-    <updated>2017-08-05T09:26:35.000Z</updated>
-    <content type="html"><![CDATA[<p>在前後端分離下，Angular 需要倚賴後端 API 才能對資料庫存取，在實務上，當 API 規格確立後，前端工程師不可能等後端工程師寫好 API 才開始開發，而是一起同時開發，因此前端工程師需要有假 API 才能開發測試。</p>
-<p>前端工程師不必為了假 API 安裝後端環境與資料庫，只要安裝 JSON Server，就能模擬出假 API。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>JSON Server 0.12.0</p>
-<h2 id="安裝_JSON_Server">安裝 JSON Server</h2><hr>
-<h3 id="使用_NPM_安裝">使用 NPM 安裝</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">json</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure>
-<p>將 JSON Server 安裝在 global 環境。</p>
-<p><img src="/images/http/http-json-server/jsonserver000.png" alt="jsonserver000"></p>
-<h3 id="啟動_JSON_Server">啟動 JSON Server</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~$ cd MyProject</span><br><span class="line">~/MyProject$ mkdir json-<span class="keyword">server</span></span><br><span class="line">~/MyProject$ cd json-<span class="keyword">server</span></span><br><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json</span><br></pre></td></tr></table></figure>
-<ol>
-<li>進入 <code>MyProject</code> 專案目錄</li>
-<li>在專案目錄下建立 <code>json-server</code> 目錄</li>
-<li>啟動 JSON Server，指定 <code>db.json</code> 為資料庫檔案</li>
-</ol>
-<p>若 <code>db.json</code> 檔案存在，則 JSON Server 會以此檔案為資料庫，若不存在，則會建立新的 <code>db.json</code> 檔案。</p>
-<p><img src="/images/http/http-json-server/jsonserver001.png" alt="jsonserver001"></p>
-<ol>
-<li>建立 <code>json-server</code> 目錄</li>
-<li>進入 <code>json-server</code> 目錄</li>
-<li>在 <code>json-server</code> 目錄啟動 JSON Server，並將 <code>db.json</code> 檔案建立在 <code>json-server</code> 目錄下</li>
-<li>JSON Server 在 <code>json-server</code> 目錄下產生 <code>db.json</code> 檔案</li>
-<li><code>db.json</code> 預設已經有預設資料了</li>
-<li>JSON Server 預設提供了網址可供測試</li>
-</ol>
-<h3 id="測試_JSON_Server">測試 JSON Server</h3><p>預設 <code>db.json</code> 已經有資料，可藉此測試 JSON Server 是否有成功啟動。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/http/http-json-server/jsonserver002.png" alt="jsonserver002"></p>
-<p>使用 Postman 測試 <code>http://localhost:3000/posts</code>，確定能抓到資料。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/http/http-json-server/jsonserver003.png" alt="jsonserver003"></p>
-<p>使用瀏覽器測試 <code>http://localhost:3000</code>，確定 JSON Server 內建 Web server 已經成功啟動。</p>
-<h2 id="HTTP_Request_Method">HTTP Request Method</h2><hr>
-<p>JSON Server 支援開發中最常用的 <code>GET</code>、<code>POST</code>、<code>PUT</code>、<code>PATCH</code> 與 <code>DELETE</code> 等 request method。</p>
-<h3 id="GET">GET</h3><p>用於取得 resource。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
-<p>取得所有  <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver005.png" alt="jsonserver005"></p>
-<ol>
-<li>選擇 <code>GET</code></li>
-<li>輸入 <code>http://localhost:3000/posts</code></li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳 JSON 物件陣列</li>
-</ol>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/1</span></span><br></pre></td></tr></table></figure>
-<p>取得 <code>id</code> 為 <code>1</code> 的 <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver006.png" alt="jsonserver006"></p>
-<ol>
-<li>選擇 <code>GET</code></li>
-<li>輸入 <code>http://localhost:3000/posts/1</code></li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳 JSON 物件</li>
-</ol>
-<h3 id="POST">POST</h3><p>用於建立 resource。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts</span></span><br></pre></td></tr></table></figure>
-<p>建立新的一筆 <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver007.png" alt="jsonserver007"></p>
-<ol>
-<li>選擇 <code>POST</code></li>
-<li>輸入 <code>http://localhost:3000/posts</code></li>
-<li>選擇 <code>Body</code></li>
-<li>選擇 <code>raw</code> 格式</li>
-<li>選擇 <code>JSON (application/json)</code> 格式</li>
-<li>要新增的 JSON 物件</li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳所新增的 JSON 物件，並包含 <code>id</code></li>
-</ol>
-<p><img src="/images/http/http-json-server/jsonserver008.png" alt="jsonserver008"></p>
-<ol>
-<li>開啟 <code>/json-server/db.json</code></li>
-<li>剛剛新增的 <code>post</code> 已經寫入 <code>db.json</code></li>
-</ol>
-<h3 id="PUT">PUT</h3><p>用於更新完整 resource。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
-<p>更新 <code>id</code> 為 <code>2</code> 的完整 <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver009.png" alt="jsonserver009"></p>
-<ol>
-<li>選擇 <code>PUT</code></li>
-<li>輸入 <code>http://localhost:3000/posts/2</code></li>
-<li>選擇 <code>Body</code></li>
-<li>選擇 <code>raw</code> 格式</li>
-<li>選擇 <code>JSON (application/json)</code> 格式</li>
-<li>要更新的 JSON 物件 (不用含 <code>id</code>，要包含全部欄位)</li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
-</ol>
-<p><img src="/images/http/http-json-server/jsonserver010.png" alt="jsonserver010"></p>
-<ol>
-<li>開啟 <code>/json-server/db.json</code></li>
-<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code></li>
-</ol>
-<blockquote>
-<p>使用 <code>PUT</code> 要小心，他是將整個 JSON 物件寫入原來的 <code>id</code>，也就是說原本有 <code>3</code> 個欄位，若 <code>PUT</code> 時的 JSON 物件只有 2 個欄位，則 <code>PUT</code> 後就只剩下 <code>2</code> 個欄位。</p>
-</blockquote>
-<h3 id="PATCH">PATCH</h3><p>用於更新部分 resource。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
-<p>更新 <code>id</code> 為 <code>2</code> 的部分 <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver011.png" alt="jsonserver011"></p>
-<ol>
-<li>選擇 <code>PUT</code></li>
-<li>輸入 <code>http://localhost:3000/posts/2</code></li>
-<li>選擇 <code>Body</code></li>
-<li>選擇 <code>raw</code> 格式</li>
-<li>選擇 <code>JSON (application/json)</code> 格式</li>
-<li>要更新的 JSON 物件 (不用含 <code>id</code>，不用包含全部欄位)</li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳整筆 JSON 物件，並包含 <code>id</code></li>
-</ol>
-<p><img src="/images/http/http-json-server/jsonserver012.png" alt="jsonserver012"></p>
-<ol>
-<li>開啟 <code>/json-server/db.json</code></li>
-<li>剛剛更新的 <code>post</code> 已經寫入 <code>db.json</code>，且只更新 <code>1</code> 個欄位資料。</li>
-</ol>
-<h3 id="DELETE">DELETE</h3><p>用於刪除 resource。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/posts/2</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/http/http-json-server/jsonserver013.png" alt="jsonserver013"></p>
-<ol>
-<li>選擇 <code>DELETE</code></li>
-<li>輸入 <code>http://localhost:3000/posts/2</code></li>
-<li>按 <code>Send</code> 送出 request</li>
-<li>回傳空的 JSON 物件</li>
-</ol>
-<p><img src="/images/http/http-json-server/jsonserver019.png" alt="jsonserver019"></p>
-<ol>
-<li>開啟 <code>/json-server/db.json</code></li>
-<li>剛剛更新的 <code>post</code> 資料已經被刪除。</li>
-</ol>
-<h2 id="修改資料">修改資料</h2><hr>
-<p>JSON Server 並沒有搭配資料庫，因此也不需要 Sequel Pro 或 DataGrip 之類的工具連到資料庫，它只是個文字檔。</p>
-<p><strong>/json-server/db.json</strong></p>
-<p><img src="/images/http/http-json-server/jsonserver014.png" alt="jsonserver014"></p>
-<ol>
-<li>開啟 <code>/json-server/db.json</code></li>
-<li>每個 field 相當於資料庫的 table 名稱，可自行修改，後面接的是 JSON 物件陣列，也可以自行修改 JSON 建立假資料</li>
-</ol>
-<h2 id="建立_Snapshot">建立 Snapshot</h2><hr>
-<p>在實務上有時會想將目前的資料先存起來做備份，當作 golden sample，JSON Server 可以幫我們將目前的所有資料備份成 snapshot。</p>
-<blockquote>
-<p>熱鍵：S + enter</p>
-</blockquote>
-<p><img src="/images/http/http-json-server/jsonserver015.png" alt="jsonserver015"></p>
-<ol>
-<li>在 terminal 下輸入熱鍵 <code>S + enter</code></li>
-<li>JSON Server 會亂數產生檔案，將目前的 <code>db.json</code> 做 snapshot</li>
-</ol>
-<h2 id="自訂新_Route">自訂新 Route</h2><hr>
-<p>JSON Server 預設是以 table 名稱作為 route，但實務上 API 的 route 可能不一樣，如 <code>/api/posts</code> 與 <code>api/posts/1</code>。</p>
-<h3 id="新增_routes-json">新增 routes.json</h3><p><strong>json-server/routes.json</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">/api/posts</span>": <span class="value"><span class="string">"/posts"</span></span>,</span><br><span class="line">  "<span class="attribute">/api/posts/:id</span>": <span class="value"><span class="string">"/posts/:id"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>將 <code>/api/ports</code> 指向原本的 <code>/posts</code>。</p>
-<p>將 <code>/api/posts/1</code> 只像原本的 <code>/posts/1</code>。</p>
-<p><img src="/images/http/http-json-server/jsonserver004.png" alt="jsonserver004"></p>
-<ol>
-<li>新增 <code>json-server/routes.json</code></li>
-<li>編輯 routes 的對應規則</li>
-</ol>
-<h3 id="套用新_Route">套用新 Route</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject/json-<span class="keyword">server</span>$ json-<span class="keyword">server</span> db.json --routes routes.json</span><br></pre></td></tr></table></figure>
-<p>重新啟動 JSON Server，加上 <code>—-routes</code> 參數，指定套用 <code>routes.json</code>。</p>
-<p><img src="/images/http/http-json-server/jsonserver016.png" alt="jsonserver016"></p>
-<ol>
-<li><p>重新啟動 JSON Server，並加上 <code>—-routes</code> 參數與 <code>routes.json</code> </p>
-</li>
-<li><p>JSON Server 提示載入 <code>routes.json</code></p>
-</li>
-<li><p>顯示新增的 route</p>
-</li>
-</ol>
-<h3 id="測試新_Route">測試新 Route</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//localhost:3000/api/posts</span></span><br></pre></td></tr></table></figure>
-<p>取得所有  <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver017.png" alt="jsonserver017"></p>
-<ol>
-<li>使用新的 <code>http://localhost/api/posts</code> 測試</li>
-<li>一樣回傳 JSON 物件陣列</li>
-</ol>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/localhost:3000/api</span><span class="regexp">/posts/</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>取得 id 為 <code>1</code> 的 <code>post</code> 資料。</p>
-<p><img src="/images/http/http-json-server/jsonserver018.png" alt="jsonserver018"></p>
-<ol>
-<li>使用新的 <code>http://localhost/api/posts/1</code> 測試</li>
-<li>一樣回傳 JSON 物件</li>
-</ol>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>JSON Server 讓我們不用安裝後端環境，也不用安裝資料庫，就可以快速建立前端開發測試用的 API。</li>
-<li><a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="external">JSONPlaceholder</a> 其實就是以 JSON Server 架設，若為了 demo 方便，可直接使用 JSONPlaceholder，但若在實務上使用，JSON Server 的彈性更高。</li>
-<li>本文僅針對實務上最常用的功能介紹 JSON Server，更進階的功能請參考 reference 部分。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://github.com/typicode/json-server" target="_blank" rel="external">typicode</a>, <a href="https://github.com/typicode/json-server" target="_blank" rel="external">JSON Server</a><br><a href="http://blog.miniasp.com" target="_blank" rel="external">保哥</a>, <a href="https://www.slideshare.net/WillHuangTW/use-json-server-as-a-fake-rest-api" target="_blank" rel="external">進擊的前端工程師：今天就自己打造 API 吧！</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[最簡單的方式建立假 API]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
   </entry>
   
