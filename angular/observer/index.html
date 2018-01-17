@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 Angular 實現 Observer Pattern ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="Design Pattern 在 Angular 將有全新的使用方式">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="Design Pattern 在 Angular 將有全新的使用方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 Angular 實現 Observer Pattern ?">
+<meta property="og:url" content="http://oomusou.io/angular/observer/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="Design Pattern 在 Angular 將有全新的使用方式">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-17T05:03:49.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 Angular 實現 Observer Pattern ?">
+<meta name="twitter:description" content="Design Pattern 在 Angular 將有全新的使用方式">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 Angular 實現 Observer Pattern ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> Design Pattern 在 Angular 將有全新的使用方式			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#DigitalClockComponent"><span class="toc-article-text">DigitalClockComponent</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SubjectInterface"><span class="toc-article-text">SubjectInterface</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ClockService"><span class="toc-article-text">ClockService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ObserverInterface"><span class="toc-article-text">ObserverInterface</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#DigitalClockComponent-1"><span class="toc-article-text">DigitalClockComponent</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppModule"><span class="toc-article-text">AppModule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppComponent"><span class="toc-article-text">AppComponent</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Summary"><span class="toc-article-text">Summary</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Observer Pattern 是 OOP 中著名的 Design Pattern，尤其在應付 <code>一對多</code> 的場景特別有效，在本文中，我們將以 Angular 與  TypeScript 實現 Observer Pattern。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/observer/observer000.png" alt="observer000"></p>
+<p>畫面上有兩個 <code>數字鐘</code>，每秒更新一次，不斷的顯示目前的時間。</p>
+<h2 id="Task">Task</h2><hr>
+<p>程式碼希望分成兩部分，一個部分是每秒送出 <code>目前時間</code>，另一個部分負責 <code>顯示時間</code>。</p>
+<blockquote>
+<p>也就是一個 class 負責<code>產生資料</code>；另一 class 負責 <code>顯示資料</code></p>
+</blockquote>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/angular/observer/observer001.svg" alt="observer001"></p>
+<ul>
+<li><code>ClockService</code> 負責 <code>產生資料</code>，也就是每秒送出 <code>目前時間</code></li>
+<li><code>DigitalClockComponent</code> 負責 <code>顯示資料</code>，也就是顯示 <code>目前時間</code></li>
+<li><code>DigitalClockComponent</code> 必須能向 <code>ClockService</code> <code>註冊為觀察者</code>，根據 <code>DigitalClockComponent</code> 的需求，訂出 <code>SubjectInterface</code>，期望 <code>ClockService</code> 能遵守</li>
+<li><code>ClockService</code> 必須能向 <code>DigitalClockComponent</code> 每秒送出 <code>目前時間</code>，根據 <code>ClockService</code> 的需求，訂出 <code>ObserverInterface</code>，期望 <code>DigitalClockComponent</code> 能遵守</li>
+</ul>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="DigitalClockComponent">DigitalClockComponent</h3><p><img src="/images/angular/observer/observer002.svg" alt="observer002"></p>
+<p><code>DigitalClockComponent</code> 負責 <code>顯示資料</code>，既然是 <code>顯示資料</code>，在 Angular 最適合的並不是 service，而是 component，而且 Angular 的 component 已經 class 化，表示所有 OOP 能用的技巧都能使用，因此決定使用 component 實作 。</p>
+<p><strong>digital-clock.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; now | date:'HH:mm:ss'&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>HTML 負責顯示 <code>目前時間</code>，至於 <code>時:分:秒</code> 部分就不用自己寫程式處理了，靠 pipe 即可。</p>
+<p><strong>digital-clock.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject, OnDestroy, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ObserverInterface &#125; from <span class="string">'../../interface/observer.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterfaceToken &#125; from <span class="string">'../../interface/InjectionToken'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterface &#125; from <span class="string">'../../interface/subject.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-digital-clock'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./digital-clock.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./digital-clock.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface, OnInit, OnDestroy &#123;</span><br><span class="line">  now: <span class="built_in">Date</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(</span><br><span class="line">    @Inject(SubjectInterfaceToken)</span><br><span class="line">    private clockService: SubjectInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.clockService.addObserver(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnDestroy(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.clockService.removeObserver(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  update(date: <span class="built_in">Date</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.now = date;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface, OnInit, OnDestroy</span><br></pre></td></tr></table></figure>
+<p>先不考慮 <code>DigitalClockComponent</code> 所使用的 <code>ObserverInterface</code> ，最後會討論。</p>
+<p>回想 <code>DigitalClockComponent</code> 的初衷，除了顯示 <code>目前時間</code> 外，另外一個目的就是能對 <code>ClockService</code> 加以 <code>註冊為觀察者</code> 與 <code>取消註冊</code> 。</p>
+<p>19 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.clockService.addObserver(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然要 <code>註冊為觀察者</code>，要在什麼時候註冊呢 ?</p>
+<p>最好是在 <code>DigitalClockComponent</code> 開始 <code>初始化</code> 時就對 <code>ClockService</code> 加以 <code>註冊為觀察者</code>，因此選擇使用 <code>ngOnInit()</code> lifecycle hook。</p>
+<p>希望 <code>ClockService</code> 有 <code>addObserver()</code>，提供 <code>註冊為觀察者</code> 功能。</p>
+<p>23 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnDestroy(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.clockService.removeObserver(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然有 <code>註冊為觀察者</code>，就應該有 <code>取消註冊</code>，該在什麼時候取消註冊呢 ?</p>
+<p>最好是在 <code>DigitalClockComponent</code> 最後 <code>被消滅</code> 時對 <code>ClockService</code> 加以 <code>取消註冊</code>，因此選擇 <code>ngOnDestroy()</code> lifecycle hook。</p>
+<p>希望 <code>ClockService</code> 有 <code>removeObserver()</code> ，提供 <code>取消註冊</code> 功能。</p>
+<blockquote>
+<p>綜合 <code>ngOnInit()</code> 與 <code>ngOnDestroy()</code>，根據 <code>介面隔離原則</code>，已經大概可猜到 interface 該提供 <code>addObserver()</code> 與 <code>removeObserver()</code> </p>
+</blockquote>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(</span><br><span class="line">  @Inject(SubjectInterfaceToken)</span><br><span class="line">  private clockService: SubjectInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然 <code>DigiClockComponent</code> 需要 <code>ClockService</code>，因此必須在 constructor 將 <code>ClockService</code> DI 注入進來。</p>
+<p>根據 <code>依賴反轉原則</code> : <code>DigitalClockComponent</code> 不應該依賴底層的 <code>ClockService</code>，兩者應該依賴於 interface。</p>
+<p>根據 <code>介面隔離原則</code> : <code>DigitalClockComponent</code> 應該只相依於他所需要的 interface，目前看來 <code>DigitalClockComponent</code> 需要 <code>addObserver()</code> 與 <code>removeObserver()</code>，因此由 <code>DigitalClockComponent</code> 需求角度訂出的 <code>SubjectInterface</code>。</p>
+<p>因此 DI 注入的 <code>ClockService</code> ，其型別為 <code>SubjectInterface</code>，這樣就符合 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code>。</p>
+<h3 id="SubjectInterface">SubjectInterface</h3><p><img src="/images/angular/observer/observer003.svg" alt="observer002"></p>
+<p><strong>subject.interface.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ObserverInterface &#125; from <span class="string">'./observer.interface'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> SubjectInterface </span>&#123;</span><br><span class="line">  addObserver(observer: ObserverInterface): <span class="built_in">void</span>;</span><br><span class="line">  removeObserver(observer: ObserverInterface): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據 <code>介面隔離原則</code> : <code>DigitalClock</code> 應該只相依於他所需要的 interface，目前看來 <code>DigitalClock</code> 需要 <code>addObserver()</code> 與 <code>removeObserver()</code>，因此由 <code>DigitalClock</code> 需求訂出的 <code>SubjectInterface</code>，應該要有 <code>addObserver()</code> 與 <code>removeObserver()</code>。</p>
+<h3 id="ClockService">ClockService</h3><p><img src="/images/angular/observer/observer005.svg" alt="observer005"></p>
+<p><strong>clock.service.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterface &#125; from <span class="string">'../../interface/subject.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ClockInterface &#125; from <span class="string">'../../interface/clock.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ObserverInterface &#125; from <span class="string">'../../interface/observer.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ClockService <span class="keyword">implements</span> SubjectInterface &#123;</span><br><span class="line">  <span class="keyword">private</span> observers: ObserverInterface[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    setInterval(() =&gt; <span class="keyword">this</span>.tick(), <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addObserver(observer: ObserverInterface): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.observers.push(observer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeObserver(observer: ObserverInterface): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> index = <span class="keyword">this</span>.observers.indexOf(observer);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.observers.splice(index, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> tick(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.observers.forEach(observer =&gt; observer.update(<span class="keyword">new</span> <span class="built_in">Date</span>()));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 7  行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ClockService <span class="keyword">implements</span> SubjectInterface</span><br></pre></td></tr></table></figure>
+<p>根據 <code>依賴反轉原則</code>，<code>ClockService</code> 應該相依於 <code>DigitalClockComponent</code> 所訂出的 interface，因此必須實現 <code>SubjectInterface</code>。</p>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> observers: ObserverInterface[] = [];</span><br></pre></td></tr></table></figure>
+<p> <code>observers</code> 陣列儲存所有註冊為 <code>觀察者</code> 的物件，每個物件型別為 <code>ObserverInterface</code>。</p>
+<blockquote>
+<p>也就是只要有實作 <code>ObserverInterface</code> 的物件，都算是 <code>觀察者</code>，至於 <code>ObserverInterface</code> 是什麼 ? 稍後會討論</p>
+</blockquote>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">addObserver(observer: ObserverInterface): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.observers.push(observer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">removeObserver(observer: ObserverInterface): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> index = <span class="keyword">this</span>.observers.indexOf(observer);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.observers.splice(index, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然 <code>SubjectInterface</code> 已經定義了 <code>addObserver()</code> 與 <code>removeObserver()</code> ，<code>ClockService</code> 就應該時做出 <code>addObserver()</code> 與 <code>removeObserver()</code>。</p>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  setInterval(() =&gt; <span class="keyword">this</span>.tick(), <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據需求，<code>ClockService</code> 要能夠每秒送出 <code>目前時間</code>，所以使用 JavaScript 原生的 <code>setInterval()</code>，每 1 秒鐘呼叫 <code>tick()</code> 一次。</p>
+<p>28 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> tick(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.observers.forEach(observer =&gt; observer.update(<span class="keyword">new</span> <span class="built_in">Date</span>()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每一秒執行 <code>tick()</code> 時，會將 <code>observers</code> 陣列全部跑一遍，執行陣列內每個 <code>觀察者</code>  <code>update()</code>。</p>
+<p>根據 <code>介面隔離原則</code>， <code>ClockService</code> 訂出 <code>ObserverInterface</code>，且必須要有 <code>update()</code>。</p>
+<h3 id="ObserverInterface">ObserverInterface</h3><p><img src="/images/angular/observer/observer006.svg" alt="observer006"></p>
+<p><strong>observer.interface.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> ObserverInterface </span>&#123;</span><br><span class="line">  update(date: <span class="built_in">Date</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根據 <code>介面隔離原則</code> : <code>ClockService</code> 應該只相依於他所需要的 interface，目前看來 <code>ClockService</code> 需要 <code>update()</code>，因此由 <code>ClockService</code> 需求訂出的 <code>ObserverInterface</code>，所有 <code>觀察者</code> 都應該具備 <code>ObserverInterface</code>。</p>
+<h3 id="DigitalClockComponent-1">DigitalClockComponent</h3><p><img src="/images/angular/observer/observer002.svg" alt="observer002"></p>
+<p><strong>digital-clock.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject, OnDestroy, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ObserverInterface &#125; from <span class="string">'../../interface/observer.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterfaceToken &#125; from <span class="string">'../../interface/InjectionToken'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterface &#125; from <span class="string">'../../interface/subject.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-digital-clock'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./digital-clock.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./digital-clock.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface, OnInit, OnDestroy &#123;</span><br><span class="line">  now: <span class="built_in">Date</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(</span><br><span class="line">    @Inject(SubjectInterfaceToken)</span><br><span class="line">    private clockService: SubjectInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.clockService.addObserver(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnDestroy(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.clockService.removeObserver(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  update(date: <span class="built_in">Date</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.now = date;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回到一開始還沒討論完的 <code>DigitalClockComponent</code>。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface</span><br></pre></td></tr></table></figure>
+<p><code>DigitalClockComponent</code> 因為要對 <code>ClockService</code> 加以 <code>註冊為觀察者</code>，所以是個典型的 <code>觀察者</code>，因此要實現 <code>ObserverInterface</code>。</p>
+<p>27 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update(date: <span class="built_in">Date</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.now = date;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>ObserverInterface</code> 有定義 <code>update()</code>，因此要實作出 <code>update()</code>，也就是將 <code>ClockService</code> 送出的目前時間 <code>date</code>，指定給 <code>now</code>，準備 data binding 顯示。</p>
+<h3 id="AppModule">AppModule</h3><p><strong>app.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectInterfaceToken &#125; from <span class="string">'./interface/InjectionToken'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ClockService &#125; from <span class="string">'./service/clock/clock.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DigitalClockComponent &#125; from <span class="string">'./component/digital-clock/digital-clock.component'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    DigitalClockComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    ClockService,</span><br><span class="line">    &#123;provide: SubjectInterfaceToken, useExisting: ClockService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>既然在 <code>DigitalClockComponent</code> 使用 DI 注入了 <code>ClockService</code>，就必須在 <code>provider</code> 交代 interface 與 service 的關係。</p>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  ClockService,</span><br><span class="line">  &#123;provide: SubjectInterfaceToken, useExisting: ClockService&#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>當使用 <code>SubjectInterfaceToken</code>，注入 <code>ClockService</code>。</p>
+<p>由於我們希望無論有幾個 <code>觀察者</code>，都顯示 <code>相同時間</code>，因此 <code>ClockService</code> 將採用 Singleton 方式，所以使用 <code>useExisting</code>。</p>
+<h3 id="AppComponent">AppComponent</h3><p>折騰了這麼久，到底使用 Observer Pattern 的威力在哪裡 ?</p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">app-digital-clock</span>&gt;</span><span class="tag">&lt;/<span class="title">app-digital-clock</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-digital-clock</span>&gt;</span><span class="tag">&lt;/<span class="title">app-digital-clock</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 <code>AppComponent</code> 使用了 2 個 <code>DigitalClockComponent</code>，都會自己去註冊 <code>ClockService</code>，且無論使用 n 的 <code>DigitalClockComponent</code>，都不用改程式碼，達到 <code>開放封閉原則</code> 的要求。</p>
+<h3 id="Summary">Summary</h3><blockquote>
+<p>Observer Pattern</p>
+<p>當物件之間有 <code>一對多</code> 的依賴關係，且當 <code>一</code> 的 <code>主題</code> (subject) 改變時，<code>多</code> 的 <code>觀察者</code> (observer) 也必須跟著改變，此時就適合使用 <code>Observer Pattern</code></p>
+</blockquote>
+<p><img src="/images/angular/observer/observer007.svg" alt="observer007"></p>
+<p>此為 Observer Pattern 最原始的 UML class diagram，<code>主題</code> (subject) 與 <code>觀察者</code> (observer) 彼此互相依賴，為了不讓 subject 與 object 之間強耦合，採用了 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code>，分別訂出 <code>SubjectInterface</code> 與 <code>ObserverInterface</code>，讓 subject 與 object 彼此僅相依於對方訂出的 interface，如此 <code>主題</code> 就不須知道有多少 <code>觀察者</code> 正在觀察，且 <code>觀察者</code>也不須知道實際的 <code>主題</code> 為何，<code>觀察者</code> 只關心 <code>主題</code> 能不能被 <code>註冊</code>，<code>主題</code> 只關心 <code>觀察者</code> 能不能被 <code>通知</code>，如此 <code>主題</code> 與 <code>觀察者</code> 就徹底 <code>解耦合</code>了，且將來無論新增多少 <code>觀察者</code>，<code>主題</code> 與 <code>觀察者</code> 的程式碼都不用修改，符合 <code>開放封閉原則</code> 的要求。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>傳統後端 MVC 架構，Design pattern 大都用在 service，少部分機會可以用在 repository，但 controller 與 view 就很難用上，尤其是 view 幾乎與 Design Pattern 絕緣；但 Angular 將 component 給 class 化之後，又能使用 interface，使的 view 也有使用 Design Pattern 的可能。本文就是使用 component 直接當 <code>Observer</code> 使用，這使的 Design Pattern 在 Angular 應用上有全新的可能，不再只限於 service，連 component 也可以使用</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52ObserverPattern" target="_blank" rel="external">GitHub</a> 上找到</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/http-server/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-17 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>33</span></a></li> <li><a href="/tags/Design-Pattern/">Design Pattern<span>3</span></a></li> <li><a href="/tags/TypeScript/">TypeScript<span>14</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
