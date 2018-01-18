@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-17T05:03:49.281Z</updated>
+  <updated>2018-01-18T06:00:06.186Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,109 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ViewChild() Decorator 的使用方法]]></title>
+    <link href="http://oomusou.io/angular/viewchild/"/>
+    <id>http://oomusou.io/angular/viewchild/</id>
+    <published>2018-01-18T12:23:43.000Z</published>
+    <updated>2018-01-18T06:00:06.186Z</updated>
+    <content type="html"><![CDATA[<p><code>@ViewChild()</code> decorator 一開始是在存取 child component 時學到的，事實上 <code>@ViewChild()</code> 還有其他使用方法。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
+<h2 id="Component">Component</h2><hr>
+<p>使用 <code>@ViewChild()</code> 存取 child component。</p>
+<p><img src="/images/angular/viewchild/viewchild000.png" alt="viewchild000"></p>
+<ul>
+<li><code>counter</code> 初始值為 <code>2</code></li>
+<li>按 <code>+</code> 則 <code>counter</code> + 1，按 <code>-</code> 則 <code>counter</code> -1</li>
+</ul>
+<h3 id="Architecture">Architecture</h3><p><img src="/images/angular/viewchild/viewchild001.svg" alt="viewchild001"></p>
+<ul>
+<li><code>AppComponent</code> 負責處理 <code>&lt;button/&gt;</code>；<code>CounterComponent</code> 負責顯示 <code>counter</code></li>
+<li><code>AppComponent</code> 相當於 parent component，<code>CounterComponent</code> 相當於 child component</li>
+<li><code>AppComponent</code> 直接呼叫 <code>CounterComponent</code> 的 method 改變 <code>counter</code>；<code>AppComponent</code> 也可直接讀取 <code>CounterComponent</code> 的 property</li>
+</ul>
+<h3 id="Implementation">Implementation</h3><p><strong>AppComponent</strong></p>
+<p><img src="/images/angular/viewchild/viewchild002.svg" alt="viewchild002"></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAddOneClick()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onMinusOneClick()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-counter</span>&gt;</span><span class="tag">&lt;/<span class="title">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 2 個 <code>&lt;button/&gt;</code> 留在 <code>AppComponent</code> 內。</p>
+<p><code>counter</code> 的顯示由 <code>&lt;app-counter/&gt;</code> 負責。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AfterViewInit, Component, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./counter/counter.component'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  @ViewChild(CounterComponent)</span><br><span class="line">  <span class="keyword">private</span> counterComponent: CounterComponent;</span><br><span class="line"></span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onAddOneClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMinusOneClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(CounterComponent)</span><br><span class="line"><span class="keyword">private</span> counterComponent: CounterComponent;</span><br></pre></td></tr></table></figure>
+<p>Angular 允許我們在 parent component 透過 <code>@ViewChild()</code> decorator 宣告 child component，藉此存取 child component 的 public field 與 method。</p>
+<p><code>@ViewChild()</code> 第一個參數傳入 child component 的型別。</p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public field，則必須在 <code>ngAfterViewInit()</code> lifecycle hook 才可抓的到，不可以在 <code>ngOnInit()</code>。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onAddOneClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterComponent.addOne();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public method，則無此限制。</p>
+<p><strong>CounterComponent</strong></p>
+<p><img src="/images/angular/viewchild/viewchild003.svg" alt="viewchild003"></p>
+<p><strong>counter.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; counter &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>負責顯示 <code>counter</code>。</p>
+<p><strong>counter.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent &#123;</span><br><span class="line">  counter = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  addOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>沒有特別的部分需要講解。</p>
+<p><img src="images/viewchild004.svg" alt="viewchild004"></p>
+<p>當 parent component 要存取 child component 時，使用 <code>@ViewChild()</code> 宣告 child decorator，public field 可在 <code>ngAfterViewInit()</code> 存取，public method 則無此限制</p>
+<h2 id="Directive">Directive</h2><p>當使用 directive 套用在 HTML 上時，可以藉由 <code>@ViewChild()</code> 取得 directive 的物件實體，藉此控制 directive。</p>
+<h3 id="Implementation-1">Implementation</h3><p><strong>ChangeColorDirective</strong></p>
+<p><strong>change-color.directive.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AfterViewInit, Directive, ElementRef &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Directive(&#123;</span><br><span class="line">  selector: <span class="string">'[appChangeColor]'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ChangeColorDirective <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private elementRef: ElementRef) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.elementRef.nativeElement.style.color = <span class="string">'red'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  change(changedColor: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.elementRef.nativeElement.style.color = changedColor;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 Angular CLI 的 <code>ng g d ChangeColor</code> 建立 <code>ChangeColor</code> directive。</p>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">change(changedColor: <span class="built_in">string</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.elementRef.nativeElement.style.color = changedColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ChangeColor</code> directive 提供了 <code>change()</code> 修改 <code>color</code>。</p>
+<p><strong>AppComponent</strong></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">appChangeColor</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onChangeColorClick()"</span>&gt;</span>Change Color<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;p&gt;</code> 套用了 <code>ChangeColor</code> directive。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeColorDirective &#125; from <span class="string">'./change-color.directive'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  @ViewChild(ChangeColorDirective)</span><br><span class="line">  <span class="keyword">private</span> changeColorDirective: ChangeColorDirective;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  onChangeColorClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.changeColorDirective.change(<span class="string">'green'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(ChangeColorDirective)</span><br><span class="line"><span class="keyword">private</span> changeColorDirective: ChangeColorDirective;</span><br></pre></td></tr></table></figure>
+<p>為了使用 <code>ChangeColor</code> directive 的 <code>change()</code>，特別使用 <code>@ViewChild()</code> 取得 <code>ChangeColor</code> directive 的物件實體，如此就能使用 <code>change()</code>。</p>
+<h2 id="DOM_Element">DOM Element</h2><hr>
+<p>最後一個常用的 <code>@ViewChild()</code> 方式，是藉由 template reference varibale 存取 DOM element。</p>
+<h3 id="Implementation-2">Implementation</h3><p><strong>AppComponent</strong></p>
+<p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> #<span class="attribute">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onSubmitClick()"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; yourName &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>若要在 JavaScript 存取 HTML，傳統會使用 <code>id</code> 或 CSS selector，在 Angular 提出新的方法，我們可以為 HTML 加上 <code>#</code> 開頭的 template reference variable。</p>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ElementRef, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  yourName: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  @ViewChild(<span class="string">'name'</span>)</span><br><span class="line">  <span class="keyword">private</span> name: ElementRef;</span><br><span class="line"></span><br><span class="line">  onSubmitClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.yourName = <span class="keyword">this</span>.name.nativeElement.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(<span class="string">'name'</span>)</span><br><span class="line"><span class="keyword">private</span> name: ElementRef;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>@ViewChild()</code> 取得 DOM element 的物件實體，參數以字串傳入 template reference variable 的字串名稱。</p>
+<p>注意其型別為 <code>ElementRef</code>。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onSubmitClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.yourName = <span class="keyword">this</span>.name.nativeElement.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如此就能在 TypeScript 藉由 <code>@ViewChild()</code> 所宣告的變數，存取 DOM element 物件。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>傳統都只將 <code>@ViewChild()</code> 用在存取 child component，事實上 <code>@ViewChild()</code> 還可以用在存取 directive 與 DOM element。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到</p>
+<ul>
+<li><a href="https://github.com/oomusou/NG52ViewChildComponent" target="_blank" rel="external">@ViewChild with Componet</a></li>
+<li><a href="https://github.com/oomusou/NG52ViewChildDirective" target="_blank" rel="external">@ViewChild with Directive</a></li>
+<li><a href="https://github.com/oomusou/NG52ViewChildDOMElement" target="_blank" rel="external">@ViewChild() with DOM Element</a></li>
+</ul>
+<h2 id="Reference">Reference</h2><p><a href="https://www.facebook.com/concretepage" target="_blank" rel="external">Arvind Rai</a>, <a href="https://www.concretepage.com/angular-2/angular-2-viewchild-example" target="_blank" rel="external">Angular 2 @ViewChild() Example</a> </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[ViewChild 共 3 種使用方式]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使用 Angular 實現 Observer Pattern ?]]></title>
@@ -2903,119 +3006,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[深入探討 Jasmine 的 Spy]]></title>
-    <link href="http://oomusou.io/jasmine/jasmine-spy/"/>
-    <id>http://oomusou.io/jasmine/jasmine-spy/</id>
-    <published>2017-08-13T12:23:43.000Z</published>
-    <updated>2017-08-13T06:43:13.000Z</updated>
-    <content type="html"><![CDATA[<p>Jasmine 是個 mock 與 assertion 合一的 testing framework，語法優美，寫起來程式碼的可讀性很高，重點是不複雜，學習曲線平緩，Spy 為 Jasmine 最重要的部分，本文針對最常在 Angular 使用的 Spy 做整理。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Jasmine 2.6.2<br>Angular 4.3</p>
-<h2 id="建立_Spy">建立 Spy</h2><hr>
-<h3 id="spyOn()">spyOn()</h3><blockquote>
-<p>spyOn<t>(object: T, method: keyof T): Spy</t></p>
-</blockquote>
-<p>對於 class 的 method 建立 Spy。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() method`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試在 HTML <code>getTitle()</code> 是否 binding 正確。</p>
-<h3 id="spyOnProperty()">spyOnProperty()</h3><blockquote>
-<p>spyOnProperty<t>(object:T, property: keyof T, accessType: string): Spy</t></p>
-</blockquote>
-<p>對於 class 的 property 建立 Spy。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use title <span class="keyword">in</span> HTML`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOnProperty(component, <span class="string">'title'</span>, <span class="string">'get'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試在 HTML <code>title</code> 是否 binding 正確。</p>
-<h3 id="jasmine-createSpy()">jasmine.createSpy()</h3><blockquote>
-<p>createSpy(name: string, originalFn?: Function): Spy</p>
-</blockquote>
-<p>對於 function 或 arrow function 建立 Spy。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should call arrow <span class="function"><span class="keyword">function</span>`, (<span class="params"></span>) =&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> spy = jasmine.createSpy(<span class="string">'logistics'</span>);</span><br><span class="line">  target.calculateFee(<span class="literal">null</span>, spy);</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試 function 或 arrow function 是否被呼叫。</p>
-<blockquote>
-<p>若要建立在 class 內的假 method，要用 <code>spyOn()</code>；若要建立沒有 class 的假 function 或 arrow function，則要使用 <code>jasmine.createSpy()</code>。</p>
-</blockquote>
-<h2 id="Spy#and">Spy#and</h2><hr>
-<h3 id="returnValue()">returnValue()</h3><blockquote>
-<p>returnValue(val: any): Spy</p>
-</blockquote>
-<p>建立假 function 的假回傳值。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.returnValue(<span class="string">'My Todos'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'My Todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>spyOn()</code> 搭配 <code>returnValue()</code> 回傳假值，然後測試結果是否為假值。實務上有 2 個場景會使用 <code>returnValue()</code>。</p>
-<ol>
-<li>單元測試時，想要隔離相依物件，使用 <code>returnValue()</code> 建立假回傳值。</li>
-<li>整合測試時，想要測試<strong>關係</strong>，不是測試結果，藉由假資料測試 function 是否被呼叫到。</li>
-</ol>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>若只是測試關係，那有更簡單的寫法，使用 <code>spyOn()</code> 建立 Spy 之後，測試 Spy 的 <code>toHaveBeenCalled()</code> 即可，不需使用 <code>returnValue()</code>。</p>
-<h3 id="callFake()">callFake()</h3><blockquote>
-<p>callFake(fn: Function): Spy</p>
-</blockquote>
-<p>建立假 function 的假實作。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() and result is <span class="string">'my todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.callFake(() =&gt; <span class="string">'My Todos'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'My Todos'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>一般來說，<code>spyOn()</code> 搭配 <code>returnValue()</code> 已經非常夠用，若你想自行建立 Fake 取代原本 function 實作，則可使用 <code>callFake()</code>。</p>
-<h3 id="callThrough()">callThrough()</h3><blockquote>
-<p>callThrough(): Spy</p>
-</blockquote>
-<p>依然使用原本 function，但會針對此 function 做 Spy 監測。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() and result is <span class="string">'todos'</span>`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>).and.callThrough();</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">   htmlElement = debugElement.query(By.css(<span class="string">'h1'</span>)).nativeElement;</span><br><span class="line">      </span><br><span class="line">  expect(htmlElement.textContent).toBe(<span class="string">'todos'</span>);</span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>一般我們使用了 <code>spyOn()</code> 之後，就會搭配 <code>toHaveBeenCalled()</code> 測試有沒有被呼叫到即可，若你想除了驗證<strong>關係</strong>外，還順便<strong>結果</strong>，則可搭配 <code>callThrough()</code>，此時會執行實際的 function，所以可使用 <code>toBe()</code> 測試結果，但仍然保有 Spy 功能，因此也可使用 <code>toHaveBeenCalled()</code> 測試關係。</p>
-<h3 id="throwError()">throwError()</h3><blockquote>
-<p>throwError(msg: string): Spy</p>
-</blockquote>
-<p>建立假 function 的假 error。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">it(`should <span class="keyword">throw</span> error on <span class="string">'getTodos()'</span> method`, () =&gt; &#123;</span><br><span class="line">  spyOn(target, <span class="string">'getTodos'</span>).and.throwError(<span class="string">'My Error'</span>);</span><br><span class="line"></span><br><span class="line">  expect(() =&gt; &#123; target.getTodos() &#125;).toThrowError(<span class="string">'My Error'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>使用 <code>throwError()</code> 建立假 error。</p>
-<p>比較特別的是，要測試 error 時，待測 method 要放在 <code>expect()</code> 的 arrow function 內，最後用 <code>toThrowError()</code> 測試 error 是否被觸發。</p>
-<h2 id="Spy#calls">Spy#calls</h2><hr>
-<h3 id="any()">any()</h3><blockquote>
-<p>any(): boolean</p>
-</blockquote>
-<p>若 Spy 被呼叫一次以上，則傳回 <code>true</code>，否則傳回 <code>false</code>。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy.calls.any()).toBeTruthy();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試 <code>spy.calls.any()</code>，若曾被呼叫過為 <code>true</code>，否則為 <code>false</code>。</p>
-<p>這種寫法等效於：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="count()">count()</h3><blockquote>
-<p>count(): boolean</p>
-</blockquote>
-<p>傳回 Spy 被呼叫的次數。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy.calls.count()).toBe(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試 <code>spy.calls.count()</code>，可精確測試 Spy 被呼叫的次數。</p>
-<p>這種寫法等效於：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalledTimes(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="Matcher">Matcher</h2><hr>
-<h3 id="toHaveBeenCalled()">toHaveBeenCalled()</h3><blockquote>
-<p>toHaveBeenCalled(): boolean</p>
-</blockquote>
-<p>測試 function 是否被呼叫過。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle()`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試 Spy 是否被呼叫過。</p>
-<h3 id="toHaveBeenCalledTimes()">toHaveBeenCalledTimes()</h3><blockquote>
-<p>toHaveBeenCalledTimes(expected: number): boolean</p>
-</blockquote>
-<p>測試 function 是否被呼叫過 n 次。 </p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should use getTitle() <span class="keyword">for</span> once`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(component, <span class="string">'getTitle'</span>);</span><br><span class="line">  fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">  expect(spy).toHaveBeenCalledTimes(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>測試 Spy 是否被呼叫過 <code>1</code> 次。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Jasmine 的 Spy 算是 Mock 與 Spy 的合體，提供單元測試與整合測試夠用的武器，在單元測試可以藉由 Spy 隔離相依物件，在整合測試可以藉由 Spy 驗證物件之間的關係。</li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="http://keenwon.com" target="_blank" rel="external">KeenWon</a>, <a href="http://keenwon.com/1218.html" target="_blank" rel="external">Javascript测试框架Jasmine (五)：Spies</a><br><a href="https://github.com/jasmine/jasmine" target="_blank" rel="external">Jasmine</a>, <a href="https://jasmine.github.io/2.6/introduction.html" target="_blank" rel="external">Jasmine Introduction</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[整理最常用的 Jasmine Spy]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
-    
-      <category term="TDD" scheme="http://oomusou.io/tags/TDD/"/>
     
   </entry>
   
