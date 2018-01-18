@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-18T06:00:06.186Z</updated>
+  <updated>2018-01-18T06:02:06.633Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/angular/viewchild/"/>
     <id>http://oomusou.io/angular/viewchild/</id>
     <published>2018-01-18T12:23:43.000Z</published>
-    <updated>2018-01-18T06:00:06.186Z</updated>
+    <updated>2018-01-18T06:02:06.633Z</updated>
     <content type="html"><![CDATA[<p><code>@ViewChild()</code> decorator 一開始是在存取 child component 時學到的，事實上 <code>@ViewChild()</code> 還有其他使用方法。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -97,16 +97,19 @@
 <p>14 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onSubmitClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.yourName = <span class="keyword">this</span>.name.nativeElement.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如此就能在 TypeScript 藉由 <code>@ViewChild()</code> 所宣告的變數，存取 DOM element 物件。</p>
-<h2 id="Conclusion">Conclusion</h2><ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
 <li>傳統都只將 <code>@ViewChild()</code> 用在存取 child component，事實上 <code>@ViewChild()</code> 還可以用在存取 directive 與 DOM element。</li>
 </ul>
-<h2 id="Sample_Code">Sample Code</h2><p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到</p>
 <ul>
 <li><a href="https://github.com/oomusou/NG52ViewChildComponent" target="_blank" rel="external">@ViewChild with Componet</a></li>
 <li><a href="https://github.com/oomusou/NG52ViewChildDirective" target="_blank" rel="external">@ViewChild with Directive</a></li>
 <li><a href="https://github.com/oomusou/NG52ViewChildDOMElement" target="_blank" rel="external">@ViewChild() with DOM Element</a></li>
 </ul>
-<h2 id="Reference">Reference</h2><p><a href="https://www.facebook.com/concretepage" target="_blank" rel="external">Arvind Rai</a>, <a href="https://www.concretepage.com/angular-2/angular-2-viewchild-example" target="_blank" rel="external">Angular 2 @ViewChild() Example</a> </p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.facebook.com/concretepage" target="_blank" rel="external">Arvind Rai</a>, <a href="https://www.concretepage.com/angular-2/angular-2-viewchild-example" target="_blank" rel="external">Angular 2 @ViewChild() Example</a> </p>
 ]]></content>
     <summary type="html">
     <![CDATA[ViewChild 共 3 種使用方式]]>
