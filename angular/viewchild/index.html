@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="ViewChild 共 3 種使用方式">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-18T06:02:06.633Z">
+<meta property="og:updated_time" content="2018-01-19T02:24:54.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ViewChild() Decorator 的使用方法">
 <meta name="twitter:description" content="ViewChild 共 3 種使用方式">
@@ -150,7 +150,7 @@
 <p><strong>counter.component.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent &#123;</span><br><span class="line">  counter = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  addOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>沒有特別的部分需要講解。</p>
-<p><img src="images/viewchild004.svg" alt="viewchild004"></p>
+<p><img src="/images/angular/viewchild/viewchild004.svg" alt="viewchild004"></p>
 <p>當 parent component 要存取 child component 時，使用 <code>@ViewChild()</code> 宣告 child decorator，public field 可在 <code>ngAfterViewInit()</code> 存取，public method 則無此限制</p>
 <h2 id="Directive">Directive</h2><p>當使用 directive 套用在 HTML 上時，可以藉由 <code>@ViewChild()</code> 取得 directive 的物件實體，藉此控制 directive。</p>
 <h3 id="Implementation-1">Implementation</h3><p><strong>ChangeColorDirective</strong></p>
