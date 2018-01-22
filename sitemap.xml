@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/lite-server/</loc>
+    <lastmod>2018-01-22T14:05:50.220Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/viewchild/</loc>
     <lastmod>2018-01-19T02:24:54.678Z</lastmod>
   </url>
@@ -9,11 +14,6 @@
   <url>
     <loc>http://oomusou.io/angular/observer/</loc>
     <lastmod>2018-01-17T05:03:49.281Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/http-server/</loc>
-    <lastmod>2018-01-15T14:57:07.304Z</lastmod>
   </url>
   
   <url>
