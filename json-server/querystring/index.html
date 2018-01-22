@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何以 JSON Server 模擬 Query String API ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="讓 JSON Server 的應用更全面">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="讓 JSON Server 的應用更全面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何以 JSON Server 模擬 Query String API ?">
+<meta property="og:url" content="http://oomusou.io/json-server/querystring/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="讓 JSON Server 的應用更全面">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-22T15:41:00.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何以 JSON Server 模擬 Query String API ?">
+<meta name="twitter:description" content="讓 JSON Server 的應用更全面">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何以 JSON Server 模擬 Query String API ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 讓 JSON Server 的應用更全面			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_routes-json"><span class="toc-article-text">新增 routes.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Postman_測試"><span class="toc-article-text">使用 Postman 測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>雖然我們都盡量希望  API 以 URI 的方式表示，但實務上仍有一些 API 使用老式的 query string，我們該如何使用 JSON Server 模擬這類的  API 呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>JSON Server 0.12.0</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/json-server/querystring/qs000.png" alt="qs000"></p>
+<p>Server 端並沒有提供類似 <code>http://localhost/posts/1</code> 使用 URI 的 API，而是提供 <code>http://localhost:3000/api/posts?id=1</code> 使用 query string 的 API</p>
+<h2 id="Task">Task</h2><hr>
+<p>希望能夠使用 JSON Server 模擬出 query string 風格的 API，讓前端與後端可以同時開發。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="新增_routes-json">新增 <code>routes.json</code></h3><p><strong>routes.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">/api/posts</span>": <span class="value"><span class="string">"/posts"</span></span>,</span><br><span class="line">  "<span class="attribute">/api/posts?id=:id</span>": <span class="value"><span class="string">"/posts/:id"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>JSON Server 本身只提供 URI 風格的 API，必須靠自訂 route，將 <code>posts?id=:id</code> 轉成 <code>/posts/:id</code>， 其中 <code>:id</code> 為變數。</p>
+<p><img src="/images/json-server/querystring/qs001.png" alt="qs001"></p>
+<ol>
+<li>新增 <code>routes.json</code> </li>
+<li>新增 <code>&quot;/api/posts?id=:id&quot;: &quot;/posts/:id&quot;</code>，將 query string 對應到 URI，其中 <code>:id</code> 為變數</li>
+</ol>
+<p>###啟動 JSON Sever</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject $ json-server ./json</span><span class="regexp">/db.json --routes ./json</span><span class="regexp">/routes.json</span></span><br></pre></td></tr></table></figure>
+<p>啟動 JSON Server，除了 <code>db.json</code> 外，另外加上 <code>--routes</code> 參數與 <code>routes.json</code>。</p>
+<p><img src="/images/json-server/querystring/qs002.png" alt="qs002"></p>
+<h3 id="使用_Postman_測試">使用 Postman 測試</h3><p><img src="/images/json-server/querystring/qs000.png" alt="qs000"></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>只要透過簡單的 route 設定，JSON Server 也能模擬出 query string 風格的 API</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在 <a href="https://github.com/oomusou/JsonServerQueryString" target="_blank" rel="external">GitHub</a> 上找到</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/viewchild/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-22 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>35</span></a></li> <li><a href="/tags/JSON-Server/">JSON Server<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
