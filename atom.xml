@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-22T15:41:00.620Z</updated>
+  <updated>2018-01-22T15:51:43.143Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/json-server/querystring/"/>
     <id>http://oomusou.io/json-server/querystring/</id>
     <published>2018-01-22T12:23:43.000Z</published>
-    <updated>2018-01-22T15:41:00.620Z</updated>
+    <updated>2018-01-22T15:51:43.143Z</updated>
     <content type="html"><![CDATA[<p>雖然我們都盡量希望  API 以 URI 的方式表示，但實務上仍有一些 API 使用老式的 query string，我們該如何使用 JSON Server 模擬這類的  API 呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -38,8 +38,7 @@
 <li>新增 <code>routes.json</code> </li>
 <li>新增 <code>&quot;/api/posts?id=:id&quot;: &quot;/posts/:id&quot;</code>，將 query string 對應到 URI，其中 <code>:id</code> 為變數</li>
 </ol>
-<p>###啟動 JSON Sever</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject $ json-server ./json</span><span class="regexp">/db.json --routes ./json</span><span class="regexp">/routes.json</span></span><br></pre></td></tr></table></figure>
+<h3 id="啟動_JSON_Sever">啟動 JSON Sever</h3><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject <span class="variable">$json-server</span> ./json/db.json --routes ./json/routes.json</span><br></pre></td></tr></table></figure>
 <p>啟動 JSON Server，除了 <code>db.json</code> 外，另外加上 <code>--routes</code> 參數與 <code>routes.json</code>。</p>
 <p><img src="/images/json-server/querystring/qs002.png" alt="qs002"></p>
 <h3 id="使用_Postman_測試">使用 Postman 測試</h3><p><img src="/images/json-server/querystring/qs000.png" alt="qs000"></p>

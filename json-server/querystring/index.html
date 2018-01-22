@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="讓 JSON Server 的應用更全面">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-22T15:41:00.620Z">
+<meta property="og:updated_time" content="2018-01-22T15:51:43.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何以 JSON Server 模擬 Query String API ?">
 <meta name="twitter:description" content="讓 JSON Server 的應用更全面">
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_routes-json"><span class="toc-article-text">新增 routes.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Postman_測試"><span class="toc-article-text">使用 Postman 測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#新增_routes-json"><span class="toc-article-text">新增 routes.json</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#啟動_JSON_Sever"><span class="toc-article-text">啟動 JSON Sever</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用_Postman_測試"><span class="toc-article-text">使用 Postman 測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -125,8 +125,7 @@
 <li>新增 <code>routes.json</code> </li>
 <li>新增 <code>&quot;/api/posts?id=:id&quot;: &quot;/posts/:id&quot;</code>，將 query string 對應到 URI，其中 <code>:id</code> 為變數</li>
 </ol>
-<p>###啟動 JSON Sever</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/MyProject $ json-server ./json</span><span class="regexp">/db.json --routes ./json</span><span class="regexp">/routes.json</span></span><br></pre></td></tr></table></figure>
+<h3 id="啟動_JSON_Sever">啟動 JSON Sever</h3><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject <span class="variable">$json-server</span> ./json/db.json --routes ./json/routes.json</span><br></pre></td></tr></table></figure>
 <p>啟動 JSON Server，除了 <code>db.json</code> 外，另外加上 <code>--routes</code> 參數與 <code>routes.json</code>。</p>
 <p><img src="/images/json-server/querystring/qs002.png" alt="qs002"></p>
 <h3 id="使用_Postman_測試">使用 Postman 測試</h3><p><img src="/images/json-server/querystring/qs000.png" alt="qs000"></p>
