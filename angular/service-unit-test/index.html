@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何對 Service 單元測試 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 HttpTestingController 將大幅簡化單元測試">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 HttpTestingController 將大幅簡化單元測試">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何對 Service 單元測試 ?">
+<meta property="og:url" content="http://oomusou.io/angular/service-unit-test/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 HttpTestingController 將大幅簡化單元測試">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-01-28T15:16:41.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何對 Service 單元測試 ?">
+<meta name="twitter:description" content="使用 HttpTestingController 將大幅簡化單元測試">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何對 Service 單元測試 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 HttpTestingController 將大幅簡化單元測試			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PostService"><span class="toc-article-text">PostService</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#AppComponent"><span class="toc-article-text">AppComponent</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>凡與顯示相關邏輯，我們會寫在 component；凡與資料相關邏輯，我們會寫在 service。而 service 最常見的應用，就是透過 <code>HttpClient</code> 存取 API。</p>
+<p>對於 service 單元測試而言，我們必須對 <code>HttpClient</code> 加以隔離；而對 component 單元測試而言，我們必須對 <code>service</code> 加以隔離，我們該如何對 service 與 component 進行單元測試呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Angular CLI 1.6.2<br>Node.js 8.9.4<br>Angular 5.2.2</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/service-unit-test/service000.png" alt="service000"></p>
+<ul>
+<li>Header 會顯示 <code>Welcome to app!</code></li>
+<li>程式一開始會顯示 <code>所有 post</code></li>
+<li>按 <code>Add Post</code> 會呼叫 <code>POST</code> API <code>新增 post</code></li>
+<li>按 <code>List Posts</code> 會呼叫 <code>GET</code> API 回傳 <code>所有 post</code>    </li>
+</ul>
+<h2 id="Task">Task</h2><hr>
+<ul>
+<li>目前有 <code>PostService</code> 使用 <code>HttpClient</code> 存取 API，為了對 <code>PostService</code> 做 <code>單元測試</code>，必須對 <code>HttpClient</code> 加以隔離</li>
+<li>目前有 <code>AppComponent</code> 使用 <code>PostService</code>， 為了對 <code>AppComponent</code> 做 <code>單元測試</code>，必須對 <code>PostService</code> 加以隔離</li>
+</ul>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/angular/service-unit-test/service001.svg" alt="service001"></p>
+<ul>
+<li><code>AppComponent</code> 負責 <code>新增 post</code> 與 <code>顯示 post</code> 的介面顯示；而 <code>PostService</code> 負責 API 的串接</li>
+<li>根據 <code>依賴反轉原則</code>，<code>AppComponent</code> 不應該直接相依於 <code>PostService</code>，而是兩者相依於 interface</li>
+<li>根據 <code>介面隔離原則</code>，<code>AppComponent</code> 只相依於它所需要的 interface，因此以 <code>AppComponent</code> 的角度訂出 <code>PostInterface</code>，且 <code>PostService</code> 必須實作此 interface</li>
+<li>因為 <code>AppComponent</code> 與 <code>PostService</code> 都相依於 <code>PostInterface</code>，兩者都只知道 <code>PostInterface</code> 而已，而不知道彼此，因此 <code>AppComponent</code> 與  <code>PostService</code> 徹底解耦合</li>
+<li>透過 DI 將實作 <code>PostInterface</code> 的 <code>PostService</code> 注入到 <code>AppComponent</code> ，且將 <code>HttpClient</code> 注入到 <code>PostService</code></li>
+</ul>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><code>AppComponent</code> 與 <code>PostService</code> 的實作並非本文的重點，本文的重點在於實作 <code>AppComponent</code> 與 <code>PostService</code> 的 <code>單元測試</code> 部分。</p>
+<h3 id="PostService">PostService</h3><p><img src="/images/angular/service-unit-test/service002.svg" alt="service002"></p>
+<p><strong>post.service.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; TestBed &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostService &#125; from <span class="string">'./post.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HttpClientTestingModule, HttpTestingController &#125; from <span class="string">'@angular/common/http/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostInterfaceToken &#125; from <span class="string">'../interface/injection.token'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../../model/post.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; environment &#125; from <span class="string">'../../environments/environment'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostInterface &#125; from <span class="string">'../interface/post.interface'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'PostService'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> postService: PostInterface;</span><br><span class="line">  <span class="keyword">let</span> mockHttpClient: HttpTestingController;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [</span><br><span class="line">        HttpClientTestingModule</span><br><span class="line">      ],</span><br><span class="line">      providers: [</span><br><span class="line">        &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    postService = TestBed.get(PostInterfaceToken, PostService);</span><br><span class="line">    mockHttpClient = TestBed.get(HttpTestingController);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should be created'</span>, () =&gt; &#123;</span><br><span class="line">    expect(PostService).toBeTruthy();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should list all posts`, () =&gt; &#123;</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    <span class="keyword">const</span> expected: Post[] = [</span><br><span class="line">      &#123;</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">        author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    postService.listPosts$().subscribe(posts =&gt; &#123;</span><br><span class="line">      <span class="comment">/** assert */</span></span><br><span class="line">      expect(posts).toEqual(expected);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** arrange */</span></span><br><span class="line">    <span class="keyword">const</span> mockResponse: Post[] = [</span><br><span class="line">      &#123;</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">        author: <span class="string">'Eric Gamma'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    mockHttpClient.expectOne(&#123;</span><br><span class="line">      url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">      method: <span class="string">'GET'</span></span><br><span class="line">    &#125;).flush(mockResponse);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should add post`, () =&gt; &#123;</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    <span class="keyword">const</span> expected: Post = &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'OOP'</span>,</span><br><span class="line">      author: <span class="string">'Sam'</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    postService.addPost(expected).subscribe(post =&gt; &#123;</span><br><span class="line">      <span class="comment">/** assert */</span></span><br><span class="line">      expect(post).toBe(expected);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** arrange */</span></span><br><span class="line">    mockHttpClient.expectOne(&#123;</span><br><span class="line">      url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">      method: <span class="string">'POST'</span></span><br><span class="line">    &#125;).flush(expected);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  afterEach(() =&gt; &#123;</span><br><span class="line">    mockHttpClient.verify();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TestBed.configureTestingModule(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    HttpClientTestingModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Angular 有 module 觀念，若使用到了其他 module，必須在 <code>imports</code> 設定；若使用到 DI，則必須在 <code>providers</code> 設定。</p>
+<p>若只有一個 module，則在 <code>AppModule</code> 設定。</p>
+<p>但是單元測試時，並沒有使用 <code>AppModule</code> 的設定，因為我們可能在測試時使用其他替代 module，也可能自己實作 fake 另外 DI。</p>
+<p>Angular 提供了 <code>TestBed.configureTestingModule()</code>，讓我們另外設定跑測試時的 <code>imports</code> 與 <code>providers</code> 部分。</p>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  HttpClientTestingModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>原本 <code>HttpClient</code> 使用的是 <code>HttpClientModule</code>，這會使得 <code>HttpClient</code> 真的透過網路去打 API，這就不符合單元測試 <code>隔離</code> 的要求，因此 Angular 另外提供 <code>HttpClientTestingModule</code> 取代 <code>HttpClientModule</code>。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>由於我們要測試的就是 <code>PostService</code>，因此 <code>PostService</code> 也必須由 DI 幫我們建立。</p>
+<p>但因爲 <code>PostService</code> 是基於 <code>PostInterface</code> 建立，因此必須透過 <code>PostInterfaceToken</code> mapping 到 <code>PostService</code>。</p>
+<p>23 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postService = TestBed.get(PostInterfaceToken, PostService);</span><br><span class="line">mockHttpClient = TestBed.get(HttpTestingController);</span><br></pre></td></tr></table></figure>
+<p>由 <code>providers</code> 設定好 interface 與 class 的 mapping 關係後，我們必須透過 DI 建立 <code>postService</code> 與 <code>mockHttpClient</code>。</p>
+<p>其中 <code>HttpTestingController</code> 相當於 mock 版的 <code>HttpClient</code>，因此取名為 <code>mockHttpClient</code>。</p>
+<blockquote>
+<p>TestBed.get() 其實相當於 <code>new</code>，只是這是藉由 DI 幫我們 <code>new</code> 而已</p>
+</blockquote>
+<p>31 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">it(`should list all posts`, () =&gt; &#123;</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  <span class="keyword">const</span> expected: Post[] = [</span><br><span class="line">    &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">      author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">    &#125;</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  postService.listPosts$().subscribe(posts =&gt; &#123;</span><br><span class="line">    <span class="comment">/** assert */</span></span><br><span class="line">    expect(posts).toEqual(expected);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** arrange */</span></span><br><span class="line">  <span class="keyword">const</span> mockResponse: Post[] = [</span><br><span class="line">    &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">      author: <span class="string">'Eric Gamma'</span></span><br><span class="line">    &#125;</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  mockHttpClient.expectOne(&#123;</span><br><span class="line">    url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">    method: <span class="string">'GET'</span></span><br><span class="line">  &#125;).flush(mockResponse);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>先談談如何測試 <code>GET</code>。</p>
+<p>3A 原則的 <code>arrange</code> 習慣都會寫在最前面，但在 service 的單元測試時，<code>arrange</code> 必須寫在最後面，否則會執行錯誤，稍後會解釋原因。</p>
+<p>32 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** act */</span></span><br><span class="line"><span class="keyword">const</span> expected: Post[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    id: <span class="number">1</span>,</span><br><span class="line">    title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">    author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">postService.listPosts$().subscribe(posts =&gt; &#123;</span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(posts).toEqual(expected);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>直接對 <code>PostService.listPost$()</code> 測試，由於 <code>listPost$()</code> 回傳 <code>Observable</code>，因此 <code>expect()</code> 必須寫在 <code>subscribe()</code> 內。</p>
+<p>將預期的測試結果寫在 <code>expected</code> 內。</p>
+<blockquote>
+<p>一般 <code>Observable</code> 會在 <code>subscribe()</code> 後執行，不過在 <code>HttpTestingController</code> 的設計裡，<code>subscribe()</code> 會在 <code>flush()</code> 才執行，稍後會看到 <code>flush()</code>，所以此時並還沒有執行 <code>expect()</code> 測試</p>
+</blockquote>
+<p>46 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** arrange */</span></span><br><span class="line"><span class="keyword">const</span> mockResponse: Post[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    id: <span class="number">1</span>,</span><br><span class="line">    title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">    author: <span class="string">'Eric Gamma'</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">mockHttpClient.expectOne(&#123;</span><br><span class="line">  url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">  method: <span class="string">'GET'</span></span><br><span class="line">&#125;).flush(mockResponse);</span><br></pre></td></tr></table></figure>
+<p>之前已經使用 <code>HttpClientTestingModule</code> 取代 <code>HttpClient</code>，<code>HttpTestingController</code> 取代 <code>HttpClient</code>，這只能確保呼叫 API 時不用透過網路。</p>
+<p>還要透過 <code>expectOne()</code> 設定要 mock 的 URI 與 action，之所以取名為 <code>expectOne()</code>，就是期望有人真的呼叫這個 URI <code>一次</code>，且必須為 <code>GET</code>，若沒有呼叫這個 URI 或者不是 <code>GET</code>，將造成單元測試 <code>紅燈</code>。</p>
+<p>這也是為什麼 <code>HttpTestingController</code> 的設計是 <code>act</code> 與 <code>assert</code> 要先寫，最後再寫 <code>arrange</code>，因為 <code>HttpTestingController</code> 本身也有 <code>assert</code> 功能，必須有 <code>act</code>，才能知道 <code>assert</code> URI 與 GET 有沒有錯誤。</p>
+<p>最後使用 <code>flush()</code> 設定 mock 的回傳值，<code>flush</code> 英文就是 <code>沖水</code>，當 <code>HttpTestingController</code> 將 <code>mockResponse</code> 沖出去後，才會執行 <code>subscribe()</code> 內的 <code>expect()</code> 測試。</p>
+<blockquote>
+<p>也就是說若你忘了寫 <code>flush()</code>，其實單元測試也會 <code>綠燈</code>，但此時的綠燈並不是真的測試通過，而是根本沒有執行到 <code>subscribe()</code> 內的 <code>expect()</code>。</p>
+</blockquote>
+<p>81 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">afterEach(() =&gt; &#123;</span><br><span class="line">  mockHttpClient.verify();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>實務上可能真的忘了寫 <code>expectOne()</code> 與  <code>flush()</code>，導致 <code>subscribe()</code> 內的 <code>expect()</code> 根本沒跑到而造成單元測試 <code>綠燈</code>，因此必須在每個單元測試跑完補上 <code>mockHttpClient.verify()</code>，若有任何 API request 卻沒有經過 <code>expectOne()</code> 與 <code>flush()</code> 測試，則 <code>verify()</code> 會造成單元測試 <code>紅燈</code>，藉以彌補忘了寫 <code>expectOne()</code> 與 <code>flush()</code> 的人為錯誤。</p>
+<blockquote>
+<p>Q : 我們在 <code>listPosts$()</code> 的單元測試到底測試了什麼 ?</p>
+</blockquote>
+<ul>
+<li>若 service 的 API 與 mock 不同，會出現單元測試 <code>紅燈</code>，可能是 service 的 API 錯誤</li>
+<li>若 service 的 action 與 mock 不同，會出現單元測試 <code>紅燈</code>，可能是 service 的 action 錯誤</li>
+<li>若 service 的 response 與 expected 不同，可能是 service 的邏輯錯誤</li>
+</ul>
+<p>61 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">it(`should add post`, () =&gt; &#123;</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    <span class="keyword">const</span> expected: Post = &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'OOP'</span>,</span><br><span class="line">      author: <span class="string">'Sam'</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    postService.addPost(expected).subscribe(post =&gt; &#123;</span><br><span class="line">      <span class="comment">/** assert */</span></span><br><span class="line">      expect(post).toBe(expected);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** arrange */</span></span><br><span class="line">    mockHttpClient.expectOne(&#123;</span><br><span class="line">      url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">      method: <span class="string">'POST'</span></span><br><span class="line">    &#125;).flush(expected);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>再來談談如何測試 <code>POST</code>。</p>
+<p>62 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** act */</span></span><br><span class="line"><span class="keyword">const</span> expected: Post = &#123;</span><br><span class="line">  id: <span class="number">1</span>,</span><br><span class="line">  title: <span class="string">'OOP'</span>,</span><br><span class="line">  author: <span class="string">'Sam'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">postService.addPost(expected).subscribe(post =&gt; &#123;</span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(post).toBe(expected);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>直接對 <code>PostService.addPost()</code> 測試，由於 <code>addPost()</code> 回傳 <code>Observable</code>，因此 <code>expect()</code> 必須寫在 <code>subscribe()</code> 內。</p>
+<p>將預期的測試結果寫在 <code>expected</code> 內。</p>
+<p>74 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** arrange */</span></span><br><span class="line">mockHttpClient.expectOne(&#123;</span><br><span class="line">  url: `$&#123;environment.apiServer&#125;/posts`,</span><br><span class="line">  method: <span class="string">'POST'</span></span><br><span class="line">&#125;).flush(expected);</span><br></pre></td></tr></table></figure>
+<p>因為要 mock <code>POST</code>，因此 <code>method</code> 部分改為 <code>POST</code>，其他部分與 <code>GET</code> 部分完全相同。</p>
+<blockquote>
+<p>Q : 我們在 <code>addPost()</code> 到底測試了什麼 ?</p>
+</blockquote>
+<ul>
+<li>若 service 的 API 與 mock 不同，會出現單元測試 <code>紅燈</code>，可能是 service 的 API 錯誤</li>
+<li>若 service 的 action 與 mock 不同，會出現單元測試 <code>紅燈</code>，可能是 service 的 action 錯誤</li>
+<li>若 service 的 response 與 expected 不同，可能是 service 的邏輯錯誤</li>
+</ul>
+<p><img src="/images/angular/service-unit-test/service004.png" alt="service004"></p>
+<p>使用 Wallaby.js 通過所有 service 單元測試。</p>
+<h3 id="AppComponent">AppComponent</h3><p><img src="/images/angular/service-unit-test/service003.svg" alt="service003"></p>
+<p><strong>app.component.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; async, ComponentFixture, TestBed &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HttpClientTestingModule &#125; from <span class="string">'@angular/common/http/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostService &#125; from <span class="string">'./service/post.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostInterfaceToken &#125; from <span class="string">'./interface/injection.token'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DebugElement &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'rxjs/add/observable/of'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostInterface &#125; from <span class="string">'./interface/post.interface'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'AppComponent'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture: ComponentFixture&lt;AppComponent&gt;;</span><br><span class="line">  <span class="keyword">let</span> appComponent: AppComponent;</span><br><span class="line">  <span class="keyword">let</span> debugElement: DebugElement;</span><br><span class="line">  <span class="keyword">let</span> htmlElement: HTMLElement;</span><br><span class="line">  <span class="keyword">let</span> postService: PostInterface;</span><br><span class="line"></span><br><span class="line">  beforeEach(async(() =&gt; &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      declarations: [</span><br><span class="line">        AppComponent</span><br><span class="line">      ],</span><br><span class="line">      imports: [</span><br><span class="line">        FormsModule,</span><br><span class="line">        HttpClientTestingModule</span><br><span class="line">      ],</span><br><span class="line">      providers: [</span><br><span class="line">        &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;).compileComponents();</span><br><span class="line"></span><br><span class="line">    fixture = TestBed.createComponent(AppComponent);</span><br><span class="line">    appComponent = fixture.componentInstance;</span><br><span class="line">    debugElement = fixture.debugElement;</span><br><span class="line">    htmlElement = debugElement.nativeElement;</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">    postService = TestBed.get(PostInterfaceToken, PostService);</span><br><span class="line">  &#125;));</span><br><span class="line">  </span><br><span class="line">  it(<span class="string">'should create the app'</span>, async(() =&gt; &#123;</span><br><span class="line">    expect(appComponent).toBeTruthy();</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(`should have as title <span class="string">'app'</span>`, async(() =&gt; &#123;</span><br><span class="line">    expect(appComponent.title).toEqual(<span class="string">'app'</span>);</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should render title in a h1 tag'</span>, async(() =&gt; &#123;</span><br><span class="line">    expect(htmlElement.querySelector(<span class="string">'h1'</span>).textContent).toContain(<span class="string">'Welcome to app!'</span>);</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  it(`should list posts`, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> expected$ = Observable.of([</span><br><span class="line">      &#123;</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">        author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** arrange */</span></span><br><span class="line">    spyOn(postService, <span class="string">'listPosts$'</span>).and.returnValue(expected$);</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    appComponent.onListPostsClick();</span><br><span class="line">    <span class="comment">/** assert */</span></span><br><span class="line">    expect(appComponent.posts$).toEqual(expected$);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should add post`, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> expected$ = Observable.of(</span><br><span class="line">      &#123;</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">        author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** arrange */</span></span><br><span class="line">    <span class="keyword">const</span> spy = spyOn(postService, <span class="string">'addPost'</span>).and.returnValue(expected$);</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    appComponent.onAddPostClick();</span><br><span class="line">    <span class="comment">/** assert */</span></span><br><span class="line">    expect(spy).toHaveBeenCalled();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">TestBed.configureTestingModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpClientTestingModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;).compileComponents();</span><br></pre></td></tr></table></figure>
+<p>跑 component 單元測試時，一樣沒有使用 <code>AppModule</code> 的設定，因為我們可能在測試時使用其他替代 module，也可能自己實作 fake 另外 DI。</p>
+<p>因此一樣使用 <code>TestBed.configureTestingModule()</code>，讓我們另外設定跑測試時的 <code>imports</code> 與 <code>providers</code> 部分。</p>
+<p>24 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  FormsModule,</span><br><span class="line">  HttpClientTestingModule</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>因為在 component 使用了 two-way binding，因此要加上 <code>FormsModule</code>。</p>
+<blockquote>
+<p>Q : 為什麼要 import <code>HttpClientTestingModule</code> 呢 ?</p>
+</blockquote>
+<p><code>AppComponent</code> 依賴的是 <code>PostService</code>，看起來與 <code>HttpClient</code> 無關，應該不需要注入 <code>HttpClientTestingModule</code>。</p>
+<p>但其實 DI 並不是這樣運作，雖然 <code>AppComponent</code> 只用到了 <code>PostService</code>，但 DI 會將 <code>PostService</code> 下所有的 dependency 都一起注入，所以也要 import <code>HttpClientTestingModule</code>。</p>
+<p>28 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  &#123;provide: PostInterfaceToken, useClass: PostService&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>由於我們要測試的就是 <code>PostService</code>，因此 <code>PostService</code> 也必須由 DI 幫我們建立。</p>
+<p>但因爲 <code>PostService</code> 是基於 <code>PostInterface</code> 建立，因此必須透過 <code>PostInterfaceToken</code> mapping 到 <code>PostService</code>。</p>
+<p>39 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postService = TestBed.get(PostInterfaceToken, PostService);</span><br></pre></td></tr></table></figure>
+<p>由 <code>providers</code> 設定好 interface 與 class 的 mapping 關係後，我們必須透過 DI 建立 <code>postService</code> 與。</p>
+<p>53 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">it(`should list posts`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> expected$ = Observable.of([</span><br><span class="line">    &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">      author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** arrange */</span></span><br><span class="line">  spyOn(postService, <span class="string">'listPosts$'</span>).and.returnValue(expected$);</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  appComponent.onListPostsClick();</span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(appComponent.posts$).toEqual(expected$);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>55 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> expected$ = Observable.of([</span><br><span class="line">  &#123;</span><br><span class="line">    id: <span class="number">1</span>,</span><br><span class="line">    title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">    author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">  &#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>透過 <code>Observable.of()</code> 將 <code>Post[]</code> 轉成 <code>Observable&lt;Post[]&gt;</code>。</p>
+<p>63 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** arrange */</span></span><br><span class="line">spyOn(postService, <span class="string">'listPosts$'</span>).and.returnValue(expected$);</span><br></pre></td></tr></table></figure>
+<p>由於我們要隔離 <code>PostService</code>，因此使用 <code>spyOn()</code> 對 <code>PostService</code> 的 <code>listPost$()</code> 加以 mock，並設定其假的回傳值。</p>
+<p>65 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** act */</span></span><br><span class="line">appComponent.onListPostsClick();</span><br></pre></td></tr></table></figure>
+<p>實際測試 <code>onListPostClick()</code>。</p>
+<p>67 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** assert */</span></span><br><span class="line">expect(appComponent.posts$).toEqual(expected$);</span><br></pre></td></tr></table></figure>
+<p>測試 <code>AppComponent.post$</code> 是否如預期。</p>
+<blockquote>
+<p>Q : 我們在 <code>onListPostsClick()</code> 到底測試了什麼 ?</p>
+</blockquote>
+<ul>
+<li>若 component 的 return 與 expected 不同，可能是 component 的邏輯錯誤</li>
+</ul>
+<p>70 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">it(`should add post`, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> expected$ = Observable.of(</span><br><span class="line">    &#123;</span><br><span class="line">      id: <span class="number">1</span>,</span><br><span class="line">      title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">      author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** arrange */</span></span><br><span class="line">  <span class="keyword">const</span> spy = spyOn(postService, <span class="string">'addPost'</span>).and.returnValue(expected$);</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  appComponent.onAddPostClick();</span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(spy).toHaveBeenCalled();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>72 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> expected$ = Observable.of(</span><br><span class="line">  &#123;</span><br><span class="line">    id: <span class="number">1</span>,</span><br><span class="line">    title: <span class="string">'Design Pattern'</span>,</span><br><span class="line">    author: <span class="string">'Dr. Eric Gamma'</span></span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>透過 <code>Observable.of()</code> 將 <code>Post</code> 轉成 <code>Observable&lt;Post&gt;</code>。</p>
+<p>80 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** arrange */</span></span><br><span class="line"><span class="keyword">const</span> spy = spyOn(postService, <span class="string">'addPost'</span>).and.returnValue(expected$);</span><br></pre></td></tr></table></figure>
+<p>由於我們要隔離 <code>PostService</code>，因此使用 <code>spyOn()</code> 對 <code>PostService</code> 的 <code>addPost</code> 加以 mock，並設定其假的回傳值。</p>
+<p>82 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** act */</span></span><br><span class="line">appComponent.onAddPostClick();</span><br></pre></td></tr></table></figure>
+<p>實際測試 <code>onAddPostClick()</code>。</p>
+<p>84 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** assert */</span></span><br><span class="line">expect(spy).toHaveBeenCalled();</span><br></pre></td></tr></table></figure>
+<p>由於 <code>onAddPostClick()</code> 回傳值為 <code>void</code>，且 <code>PostService.addPost()</code> 已經有單元測試保護，因此只要測試 <code>PostService.addPost()</code> 曾經被呼叫過即可。</p>
+<p><img src="/images/angular/service-unit-test/service005.png" alt="service005"></p>
+<p>使用 Wallaby.js 通過所有 component 單元測試。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>當 component 使用了 service，若要單元測試就牽涉到 DI 與 <code>spyOn()</code></li>
+<li>Service 單元測試可透過 <code>HttpTestingController</code> 加以隔離 <code>HttpClient</code></li>
+<li>Component 單元測試可透過 <code>spyOn()</code> 加以隔離 service</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52ServiceUnitTest" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/testing" target="_blank" rel="external">Testing</a><br><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/http" target="_blank" rel="external">HttpClient</a><a href="../../../../MyBlog/source/_posts/service-unit-test.md">service-unit-test.md</a><br><a href="https://offering.solutions/blog/author/" target="_blank" rel="external">Fabian Gosebrink</a>, <a href="https://offering.solutions/blog/articles/2017/10/02/testing-angular-2-http-service/" target="_blank" rel="external">Testing Angular Http Service</a><br><a href="https://medium.com/@paynoattn?source=post_header_lockup" target="_blank" rel="external">Chris Pawlukiewicz</a>, <a href="https://medium.com/@paynoattn/simple-observable-unit-testing-in-angular2-43c4f4a0bfe2" target="_blank" rel="external">Simple Observable Unit Testing in Angular 2</a><br>Jesse Palmer, <a href="https://www.manning.com/books/testing-angular-applications" target="_blank" rel="external">Testing Angular Applications</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/json-server/querystring/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-01-28 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>36</span></a></li> <li><a href="/tags/Angular-Testing/">Angular Testing<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
