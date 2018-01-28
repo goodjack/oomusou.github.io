@@ -1346,11 +1346,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[使用 Observable Data Service]]></title>
+    <title><![CDATA[如何使用 Observable Data Service ?]]></title>
     <link href="http://oomusou.io/angular/observable-data-service/"/>
     <id>http://oomusou.io/angular/observable-data-service/</id>
     <published>2018-01-04T12:23:43.000Z</published>
-    <updated>2018-01-07T11:04:19.000Z</updated>
+    <updated>2018-01-28T15:24:37.414Z</updated>
     <content type="html"><![CDATA[<p>當 HTML 都 component 化之後，看似美好，但卻也導出另外一個棘手的問題 : <code>component 間共用的資料該如何處理?</code> React 是以 Redux 來解決這個問題，當然在 Angular 也可使用類似 Redux 的 NgRx，但 Redux 稍嫌複雜，而 Observable Data Service 較為簡單。顧名思義，<code>Observable</code> 採用的是 RxJS，而 <code>Data Service</code> 採用是 DI。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
