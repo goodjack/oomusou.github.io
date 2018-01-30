@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/observer/</loc>
+    <lastmod>2018-01-30T09:20:28.794Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/observable-data-service/</loc>
     <lastmod>2018-01-28T15:24:37.414Z</lastmod>
   </url>
@@ -29,11 +34,6 @@
   <url>
     <loc>http://oomusou.io/angular/viewchild/</loc>
     <lastmod>2018-01-19T02:24:54.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/observer/</loc>
-    <lastmod>2018-01-17T05:03:49.000Z</lastmod>
   </url>
   
   <url>
