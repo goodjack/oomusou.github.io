@@ -360,8 +360,8 @@
     <link href="http://oomusou.io/angular/observer/"/>
     <id>http://oomusou.io/angular/observer/</id>
     <published>2018-01-17T12:23:43.000Z</published>
-    <updated>2018-01-30T09:20:28.794Z</updated>
-    <content type="html"><![CDATA[<p>Observer Pattern 是 OOP 中著名的 Design Pattern，尤其在應付 <code>一對多</code> 的場景特別有效，在本文中，我們將以 Angular 與  TypeScript 實現 Observer Pattern。</p>
+    <updated>2018-01-30T09:29:59.474Z</updated>
+    <content type="html"><![CDATA[<p>Observer Pattern 是 OOP 中著名的 Design Pattern，尤其在應付 <code>一對多</code> 的場景特別有效，在本文中，我們將以 Angular 與  TypeScript 實現。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
