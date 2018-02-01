@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-01-28T15:16:41.958Z</updated>
+  <updated>2018-02-01T02:30:41.390Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,66 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[如何在 Angular 使用 Lodash ?]]></title>
+    <link href="http://oomusou.io/angular/javascript-package/"/>
+    <id>http://oomusou.io/angular/javascript-package/</id>
+    <published>2018-02-01T12:23:43.000Z</published>
+    <updated>2018-02-01T02:30:41.390Z</updated>
+    <content type="html"><![CDATA[<p>Lodash 是 JavaScript 很有名的 package，尤其對於處理 array 很有一套，Angular 該如何使用 <code>lodash</code> 呢 ? 這也可以視為在 Angular 使用傳統 JavaScript package 的 SOP。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.4<br>Angular CLI 1.6.2<br>Angular 5.2.2</p>
+<h2 id="安裝_Lodash">安裝 Lodash</h2><hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="operator"><span class="keyword">install</span> lodash <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
+<p>使用  npm 安裝 <code>lodash</code>。</p>
+<h2 id="安裝_Lodash_Type_定義檔">安裝 Lodash Type 定義檔</h2><hr>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ <span class="built_in">npm</span> install <span class="property">@types</span>/lodash --save-dev</span><br></pre></td></tr></table></figure>
+<p>傳統 JavaScript 並沒有型別，但 TypeScript 是個強型別語言，除了型別外還有泛型，這該怎麼與傳統 JavaScript 搭配呢 ?</p>
+<p>TypeScript 的解決方案是另外使用 <code>*.d.ts</code>，此為 type 定義檔。</p>
+<p>一般來說，若是知名的 JavaScript library，都已經有人維護 type 定義檔，其 package 的規則是 <code>@types/package</code>。</p>
+<p>由於 type 定義檔只是 TypeScript 編譯使用，以此加上 <code>--save-dev</code>。</p>
+<h2 id="tsconfig-json">tsconfig.json</h2><hr>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">compileOnSave</span>": <span class="value"><span class="literal">false</span></span>,</span><br><span class="line">  "<span class="attribute">compilerOptions</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">outDir</span>": <span class="value"><span class="string">"./dist/out-tsc"</span></span>,</span><br><span class="line">    "<span class="attribute">sourceMap</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">declaration</span>": <span class="value"><span class="literal">false</span></span>,</span><br><span class="line">    "<span class="attribute">moduleResolution</span>": <span class="value"><span class="string">"node"</span></span>,</span><br><span class="line">    "<span class="attribute">emitDecoratorMetadata</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">experimentalDecorators</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">target</span>": <span class="value"><span class="string">"es5"</span></span>,</span><br><span class="line">    "<span class="attribute">typeRoots</span>": <span class="value">[</span><br><span class="line">      <span class="string">"node_modules/@types"</span></span><br><span class="line">    ]</span>,</span><br><span class="line">    "<span class="attribute">types</span>" : <span class="value">[<span class="string">"lodash"</span>]</span>,</span><br><span class="line">    "<span class="attribute">lib</span>": <span class="value">[</span><br><span class="line">      <span class="string">"es2017"</span>,</span><br><span class="line">      <span class="string">"dom"</span></span><br><span class="line">    ]</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>14 行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"types" : ["lodash"],</span><br></pre></td></tr></table></figure>
+<p>在 <code>typeRoots</code> 新增 <code>types</code>，在陣列中加入 <code>lodash</code>，表示 TypeScript 在編譯時會使用剛剛安裝的 <code>lodash</code> type 定義檔。</p>
+<h2 id="Import_Lodash">Import Lodash</h2><hr>
+<p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> * as _ from <span class="string">'lodash'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> scores: <span class="built_in">number</span>[] = [<span class="number">100</span>, <span class="number">99</span>, <span class="number">98</span>];</span><br><span class="line"></span><br><span class="line">    _.remove(scores, <span class="number">2</span>);</span><br><span class="line">    scores.forEach((score) =&gt; <span class="built_in">console</span>.log(score));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 2 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * as _ from <span class="string">'lodash'</span>;</span><br></pre></td></tr></table></figure>
+<p>載入 <code>lodash</code> 。</p>
+<blockquote>
+<p>因為 lodash 習慣以 <code>_</code> 使用，因此 import 時特別取別名為 <code>_</code></p>
+<p>WebStorm 對於 Angular 內建的 API，都可以自動 import，但對於 JavaScript 的 package，目前 WebStorm 還沒有辦法自動 import，需手動載入</p>
+</blockquote>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.remove(scores, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>陣列的移除元素一直是 JavaScript 比較麻煩的部分，透過 lodash 的 <code>remove()</code>，可以很簡單的使用。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>實務上若有 Angular 版本的 package，當然優先使用；若遇到必須使用 JavaScript package 不可的場合，除了安裝 package 外，還要安裝 type 定義檔，並且在 <code>tsconfig.json</code> 設定，如此才可以在 Angular 正確使用並通過編譯</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/AngularLodash" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>,  <a href="https://blog.kevinyang.net/2016/11/17/ng2-3rdLibrary/" target="_blank" rel="external">Angular 3rd Library 的安裝筆記</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[在 Angular 內使用 JavaScript Package]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何對 Service 單元測試 ?]]></title>
     <link href="http://oomusou.io/angular/service-unit-test/"/>
     <id>http://oomusou.io/angular/service-unit-test/</id>
     <published>2018-01-28T12:23:43.000Z</published>
-    <updated>2018-01-28T15:16:41.958Z</updated>
+    <updated>2018-02-01T02:20:30.191Z</updated>
     <content type="html"><![CDATA[<p>凡與顯示相關邏輯，我們會寫在 component；凡與資料相關邏輯，我們會寫在 service。而 service 最常見的應用，就是透過 <code>HttpClient</code> 存取 API。</p>
 <p>對於 service 單元測試而言，我們必須對 <code>HttpClient</code> 加以隔離；而對 component 單元測試而言，我們必須對 <code>service</code> 加以隔離，我們該如何對 service 與 component 進行單元測試呢 ?</p>
 <a id="more"></a>
@@ -190,7 +245,7 @@
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52ServiceUnitTest" target="_blank" rel="external">GitHub</a> 上找到</p>
 <h2 id="Reference">Reference</h2><hr>
-<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/testing" target="_blank" rel="external">Testing</a><br><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/http" target="_blank" rel="external">HttpClient</a><a href="../../../../MyBlog/source/_posts/service-unit-test.md">service-unit-test.md</a><br><a href="https://offering.solutions/blog/author/" target="_blank" rel="external">Fabian Gosebrink</a>, <a href="https://offering.solutions/blog/articles/2017/10/02/testing-angular-2-http-service/" target="_blank" rel="external">Testing Angular Http Service</a><br><a href="https://medium.com/@paynoattn?source=post_header_lockup" target="_blank" rel="external">Chris Pawlukiewicz</a>, <a href="https://medium.com/@paynoattn/simple-observable-unit-testing-in-angular2-43c4f4a0bfe2" target="_blank" rel="external">Simple Observable Unit Testing in Angular 2</a><br>Jesse Palmer, <a href="https://www.manning.com/books/testing-angular-applications" target="_blank" rel="external">Testing Angular Applications</a></p>
+<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/testing" target="_blank" rel="external">Testing</a><br><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/http" target="_blank" rel="external">HttpClient</a><br><a href="https://offering.solutions/blog/author/" target="_blank" rel="external">Fabian Gosebrink</a>, <a href="https://offering.solutions/blog/articles/2017/10/02/testing-angular-2-http-service/" target="_blank" rel="external">Testing Angular Http Service</a><br><a href="https://medium.com/@paynoattn?source=post_header_lockup" target="_blank" rel="external">Chris Pawlukiewicz</a>, <a href="https://medium.com/@paynoattn/simple-observable-unit-testing-in-angular2-43c4f4a0bfe2" target="_blank" rel="external">Simple Observable Unit Testing in Angular 2</a><br>Jesse Palmer, <a href="https://www.manning.com/books/testing-angular-applications" target="_blank" rel="external">Testing Angular Applications</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[使用 HttpTestingController 將大幅簡化單元測試]]>
@@ -360,7 +415,7 @@
     <link href="http://oomusou.io/angular/observer/"/>
     <id>http://oomusou.io/angular/observer/</id>
     <published>2018-01-17T12:23:43.000Z</published>
-    <updated>2018-01-30T09:29:59.474Z</updated>
+    <updated>2018-01-30T13:42:33.340Z</updated>
     <content type="html"><![CDATA[<p>Observer Pattern 是 OOP 中著名的 Design Pattern，尤其在應付 <code>一對多</code> 的場景特別有效，在本文中，我們將以 Angular 與  TypeScript 實現。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -392,9 +447,9 @@
 <p>11 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface, OnInit, OnDestroy</span><br></pre></td></tr></table></figure>
 <p>先不考慮 <code>DigitalClockComponent</code> 所使用的 <code>ObserverInterface</code> ，最後會討論。</p>
-<p>回想 <code>DigitalClockComponent</code> 的初衷，除了顯示 <code>目前時間</code> 外，另外一個目的就是能對 <code>ClockService</code> 加以 <code>註冊為觀察者</code> 與 <code>取消註冊</code> 。</p>
 <p>19 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.clockService.addObserver(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回想 <code>DigitalClockComponent</code> 的初衷，除了顯示 <code>目前時間</code> 外，另外一個目的就是能對 <code>ClockService</code> 加以 <code>註冊為觀察者</code> 與 <code>取消註冊</code> 。</p>
 <p>既然要 <code>註冊為觀察者</code>，要在什麼時候註冊呢 ?</p>
 <p>最好是在 <code>DigitalClockComponent</code> 開始 <code>初始化</code> 時就對 <code>ClockService</code> 加以 <code>註冊為觀察者</code>，因此選擇使用 <code>ngOnInit()</code> lifecycle hook。</p>
 <p>希望 <code>ClockService</code> 有 <code>addObserver()</code>，提供 <code>註冊為觀察者</code> 功能。</p>
@@ -2828,54 +2883,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何關閉 WebStorm 的 Jasmine Warning ?]]></title>
-    <link href="http://oomusou.io/webstorm/jasmine-warning/"/>
-    <id>http://oomusou.io/webstorm/jasmine-warning/</id>
-    <published>2017-08-20T12:23:43.000Z</published>
-    <updated>2017-08-27T08:42:51.000Z</updated>
-    <content type="html"><![CDATA[<p>使用 WebStorm 寫 Protractor 或 Jasmine 測試時，有 2 個 WebStorm 的 warning 會造成困擾，建議將其關閉。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>WebStorm 2017.2.2</p>
-<h2 id="Symptom">Symptom</h2><hr>
-<p><img src="/images/webstorm/webstorm-jasmine-warning/warning000.png" alt="warning000"></p>
-<p>Jasmine 的 <code>toBe()</code> 會出現 warning。</p>
-<blockquote>
-<p>因為 toBe() 回傳的是 promise，WebStorm 是警告應該有 <code>then()</code> 作相對的處理，其本意是好的，不過在寫測試時，一般不會再去寫 <code>then()</code>。</p>
-</blockquote>
-<p><img src="/images/webstorm/webstorm-jasmine-warning/warning001.png" alt="warning001"></p>
-<p>在 Protractor 的 page object 內，method 會出現 warning。</p>
-<blockquote>
-<p>由於 page object 的 method 都沒使用到 field，會被警告可以改用 static methhod。</p>
-</blockquote>
-<h2 id="Recipe">Recipe</h2><hr>
-<h3 id="Promise">Promise</h3><p><img src="/images/webstorm/webstorm-jasmine-warning/warning002.png" alt="warning002"></p>
-<p><strong><em>File -&gt;Settings -&gt; Editor -&gt;Inspections -&gt; JavaScript -&gt; Probable bugs</em></strong></p>
-<p><code>Result of method call returning a promise is ignored</code> 不要勾選。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-warning/warning004.png" alt="warning004"></p>
-<p><code>ToBe()</code> 就不再出現 warning 了。</p>
-<h3 id="Static">Static</h3><p><img src="/images/webstorm/webstorm-jasmine-warning/warning003.png" alt="warning003"></p>
-<p><strong><em>File -&gt;Settings -&gt; Editor -&gt;Inspections -&gt; JavaScript -&gt; General</em></strong></p>
-<p><code>Method can be static</code> 不要勾選。</p>
-<p><img src="/images/webstorm/webstorm-jasmine-warning/warning005.png" alt="warning005"></p>
-<p>Page object 內的 method 就不再出現 warning 了。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>WebStorm 這 2 個 warning 都是善意的，只是一般在寫測試時，這 2 個 warning 對我們並沒有幫助，因此可以暫時關閉。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[關閉 WebStorm 惱人的警告訊息]]>
-    
-    </summary>
-    
-      <category term="Jasmine" scheme="http://oomusou.io/tags/Jasmine/"/>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   

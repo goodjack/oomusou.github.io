@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="Design Pattern 在 Angular 將有全新的使用方式">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-01-30T09:29:59.474Z">
+<meta property="og:updated_time" content="2018-01-30T13:42:33.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何使用 Angular 實現 Observer Pattern ?">
 <meta name="twitter:description" content="Design Pattern 在 Angular 將有全新的使用方式">
@@ -138,9 +138,9 @@
 <p>11 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> DigitalClockComponent <span class="keyword">implements</span> ObserverInterface, OnInit, OnDestroy</span><br></pre></td></tr></table></figure>
 <p>先不考慮 <code>DigitalClockComponent</code> 所使用的 <code>ObserverInterface</code> ，最後會討論。</p>
-<p>回想 <code>DigitalClockComponent</code> 的初衷，除了顯示 <code>目前時間</code> 外，另外一個目的就是能對 <code>ClockService</code> 加以 <code>註冊為觀察者</code> 與 <code>取消註冊</code> 。</p>
 <p>19 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.clockService.addObserver(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回想 <code>DigitalClockComponent</code> 的初衷，除了顯示 <code>目前時間</code> 外，另外一個目的就是能對 <code>ClockService</code> 加以 <code>註冊為觀察者</code> 與 <code>取消註冊</code> 。</p>
 <p>既然要 <code>註冊為觀察者</code>，要在什麼時候註冊呢 ?</p>
 <p>最好是在 <code>DigitalClockComponent</code> 開始 <code>初始化</code> 時就對 <code>ClockService</code> 加以 <code>註冊為觀察者</code>，因此選擇使用 <code>ngOnInit()</code> lifecycle hook。</p>
 <p>希望 <code>ClockService</code> 有 <code>addObserver()</code>，提供 <code>註冊為觀察者</code> 功能。</p>
@@ -268,7 +268,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Angular/">Angular<span>36</span></a></li> <li><a href="/tags/Design-Pattern/">Design Pattern<span>3</span></a></li> <li><a href="/tags/TypeScript/">TypeScript<span>14</span></a></li>
+  <li><a href="/tags/Angular/">Angular<span>37</span></a></li> <li><a href="/tags/Design-Pattern/">Design Pattern<span>3</span></a></li> <li><a href="/tags/TypeScript/">TypeScript<span>14</span></a></li>
     </ul>
 	</div>
 		
