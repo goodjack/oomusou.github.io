@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何對 Route 單元測試 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="不執行 ng serve 下就可以測試 route">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="不執行 ng serve 下就可以測試 route">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何對 Route 單元測試 ?">
+<meta property="og:url" content="http://oomusou.io/angular/route-unit-test/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="不執行 ng serve 下就可以測試 route">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-01T15:35:26.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何對 Route 單元測試 ?">
+<meta name="twitter:description" content="不執行 ng serve 下就可以測試 route">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何對 Route 單元測試 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 不執行 ng serve 下就可以測試 route			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
+<a id="more"></a>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/route-unit-test/router000.png" alt="router000"></p>
+<p>首頁使用的是 <code>PostComponent</code>，按下 <code>Redirect to comment</code> 將會導到 <code>/comment</code>。</p>
+<p><img src="/images/angular/route-unit-test/router001.png" alt="router001"></p>
+<p>導到 <code>/comment</code> 之後，將顯示 <code>CommentComponent</code> 。</p>
+<h2 id="Task">Task</h2><hr>
+<p>對 <code>PostComponent</code> 單元測試，確定有正確導到 <code>/comment</code>。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><strong>app-routing.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; RouterModule, Routes &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post/post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommentComponent &#125; from <span class="string">'./comment/comment.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'comment'</span>, component: CommentComponent &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forRoot(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'comment'</span>, component: CommentComponent &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>實際的 route 設定，為了單元測試也能使用，所以特別使用 <code>export</code> 。</p>
+<p><strong>post.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>post works!<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onRedirectClick()"</span>&gt;</span>Redirect to comment<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>當按下 <code>Redirect to comment</code> 時，會執行  <code>onRedirectClick()</code>。</p>
+<p><strong>post.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-post'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./post.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./post.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostComponent &#123;</span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private router: Router) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onRedirectClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.router.navigateByUrl(<span class="string">'comment'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private router: Router) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要使用 <code>Router</code> 去切換 route，因此 DI 注入 <code>Router</code>。</p>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onRedirectClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.router.navigateByUrl(<span class="string">'comment'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>Router.navigateByUrl()</code> 切換到 <code>comment</code>。</p>
+<p><strong>post.component.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ComponentFixture, fakeAsync, TestBed, tick &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; RouterTestingModule &#125; from <span class="string">'@angular/router/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; from <span class="string">'../app-routing.module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommentComponent &#125; from <span class="string">'../comment/comment.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'PostComponent'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture: ComponentFixture&lt;PostComponent&gt;;</span><br><span class="line">  <span class="keyword">let</span> postComponent: PostComponent;</span><br><span class="line">  <span class="keyword">let</span> router: Router;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [</span><br><span class="line">        RouterTestingModule.withRoutes(routes)</span><br><span class="line">      ],</span><br><span class="line">      declarations: [</span><br><span class="line">        PostComponent,</span><br><span class="line">        CommentComponent</span><br><span class="line">      ]</span><br><span class="line">    &#125;);</span><br><span class="line">    fixture = TestBed.createComponent(PostComponent);</span><br><span class="line">    postComponent = fixture.componentInstance;</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">    router = TestBed.get(Router);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should create'</span>, () =&gt; &#123;</span><br><span class="line">    expect(postComponent).toBeTruthy();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should navigate to comment`, fakeAsync(() =&gt; &#123;</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    postComponent.onRedirectClick();</span><br><span class="line">    tick();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** assert */</span></span><br><span class="line">    expect(router.url).toEqual(<span class="string">'/comment'</span>);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  RouterTestingModule.withRoutes(routes)</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>Angular 對於 route 單元測試，另外提供了 <code>RouterTestingModule</code>，使用 <code>withRoutes()</code> 將原本的 route 帶入。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declarations: [</span><br><span class="line">  PostComponent,</span><br><span class="line">  CommentComponent</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>由於我們由 <code>RouterTestingModule.withRoutes()</code> 所載入的 route 包含 <code>PostComponent</code> 與 <code>CommentComponent</code>，因此需要特別在 <code>declarations</code> 宣告。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> router: Router;</span><br></pre></td></tr></table></figure>
+<p>宣告要測試的 <code>router</code>。</p>
+<blockquote>
+<p>由於其型別仍然是 <code>Router</code>，而不是如 <code>HttpClient</code> 的 <code>HttpTestingController</code>，所以不算 mock，<code>RouterTestingModule</code> 只是幫我們解決了 DI 的問題</p>
+</blockquote>
+<p>27 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router = TestBed.get(Router);</span><br></pre></td></tr></table></figure>
+<p>由 DI 幫我們建立 <code>router</code> 物件。</p>
+<p>34 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should navigate to comment`, fakeAsync(() =&gt; &#123;</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  postComponent.onRedirectClick();</span><br><span class="line">  tick();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(router.url).toEqual(<span class="string">'/comment'</span>);</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>這裡使用了 <code>fackAsync()</code> 與 <code>tick()</code>，這是 Angular 提供的非同步測試機制。</p>
+<p>主要的原因是 <code>Router.navigateByUrl()</code> 回傳的是 <code>Promise&lt;boolean&gt;</code>，也就是非同步，因此必須使用 <code>fackAsync()</code> 與  <code>tick()</code>，</p>
+<p>簡單的說，由於在 <code>onRedirectClick()</code> 的 <code>Router.navigateByUrl()</code> 為非同步，我們必須使用 <code>tick()</code> 等待非同步執行完畢後，才能繼續執行 <code>expect()</code>，<code>tick()</code> 讓我們不用寫 callback，以更同步的寫法來測試非同步行為。</p>
+<p>最後直接 <code>expect()</code> <code>router.url</code>，測試目前 url 有沒有如預期。</p>
+<p><img src="/images/angular/route-unit-test/router002.png" alt="router002"></p>
+<p>使用 Wallaby.js 通過所有 route 單元測試。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Route 單元測試的可貴在於不用執行 <code>ng serve</code>，就可以測試 route 是否正確</li>
+<li>Route 單元測試的難點在於該如何解決 <code>Router</code> DI 注入，所幸搭配 <code>RouterTestingModule</code>，就可以幫我們解決</li>
+<li><code>RouterTestingModule</code> 所提供的方式不算 mock <code>Router</code>，只是幫我們解決了 <code>Router</code> DI 注入問題，不管如何，能夠在不執行 <code>ng serve</code> 就可執行測試，就非常難得</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52RouteUnitTest" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/testing" target="_blank" rel="external">Testing</a><br><a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fcodecraft.tv%2Fcourses%2Fangular%2Funit-testing%2Frouting%2F&amp;ref_src=twsrc%5Etfw&amp;screen_name=jawache&amp;tw_p=followbutton" target="_blank" rel="external">Asim</a>, <a href="https://codecraft.tv/courses/angular/unit-testing/routing/" target="_blank" rel="external">Testing Routing</a><br><a href="https://medium.com/@buraktasci" target="_blank" rel="external">Burak Tasci</a>, <a href="https://medium.com/burak-tasci/using-jasmine-framework-to-test-angular-router-b568a232efed" target="_blank" rel="external">Using Jasmine framework to test Angular Router</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/javascript-package/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-02 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>38</span></a></li> <li><a href="/tags/Angular-Test/">Angular Test<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

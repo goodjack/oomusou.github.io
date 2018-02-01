@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-01T02:30:41.390Z</updated>
+  <updated>2018-02-01T15:35:26.390Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何對 Route 單元測試 ?]]></title>
+    <link href="http://oomusou.io/angular/route-unit-test/"/>
+    <id>http://oomusou.io/angular/route-unit-test/</id>
+    <published>2018-02-02T12:23:43.000Z</published>
+    <updated>2018-02-01T15:35:26.390Z</updated>
+    <content type="html"><![CDATA[<p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
+<a id="more"></a>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/route-unit-test/router000.png" alt="router000"></p>
+<p>首頁使用的是 <code>PostComponent</code>，按下 <code>Redirect to comment</code> 將會導到 <code>/comment</code>。</p>
+<p><img src="/images/angular/route-unit-test/router001.png" alt="router001"></p>
+<p>導到 <code>/comment</code> 之後，將顯示 <code>CommentComponent</code> 。</p>
+<h2 id="Task">Task</h2><hr>
+<p>對 <code>PostComponent</code> 單元測試，確定有正確導到 <code>/comment</code>。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<p><strong>app-routing.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; RouterModule, Routes &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post/post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommentComponent &#125; from <span class="string">'./comment/comment.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'comment'</span>, component: CommentComponent &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forRoot(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'comment'</span>, component: CommentComponent &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>實際的 route 設定，為了單元測試也能使用，所以特別使用 <code>export</code> 。</p>
+<p><strong>post.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>post works!<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onRedirectClick()"</span>&gt;</span>Redirect to comment<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>當按下 <code>Redirect to comment</code> 時，會執行  <code>onRedirectClick()</code>。</p>
+<p><strong>post.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-post'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./post.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./post.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostComponent &#123;</span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private router: Router) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onRedirectClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.router.navigateByUrl(<span class="string">'comment'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private router: Router) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要使用 <code>Router</code> 去切換 route，因此 DI 注入 <code>Router</code>。</p>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onRedirectClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.router.navigateByUrl(<span class="string">'comment'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>Router.navigateByUrl()</code> 切換到 <code>comment</code>。</p>
+<p><strong>post.component.spec.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ComponentFixture, fakeAsync, TestBed, tick &#125; from <span class="string">'@angular/core/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; RouterTestingModule &#125; from <span class="string">'@angular/router/testing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; from <span class="string">'../app-routing.module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommentComponent &#125; from <span class="string">'../comment/comment.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'PostComponent'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> fixture: ComponentFixture&lt;PostComponent&gt;;</span><br><span class="line">  <span class="keyword">let</span> postComponent: PostComponent;</span><br><span class="line">  <span class="keyword">let</span> router: Router;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    TestBed.configureTestingModule(&#123;</span><br><span class="line">      imports: [</span><br><span class="line">        RouterTestingModule.withRoutes(routes)</span><br><span class="line">      ],</span><br><span class="line">      declarations: [</span><br><span class="line">        PostComponent,</span><br><span class="line">        CommentComponent</span><br><span class="line">      ]</span><br><span class="line">    &#125;);</span><br><span class="line">    fixture = TestBed.createComponent(PostComponent);</span><br><span class="line">    postComponent = fixture.componentInstance;</span><br><span class="line">    fixture.detectChanges();</span><br><span class="line"></span><br><span class="line">    router = TestBed.get(Router);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should create'</span>, () =&gt; &#123;</span><br><span class="line">    expect(postComponent).toBeTruthy();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should navigate to comment`, fakeAsync(() =&gt; &#123;</span><br><span class="line">    <span class="comment">/** act */</span></span><br><span class="line">    postComponent.onRedirectClick();</span><br><span class="line">    tick();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** assert */</span></span><br><span class="line">    expect(router.url).toEqual(<span class="string">'/comment'</span>);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>15 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">imports: [</span><br><span class="line">  RouterTestingModule.withRoutes(routes)</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>Angular 對於 route 單元測試，另外提供了 <code>RouterTestingModule</code>，使用 <code>withRoutes()</code> 將原本的 route 帶入。</p>
+<p>18 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declarations: [</span><br><span class="line">  PostComponent,</span><br><span class="line">  CommentComponent</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>由於我們由 <code>RouterTestingModule.withRoutes()</code> 所載入的 route 包含 <code>PostComponent</code> 與 <code>CommentComponent</code>，因此需要特別在 <code>declarations</code> 宣告。</p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> router: Router;</span><br></pre></td></tr></table></figure>
+<p>宣告要測試的 <code>router</code>。</p>
+<blockquote>
+<p>由於其型別仍然是 <code>Router</code>，而不是如 <code>HttpClient</code> 的 <code>HttpTestingController</code>，所以不算 mock，<code>RouterTestingModule</code> 只是幫我們解決了 DI 的問題</p>
+</blockquote>
+<p>27 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router = TestBed.get(Router);</span><br></pre></td></tr></table></figure>
+<p>由 DI 幫我們建立 <code>router</code> 物件。</p>
+<p>34 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should navigate to comment`, fakeAsync(() =&gt; &#123;</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  postComponent.onRedirectClick();</span><br><span class="line">  tick();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(router.url).toEqual(<span class="string">'/comment'</span>);</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>這裡使用了 <code>fackAsync()</code> 與 <code>tick()</code>，這是 Angular 提供的非同步測試機制。</p>
+<p>主要的原因是 <code>Router.navigateByUrl()</code> 回傳的是 <code>Promise&lt;boolean&gt;</code>，也就是非同步，因此必須使用 <code>fackAsync()</code> 與  <code>tick()</code>，</p>
+<p>簡單的說，由於在 <code>onRedirectClick()</code> 的 <code>Router.navigateByUrl()</code> 為非同步，我們必須使用 <code>tick()</code> 等待非同步執行完畢後，才能繼續執行 <code>expect()</code>，<code>tick()</code> 讓我們不用寫 callback，以更同步的寫法來測試非同步行為。</p>
+<p>最後直接 <code>expect()</code> <code>router.url</code>，測試目前 url 有沒有如預期。</p>
+<p><img src="/images/angular/route-unit-test/router002.png" alt="router002"></p>
+<p>使用 Wallaby.js 通過所有 route 單元測試。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Route 單元測試的可貴在於不用執行 <code>ng serve</code>，就可以測試 route 是否正確</li>
+<li>Route 單元測試的難點在於該如何解決 <code>Router</code> DI 注入，所幸搭配 <code>RouterTestingModule</code>，就可以幫我們解決</li>
+<li><code>RouterTestingModule</code> 所提供的方式不算 mock <code>Router</code>，只是幫我們解決了 <code>Router</code> DI 注入問題，不管如何，能夠在不執行 <code>ng serve</code> 就可執行測試，就非常難得</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52RouteUnitTest" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/testing" target="_blank" rel="external">Testing</a><br><a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fcodecraft.tv%2Fcourses%2Fangular%2Funit-testing%2Frouting%2F&amp;ref_src=twsrc%5Etfw&amp;screen_name=jawache&amp;tw_p=followbutton" target="_blank" rel="external">Asim</a>, <a href="https://codecraft.tv/courses/angular/unit-testing/routing/" target="_blank" rel="external">Testing Routing</a><br><a href="https://medium.com/@buraktasci" target="_blank" rel="external">Burak Tasci</a>, <a href="https://medium.com/burak-tasci/using-jasmine-framework-to-test-angular-router-b568a232efed" target="_blank" rel="external">Using Jasmine framework to test Angular Router</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[不執行 ng serve 下就可以測試 route]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+      <category term="Angular Test" scheme="http://oomusou.io/tags/Angular-Test/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何在 Angular 使用 Lodash ?]]></title>
@@ -2735,148 +2814,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[使用 Protractor 控制 Radio]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Protractor 寫 Select 的驗收測試 ?]]></title>
-    <link href="http://oomusou.io/protractor/protractor-select/"/>
-    <id>http://oomusou.io/protractor/protractor-select/</id>
-    <published>2017-08-21T12:23:43.000Z</published>
-    <updated>2017-08-27T12:38:56.000Z</updated>
-    <content type="html"><![CDATA[<p>HTML 的 <code>&lt;select&gt;</code> 是常見的控制項，該如何使用 Protractor 對 select 寫驗收測試呢 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Protractor 5.1.2</p>
-<h2 id="Requirement">Requirement</h2><hr>
-<p><img src="/images/protractor/protractor-select/select000.png" alt="select000"></p>
-<p>畫面只有 1 個 <code>&lt;select&gt;</code>，下方會顯示目前所選擇的 value。</p>
-<p><img src="/images/protractor/protractor-select/select001.png" alt="select001"></p>
-<p><code>&lt;select&gt;</code> 下共有 <code>3</code> 個 option，各為 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code>。</p>
-<p><img src="/images/protractor/protractor-select/select000.png" alt="select000"></p>
-<p>當選擇 <code>AWS</code> 時，下方顯示 <code>0</code>。</p>
-<p><img src="/images/protractor/protractor-select/select002.png" alt="select002"></p>
-<p>當選擇 <code>Azure</code> 時，下方顯示 <code>1</code>。</p>
-<p><img src="/images/protractor/protractor-select/select003.png" alt="select003"></p>
-<p>當選擇 <code>GCP</code>，下方顯示 <code>2</code>。</p>
-<h2 id="Acceptance_Test_(紅燈)">Acceptance Test (紅燈)</h2><hr>
-<p>測試案例 :</p>
-<blockquote>
-<ol>
-<li>應該有  <code>1</code> 個 <code>&lt;select&gt;</code></li>
-<li>應該有 <code>3</code> 個 <code>&lt;option&gt;</code></li>
-<li>當選擇 <code>AWS</code>，下方應該出現 <code>0</code></li>
-<li>當選擇 <code>Azure</code>，下方應該出現 <code>1</code></li>
-<li>當選擇 <code>GCP</code>，下方應該出現 <code>2</code></li>
-</ol>
-</blockquote>
-<p><strong>src/app.e2e-spec.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AppPage &#125; from <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'protractor512-select App'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> page: AppPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    page = <span class="keyword">new</span> AppPage();</span><br><span class="line">    page.navigateTo();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'1'</span> select`, () =&gt; &#123;</span><br><span class="line">    expect(page.getSelect().isPresent()).toBe(<span class="literal">true</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'3'</span> options <span class="keyword">in</span> select`, () =&gt; &#123;</span><br><span class="line">    expect(page.getSelectCount()).toBe(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should show <span class="string">'0'</span> when selecting <span class="string">'AWS'</span>`, () =&gt; &#123;</span><br><span class="line">    page.selectCloudByIndex(<span class="number">0</span>);</span><br><span class="line">    expect(page.getSelectedId()).toBe(<span class="string">'0'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should show <span class="string">'1'</span> when selecting <span class="string">'Azure'</span>`, () =&gt; &#123;</span><br><span class="line">    page.selectCloudByText(<span class="string">'Azure'</span>);</span><br><span class="line">    expect(page.getSelectedId()).toBe(<span class="string">'1'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should show <span class="string">'2'</span> when selecting <span class="string">'GCP'</span>`, () =&gt; &#123;</span><br><span class="line">    page.selectCloudByText(<span class="string">'GCP'</span>);</span><br><span class="line">    expect(page.getSelectedId()).toBe(<span class="string">'2'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'1'</span> select`, () =&gt; &#123;</span><br><span class="line">  expect(page.getSelect().isPresent()).toBe(<span class="literal">true</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 應該有  <code>1</code> 個 <code>&lt;select&gt;</code></p>
-</blockquote>
-<p>若 <code>&lt;select&gt;</code> 存在，則 <code>isPresent()</code> 回傳 <code>true</code>，否則回傳 <code>false</code>。</p>
-<p><code>page.getSelect()</code> 將由 page object 傳回 <code>ElementFinder</code> 型別且符合條件的 <code>&lt;select&gt;</code>。</p>
-<p>15 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'3'</span> options <span class="keyword">in</span> select`, () =&gt; &#123;</span><br><span class="line">  expect(page.getSelectCount()).toBe(<span class="number">3</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 應該有 <code>3</code> 個 <code>&lt;option&gt;</code></p>
-</blockquote>
-<p>測試 <code>&lt;select&gt;</code> 是否有 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code> 3 個 <code>&lt;option&gt;</code>，實務上這些資料會從後端 API 來，可測試 API 是否正常，也可測試 API 的 SQL 或 ORM 是否正確。</p>
-<p>若要測試資料完全相同比較困難時，最少可測試資料的筆數是否正確。</p>
-<p><code>page.getSelectCount()</code> 將由 page object 傳回 <code>&lt;option&gt;</code> 的個數。</p>
-<p>19 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">it(`should show <span class="string">'0'</span> when selecting <span class="string">'AWS'</span>`, () =&gt; &#123;</span><br><span class="line">  page.selectCloudByIndex(<span class="number">0</span>);</span><br><span class="line">  expect(page.getSelectedId()).toBe(<span class="string">'0'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 當選擇 <code>AWS</code>，下方應該出現 <code>0</code></p>
-</blockquote>
-<p>要模擬 user 選擇 <code>&lt;select&gt;</code>，有 <code>2</code> 種方式，一種是使用 index 選擇，一種是由文字選擇。</p>
-<p><code>page.selectCloudByIndex()</code> 將使用 index 方式選擇 <code>&lt;select&gt;</code>。</p>
-<p>24 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">it(`should show <span class="string">'1'</span> when selecting <span class="string">'Azure'</span>`, () =&gt; &#123;</span><br><span class="line">  page.selectCloudByText(<span class="string">'Azure'</span>);</span><br><span class="line">  expect(page.getSelectedId()).toBe(<span class="string">'1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> 測試案例 : 當選擇 <code>Azure</code>，下方應該出現 <code>1</code></p>
-</blockquote>
-<p><code>page.selectCloudByText()</code> 將使用文字方式選擇 <code>&lt;select&gt;</code>。</p>
-<p><strong>src/app.po.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getSelect(): ElementFinder &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.id(<span class="string">'TDDSelect'</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getSelectCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">      .all(by.tagName(<span class="string">'option'</span>))</span><br><span class="line">      .count();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  selectCloudByIndex(index: <span class="built_in">number</span>): AppPage &#123;</span><br><span class="line">    element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">      .all(by.tagName(<span class="string">'option'</span>))</span><br><span class="line">      .get(index)</span><br><span class="line">      .click();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  selectCloudByText(text: <span class="built_in">string</span>): AppPage &#123;</span><br><span class="line">    element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">      .element(by.cssContainingText(<span class="string">'option'</span>, text))</span><br><span class="line">      .click();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getSelectedId(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'p'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>*.e2e-spec.ts</code> 負責描述測試案例，不包含 HTML 與 CSS 部分。</p>
-<p> <code>*.po.ts</code> 則負責描述 HTML 與 CSS 部分。</p>
-<p>Page object 主要目的在於讓測試與 HTML/CSS 解耦合，不要 designer 若變動了 HTML 或 CSS，則所有驗收測試都要修改，只要修改 page object 即可。</p>
-<blockquote>
-<p>驗收測試應該只根據需求變動而修改，不應該因為 HTML/CSS 變動而修改。</p>
-</blockquote>
-<p>第 8 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getSelect(): ElementFinder &#123;</span><br><span class="line">  <span class="keyword">return</span> element(by.id(<span class="string">'TDDSelect'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 id 為 <code>TDDSelect</code> 回傳 ElementFinder 物件，主要是為了 <code>isPresent()</code> 判斷 <code>&lt;select&gt;</code> 是否存在。</p>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">getSelectCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">    .all(by.tagName(<span class="string">'option'</span>))</span><br><span class="line">    .count();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>回傳 <code>&lt;select&gt;</code> 下共有幾個 <code>&lt;option&gt;</code>。</p>
-<p>若要在 HTML 的階層下找單一 element，可用 <code>element(locator).element(locator)</code>。</p>
-<p>若要在 HTML 的階層下找多個 element，可用 <code>element(locator).all(locator)</code>。</p>
-<p>因為 <code>all()</code> 是陣列，可用 <code>count()</code> 得知陣列筆數。</p>
-<blockquote>
-<p><code>count()</code> 的型別不是 <code>number</code>，而是 <code>wdpromise.Promise&lt;number&gt;</code>，因為型別比較複雜，所以迴船型別使用 <code>any</code> 代替。</p>
-</blockquote>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">selectCloudByIndex(index: <span class="built_in">number</span>): AppPage &#123;</span><br><span class="line">  element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">    .all(by.tagName(<span class="string">'option'</span>))</span><br><span class="line">    .get(index)</span><br><span class="line">    .click();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 index 選擇 <code>&lt;select&gt;</code>。</p>
-<p>先用 <code>element(by.id(&#39;TDDSelect&#39;))</code> 找到 <code>&lt;select&gt;</code>，由 <code>all(by.tagName(&#39;option&#39;))</code> 取得 <code>&lt;select&gt;</code> 下所有 <code>&lt;option&gt;</code> 的陣列，再透過 <code>get(index)</code> 選擇 <code>&lt;select&gt;</code> 的 <code>&lt;option&gt;</code>，最後 <code>click()</code>。</p>
-<p>27 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">selectCloudByText(text: <span class="built_in">string</span>): AppPage &#123;</span><br><span class="line">  element(by.id(<span class="string">'TDDSelect'</span>))</span><br><span class="line">   .element(by.cssContainingText(<span class="string">'option'</span>, text))</span><br><span class="line">   .click();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用文字選擇 <code>&lt;select&gt;</code>。</p>
-<p>先用 <code>element(by.id(&#39;TDDSelect&#39;))</code> 找到 <code>&lt;select&gt;</code>，因為要直接由文字得到單一 <code>&lt;option&gt;</code>，就不再使用 <code>all()</code>，直接使用 <code>element()</code> 。</p>
-<p>透過 <code>by.cssContainingText(&#39;option&#39;, text)</code> 取得 <code>&lt;option&gt;</code>，最後 <code>click()</code>。</p>
-<p><img src="/images/protractor/protractor-select/select004.png" alt="select004"></p>
-<p>因為我們還沒實作任何功能，得到預期的驗收測試 <code>紅燈</code>。</p>
-<h2 id="Acceptance_Test_(綠燈)">Acceptance Test (綠燈)</h2><hr>
-<p>測試案例 :</p>
-<blockquote>
-<ol>
-<li>應該有  <code>1</code> 個 <code>&lt;select&gt;</code></li>
-<li>應該有 <code>3</code> 個 <code>&lt;option&gt;</code></li>
-<li>當選擇 <code>AWS</code>，下方應該出現 <code>0</code></li>
-<li>當選擇 <code>Azure</code>，下方應該出現 <code>1</code></li>
-<li>當選擇 <code>GCP</code>，下方應該出現 <code>2</code></li>
-</ol>
-</blockquote>
-<p><strong>src/app/app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>&#123;&#123; selectedId &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"TDDSelect"</span> (<span class="attribute">change</span>)=<span class="value">"onChange(mySelect)"</span> #<span class="attribute">mySelect</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>將 <code>change</code> event 綁定到 <code>onChange()</code>，並將 <code>#mySelect</code> 傳入 <code>onChange()</code>。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">option</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> [<span class="attribute">value</span>]=<span class="value">"cloud.id"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>使用 <code>*ngFor</code> 根據 <code>clouds</code> field 產生 <code>&lt;option&gt;</code>。</p>
-<p><strong>src/app/app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  selectedId = <span class="string">'0'</span>;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="string">'0'</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="string">'1'</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">    &#123;id: <span class="string">'2'</span>, name: <span class="string">'GCP'</span>&#125;</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">    <span class="keyword">this</span>.selectedId = element.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectedId = <span class="string">'0'</span>;</span><br></pre></td></tr></table></figure>
-<p><code>selectedId</code> field 預設為 <code>0</code>。</p>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clouds: Cloud[] = [</span><br><span class="line">  &#123;id: <span class="string">'0'</span>, name: <span class="string">'AWS'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="string">'1'</span>, name: <span class="string">'Azure'</span>&#125;,</span><br><span class="line">  &#123;id: <span class="string">'2'</span>, name: <span class="string">'GCP'</span>&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<p>建立 <code>cloud</code> field 與設定初始陣列。</p>
-<p>17 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(element: HTMLSelectElement) &#123;</span><br><span class="line">  <span class="keyword">this</span>.selectedId = element.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>將 <code>HTMLSelectElement.value</code> 值指定到 <code>selectedId</code> field。</p>
-<p><img src="/images/protractor/protractor-select/select005.png" alt="select005"></p>
-<p>功能都實作出來了，重新跑一次驗收測試確認都為 <code>綠燈</code>。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>實務上整個 ATDD 循環應該是驗收測試 (紅燈) -&gt; 整合測試 (紅燈) -&gt; 單元測試 (紅燈) -&gt; 單元測試 (綠燈) -&gt; 整合測試 (綠燈) -&gt; 驗收測試 (綠燈)，因為本文重點在於 Protract 驗收測試的 <code>&lt;select&gt;</code> 寫法，所以省略了整合測試與單元測試部分。</li>
-<li>本文特別針對 <code>&lt;select&gt;</code> 展示了 <code>selectCloudByIndex()</code> 與 <code>selectCloudByText()</code> 兩種寫法。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Protractor512Select" target="_blank" rel="external">GitHub</a> 找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[使用 Protractor 控制 Select]]>
     
     </summary>
     
