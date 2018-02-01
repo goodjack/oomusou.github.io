@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何刪除陣列中的物件 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 3 種方式刪除陣列中的物件">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 3 種方式刪除陣列中的物件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何刪除陣列中的物件 ?">
+<meta property="og:url" content="http://oomusou.io/javascript/remove-object-array/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 3 種方式刪除陣列中的物件">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-01T15:46:43.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何刪除陣列中的物件 ?">
+<meta name="twitter:description" content="使用 3 種方式刪除陣列中的物件">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何刪除陣列中的物件 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 3 種方式刪除陣列中的物件			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#splice()"><span class="toc-article-text">splice()</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#典型錯誤寫法"><span class="toc-article-text">典型錯誤寫法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#正確寫法"><span class="toc-article-text">正確寫法</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#filter()"><span class="toc-article-text">filter()</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#_-remove()"><span class="toc-article-text">_.remove()</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>JavaScript 並沒有內建刪除陣列元素的 operator，必須使用一些技巧才能刪除，若陣列內放的是 object，則狀況將更加詭異，這也是 JavaScript 初學者一定會踩到的雷。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Node.js 8.9.4<br>Angular CLI 1.6.7<br>Angular 5.2.3</p>
+<h2 id="splice()">splice()</h2><hr>
+<h3 id="典型錯誤寫法">典型錯誤寫法</h3><p><strong>app.component.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectSubscriber &#125; from <span class="string">'../model/subject-subscriber.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubjectEnum &#125; from <span class="string">'../enum/subject.enum'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SubscriberInterface &#125; from <span class="string">'../interface/SubscriberInterface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> SubscriberInterface &#123;</span><br><span class="line">  message: <span class="built_in">string</span>;</span><br><span class="line">  <span class="keyword">private</span> subscribers: SubjectSubscriber[] = [];</span><br><span class="line"></span><br><span class="line">  update(message: <span class="built_in">string</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.message = message;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onSubscribeClick() &#123;</span><br><span class="line">    <span class="keyword">const</span> subjectSubscriber: SubjectSubscriber = &#123;</span><br><span class="line">      subject: SubjectEnum.FrontEnd,</span><br><span class="line">      subscriber: <span class="keyword">this</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.subscribers.push(subjectSubscriber);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onUnSubscribeClick() &#123;</span><br><span class="line">    <span class="keyword">const</span> subjectSubscriber: SubjectSubscriber = &#123;</span><br><span class="line">      subject: SubjectEnum.FrontEnd,</span><br><span class="line">      subscriber: <span class="keyword">this</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> index = <span class="keyword">this</span>.subscribers.indexOf(subjectSubscriber);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>13 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> subscribers: SubjectSubscriber[] = [];</span><br></pre></td></tr></table></figure>
+<p>宣告一個陣列，注意其型別為 <code>SubjectSubscriber</code>，也就是 <code>subscribers</code> 為一個物件陣列。</p>
+<p>19 行</p>
+ <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onSubscribeClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> subjectSubscriber: SubjectSubscriber = &#123;</span><br><span class="line">    subject: SubjectEnum.FrontEnd,</span><br><span class="line">    subscriber: <span class="keyword">this</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.subscribers.push(subjectSubscriber);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>準備好一個物件，使用 JavaScript array 原生的 <code>push()</code> 將物件新增至陣列。</p>
+<p>30 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">onUnSubscribeClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> subjectSubscriber: SubjectSubscriber = &#123;</span><br><span class="line">    subject: SubjectEnum.FrontEnd,</span><br><span class="line">    subscriber: <span class="keyword">this</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> index = <span class="keyword">this</span>.subscribers.indexOf(subjectSubscriber);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直覺會使用 <code>onSubscribeClick()</code> 方法，準備好一個物件，使用 JavaScript 原生的 <code>indexOf()</code> 去尋找該物件的 <code>index</code>，然後再加以 <code>splice()</code>。</p>
+<p>問題在於 <code>subjectSubscriber</code> 是一個全新的物件，有新的 reference， 因此 <code>indexOf()</code> 會找不到物件而傳回 <code>-1</code>。</p>
+<h3 id="正確寫法">正確寫法</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">onUnSubscribeClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> index = <span class="keyword">this</span>.subscribers.findIndex(</span><br><span class="line">    item =&gt; item.subject === SubjectEnum.FrontEnd &amp;&amp; item.subscriber === <span class="keyword">this</span></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改用  <code>findIndex()</code>，需要傳入 arrow function，直接用物件內的 field 做判斷，這樣就可以抓到正確的 <code>index</code>。</p>
+<h2 id="filter()">filter()</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">onUnSubscribeClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.subscribers = <span class="keyword">this</span>.subscribers.filter(</span><br><span class="line">    item =&gt; !(item.subject === SubjectEnum.FrontEnd &amp;&amp; item.subscriber === <span class="keyword">this</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一個方法是改用 JavaScript 原生的 <code>filter()</code> ，傳入 arrow function 找出所有 <code>不符合條件</code> 的陣列，重新指定給 <code>subscribers</code>。</p>
+<p>由於 <code>filter()</code> 會產生一個新的陣列，所以效率會較差一點，不過符合 FP 的 pure function 要求。</p>
+<h2 id="_-remove()">_.remove()</h2><hr>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onUnSubscribeClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> subjectSubscriber: SubjectSubscriber = &#123;</span><br><span class="line">    subject: SubjectEnum.FrontEnd,</span><br><span class="line">    subscriber: <span class="keyword">this</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  _.remove(<span class="keyword">this</span>.subscribers, subjectSubscriber);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.subscribers.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若使用 Lodash 的 <code>remove()</code>，則有更直覺的寫法，一樣準備好物件，傳進 <code>remove()</code> 即可，雖然物件是 reference type，但 Lodash 的 <code>remove()</code> 會自己比較每個物件的 field 值是否相等。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><code>indexOf()</code> 找不到物件，並不是 <code>indexOf()</code> 不能使用在物件，而是常常因為新建立物件的 reference 已經改變，導致 <code>indexOf()</code> 找不到</li>
+<li>Lodash 的  <code>remove()</code> 提供更直覺的方式刪除物件陣列中的元素，無論是 value type 或 reference type 都適用</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52RemoveItemInObjectArray" target="_blank" rel="external">GitHub</a> 上找到</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/angular/route-unit-test/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-03 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/JavaScript/">JavaScript<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

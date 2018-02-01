@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何在 Angular 使用 Lodash ? | 點燈坊</title>
+  <title>如何在 Angular 使用傳統 JavaScript 套件 ? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
   <meta name="description" content="在 Angular 內使用 JavaScript Package">
@@ -12,14 +12,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
  <meta name="description" content="在 Angular 內使用 JavaScript Package">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在 Angular 使用 Lodash ?">
+<meta property="og:title" content="如何在 Angular 使用傳統 JavaScript 套件 ?">
 <meta property="og:url" content="http://oomusou.io/angular/javascript-package/index.html">
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="在 Angular 內使用 JavaScript Package">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-01T02:30:41.390Z">
+<meta property="og:updated_time" content="2018-02-01T15:39:30.907Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在 Angular 使用 Lodash ?">
+<meta name="twitter:title" content="如何在 Angular 使用傳統 JavaScript 套件 ?">
 <meta name="twitter:description" content="在 Angular 內使用 JavaScript Package">
  
 
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 如何在 Angular 使用 Lodash ?</h1>
+			<h1> 如何在 Angular 使用傳統 JavaScript 套件 ?</h1>
 		</div>		
 	
 
@@ -102,7 +102,7 @@
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Lodash"><span class="toc-article-text">安裝 Lodash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Lodash_Type_定義檔"><span class="toc-article-text">安裝 Lodash Type 定義檔</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#tsconfig-json"><span class="toc-article-text">tsconfig.json</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Import_Lodash"><span class="toc-article-text">Import Lodash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Lodash"><span class="toc-article-text">安裝 Lodash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Lodash_Type_定義檔"><span class="toc-article-text">安裝 Lodash Type 定義檔</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Import_Lodash"><span class="toc-article-text">Import Lodash</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
     </div>
 
 	<!-- content -->
@@ -110,7 +110,7 @@
 	    <p>Lodash 是 JavaScript 很有名的 package，尤其對於處理 array 很有一套，Angular 該如何使用 <code>lodash</code> 呢 ? 這也可以視為在 Angular 使用傳統 JavaScript package 的 SOP。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.4<br>Angular CLI 1.6.2<br>Angular 5.2.2</p>
+<p>Node.js 8.9.4<br>Angular CLI 1.6.2<br>Angular 5.2.2<br>Lodash 4.17.4</p>
 <h2 id="安裝_Lodash">安裝 Lodash</h2><hr>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ npm <span class="operator"><span class="keyword">install</span> lodash <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
 <p>使用  npm 安裝 <code>lodash</code>。</p>
@@ -120,11 +120,7 @@
 <p>TypeScript 的解決方案是另外使用 <code>*.d.ts</code>，此為 type 定義檔。</p>
 <p>一般來說，若是知名的 JavaScript library，都已經有人維護 type 定義檔，其 package 的規則是 <code>@types/package</code>。</p>
 <p>由於 type 定義檔只是 TypeScript 編譯使用，以此加上 <code>--save-dev</code>。</p>
-<h2 id="tsconfig-json">tsconfig.json</h2><hr>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">compileOnSave</span>": <span class="value"><span class="literal">false</span></span>,</span><br><span class="line">  "<span class="attribute">compilerOptions</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">outDir</span>": <span class="value"><span class="string">"./dist/out-tsc"</span></span>,</span><br><span class="line">    "<span class="attribute">sourceMap</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">declaration</span>": <span class="value"><span class="literal">false</span></span>,</span><br><span class="line">    "<span class="attribute">moduleResolution</span>": <span class="value"><span class="string">"node"</span></span>,</span><br><span class="line">    "<span class="attribute">emitDecoratorMetadata</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">experimentalDecorators</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">    "<span class="attribute">target</span>": <span class="value"><span class="string">"es5"</span></span>,</span><br><span class="line">    "<span class="attribute">typeRoots</span>": <span class="value">[</span><br><span class="line">      <span class="string">"node_modules/@types"</span></span><br><span class="line">    ]</span>,</span><br><span class="line">    "<span class="attribute">types</span>" : <span class="value">[<span class="string">"lodash"</span>]</span>,</span><br><span class="line">    "<span class="attribute">lib</span>": <span class="value">[</span><br><span class="line">      <span class="string">"es2017"</span>,</span><br><span class="line">      <span class="string">"dom"</span></span><br><span class="line">    ]</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>14 行</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"types" : ["lodash"],</span><br></pre></td></tr></table></figure>
-<p>在 <code>typeRoots</code> 新增 <code>types</code>，在陣列中加入 <code>lodash</code>，表示 TypeScript 在編譯時會使用剛剛安裝的 <code>lodash</code> type 定義檔。</p>
+<p>剛剛安裝的 <code>lodash</code> type 定義檔。</p>
 <h2 id="Import_Lodash">Import Lodash</h2><hr>
 <p><strong>app.component.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> * as _ from <span class="string">'lodash'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> scores: <span class="built_in">number</span>[] = [<span class="number">100</span>, <span class="number">99</span>, <span class="number">98</span>];</span><br><span class="line"></span><br><span class="line">    _.remove(scores, <span class="number">2</span>);</span><br><span class="line">    scores.forEach((score) =&gt; <span class="built_in">console</span>.log(score));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -137,13 +133,16 @@
 </blockquote>
 <p>15 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_.remove(scores, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<p>陣列的移除元素一直是 JavaScript 比較麻煩的部分，透過 lodash 的 <code>remove()</code>，可以很簡單的使用。</p>
+<p>移除陣列元素一直是 JavaScript 比較麻煩的部分，透過 lodash 的 <code>remove()</code>，可以很簡單的使用。</p>
+<blockquote>
+<p>目前 WebStorm 在輸入 <code>_.</code> 之後的 intellisense 速度較慢，需要等 1s  之後才會顯示，這應該是 WebStorm 本身的問題</p>
+</blockquote>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>實務上若有 Angular 版本的 package，當然優先使用；若遇到必須使用 JavaScript package 不可的場合，除了安裝 package 外，還要安裝 type 定義檔，並且在 <code>tsconfig.json</code> 設定，如此才可以在 Angular 正確使用並通過編譯</li>
 </ul>
 <h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/AngularLodash" target="_blank" rel="external">GitHub</a> 上找到</p>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52Lodash" target="_blank" rel="external">GitHub</a> 上找到</p>
 <h2 id="Reference">Reference</h2><hr>
 <p><a href="https://blog.kevinyang.net" target="_blank" rel="external">CK’s Notepad</a>,  <a href="https://blog.kevinyang.net/2016/11/17/ng2-3rdLibrary/" target="_blank" rel="external">Angular 3rd Library 的安裝筆記</a></p>
 	  

@@ -2,13 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://oomusou.io/angular/route-unit-test/</loc>
-    <lastmod>2018-02-01T15:35:26.390Z</lastmod>
+    <loc>http://oomusou.io/javascript/remove-object-array/</loc>
+    <lastmod>2018-02-01T15:46:43.864Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/remove-object-array/</loc>
+    <lastmod>2018-02-01T15:40:45.831Z</lastmod>
   </url>
   
   <url>
     <loc>http://oomusou.io/angular/javascript-package/</loc>
-    <lastmod>2018-02-01T02:30:41.390Z</lastmod>
+    <lastmod>2018-02-01T15:39:30.907Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/angular/route-unit-test/</loc>
+    <lastmod>2018-02-01T15:35:26.390Z</lastmod>
   </url>
   
   <url>
@@ -352,62 +362,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-github/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/hexo/freemind-tag-overview/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
-    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-inspection/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -422,12 +377,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-inspection/</loc>
+    <loc>http://oomusou.io/laravel/homestead/homestead-per-project/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-code-generation/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-xdebug-on-demand/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -437,7 +392,52 @@
   </url>
   
   <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-github/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/laravel-architecture/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-class-template/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/elixir/elixir-nodejs/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/hexo/freemind-tag-overview/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/tdd/tdd-factory-ocp/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/tdd/tdd-collection-assertion/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/eloquent/eloquent-model-factory-relation/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-project-template/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/azure/azure-blob-storage/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -447,7 +447,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-phpstorm-mysql/</loc>
+    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -462,7 +462,7 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
+    <loc>http://oomusou.io/phpstorm/phpstorm-code-generation/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
@@ -472,13 +472,13 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+    <loc>http://oomusou.io/laravel/laravel-presenter/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
-    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+    <loc>http://oomusou.io/azure/azure-phpstorm-mysql/</loc>
+    <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
@@ -488,6 +488,16 @@
   
   <url>
     <loc>http://oomusou.io/phpstorm/phpstorm-collection-debug/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/phpstorm/phpstorm-refactor-di/</loc>
+    <lastmod>2016-08-06T03:11:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/laravel/collection/collection-duplicated/</loc>
     <lastmod>2016-08-06T03:11:22.000Z</lastmod>
   </url>
   
@@ -527,17 +537,17 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/javascript/javascript-variable-method/</loc>
+    <loc>http://oomusou.io/javascript/variable-method/</loc>
     <lastmod>2016-06-07T03:31:45.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/javascript/javascript-variable-property/</loc>
+    <loc>http://oomusou.io/javascript/variable-property/</loc>
     <lastmod>2016-06-07T03:27:04.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/javascript/javascript-variable-object/</loc>
+    <loc>http://oomusou.io/javascript/variable-object/</loc>
     <lastmod>2016-06-07T01:53:23.000Z</lastmod>
   </url>
   

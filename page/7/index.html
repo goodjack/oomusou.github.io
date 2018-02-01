@@ -99,6 +99,74 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/refactor/refactor-in-action/" title="歸納自己天天使用的重構步驟">如何在 TDD 使用「重構九式」?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/refactor/refactor-in-action/"><img src="/images/feature/tdd.png" alt="如何在 TDD 使用「重構九式」?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>TDD 不僅是先寫測試而已，當第一個 <span class="label label-success">綠燈</span> 之後，剩下的半壁江山就是拼<strong>重構</strong>功力，重構的書多半來自於 Java，因此有些 PHP 獨門的重構技巧在 Java 書上是看不到的，也因為編程思維的持續演進，重構也有了新的面貌，本文整理出自己在實務上，天天必用的 9 個適用於 PHP 重構的 SOP。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/refactor/refactor-in-action/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
+			<div class="article-title"><a href="/laravel/laravel-email-queue-forever/" title="以非同步的方式寄送 Email 加快執行速度">如何使用 Forever 搭配 Laravel Queue 寄送 Email?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/laravel/laravel-email-queue-forever/"><img src="/images/feature/laravel.png" alt="如何使用 Forever 搭配 Laravel Queue 寄送 Email?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>傳統寄送 email 是採用同步的方式，也就是當你寄出一封信，必須等 email server 回應後，才可以繼續後續的程式動作，因此使用者會有明顯的等待時間；若能搭配 queue 機制，寄送 email 後，馬上以非同步的方式回到原來程式繼續執行，會有另外一個 process 去消耗 queue，負責寄送 email。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/laravel/laravel-email-queue-forever/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/phpunit/phpunit-test-private/" title="使用 Closure::call() 測試 private 與 protected method">如何使用 PHPUnit 測試 private 與 protected method?</a></div>						
 		</h3>
 	
@@ -361,74 +429,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/azure/azure-blob-storage/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/azure/azure-ide-helper/" title="將 IDE Helper 安裝在 require-dev 將造成 Azure 部署失敗">如何解決安裝 IDE Helper 造成 Laravel 在 Azure 部署失敗?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/azure/azure-ide-helper/"><img src="/images/feature/azure.png" alt="如何解決安裝 IDE Helper 造成 Laravel 在 Azure 部署失敗?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p><a href="https://github.com/barryvdh/laravel-ide-helper">Laravel IDE Helper</a> 解決了 PhpStorm 無法對 Facade 做 code completion 的問題，，為使用 Laravel 與 PhpStorm 必裝的套件，但安裝方式的差異，可能造成 Laravel 在 Azure 無法部署成功。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/azure/azure-ide-helper/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/azure/azure-phpstorm-mysql/" title="在 Azure 一樣可以使用我們喜愛的 MySQL">如何在 Azure 使用 Laravel + MySQL?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/azure/azure-phpstorm-mysql/"><img src="/images/feature/azure.png" alt="如何在 Azure 使用 Laravel + MySQL?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>Azure 除了可以跑 PHP 與 Laravel 外，更可以跑我們喜愛的 MySQL 資料庫。本文將實際在 Azure 建立 MySQL 資料庫，透過 <code>.env</code> 的設定，讓 Laravel 可以連上 MySQL，並透過 PhpStorm 直接管理 Azure 雲端的 MySQL 資料庫。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/azure/azure-phpstorm-mysql/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
