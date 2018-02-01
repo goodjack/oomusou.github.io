@@ -68,7 +68,7 @@
     <link href="http://oomusou.io/angular/route-unit-test/"/>
     <id>http://oomusou.io/angular/route-unit-test/</id>
     <published>2018-02-02T12:23:43.000Z</published>
-    <updated>2018-02-01T15:35:26.390Z</updated>
+    <updated>2018-02-01T15:57:24.500Z</updated>
     <content type="html"><![CDATA[<p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
 <a id="more"></a>
 <h2 id="User_Story">User Story</h2><hr>
@@ -138,7 +138,7 @@
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
-      <category term="Angular Test" scheme="http://oomusou.io/tags/Angular-Test/"/>
+      <category term="Angular Testing" scheme="http://oomusou.io/tags/Angular-Testing/"/>
     
   </entry>
   
