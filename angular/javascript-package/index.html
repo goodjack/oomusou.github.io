@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="在 Angular 內使用 JavaScript Package">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-01T15:39:30.907Z">
+<meta property="og:updated_time" content="2018-02-02T03:13:38.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 Angular 使用傳統 JavaScript 套件 ?">
 <meta name="twitter:description" content="在 Angular 內使用 JavaScript Package">
@@ -120,7 +120,6 @@
 <p>TypeScript 的解決方案是另外使用 <code>*.d.ts</code>，此為 type 定義檔。</p>
 <p>一般來說，若是知名的 JavaScript library，都已經有人維護 type 定義檔，其 package 的規則是 <code>@types/package</code>。</p>
 <p>由於 type 定義檔只是 TypeScript 編譯使用，以此加上 <code>--save-dev</code>。</p>
-<p>剛剛安裝的 <code>lodash</code> type 定義檔。</p>
 <h2 id="Import_Lodash">Import Lodash</h2><hr>
 <p><strong>app.component.ts</strong></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, OnInit&#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> * as _ from <span class="string">'lodash'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> scores: <span class="built_in">number</span>[] = [<span class="number">100</span>, <span class="number">99</span>, <span class="number">98</span>];</span><br><span class="line"></span><br><span class="line">    _.remove(scores, <span class="number">2</span>);</span><br><span class="line">    scores.forEach((score) =&gt; <span class="built_in">console</span>.log(score));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -139,7 +138,7 @@
 </blockquote>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>實務上若有 Angular 版本的 package，當然優先使用；若遇到必須使用 JavaScript package 不可的場合，除了安裝 package 外，還要安裝 type 定義檔，並且在 <code>tsconfig.json</code> 設定，如此才可以在 Angular 正確使用並通過編譯</li>
+<li>實務上若有 Angular 版本的 package，當然優先使用；若遇到必須使用 JavaScript package 不可的場合，除了安裝 package 外，還要安裝 type 定義檔，如此才可以在 Angular 正確使用並通過編譯</li>
 </ul>
 <h2 id="Sample_Code">Sample Code</h2><hr>
 <p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG52Lodash" target="_blank" rel="external">GitHub</a> 上找到</p>

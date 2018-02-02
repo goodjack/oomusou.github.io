@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/javascript-package/</loc>
+    <lastmod>2018-02-02T03:13:38.327Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/route-unit-test/</loc>
     <lastmod>2018-02-01T15:57:24.500Z</lastmod>
   </url>
@@ -14,11 +19,6 @@
   <url>
     <loc>http://oomusou.io/remove-object-array/</loc>
     <lastmod>2018-02-01T15:40:45.831Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/javascript-package/</loc>
-    <lastmod>2018-02-01T15:39:30.907Z</lastmod>
   </url>
   
   <url>
