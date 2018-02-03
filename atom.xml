@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-03T03:49:22.624Z</updated>
+  <updated>2018-02-03T03:55:10.078Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案?]]></title>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
     <link href="http://oomusou.io/webstorm/run-by-command/"/>
     <id>http://oomusou.io/webstorm/run-by-command/</id>
     <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T03:49:22.624Z</updated>
+    <updated>2018-02-03T03:55:10.078Z</updated>
     <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
