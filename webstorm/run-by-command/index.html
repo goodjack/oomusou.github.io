@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>文章標題 | 點燈坊</title>
+  <title>如何以 Command 方式執行 WebStorm 並開啟專案? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="標題描述">
+  <meta name="description" content="更快速的啟動方式">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="標題描述">
+ <meta name="description" content="更快速的啟動方式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="文章標題">
-<meta property="og:url" content="http://oomusou.io/remove-object-array/index.html">
+<meta property="og:title" content="如何以 Command 方式執行 WebStorm 並開啟專案?">
+<meta property="og:url" content="http://oomusou.io/webstorm/run-by-command/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="標題描述">
+<meta property="og:description" content="更快速的啟動方式">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-01T15:40:45.831Z">
+<meta property="og:updated_time" content="2018-02-03T03:49:22.624Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章標題">
-<meta name="twitter:description" content="標題描述">
+<meta name="twitter:title" content="如何以 Command 方式執行 WebStorm 並開啟專案?">
+<meta name="twitter:description" content="更快速的啟動方式">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 文章標題</h1>
+			<h1> 如何以 Command 方式執行 WebStorm 並開啟專案?</h1>
 		</div>		
 	
 
@@ -95,28 +95,37 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 標題描述			
+			<i class="fa fa-info-circle"></i> 更快速的啟動方式			
 		</div> <!-- alert -->
 		
 
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Motivation"><span class="toc-article-text">Motivation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#實際案例"><span class="toc-article-text">實際案例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立啟動_Script"><span class="toc-article-text">建立啟動 Script</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#在_Terminal_執行_Script"><span class="toc-article-text">在 Terminal 執行 Script</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>引言</p>
+	    <p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
 <a id="more"></a>
-<h2 id="Motivation">Motivation</h2><hr>
 <h2 id="Version">Version</h2><hr>
-<p>PHP 7.0.0<br>Laravel 5.2.22</p>
-<h2 id="實際案例">實際案例</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_Script">在 Terminal 執行 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，打 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到。</p>
-<h2 id="Reference">Reference</h2><hr>
+<ul>
+<li>WebStorm 專案除了使用 <code>JetBrains ToolBox</code> 開啟外，也可以使用 command 方式在 terminal 開啟</li>
+</ul>
 	  
 	</div>
 
@@ -125,14 +134,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/angular/di/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/refactor/refactor-in-action/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/javascript/remove-object-array/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -153,7 +162,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2016-12-05 
+	2018-02-03 
 	</div>
 	
 
@@ -163,7 +172,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Laravel/">Laravel<span>50</span></a></li>
+  <li><a href="/tags/WebStorm/">WebStorm<span>14</span></a></li>
     </ul>
 	</div>
 		

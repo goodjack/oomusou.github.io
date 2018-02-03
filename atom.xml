@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-01T15:46:43.864Z</updated>
+  <updated>2018-02-03T03:49:22.624Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T03:49:22.624Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_Script">在 Terminal 執行 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，打 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 專案除了使用 <code>JetBrains ToolBox</code> 開啟外，也可以使用 command 方式在 terminal 開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[更快速的啟動方式]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何刪除陣列中的物件 ?]]></title>
@@ -2569,156 +2604,6 @@
     </summary>
     
       <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Protractor 寫 Checkbox 的驗收測試 ?]]></title>
-    <link href="http://oomusou.io/protractor/protrator-checkbox/"/>
-    <id>http://oomusou.io/protractor/protrator-checkbox/</id>
-    <published>2017-08-23T12:23:43.000Z</published>
-    <updated>2017-10-15T06:49:33.000Z</updated>
-    <content type="html"><![CDATA[<p>HTML 的 <code>&lt;input type=&quot;checkbox&quot;&gt;</code> 是常見的控制項，該如何使用 Protractor 對 checkbox 寫驗收測試 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Protractor 5.1.2</p>
-<h2 id="Requirement">Requirement</h2><hr>
-<p><img src="/images/protractor/protractor-checkbox/checkbox000.png" alt="checkbox000"></p>
-<p>畫面上共有 <code>3</code> 個 checkbox，各為 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code>。</p>
-<p>下方會顯示目前所選擇的 checkbox 數量。</p>
-<p>下方一開始數量為 <code>0</code>。</p>
-<p><img src="/images/protractor/protractor-checkbox/checkbox001.png" alt="checkbox001"></p>
-<p>當選擇 <code>AWS</code> 時，下方顯示為 <code>1</code>。</p>
-<p><img src="/images/protractor/protractor-checkbox/checkbox002.png" alt="checkbox002"></p>
-<p>當選擇 <code>AWS</code> 與 <code>Azure</code> 時，下方顯示為 <code>2</code>。</p>
-<p><img src="/images/protractor/protractor-checkbox/checkbox003.png" alt="checkbox003"></p>
-<p>當選擇 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code> 時，下方顯示為 <code>3</code>。</p>
-<h2 id="Acceptance_Test_(紅燈)">Acceptance Test (紅燈)</h2><hr>
-<p>測試案例 :</p>
-<blockquote>
-<ol>
-<li>應該有 <code>3</code> 個 <code>&lt;label&gt;</code></li>
-<li>應該有 <code>3</code> 個 <code>&lt;input type=&quot;checkbox&quot;&gt;</code></li>
-<li>一開始下方應該出現 <code>0</code></li>
-<li>當選擇 <code>AWS</code>，下方應該出現 <code>1</code></li>
-<li>當選擇 <code>AWS</code> 與 <code>Azure</code> ，下方應該出現 <code>2</code></li>
-<li>當選擇 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code> ，下方應該出現 <code>3</code></li>
-</ol>
-</blockquote>
-<p><strong>e2e/app.e2e-spec.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AppPage &#125; from <span class="string">'./app.po'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'protractor512-checkbox App'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> page: AppPage;</span><br><span class="line"></span><br><span class="line">  beforeEach(() =&gt; &#123;</span><br><span class="line">    page = <span class="keyword">new</span> AppPage();</span><br><span class="line">    page.navigateTo();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'3'</span> labels`, () =&gt; &#123;</span><br><span class="line">    expect(page.getLabelCount()).toBe(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'3'</span> checkboxes`, () =&gt; &#123;</span><br><span class="line">    expect(page.getCheckboxCount()).toBe(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'0'</span> checkbox selected by <span class="keyword">default</span>`, () =&gt; &#123;</span><br><span class="line">    expect(page.getSelectedCloudCount()).toBe(<span class="string">'0'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should show <span class="string">'1'</span> when <span class="string">'AWS'</span> selected`, () =&gt; &#123;</span><br><span class="line">    page.selectCloudByIndex(<span class="number">0</span>);</span><br><span class="line">    expect(page.getSelectedCloudCount()).toBe(<span class="string">'1'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should have <span class="string">'2'</span> when <span class="string">'AWS'</span> and <span class="string">'Azure'</span> selected`, () =&gt; &#123;</span><br><span class="line">    page</span><br><span class="line">      .selectCloudByText(<span class="string">'AWS'</span>)</span><br><span class="line">      .selectCloudByText(<span class="string">'Azure'</span>);</span><br><span class="line">    expect(page.getSelectedCloudCount()).toBe(<span class="string">'2'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(`should <span class="string">'3'</span> when all checkbox selected`, () =&gt; &#123;</span><br><span class="line">    page</span><br><span class="line">      .selectCloudByText(<span class="string">'AWS'</span>)</span><br><span class="line">      .selectCloudByText(<span class="string">'Azure'</span>)</span><br><span class="line">      .selectCloudByText(<span class="string">'GCP'</span>);</span><br><span class="line">    expect(page.getSelectedCloudCount()).toBe(<span class="string">'3'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'3'</span> labels`, () =&gt; &#123;</span><br><span class="line">  expect(page.getLabelCount()).toBe(<span class="number">3</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 應該有 <code>3</code> 個 <code>&lt;label&gt;</code></p>
-</blockquote>
-<p><code>page.getLabelCount()</code> 將由 page object 傳回 <code>&lt;label&gt;</code> 的個數。</p>
-<p>15 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'3'</span> checkboxes`, () =&gt; &#123;</span><br><span class="line">  expect(page.getCheckboxCount()).toBe(<span class="number">3</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 應該有 <code>3</code> 個 <code>&lt;input type=&quot;checkbox&quot;&gt;</code></p>
-</blockquote>
-<p><code>page.getCheckboxCount()</code> 將由 page object 傳回 checkbox 的個數。</p>
-<p>19 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'0'</span> checkbox selected by <span class="keyword">default</span>`, () =&gt; &#123;</span><br><span class="line">  expect(page.getSelectedCloudCount()).toBe(<span class="string">'0'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 一開始下方應該出現 <code>0</code></p>
-</blockquote>
-<p><code>page.getSelectedCloudCount()</code> 將由 page object 傳回下方所顯示的選擇個數。</p>
-<p>23 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">it(`should show <span class="string">'1'</span> when <span class="string">'AWS'</span> selected`, () =&gt; &#123;</span><br><span class="line">  page.selectCloudByIndex(<span class="number">0</span>);</span><br><span class="line">  expect(page.getSelectedCloudCount()).toBe(<span class="string">'1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 當選擇 <code>AWS</code>，下方應該出現 <code>1</code></p>
-</blockquote>
-<p>要模擬 user 選擇 checkbox，有兩種方式，一種是使用 index 選擇，一種是使用文字選擇。</p>
-<p><code>page.selectCloudByIndex()</code> 將由 index 方式選擇 checkbox。</p>
-<p>28 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">it(`should have <span class="string">'2'</span> when <span class="string">'AWS'</span> and <span class="string">'Azure'</span> selected`, () =&gt; &#123;</span><br><span class="line">  page</span><br><span class="line">    .selectCloudByText(<span class="string">'AWS'</span>)</span><br><span class="line">    .selectCloudByText(<span class="string">'Azure'</span>);</span><br><span class="line">  expect(page.getSelectedCloudCount()).toBe(<span class="string">'2'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>測試案例 : 當選擇 <code>AWS</code> 與 <code>Azure</code> ，下方應該出現 <code>2</code></p>
-</blockquote>
-<p><code>page.selectCloudByText()</code> 將使用文字方式選擇 checkbox。</p>
-<p><strong>e2e/app.po.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; browser, by, element &#125; from <span class="string">'protractor'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppPage &#123;</span><br><span class="line">  navigateTo() &#123;</span><br><span class="line">    <span class="keyword">return</span> browser.get(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getLabelCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element.all(by.tagName(<span class="string">'label'</span>)).count();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getCheckboxCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element.all(by.css(<span class="string">'input[type="checkbox"]'</span>)).count();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  selectCloudByIndex(index: <span class="built_in">number</span>): AppPage &#123;</span><br><span class="line">    element.all(by.css(<span class="string">'label[name="cloud"]'</span>))</span><br><span class="line">      .get(index)</span><br><span class="line">      .click();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  selectCloudByText(text: <span class="built_in">string</span>): AppPage &#123;</span><br><span class="line">    element(by.cssContainingText(<span class="string">'label'</span>, text)).click();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getSelectedCloudCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element(by.css(<span class="string">'p'</span>)).getText();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>*.e2e-spec.ts</code> 負責描述測試案例，不包含 HTML 與 CSS 部分。</p>
-<p> <code>*.po.ts</code> 則負責描述 HTML 與 CSS 部分。</p>
-<p>Page object 主要目的在於讓測試與 HTML/CSS 解耦合，不要 designer 若變動了 HTML 或 CSS，則所有驗收測試都要修改，只要修改 page object 即可。</p>
-<blockquote>
-<p>驗收測試應該只根據需求變動而修改，不應該因為 HTML/CSS 變動而修改。</p>
-</blockquote>
-<p>第 8 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getLabelCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> element.all(by.tagName(<span class="string">'label'</span>)).count();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>回傳所有 <code>&lt;label&gt;</code> 的個數。</p>
-<blockquote>
-<p><code>count()</code> 的型別不是 <code>number</code>，而是 <code>wdpromise.Promise&lt;number&gt;</code>，因為型別比較複雜，所以迴船型別使用 <code>any</code> 代替。</p>
-</blockquote>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getCheckboxCount(): <span class="built_in">any</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> element.all(by.css(<span class="string">'input[type="checkbox"]'</span>)).count();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 CSS selector 方式找到所有 checkbox。<code>all()</code> 回傳為陣列，加上 <code>count()</code> 可獲得陣列的筆數。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">selectCloudByIndex(index: <span class="built_in">number</span>): AppPage &#123;</span><br><span class="line">  element.all(by.css(<span class="string">'label[name="cloud"]'</span>))</span><br><span class="line">    .get(index)</span><br><span class="line">    .click();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 index 選擇 checkbox。</p>
-<p>因為 checkbox 已經被包在 <code>&lt;label&gt;</code> 內，所以 click <code>&lt;label&gt;</code>，就相當於 click checkbox。</p>
-<p>實務上 <code>&lt;label&gt;</code> 會使用 <code>name</code>，表示同一組 checkbox ，因此可用 <code>by.css(&#39;label[name=&quot;cloud&quot;]&#39;)</code> 找到所有 <code>&lt;label&gt;</code> 的陣列，再透過 <code>get(index)</code> 選擇 <code>&lt;label&gt;</code> ，最後 <code>click()</code>。</p>
-<p>24 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">selectCloudByText(text: <span class="built_in">string</span>): AppPage &#123;</span><br><span class="line">  element(by.cssContainingText(<span class="string">'label'</span>, text)).click();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用文字選擇 checkbox。</p>
-<p>因為 checkbox 已經被包在 <code>&lt;label&gt;</code> 內，所以 click <code>&lt;label&gt;</code>，就相當於 click checkbox。</p>
-<p>因為文字是屬於 <code>&lt;label&gt;</code>，而不是屬於 checkbox，所以使用 <code>by.cssContainingText(&#39;label&#39;, cloud)</code> 直接找到符合條件的 <code>&lt;label&gt;</code>，然後 <code>click()</code>。</p>
-<p><img src="/images/protractor/protractor-checkbox/checkbox004.png" alt="checkbox004"></p>
-<p>因為我們還沒實作任何功能，得到預期的驗收測試 <code>紅燈</code>。</p>
-<h2 id="Acceptance_Test_(綠燈)">Acceptance Test (綠燈)</h2><hr>
-<p>測試案例 :</p>
-<blockquote>
-<ol>
-<li>應該有 <code>3</code> 個 <code>&lt;label&gt;</code></li>
-<li>應該有 <code>3</code> 個 <code>&lt;input type=&quot;checkbox&quot;&gt;</code></li>
-<li>一開始下方應該出現 <code>0</code></li>
-<li>當選擇 <code>AWS</code>，下方應該出現 <code>1</code></li>
-<li>當選擇 <code>AWS</code> 與 <code>Azure</code> ，下方應該出現 <code>2</code></li>
-<li>當選擇 <code>AWS</code>、<code>Azure</code> 與 <code>GCP</code> ，下方應該出現 <code>3</code></li>
-</ol>
-</blockquote>
-<p><strong>src/app/app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">label</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> <span class="attribute">name</span>=<span class="value">"cloud"</span> [<span class="attribute">for</span>]=<span class="value">"cloud.name|lowercase"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> [<span class="attribute">id</span>]=<span class="value">"cloud.name|lowercase"</span> [<span class="attribute">name</span>]=<span class="value">"cloud"</span> [<span class="attribute">checked</span>]=<span class="value">"cloud.checked"</span> (<span class="attribute">change</span>)=<span class="value">"onChange(myCheckbox)"</span> #<span class="attribute">myCheckbox</span>&gt;</span></span><br><span class="line">  &#123;&#123; cloud.name &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>&#123;&#123; selectedCount &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">label</span> *<span class="attribute">ngFor</span>=<span class="value">"let cloud of clouds"</span> <span class="attribute">name</span>=<span class="value">"cloud"</span> [<span class="attribute">for</span>]=<span class="value">"cloud.name|lowercase"</span>&gt;</span>&#123;&#123; cloud.name &#125;&#125;<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;label&gt;</code> 與 <code>&lt;input type=&quot;checkbox&quot;&gt;</code> 會依賴後端的資料顯示，故適合使用 <code>*ngFor</code> 產生。</p>
-<p><code>for</code> 會與 checkbox 的 <code>id</code> 先對應，使用 <code>lowercase</code> pipe 將 <code>cloud.name</code> 轉成小寫。</p>
-<p><code>&lt;label&gt;</code> 所顯示的值則使用 <code>cloud.name</code> 直接 interpolation binding。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> [<span class="attribute">id</span>]=<span class="value">"cloud.name|lowercase"</span> [<span class="attribute">name</span>]=<span class="value">"cloud"</span> [<span class="attribute">checked</span>]=<span class="value">"cloud.checked"</span> (<span class="attribute">change</span>)=<span class="value">"onChange(myCheckbox)"</span> #<span class="attribute">myCheckbox</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>為了讓 checkbox 同一組，故 <code>name</code> 都使用 <code>cloud</code>。</p>
-<p><code>id</code> 使用 <code>lowercase</code> pipe 將 <code>cloud.name</code> 轉成小寫。</p>
-<p><code>checked</code> 根據 <code>cloud.checked</code> 決定 radio 一開始是否選取。</p>
-<p>將 <code>change</code> event 綁訂到 <code>onChange()</code>，並將 <code>#myCheckbox</code> 傳入 <code>onChange()</code>。</p>
-<p><strong>src/app/app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Cloud &#125; from <span class="string">'./cloud'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  selectedCount = <span class="number">0</span>;</span><br><span class="line">  clouds: Cloud[] = [</span><br><span class="line">    &#123;id: <span class="string">'0'</span>, name: <span class="string">'AWS'</span>, checked: <span class="literal">false</span>&#125;,</span><br><span class="line">    &#123;id: <span class="string">'1'</span>, name: <span class="string">'Azure'</span>, checked: <span class="literal">false</span>&#125;,</span><br><span class="line">    &#123;id: <span class="string">'2'</span>, name: <span class="string">'GCP'</span>, checked: <span class="literal">false</span>&#125;</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  onChange(element: HTMLInputElement) &#123;</span><br><span class="line">    (element.checked) ? <span class="keyword">this</span>.selectedCount++ : <span class="keyword">this</span>.selectedCount--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectedCount = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p><code>selectedCount</code> field 預設為 <code>0</code>。</p>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clouds: Cloud[] = [</span><br><span class="line">  &#123;id: <span class="string">'0'</span>, name: <span class="string">'AWS'</span>, checked: <span class="literal">false</span>&#125;,</span><br><span class="line">  &#123;id: <span class="string">'1'</span>, name: <span class="string">'Azure'</span>, checked: <span class="literal">false</span>&#125;,</span><br><span class="line">  &#123;id: <span class="string">'2'</span>, name: <span class="string">'GCP'</span>, checked: <span class="literal">false</span>&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<p>建立 <code>cloud</code> field 與設定初始陣列。</p>
-<p>17 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onChange(element: HTMLInputElement) &#123;</span><br><span class="line">  (element.checked) ? <span class="keyword">this</span>.selectedCount++ : <span class="keyword">this</span>.selectedCount--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若 <code>element.checked</code> 為 <code>true</code>，則 <code>selectedCount</code> + 1，否則 <code>selectedCount</code> - 1 。</p>
-<p><img src="/images/protractor/protractor-checkbox/checkbox005.png" alt="checkbox005"></p>
-<p>功能都實作出來了，重新跑一次驗收測試確認都為 <code>綠燈</code>。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>實務上整個 ATDD 循環應該是驗收測試 (紅燈) -&gt; 整合測試 (紅燈) -&gt; 單元測試 (紅燈) -&gt; 單元測試 (綠燈) -&gt; 整合測試 (綠燈) -&gt; 驗收測試 (綠燈)，因為本文重點在於 Protract 驗收測試的 radio 寫法，所以省略了整合測試與單元測試部分。</li>
-<li>本文特別針對 checkbox 展示了 <code>selectCloudByIndex()</code> 與 <code>selectCloudByText()</code> 兩種寫法。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Protractor512Checkbox" target="_blank" rel="external">GitHub</a> 找到。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[使用 Protractor 控制 Checkbox]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Protractor" scheme="http://oomusou.io/tags/Protractor/"/>
     
   </entry>
   
