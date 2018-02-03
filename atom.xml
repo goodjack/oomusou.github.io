@@ -223,37 +223,43 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/webstorm/run-by-command/"/>
-    <id>http://oomusou.io/webstorm/run-by-command/</id>
-    <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T03:55:10.078Z</updated>
-    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/vscode/run-by-command/"/>
+    <id>http://oomusou.io/vscode/run-by-command/</id>
+    <published>2018-02-04T12:23:43.000Z</published>
+    <updated>2018-02-03T12:22:28.535Z</updated>
+    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
+<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
+<p>熱鍵執行 Command Pallette </p>
+<ol>
+<li>輸入 <code>shell</code></li>
+<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
+</ol>
 <blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+<p>Command Pallete 熱鍵 </p>
+<p>Windows : Ctrl + Shift + P</p>
+<p>macOS : ⌘ + ⇧ + P</p>
 </blockquote>
-<h2 id="在_Terminal_執行_Script">在 Terminal 執行 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，打 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
+<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
+<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
+<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>WebStorm 專案除了使用 <code>JetBrains ToolBox</code> 開啟外，也可以使用 command 方式在 terminal 開啟</li>
+<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[更快速的啟動方式]]>
+    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
     
     </summary>
     
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
     
   </entry>
   
@@ -303,6 +309,41 @@
     </summary>
     
       <category term="JavaScript" scheme="http://oomusou.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T12:19:01.941Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[更快速的啟動方式]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -2628,85 +2669,6 @@
     </summary>
     
       <category term=".NET Core" scheme="http://oomusou.io/tags/NET-Core/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 TypeScript 實踐 Iterator Pattern? (使用 Generator)]]></title>
-    <link href="http://oomusou.io/typescript/typescript-generator/"/>
-    <id>http://oomusou.io/typescript/typescript-generator/</id>
-    <published>2017-11-21T12:23:43.000Z</published>
-    <updated>2017-11-21T12:47:27.000Z</updated>
-    <content type="html"><![CDATA[<p>在 C# 有著名的 <code>IEnumerable</code> 與 <code>IEnumerator</code> interface，只要 implement 這兩個 interface，就可以實踐 Iterator Pattern，但 TypeScript 該如何實做呢 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>TypeScript 2.6</p>
-<h2 id="User_Story">User Story</h2><hr>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> school = <span class="keyword">new</span> School&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> student of school) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(student.Name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>School</code> 內包含很多 <code>Student</code>，我們希望直接使用 <code>for of</code> 對 <code>School</code> 抓到所有 <code>Student</code>。</p>
-<blockquote>
-<p><code>for of</code> 為 ES6 的新語法，可以想像成是 C# 的 <code>foreach()</code>。</p>
-</blockquote>
-<h2 id="Task">Task</h2><hr>
-<p><code>yield</code> 本身回傳就是 iterator，因此若使用 <code>yield</code> 將更精簡。</p>
-<h2 id="Architecture">Architecture</h2><hr>
-<p><img src="/images/typescript/typescript-generator/generator000.svg" alt="generator000"></p>
-<p><code>Schoool</code> implement 了 <code>Iterable&lt;T&gt;</code> interface，且必須回傳 <code>Iterator&lt;T&gt;</code> interface。</p>
-<h2 id="Implementation">Implementation</h2><hr>
-<p><img src="/images/typescript/typescript-generator/generator001.svg" alt="generator001"></p>
-<p><strong>Iterable<t> Interface</t></strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterable&lt;T&gt; </span>&#123;</span><br><span class="line">    [Symbol.iterator](): Iterator&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>定義 Iterator 該有的 method</p>
-</blockquote>
-<p>一個 iterator 一定要有 <code>[Symbol.iterator]()</code>，並且回傳  <code>Iterator&lt;T&gt;</code>，其中 <code>yield</code> 可直接回傳 <code>Iterator&lt;T&gt;</code>。</p>
-<p><img src="/images/typescript/typescript-generator/generator002.svg" alt="Iterator003"></p>
-<p><strong>Iterator<t> Interface</t></strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Iterator&lt;T&gt; </span>&#123;</span><br><span class="line">    next(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">return</span>?(value?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">    <span class="keyword">throw</span>?(e?: <span class="built_in">any</span>): IteratorResult&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>定義 <code>[Symbol.iterator]()</code> 回傳結果的 interface</p>
-</blockquote>
-<p>不用擔心要實作這個 interface 很困難，<code>yield</code> 回傳的正是 <code>Iterator&lt;T&gt;</code>，只要簡單使用 <code>yield</code> 即可。</p>
-<p><img src="/images/typescript/typescript-generator/generator003.svg" alt="Iterator004"></p>
-<p><strong>Student.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> Student </span>&#123;</span><br><span class="line">  Name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>定義資料類型為 <code>Student</code> interface，只有 <code>Name</code> public field。</p>
-<p><img src="/images/typescript/typescript-generator/generator004.svg" alt="Iterator005"></p>
-<p><strong>School.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Student &#125; from <span class="string">'./student'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> Iterable&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">private</span> students: T[];</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.students = [</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">      &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">    ];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  *[Symbol.iterator]() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">yield</span> iter;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>第 3 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> School&lt;T extends Student&gt; <span class="keyword">implements</span> Iterable&lt;T&gt; &#123;</span><br></pre></td></tr></table></figure>
-<p>為了 <code>School</code> 實踐 iterator，使其 implement <code>IterableIterator&lt;T&gt;</code>，但這個 <code>T</code> 並不是任意的 <code>T</code>，被限定只能繼承於 <code>Student</code> interface。</p>
-<p>第 4 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> students: T[];</span><br></pre></td></tr></table></figure>
-<p><code>School</code> 的內部資料 <code>Student[]</code>，其中 <code>Student</code> 以 <code>T</code> 取代。</p>
-<p>第 6 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>() </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.students = [</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Sam'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Kevin'</span> &#125;,</span><br><span class="line">    &lt;T&gt;&#123; Name: <span class="string">'Jessie'</span> &#125;</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 constructor 將目前的 <code>students</code> 資料建立起來。</p>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*[Symbol.iterator]() &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">yield</span> iter;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>Symbol.iterator</code>  property 回傳一個 <code>Iterator&lt;T&gt;</code> 物件供使用端操作</p>
-</blockquote>
-<p>根據 <code>Iterable&lt;T&gt;</code> 規定，一定要提供 <code>Symbol.iterator</code> property，且回傳型別 <code>Iterator&lt;T&gt;</code>，而 <code>yield</code> 回傳的正是 <code>Iterator&lt;T&gt;</code>。</p>
-<p><code>yield</code> 與 <code>return</code> 不同的是 : 執行到 <code>yield</code> 會立即中止，當一個 <code>for...of</code> 執行時，會繼續下一個 <code>yield</code>，因此不像 <code>return</code> 是回傳一個陣列，然後使用端又不須再一次 <code>for..of</code>。    </p>
-<blockquote>
-<p>使用 <code>yield</code> 前後只有一次 <code>for...of</code>。</p>
-</blockquote>
-<p>另外 ES6 規定，只要回傳的是 iterator，則 function 之前要加 <code>*</code>。</p>
-<p>除此之外，ES6 提供更精簡的寫法</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*[Symbol.iterator]() &#123;</span><br><span class="line">  <span class="keyword">yield</span>* <span class="keyword">this</span>.students;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只要 <code>yield*</code>，後面加上 array，編譯展開相當於</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> iter of <span class="keyword">this</span>.students)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">yield</span> iter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Iterator Pattern 讓我們不用暴露 object 內部資料，卻又可以讓使用端以 <code>for of</code> 方式訪問內部資料。</li>
-<li>Iterator Pattern 在實務上可以讓我們避免回傳一個大陣列影響效能，大陣列需要浪費時間建立，也浪費記憶體。</li>
-<li>若使用 generator，則程式碼更短，意圖也更明顯，還可以使用更精簡的 <code>yield*</code> 寫法。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[TypeScript 也可以實做出 Iterator]]>
-    
-    </summary>
-    
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
     
   </entry>
   
