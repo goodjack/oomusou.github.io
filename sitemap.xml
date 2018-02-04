@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/vscode/wallaby/</loc>
+    <lastmod>2018-02-04T15:35:34.715Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/vscode/run-by-command/</loc>
     <lastmod>2018-02-03T12:22:28.535Z</lastmod>
   </url>
@@ -169,11 +174,6 @@
   <url>
     <loc>http://oomusou.io/webstorm/jasmine-template/</loc>
     <lastmod>2017-07-23T13:30:55.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/vscode/wallaby/</loc>
-    <lastmod>2017-07-13T02:05:52.000Z</lastmod>
   </url>
   
   <url>
