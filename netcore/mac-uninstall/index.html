@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 macOS 移除 .NET Core ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="在 macOS 移除 .NET Core 較為麻煩">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="在 macOS 移除 .NET Core 較為麻煩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 macOS 移除 .NET Core ?">
+<meta property="og:url" content="http://oomusou.io/netcore/mac-uninstall/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="在 macOS 移除 .NET Core 較為麻煩">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-05T14:57:13.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 macOS 移除 .NET Core ?">
+<meta name="twitter:description" content="在 macOS 移除 .NET Core 較為麻煩">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 macOS 移除 .NET Core ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 在 macOS 移除 .NET Core 較為麻煩			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Vervion"><span class="toc-article-text">Vervion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_-NET_Core_Uninstall_Script"><span class="toc-article-text">下載 .NET Core Uninstall Script</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#執行_-NET_Core_Uninstall_Script"><span class="toc-article-text">執行 .NET Core Uninstall Script</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_-NET_Core_SDK"><span class="toc-article-text">測試 .NET Core SDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>由於 Microsoft 所提供的 .NET Core SDK 安裝檔是 <code>pkg</code> 格式，優點是安裝很方便，只要下一步下一步就好，但缺點是移除時比較麻煩。</p>
+<a id="more"></a>
+<h2 id="Vervion">Vervion</h2><hr>
+<p>macOS High Sierra 10.13.3<br>.NET Core SDK 2.1.4</p>
+<h2 id="下載_-NET_Core_Uninstall_Script">下載 .NET Core Uninstall Script</h2><hr>
+<p><strong>dotnet-uninstall-pkgs.sh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env bash</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Copyright (c) .NET Foundation and contributors. All rights reserved.</span></span><br><span class="line"><span class="comment"># Licensed under the MIT license. See LICENSE file in the project root for full license information.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">DIR=<span class="string">"<span class="variable">$( cd "$( dirname "$&#123;BASH_SOURCE[0]&#125;" )</span>"</span> &amp;&amp; <span class="built_in">pwd</span> )<span class="string">"</span><br><span class="line"></span><br><span class="line">current_userid=<span class="variable">$(id -u)</span></span><br><span class="line">if [ <span class="variable">$current_userid</span> -ne 0 ]; then</span><br><span class="line">    echo "</span>$(basename <span class="string">"<span class="variable">$0</span>"</span>) uninstallation script requires superuser privileges to run<span class="string">" &gt;&amp;2</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># this is the common suffix for all the dotnet pkgs</span><br><span class="line">dotnet_pkg_name_suffix="</span>com.microsoft.dotnet<span class="string">"</span><br><span class="line">dotnet_install_root="</span>/usr/<span class="built_in">local</span>/share/dotnet<span class="string">"</span><br><span class="line">dotnet_path_file="</span>/etc/paths.d/dotnet<span class="string">"</span><br><span class="line">dotnet_tool_path_file="</span>/etc/paths.d/dotnet-cli-tools<span class="string">"</span><br><span class="line"></span><br><span class="line">remove_dotnet_pkgs()&#123;</span><br><span class="line">    installed_pkgs=(<span class="variable">$(pkgutil --pkgs | grep $dotnet_pkg_name_suffix)</span>)</span><br><span class="line">    </span><br><span class="line">    for i in "</span><span class="variable">$&#123;installed_pkgs[@]&#125;</span><span class="string">"</span><br><span class="line">    do</span><br><span class="line">        echo "</span>Removing dotnet component - \<span class="string">"<span class="variable">$i</span>\""</span> &gt;&amp;<span class="number">2</span></span><br><span class="line">        pkgutil --force --forget <span class="string">"<span class="variable">$i</span>"</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">remove_dotnet_pkgs</span><br><span class="line">[ <span class="string">"$?"</span> <span class="operator">-ne</span> <span class="number">0</span> ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"Failed to remove dotnet packages."</span> &gt;&amp;<span class="number">2</span> &amp;&amp; <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Deleting install root - <span class="variable">$dotnet_install_root</span>"</span> &gt;&amp;<span class="number">2</span></span><br><span class="line">rm -rf <span class="string">"<span class="variable">$dotnet_install_root</span>"</span></span><br><span class="line">rm <span class="operator">-f</span> <span class="string">"<span class="variable">$dotnet_path_file</span>"</span></span><br><span class="line">rm <span class="operator">-f</span> <span class="string">"<span class="variable">$dotnet_tool_path_file</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"dotnet packages removal succeeded."</span> &gt;&amp;<span class="number">2</span></span><br><span class="line"><span class="built_in">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>此為 .net core 官方所提供的 <a href="https://github.com/dotnet/cli/blob/master/scripts/obtain/uninstall/dotnet-uninstall-pkgs.sh" target="_blank" rel="external">uninstall script</a>。</p>
+<p>16 行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet_pkg_name_suffix=<span class="string">"com.microsoft.dotnet"</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/netcore/mac-uninstall/mac002.png" alt="mac002"></p>
+<p>只要是 <code>com.microsoft.dotnet</code> 開頭的 package，都是 .net core 所安裝。</p>
+<p>21 行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">remove_dotnet_pkgs</span></span>()&#123;</span><br><span class="line">    installed_pkgs=($(pkgutil --pkgs | grep <span class="variable">$dotnet_pkg_name_suffix</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;installed_pkgs[@]&#125;</span>"</span></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Removing dotnet component - \"<span class="variable">$i</span>\""</span> &gt;&amp;<span class="number">2</span></span><br><span class="line">        pkgutil --force --forget <span class="string">"<span class="variable">$i</span>"</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將所有 <code>com.microsoft.dotnet</code> 為開的 package 名稱儲存為 <code>installed_pkgs</code> 陣列。</p>
+<p>將 <code>installed_pkgs</code> 陣列內 package 一一 <code>for</code> 執行，使用 <code>pkgutil —force —forget</code> 移除 package。</p>
+<p> 35 行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf <span class="string">"<span class="variable">$dotnet_install_root</span>"</span></span><br><span class="line">rm <span class="operator">-f</span> <span class="string">"<span class="variable">$dotnet_path_file</span>"</span></span><br><span class="line">rm <span class="operator">-f</span> <span class="string">"<span class="variable">$dotnet_tool_path_file</span>"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>刪除 <code>/usr/local/share/dotnet</code> 目錄</li>
+<li>刪除 <code>/etc/paths.d/dotnet</code> 檔案</li>
+<li>刪除 <code>/etc/paths.d/dotnet-cli-tools</code> 檔案</li>
+</ul>
+<blockquote>
+<p>有此可見，要乾淨移除 .NET Core SDK，必須包含 :</p>
+<ol>
+<li>移除所有 <code>com.microsoft.dotnet</code> 為首的 package</li>
+<li>刪除 <code>/usr/local/share/dotnet</code> 目錄</li>
+<li>刪除 <code>/etc/paths.d/dotnet</code> 與 <code>/etc/paths.d/dotnet-cli-tools</code> 檔案</li>
+</ol>
+</blockquote>
+<h2 id="執行_-NET_Core_Uninstall_Script">執行 .NET Core Uninstall Script</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh ./dotnet-uninstall-pkgs.sh</span><br></pre></td></tr></table></figure>
+<p><img src="/images/netcore/mac-uninstall/mac000.png" alt="mac000"></p>
+<h2 id="測試_-NET_Core_SDK">測試 .NET Core SDK</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dotnet --version</span><br></pre></td></tr></table></figure>
+<p><img src="/images/netcore/mac-uninstall/mac001.png" alt="mac001"></p>
+<p>若出現 <code>command not found</code> ，表示 .NET Core SDK 已經成功移除。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>只要是 <code>pkg</code> 格式的安裝檔，理論上都要原廠提供 <code>反安裝檔</code>，或者 <code>uninstall script</code>，才能徹底的乾淨移除，而不能只是將檔案拖到 <code>垃圾桶</code> 而已</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://github.com/dotnet" target="_blank" rel="external">.NET Foundation</a>,  <a href="https://github.com/dotnet/cli/blob/master/scripts/obtain/uninstall/dotnet-uninstall-pkgs.sh" target="_blank" rel="external">dotnet-uninstall-pkgs.sh</a> </p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/netcore/mac-install/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-06 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/NET-Core/">.NET Core<span>4</span></a></li> <li><a href="/tags/macOS/">macOS<span>6</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
