@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 macOS 安裝 .NET Core ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="在 macOS 安裝 .NET Core 很簡單">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="在 macOS 安裝 .NET Core 很簡單">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 macOS 安裝 .NET Core ?">
+<meta property="og:url" content="http://oomusou.io/netcore/mac-install/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="在 macOS 安裝 .NET Core 很簡單">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-05T05:41:59.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 macOS 安裝 .NET Core ?">
+<meta name="twitter:description" content="在 macOS 安裝 .NET Core 很簡單">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 macOS 安裝 .NET Core ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 在 macOS 安裝 .NET Core 很簡單			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#下載_-NET_Core_SDK"><span class="toc-article-text">下載 .NET Core SDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_-NET_Core_SDK"><span class="toc-article-text">安裝 .NET Core SDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_-NET_Core_SDK"><span class="toc-article-text">測試 .NET Core SDK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Q&A"><span class="toc-article-text">Q&A</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>.NET Core 為 Microsoft 的跨平台解決方案，只要在 macOS 裝上 .NET Core SDK，就可在 macOS 執行與開發 .NET Core App。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>.NET Core SDK 2.1.4</p>
+<h2 id="下載_-NET_Core_SDK">下載 .NET Core SDK</h2><hr>
+<p><img src="/images/netcore/mac-install/mac000.png" alt="mac000"></p>
+<ol>
+<li>到 <code>https://www.microsoft.com/net/download/macos</code> 下載 .NET Core SDK</li>
+<li>選擇 macOS</li>
+<li>按 <code>Download .NET Core 2.1.4</code> 下載 SDK</li>
+</ol>
+<h2 id="安裝_-NET_Core_SDK">安裝 .NET Core SDK</h2><hr>
+<p><img src="/images/netcore/mac-install/mac001.png" alt="mac001"></p>
+<ol>
+<li>.NET Core SDK 安裝檔會下載到 <code>Downloads</code> 目錄下</li>
+<li>執行安裝檔安裝 SDK</li>
+</ol>
+<p><img src="/images/netcore/mac-install/mac002.png" alt="mac002"></p>
+<ol>
+<li>.NET Core SDK 安裝畫面</li>
+<li>按 <code>Continue</code> 繼續</li>
+</ol>
+<p><img src="/images/netcore/mac-install/mac003.png" alt="mac003"></p>
+<ol>
+<li>按 <code>Install</code> 繼續</li>
+</ol>
+<p><img src="/images/netcore/mac-install/mac004.png" alt="mac004"></p>
+<ol>
+<li>安裝完成，按  <code>Close</code> 結束安裝</li>
+</ol>
+<p><img src="/images/netcore/mac-install/mac005.png" alt="mac005"></p>
+<ol>
+<li>按 <code>Move To Trash</code> 將 .NET Core SDK 安裝檔刪除</li>
+</ol>
+<h2 id="測試_-NET_Core_SDK">測試 .NET Core SDK</h2><hr>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ $ <span class="keyword">dotnet</span> <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
+<p>若有出現 .NET Core 版本，表示 .NET Core SDK 安裝成功。</p>
+<p><img src="/images/netcore/mac-install/mac006.png" alt="mac006"></p>
+<h2 id="Q&amp;A">Q&amp;A</h2><blockquote>
+<p>Q : SDK 與 runtime 有什麼差別 ?</p>
+</blockquote>
+<p><img src="/images/netcore/mac-install/mac007.png" alt="mac007"></p>
+<p>在 .NET Core 官網，的確分別提供 SDK 與 Runtime 兩種版本 :</p>
+<ul>
+<li><code>SDK</code> : <code>S</code>oftware <code>D</code>evelopment <code>K</code>，開發 .NET Core 所需要的版本，檔案較大</li>
+<li><code>Runtime</code> : 執行 .NET Core 所需要的版本，檔案較小</li>
+</ul>
+<p>簡單的說，SDK 就類似 Angular CLI，包含我們開發 Angular 所需要的指令；runtime 就類似 Angular 本身執行所需要的檔案。</p>
+<blockquote>
+<p>Q : 為什麼 SDK 與 runtime 版本不一樣 ?</p>
+</blockquote>
+<p><img src="/images/netcore/mac-install/mac008.png" alt="mac008"></p>
+<p>眼尖的人應該會發現目前 SDK 版本為 2.1.4，但 runtime 版本為 2.0.5，兩者版本並不一樣，這是合理的，如 Angular CLI 的版本與 Angular 版本也並不一致，截至目前為止，Angular CLI 版本為 1.6.7，而 Angular 版本為 5.2.3，所以 SDK 與 runtime 版本不一樣是正常的。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>在 macOS 安裝 .NET Core 環境非常簡單，只要下載 <code>pkg</code> 格式的 SDK 安裝檔，下一步下一步就可以完成安裝</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.microsoft.com/zh-tw/" target="_blank" rel="external">Microsoft</a>, .<a href="https://www.microsoft.com/net/download/macos" target="_blank" rel="external">NET Core SDK Download</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/vscode/run-by-command/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/NET-Core/">.NET Core<span>3</span></a></li> <li><a href="/tags/macOS/">macOS<span>5</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
