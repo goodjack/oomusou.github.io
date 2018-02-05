@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/angular/route-unit-test/</loc>
+    <lastmod>2018-02-05T08:09:24.841Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/netcore/mac-install/</loc>
     <lastmod>2018-02-05T05:41:59.986Z</lastmod>
   </url>
@@ -29,11 +34,6 @@
   <url>
     <loc>http://oomusou.io/angular/service-unit-test/</loc>
     <lastmod>2018-02-05T05:30:19.491Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/angular/route-unit-test/</loc>
-    <lastmod>2018-02-05T05:30:17.947Z</lastmod>
   </url>
   
   <url>

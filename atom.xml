@@ -429,7 +429,7 @@
     <link href="http://oomusou.io/angular/route-unit-test/"/>
     <id>http://oomusou.io/angular/route-unit-test/</id>
     <published>2018-02-02T12:23:43.000Z</published>
-    <updated>2018-02-05T05:30:17.947Z</updated>
+    <updated>2018-02-05T08:09:24.841Z</updated>
     <content type="html"><![CDATA[<p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -478,7 +478,7 @@
 <p>34 行</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">it(`should navigate to comment`, fakeAsync(() =&gt; &#123;</span><br><span class="line">  <span class="comment">/** act */</span></span><br><span class="line">  postComponent.onRedirectClick();</span><br><span class="line">  tick();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** assert */</span></span><br><span class="line">  expect(router.url).toEqual(<span class="string">'/comment'</span>);</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
 <p>這裡使用了 <code>fackAsync()</code> 與 <code>tick()</code>，這是 Angular 提供的非同步測試機制。</p>
-<p>主要的原因是 <code>Router.navigateByUrl()</code> 回傳的是 <code>Promise&lt;boolean&gt;</code>，也就是非同步，因此必須使用 <code>fackAsync()</code> 與  <code>tick()</code>，</p>
+<p>主要的原因是 <code>Router.navigateByUrl()</code> 回傳的是 <code>Promise&lt;boolean&gt;</code>，也就是非同步，因此必須使用 <code>fackAsync()</code> 與  <code>tick()</code>。</p>
 <p>簡單的說，由於在 <code>onRedirectClick()</code> 的 <code>Router.navigateByUrl()</code> 為非同步，我們必須使用 <code>tick()</code> 等待非同步執行完畢後，才能繼續執行 <code>expect()</code>，<code>tick()</code> 讓我們不用寫 callback，以更同步的寫法來測試非同步行為。</p>
 <p>最後直接 <code>expect()</code> <code>router.url</code>，測試目前 url 有沒有如預期。</p>
 <p><img src="/images/angular/route-unit-test/router002.png" alt="router002"></p>
