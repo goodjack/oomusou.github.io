@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-07T02:57:37.504Z</updated>
+  <updated>2018-02-07T08:52:49.227Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/netcore/mac-homebrew/"/>
     <id>http://oomusou.io/netcore/mac-homebrew/</id>
     <published>2018-02-07T12:23:43.000Z</published>
-    <updated>2018-02-07T02:57:37.504Z</updated>
+    <updated>2018-02-07T08:52:49.227Z</updated>
     <content type="html"><![CDATA[<p>Microsoft 雖然提供了 <code>pkg</code> 安裝檔安裝 .NET Core SDK，也提供了 uninstall script 移除，但在 macOS 世界裡，我們有更好用的 Homebrew，是否能用 Homebrew 來管理 .NET Core 呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -55,7 +55,7 @@
 <p>若出現 <code>command not found</code>，表示 .NET Core SDK 已經成功移除。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>透過 Homebrew，安裝與移除 .NET Core SDK 都很簡單，將然若要更新 .NET Core SDK 版本，只要下 <code>brew cask upgrade</code> 即可</li>
+<li>透過 Homebrew，安裝與移除 .NET Core SDK 都很簡單，將然若要更新 .NET Core SDK 版本，只要下 <code>brew cask upgrade dotnet-sdk</code> 即可</li>
 </ul>
 ]]></content>
     <summary type="html">
