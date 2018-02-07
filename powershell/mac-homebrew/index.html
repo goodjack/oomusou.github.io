@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 macOS 安裝 PowerShell ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="PowerShell 也能跑在 macOS">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="PowerShell 也能跑在 macOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 macOS 安裝 PowerShell ?">
+<meta property="og:url" content="http://oomusou.io/powershell/mac-homebrew/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="PowerShell 也能跑在 macOS">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-07T14:06:48.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 macOS 安裝 PowerShell ?">
+<meta name="twitter:description" content="PowerShell 也能跑在 macOS">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 macOS 安裝 PowerShell ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> PowerShell 也能跑在 macOS			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_PowerShell_Core"><span class="toc-article-text">安裝 PowerShell Core</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#移除_PowerShell_Core"><span class="toc-article-text">移除 PowerShell Core</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>隨著 .NET Core 跨平台後，PowerShell 也開始跨平台，事實上 PowerShell 底層跑的就是 .NET Core，有了 PowerShell Core 之後，macOS 與 Linux 的自動化又有了新的選擇。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>PowerShell 6.0.1</p>
+<h2 id="安裝_PowerShell_Core">安裝 PowerShell Core</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~ $ brew update</span><br><span class="line">~ $ brew cask install powershell</span><br></pre></td></tr></table></figure>
+<p><img src="/images/angular/powershell/mac-homebrew/mac000.png" alt="mac000"></p>
+<ol>
+<li>使用 <code>brew cask install</code> 安裝 <code>powershell</code></li>
+<li>PowerShell 安裝完成</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="variable">$ </span>pwsh</span><br></pre></td></tr></table></figure>
+<p><code>pwsh</code> 為 PowerShell 的執行檔。</p>
+<p><img src="/images/powershell/mac-homebrew/mac001.png" alt="mac001"></p>
+<ol>
+<li>執行 <code>pwsh</code> 啟動 PowerShell</li>
+<li>當出現 <code>PS</code> 開頭，表示 PowerShell Core 安裝成功</li>
+</ol>
+<h2 id="移除_PowerShell_Core">移除 PowerShell Core</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ $ brew cask uninstall powershell</span><br></pre></td></tr></table></figure>
+<p>使用 <code>brew cask uninstall</code> 移除 <code>powershell</code>。</p>
+<p><img src="/images/powershell/mac-homebrew/mac002.png" alt="mac002"></p>
+<ol>
+<li>使用 <code>brew cask uninstall</code> 移除 <code>powershell</code></li>
+<li>PowerShell Core  移除成功</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="variable">$ </span>pwsh</span><br></pre></td></tr></table></figure>
+<p><img src="/images/powershell/mac-homebrew/mac003.png" alt="mac003"></p>
+<p>若出現 <code>command not found</code>，表示 PowerShell Core 已經成功移除。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>透過 Homebrew，安裝與移除 PowerShell Core 都很簡單，將來若要更新 PowerShell Core 版本，只要下 <code>brew cask upgrade powershell</code> 即可</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/netcore/mac-homebrew/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-08 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PowerShell/">PowerShell<span>1</span></a></li> <li><a href="/tags/macOS/">macOS<span>8</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

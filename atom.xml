@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-07T08:52:49.227Z</updated>
+  <updated>2018-02-07T14:06:48.562Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 macOS 安裝 PowerShell ?]]></title>
+    <link href="http://oomusou.io/powershell/mac-homebrew/"/>
+    <id>http://oomusou.io/powershell/mac-homebrew/</id>
+    <published>2018-02-08T12:23:43.000Z</published>
+    <updated>2018-02-07T14:06:48.562Z</updated>
+    <content type="html"><![CDATA[<p>隨著 .NET Core 跨平台後，PowerShell 也開始跨平台，事實上 PowerShell 底層跑的就是 .NET Core，有了 PowerShell Core 之後，macOS 與 Linux 的自動化又有了新的選擇。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>PowerShell 6.0.1</p>
+<h2 id="安裝_PowerShell_Core">安裝 PowerShell Core</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~ $ brew update</span><br><span class="line">~ $ brew cask install powershell</span><br></pre></td></tr></table></figure>
+<p><img src="/images/angular/powershell/mac-homebrew/mac000.png" alt="mac000"></p>
+<ol>
+<li>使用 <code>brew cask install</code> 安裝 <code>powershell</code></li>
+<li>PowerShell 安裝完成</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="variable">$ </span>pwsh</span><br></pre></td></tr></table></figure>
+<p><code>pwsh</code> 為 PowerShell 的執行檔。</p>
+<p><img src="/images/powershell/mac-homebrew/mac001.png" alt="mac001"></p>
+<ol>
+<li>執行 <code>pwsh</code> 啟動 PowerShell</li>
+<li>當出現 <code>PS</code> 開頭，表示 PowerShell Core 安裝成功</li>
+</ol>
+<h2 id="移除_PowerShell_Core">移除 PowerShell Core</h2><hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ $ brew cask uninstall powershell</span><br></pre></td></tr></table></figure>
+<p>使用 <code>brew cask uninstall</code> 移除 <code>powershell</code>。</p>
+<p><img src="/images/powershell/mac-homebrew/mac002.png" alt="mac002"></p>
+<ol>
+<li>使用 <code>brew cask uninstall</code> 移除 <code>powershell</code></li>
+<li>PowerShell Core  移除成功</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="variable">$ </span>pwsh</span><br></pre></td></tr></table></figure>
+<p><img src="/images/powershell/mac-homebrew/mac003.png" alt="mac003"></p>
+<p>若出現 <code>command not found</code>，表示 PowerShell Core 已經成功移除。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>透過 Homebrew，安裝與移除 PowerShell Core 都很簡單，將來若要更新 PowerShell Core 版本，只要下 <code>brew cask upgrade powershell</code> 即可</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[PowerShell 也能跑在 macOS]]>
+    
+    </summary>
+    
+      <category term="PowerShell" scheme="http://oomusou.io/tags/PowerShell/"/>
+    
+      <category term="macOS" scheme="http://oomusou.io/tags/macOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何使用 Homebrew 安裝 .NET Core ?]]></title>
@@ -205,47 +256,6 @@
       <category term=".NET Core" scheme="http://oomusou.io/tags/NET-Core/"/>
     
       <category term="macOS" scheme="http://oomusou.io/tags/macOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/vscode/run-by-command/"/>
-    <id>http://oomusou.io/vscode/run-by-command/</id>
-    <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T12:22:28.535Z</updated>
-    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
-<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
-<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
-<p>熱鍵執行 Command Pallette </p>
-<ol>
-<li>輸入 <code>shell</code></li>
-<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
-</ol>
-<blockquote>
-<p>Command Pallete 熱鍵 </p>
-<p>Windows : Ctrl + Shift + P</p>
-<p>macOS : ⌘ + ⇧ + P</p>
-</blockquote>
-<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
-<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
-<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
-<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
-    
-    </summary>
-    
-      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
     
   </entry>
   
@@ -458,6 +468,82 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/vscode/run-by-command/"/>
+    <id>http://oomusou.io/vscode/run-by-command/</id>
+    <published>2018-02-04T12:23:43.000Z</published>
+    <updated>2018-02-03T12:22:28.535Z</updated>
+    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
+<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
+<p>熱鍵執行 Command Pallette </p>
+<ol>
+<li>輸入 <code>shell</code></li>
+<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
+</ol>
+<blockquote>
+<p>Command Pallete 熱鍵 </p>
+<p>Windows : Ctrl + Shift + P</p>
+<p>macOS : ⌘ + ⇧ + P</p>
+</blockquote>
+<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
+<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
+<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
+<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
+    
+    </summary>
+    
+      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T12:19:01.941Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[更快速的啟動方式]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何刪除陣列中的物件 ?]]></title>
     <link href="http://oomusou.io/javascript/remove-object-array/"/>
     <id>http://oomusou.io/javascript/remove-object-array/</id>
@@ -503,41 +589,6 @@
     </summary>
     
       <category term="JavaScript" scheme="http://oomusou.io/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/webstorm/run-by-command/"/>
-    <id>http://oomusou.io/webstorm/run-by-command/</id>
-    <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T12:19:01.941Z</updated>
-    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
-<blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
-</blockquote>
-<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[更快速的啟動方式]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1998,235 +2049,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[Observable Data Service 也能用來儲存不寫回 server 的資料]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="RxJS" scheme="http://oomusou.io/tags/RxJS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Observable Data Service ?]]></title>
-    <link href="http://oomusou.io/angular/observable-data-service/"/>
-    <id>http://oomusou.io/angular/observable-data-service/</id>
-    <published>2018-01-04T12:23:43.000Z</published>
-    <updated>2018-01-28T15:24:37.414Z</updated>
-    <content type="html"><![CDATA[<p>當 HTML 都 component 化之後，看似美好，但卻也導出另外一個棘手的問題 : <code>component 間共用的資料該如何處理?</code> React 是以 Redux 來解決這個問題，當然在 Angular 也可使用類似 Redux 的 NgRx，但 Redux 稍嫌複雜，而 Observable Data Service 較為簡單。顧名思義，<code>Observable</code> 採用的是 RxJS，而 <code>Data Service</code> 採用是 DI。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.1.2<br>RxJS 5.5.2</p>
-<h2 id="User_Story">User Story</h2><hr>
-<p><img src="/images/angular/observable-data-service/ods002.png" alt="ods000"></p>
-<ul>
-<li>一開始會顯示所有 post</li>
-<li>當輸入 post 名稱，按下 <code>Add Post</code> 後，新增的 post 會顯示在下方</li>
-<li>顯示目前 post 筆數</li>
-<li>按下 <code>Reload</code> 會重新從 API server 下載最新資料</li>
-</ul>
-<h2 id="Task">Task</h2><hr>
-<p><img src="/images/angular/observable-data-service/ods001.png" alt="obs001"></p>
-<ul>
-<li>原來該有的功能必須保留，但拆成 4 個 component</li>
-<li>但 4 個 component 會共用一份資料，且互相影響</li>
-</ul>
-<h2 id="Architecture">Architecture</h2><hr>
-<p><img src="/images/angular/observable-data-service/ods003.svg" alt="ods003"></p>
-<blockquote>
-<p>Observable Data Service vs. 普通 Service</p>
-</blockquote>
-<p>相同點 :</p>
-<ul>
-<li>兩者本質上都是 service</li>
-<li>都使用 <code>@Injectable</code> decorator</li>
-<li>都是回傳 <code>Observable</code></li>
-</ul>
-<p>相異點 :</p>
-<ul>
-<li>Observable data service 內部會使用 <code>BehaviorSubject</code> 儲存一份資料；而普通 service 會直接回傳 <code>HttpClient</code> 的 <code>Observable</code></li>
-</ul>
-<p><img src="/images/angular/observable-data-service/ods000.svg" alt="ods000"></p>
-<ul>
-<li>原本只有 <code>AppComponent</code>，現在分成 <code>AddPostComponent</code>、<code>ListPostsComponent</code>、<code>ShowCountComponent</code> 與 <code>ReloadPostsComponent</code> 4 個 component</li>
-<li>Component 依然注入 <code>PostService</code>，不過此時不是普通 service，而是 observable data service，為 4 個 component 共用的資料</li>
-<li>根據 <code>依賴反轉原則</code>，component 不直接相依於 <code>PostService</code>，而是兩者相依於 interface，根據 <code>介面隔離原則</code>，component 只相依於它所需要的 interface，因此訂出 <code>IAddPost</code>、<code>IListPosts</code>、<code>IShowCount</code> 與 <code>IReloadPosts</code> 4 個以 component 為導向的 interface，<code>PostService</code> 必須實踐此 4 個 interface</li>
-<li>Component 只負責 subscribe <code>PostService</code>，當資料改變時，<code>PostService</code> 會自動更新 component</li>
-</ul>
-<h2 id="Implementation">Implementation</h2><hr>
-<h3 id="AppComponent">AppComponent</h3><p><strong>app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">app-add-post</span>&gt;</span><span class="tag">&lt;/<span class="title">app-add-post</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-list-posts</span>&gt;</span><span class="tag">&lt;/<span class="title">app-list-posts</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-show-count</span>&gt;</span><span class="tag">&lt;/<span class="title">app-show-count</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-reload-posts</span>&gt;</span><span class="tag">&lt;/<span class="title">app-reload-posts</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>原本只有一個 <code>AppComponent</code> 時，所有 HTML 都在 <code>app.component.html</code> 下，現在因為都切成 component，所以只會看到 component 的 selector 而已。</p>
-<blockquote>
-<p>切 Component 心法</p>
-<p>切 component 與切 class、切 function 的心法一樣，就是 <code>單一職責原則</code>，讓你的 component 只有一個目的，且只有一個改變 component 的理由</p>
-<p>理想的 component 會看到很多其他 component 的 selector，而不是一個 component 有大量的 HTML</p>
-</blockquote>
-<h3 id="AddPostComponent">AddPostComponent</h3><p><img src="/images/angular/observable-data-service/ods004.svg" alt="ods004"></p>
-<p><strong>add-post.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> [(<span class="attribute">ngModel</span>)]=<span class="value">"title"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAddPostClick()"</span>&gt;</span>Add Post<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>只負責新增 post 的 component，因此只有 <code>&lt;input&gt;</code> 與 <code>&lt;button&gt;</code>。</p>
-<p><strong>add-post.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../../model/post.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IAddPost &#125; from <span class="string">'../../interface/iadd-post.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-add-post'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./add-post.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./add-post.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AddPostComponent &#123;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: IAddPost) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  onAddPostClick() &#123;</span><br><span class="line">    <span class="keyword">const</span> post: Post = &#123;</span><br><span class="line">      <span class="string">'title'</span>: <span class="keyword">this</span>.title,</span><br><span class="line">      <span class="string">'author'</span>: <span class="string">'Sam'</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.postService.addPost(post);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.title = <span class="string">''</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>15 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onAddPostClick() &#123;</span><br><span class="line">  <span class="keyword">const</span> post: Post = &#123;</span><br><span class="line">    <span class="string">'title'</span>: <span class="keyword">this</span>.title,</span><br><span class="line">    <span class="string">'author'</span>: <span class="string">'Sam'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.postService.addPost(post);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.title = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onAddPostClick()</code> 負責回應 <code>&lt;button&gt;</code> 的 <code>click</code> event。</p>
-<p>因為 <code>addPost()</code> 傳入的型別為 <code>Post</code>，因此先宣告 <code>post</code> 為 <code>Post</code> 型別，並準備 post 物件。</p>
-<p>透過 <code>PostService.addPost()</code> 傳入 <code>post</code>。 </p>
-<p>最後將 <code>&lt;input&gt;</code> 清空，因為 <code>&lt;input&gt;</code> 與 <code>title</code> 使用 <code>ngModel</code> 的 two-way binding，因此對 title 指定空字串，就相當於清空 <code>&lt;input&gt;</code>。</p>
-<p>13 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private postService: IAddPost) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>onAddPostClick()</code> 使用了 <code>PostService</code>，因此需要 DI 注入 <code>PostService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>PostService</code>，而應該相依於 <code>AddPostComponent</code> 所定義出的 <code>IAddPost</code> interface。</p>
-<p><strong>iadd-post.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../model/post.model'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> IAddPost &#123;</span><br><span class="line">  abstract addPost(post: Post): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>AddPostComponent</code> 只使用了 <code>addPost()</code>，因此 <code>IAddPost</code> interface 也應該只有 <code>addPost()</code>。</p>
-<h3 id="ListPostsComponent">ListPostsComponent</h3><p><img src="/images/angular/observable-data-service/ods005.svg" alt="ods005"></p>
-<p><strong>list-posts.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> *<span class="attribute">ngFor</span>=<span class="value">"let post of posts$|async"</span>&gt;</span></span><br><span class="line">    &#123;&#123; post.title &#125;&#125; &#123;&#123; post.author &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>只負責顯示post 的 component，因此只有 <code>&lt;ul&gt;</code> 與 <code>&lt;li&gt;</code>。</p>
-<p><code>posts$</code> 因為為 <code>Observable</code>，因此要搭配 <code>async</code> pipe 做 subscribe。</p>
-<p><strong>list-posts.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span>&#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../../model/post.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IListPosts &#125; from <span class="string">'../../interface/ilist-posts.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-list-posts'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./list-posts.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./list-posts.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ListPostsComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.postService.posts$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: IListPosts) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.postService.reloadPosts();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.postService.posts$;</span><br></pre></td></tr></table></figure>
-<p><code>posts$</code> 為 Observable，直接使用 <code>PostService.post$</code> property。</p>
-<blockquote>
-<p>當然也可以在 <code>ngOnInit()</code> 內 <code>this.posts$ = this.postService.post$</code>，但因為 RxJS 為 Declarative Programming，主要都在定義 <code>Observable</code> 關係，而不重視執行順序，反正最後都是在 <code>subscribe()</code> 或 <code>async</code> pipe 才執行，所以指令 <code>Observable</code> 時一般不寫在 <code>ngOnInit()</code> 內，直接寫在 <code>field</code> 即可。</p>
-</blockquote>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private postService: IListPosts) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>ListPostComponent</code> 使用了 <code>PostService</code>，因此需要 DI 注入 <code>PostService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>PostService</code>，而應該相依於 <code>ListPostComponent</code> 所定義出的 <code>IListPosts</code> interface。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ngOnInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.postService.reloadPosts();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>ListPostsComponent</code> 主要用於顯示 post，而需求是 <code>一開始會顯示所有 post</code>，因此在 <code>ngOnInit()</code> 時要呼叫 <code>PostService.reloadPosts()</code> 將全部 post 灌入 <code>posts$</code> observable。</p>
-<p><strong>ilist-posts.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../model/post.model'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> IListPosts &#123;</span><br><span class="line">  readonly posts$: Observable&lt;Post[]&gt;;</span><br><span class="line">  abstract reloadPosts(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>ListPostsComponent</code> 只使用了 <code>post$</code> property 與 <code>reloadPosts()</code>，因此 <code>IListPosts</code> interface 也應該只有 <code>post$</code> property 與 <code>reloadPosts()</code>。</p>
-<h3 id="ShowCountComponent">ShowCountComponent</h3><p><img src="/images/angular/observable-data-service/ods006.svg" alt="ods006"></p>
-<p><strong>show-count.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; (posts$|async)?.length &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>只負責顯示 post 筆數的 component。</p>
-<blockquote>
-<p>當使用 <code>Observable</code> 的 property 時，要加上 <code>?</code>，表示當 <code>posts$</code> 有 <code>length</code> property 時，才會執行 <code>post$.length</code></p>
-<p>因為 <code>post$</code> 為非同步，可能 HTML 在做 data binding 時，<code>post$</code> 還沒有產生</p>
-<p>目前 <code>?</code> 寫法只能用在 HTML template，還不能用在 TypeScript，將來會提供</p>
-</blockquote>
-<p><strong>show-count.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../../model/post.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IShowCount &#125; from <span class="string">'../../interface/ishow-count.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-show-count'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./show-count.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./show-count.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ShowCountComponent &#123;</span><br><span class="line">  posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.postService.posts$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: IShowCount) </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.postService.posts$;</span><br></pre></td></tr></table></figure>
-<p><code>posts$</code> 為 Observable，直接使用 <code>PostService.post$</code> property。</p>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private postService: IShowCount) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>ShowCountCompone</code> 使用了 <code>PostService</code>，因此需要 DI 注入 <code>PostService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>PostService</code>，而應該相依於 <code>ShowCountComponent</code> 所定義出的 <code>IShowCount</code> interface。</p>
-<p><strong>ishow-count.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../model/post.model'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> IShowCount &#123;</span><br><span class="line">  readonly posts$: Observable&lt;Post[]&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>ShowCountComponent</code> 只使用了 <code>post$</code> property ，因此 <code>IShowCount</code> interface 也應該只有 <code>post$</code> property。</p>
-<h3 id="ReloadPostsComponent">ReloadPostsComponent</h3><p><img src="/images/angular/observable-data-service/ods007.svg" alt="ods007"></p>
-<p><strong>reload-posts.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onReloadClick()"</span>&gt;</span>Reload<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>只負責重新從 API server 抓資料的 component，因此只有 <code>&lt;button&gt;</code>。</p>
-<p><strong>reload-posts.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IReloadPosts &#125; from <span class="string">'../../interface/ireload-posts.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-reload-posts'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./reload-posts.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./reload-posts.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ReloadPostsComponent &#123;</span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private postService: IReloadPosts) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  onReloadClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.postService.reloadPosts();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onReloadClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.postService.reloadPosts();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onReloadClick()</code> 負責回應 <code>&lt;button&gt;</code> 的 <code>click</code> event。</p>
-<p>呼叫 <code>PostService.reloadPosts()</code> 重新透過 GET 向 API server 抓最新資料。</p>
-<p>10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private postService: IReloadPosts) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>onReloadClick()</code> 使用了 <code>PostService</code>，因此需要 DI 注入 <code>PostService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>PostService</code>，而應該相依於 <code>ReloadPostComponent</code> 所定義出的 <code>IReloadPosts</code> interface。</p>
-<p><strong>ireload-posts.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> IReloadPosts &#123;</span><br><span class="line">  abstract reloadPosts(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>ReloadPostComponent</code> 只使了 <code>reloadPosts()</code>，因此 <code>IReloadPosts</code> interface 也應該只有 <code>reloadPosts()</code>。</p>
-<h3 id="PostService">PostService</h3><p><img src="/images/angular/observable-data-service/ods008.svg" alt="ods008"></p>
-<p><strong>post.service.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IAddPost &#125; from <span class="string">'../../interface/iadd-post.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IListPosts &#125; from <span class="string">'../../interface/ilist-posts.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IShowCount &#125; from <span class="string">'../../interface/ishow-count.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IReloadPosts &#125; from <span class="string">'../../interface/ireload-posts.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Post &#125; from <span class="string">'../../model/post.model'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HttpClient &#125; from <span class="string">'@angular/common/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BehaviorSubject &#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService <span class="keyword">implements</span> IAddPost, IListPosts, IShowCount, IReloadPosts &#123;</span><br><span class="line">  <span class="keyword">private</span> store$: BehaviorSubject&lt;Post[]&gt; = <span class="keyword">new</span> BehaviorSubject&lt;Post[]&gt;([]);</span><br><span class="line">  readonly posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.store$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private httpClient: HttpClient) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  addPost(post: Post): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.httpClient</span><br><span class="line">      .post&lt;Post&gt;(<span class="string">'api/posts'</span>, post)</span><br><span class="line">      .subscribe();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.store$.next([...this.store$.getValue(), post]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  reloadPosts(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.httpClient</span><br><span class="line">      .get&lt;Post[]&gt;(<span class="string">'api/posts'</span>)</span><br><span class="line">      .subscribe(posts =&gt; <span class="keyword">this</span>.store$.next(posts));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostService <span class="keyword">implements</span> IAddPost, IListPosts, IShowCount, IReloadPosts</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，我們根據 component 的需求訂出 <code>IAddPost</code>、<code>IListPosts</code>、<code>IShowCount</code> 與 <code>IReloadPosts</code> interface，因此 <code>PostService</code> 必須概括承受實現這些 interface。</p>
-<p>13 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> store$: BehaviorSubject&lt;Post[]&gt; = <span class="keyword">new</span> BehaviorSubject&lt;Post[]&gt;([]);</span><br></pre></td></tr></table></figure>
-<p>本文的關鍵在此，使用 <code>BehaviorSubject</code> 當作 <code>PostService</code> 內部的資料庫，儲存所有 post 資料，Observable Data Service 的關鍵就在於使用 <code>BehaviorSubject</code>。</p>
-<blockquote>
-<p>Q : 什麼是 BehaviorSubject ?</p>
-</blockquote>
-<p>根據 RxJS 的 source code</p>
-<p><strong>BehaviorSubject.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> BehaviorSubject&lt;T&gt; extends Subject&lt;T&gt;</span><br></pre></td></tr></table></figure>
-<p><code>BehaviorSubject</code> 繼承於 <code>Subject</code>。</p>
-<p><strong>Subject.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Subject&lt;T&gt; extends Observable&lt;T&gt; <span class="keyword">implements</span> ISubscription</span><br></pre></td></tr></table></figure>
-<p>而 <code>Subject</code> 繼承於 <code>Observable</code>。</p>
-<p><img src="/images/angular/observable-data-service/ods009.svg" alt="ods009"></p>
-<p>因此 <code>Observable</code> 所有的特性，<code>Subject</code> 與 <code>BehaviorSubject</code> 都有，如被 <code>subscribe()</code>。</p>
-<blockquote>
-<p><code>Subject</code> 與 <code>BehaviorSubject</code> 算是一種特殊的 <code>Observable</code>，提供一些原本 <code>Observable</code> 沒有的功能</p>
-<p>Q : Observable 與 Subject  有何差別 ?</p>
-</blockquote>
-<ul>
-<li><code>Observable</code> 只能從 <code>HttpClient</code> 或 array、event 提供資料，無法自行新增</li>
-<li><code>Subject</code> 可以透過 <code>next()</code> 手動新增資料至 Observable</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject: Subject = <span class="keyword">new</span> Subject();</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line">subject.next(<span class="string">'Hello World'</span>);</span><br><span class="line"><span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>若你要手動將資料推進 <code>Observable</code>，就使用 <code>Subject</code></p>
-<p>Q : Subject 與 BehaviorSubject 有何差別 ?</p>
-</blockquote>
-<ul>
-<li><code>Subject</code> 不能提供初始值，但 <code>BehaviorSubject</code> 可提供初始值</li>
-<li><code>Subject</code> 在被 <code>subscribe()</code> 後，必續再 <code>next()</code> 才能收到變動資料；<code>BehaviorSubject</code> 只要被 <code>subscribe()</code> 後，就可收到之前最後一筆資料，不用再等 <code>next()</code></li>
-<li><code>BehaviorSubject</code> 提供了 <code>getValue()</code>，能獲得目前 <code>BehaviorSubject</code> 最新一筆資料；而 <code>Subject</code> 無法</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject: BehaviorSubject = <span class="keyword">new</span> BehaviorSubject(<span class="string">'Hello World'</span>);</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// Hello World</span></span><br><span class="line">subject.next(<span class="string">'Hello Taiwan'</span>)</span><br><span class="line"><span class="comment">// Hello Taiwan</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Q : 為什麼 Observable Data Service 要使用 BehaviorSubject ?</p>
-</blockquote>
-<p>因為 HTML 的 <code>async</code> pipe，每個 HTML template 執行 <code>subscribe()</code> 的時間不一致，有快有慢，若 <code>subscribe()</code> 早於 <code>next()</code>，則可收到變動資料；若晚於 <code>next()</code>，則可能收不到資料，必須等下一次 <code>next()</code>。</p>
-<p>若使用 <code>BehaviorSubject</code>，無論 <code>subscribe()</code> 早於 <code>next()</code> 或晚於 <code>next()</code>，<code>async</code> pipe 都會獲得最新一筆 <code>next()</code>，因此 Observable Data Service 必須使用 <code>BehaviorSubject</code>。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private httpClient: HttpClient) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>PostService</code> 要使用 <code>HttpClient</code>，因此 DI 注入 <code>HttpClient</code>。</p>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">addPost(post: Post): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.httpClient</span><br><span class="line">    .post&lt;Post&gt;(<span class="string">'api/posts'</span>, post)</span><br><span class="line">    .subscribe();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.store$.next([...this.store$.getValue(), post]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>HttpClient.Post()</code> 寫入 API，並且馬上 <code>subscribe()</code> 執行。</p>
-<p>由於我們自己有維護一份 <code>store$</code> 儲存所有 post，因此新增的 post 也該寫入 <code>$store</code>。</p>
-<p><code>this.store$.getValue()</code> 將取得目前最新的 post 陣列資料。</p>
-<p><code>...this.store$.getValue()</code> 將會展開 post 陣列所有資料，此為 ES6 的 array spread operator。</p>
-<p><code>[...this.store$.getValue(), post]</code> ，將 post 加到原本陣列之後，此為新的陣列。</p>
-<p>使用 <code>next()</code> 將新的陣列推入 <code>BehaviorSubject</code>。</p>
-<blockquote>
-<p>Q : 這種寫法不就本地 <code>store$</code> 不是最新資料 ?</p>
-</blockquote>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">addPost(post: Post): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.httpClient</span><br><span class="line">    .post&lt;Post&gt;(<span class="string">'api/posts'</span>, post)</span><br><span class="line">    .subscribe();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.reloadPosts();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若你很在乎前端是否為最新資料，就下 <code>reloadPosts()</code> 重新 GET，當然執行效率會較差一點，依你實務上的需求決定。</p>
-<p>26 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reloadPosts(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.httpClient</span><br><span class="line">    .get&lt;Post[]&gt;(<span class="string">'api/posts'</span>)</span><br><span class="line">    .subscribe(posts =&gt; <span class="keyword">this</span>.store$.next(posts));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重新對 API 下 GET 抓資料，由於是最新的一份資料，馬上下 <code>$store.next()</code> 將資料寫進 <code>BehaviorSubject</code>。</p>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readonly posts$: Observable&lt;Post[]&gt; = <span class="keyword">this</span>.store$;</span><br></pre></td></tr></table></figure>
-<p>已經都自己維護一份 <code>BehaviorSubject</code> 的 <code>store$</code>，我們希望當 <code>BehaviorSubject()</code> 使用 <code>next()</code> 改變資料時，能通知所有 <code>subscribe()</code> 的 component 都能自動更新，這也是我們使用 Observable Data Service 的初衷。</p>
-<p>既然 <code>BehaviorSubject</code> 繼承於 <code>Observable</code>，理論上我們也可直接將 <code>$store</code> 設定為 <code>public</code>，直接被 component <code>subscribe()</code>，但因為 <code>BehaviorSubject()</code> 提供 <code>next()</code>，因此也可能被 component 誤用 <code>next()</code> 新增資料，因此我們改用真的 <code>Observable</code> 給 component 訂閱，並且宣告為 <code>readonly</code>，表示不能被 component 修改。</p>
-<p>由於 <code>store$</code> 也是一種  <code>Observable</code>，基於 <code>里式替換原則</code> : <code>父類別可用子類別取代</code>，因此不需要轉型即可。</p>
-<h3 id="AppModule">AppModule</h3><p><strong>app.module.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; from <span class="string">'@angular/forms'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HttpClientModule &#125; from <span class="string">'@angular/common/http'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AddPostComponent &#125; from <span class="string">'./component/add-post/add-post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ListPostsComponent &#125; from <span class="string">'./component/list-posts/list-posts.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCountComponent &#125; from <span class="string">'./component/show-count/show-count.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ReloadPostsComponent &#125; from <span class="string">'./component/reload-posts/reload-posts.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IAddPost &#125; from <span class="string">'./interface/iadd-post.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IListPosts &#125; from <span class="string">'./interface/ilist-posts.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IShowCount &#125; from <span class="string">'./interface/ishow-count.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IReloadPosts &#125; from <span class="string">'./interface/ireload-posts.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostService &#125; from <span class="string">'./service/post/post.service'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    AddPostComponent,</span><br><span class="line">    ListPostsComponent,</span><br><span class="line">    ShowCountComponent,</span><br><span class="line">    ReloadPostsComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    FormsModule,</span><br><span class="line">    HttpClientModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    PostService,</span><br><span class="line">    &#123;provide: IAddPost, useExisting: PostService&#125;,</span><br><span class="line">    &#123;provide: IListPosts, useExisting: PostService&#125;,</span><br><span class="line">    &#123;provide: IShowCount, useExisting: PostService&#125;,</span><br><span class="line">    &#123;provide: IReloadPosts, useExisting: PostService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>由於我們 component 與 service 都是基於 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code> 所設計，因此必須藉由 DI container 幫我們相對應的 service 注入。</p>
-<p>29 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PostService,</span><br><span class="line">&#123;provide: IAddPost, useExisting: PostService&#125;,</span><br><span class="line">&#123;provide: IListPosts, useExisting: PostService&#125;,</span><br><span class="line">&#123;provide: IShowCount, useExisting: PostService&#125;,</span><br><span class="line">&#123;provide: IReloadPosts, useExisting: PostService&#125;</span><br></pre></td></tr></table></figure>
-<p>一般我們使用普通 service 時，都是每個 component 注入新的 service，但使用 Observable Data Service 時不可如此，因為我們就是希望各 component 共用同一份資料，只要在 provider 使用 <code>useExisting</code>，Angular DI 就會以 Singleton 方式建立 service，各 component 才能共用一份 <code>store$</code>。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Observable Data Service 在實務上常常使用，只要各 component 間有資料共用，且會根據共用資料有不同互動，就可以使用，不侷限在資料來自於 API，也可以用在與 API 無關的資料</li>
-<li>Observable Data Service 同時使用了 DI 與 RxJS，讓 component 與 service 解耦合，只要 service 的資料更新，所有 component 的資料也會隨之更新</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG51ObservableDataService" target="_blank" rel="external">GitHub</a> 上找到</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[RxJS 的 BehaviorSubject 為 Observable Data Service 的核心技術]]>
     
     </summary>
     
