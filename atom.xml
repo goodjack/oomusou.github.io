@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-07T02:54:51.468Z</updated>
+  <updated>2018-02-07T02:57:37.504Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[文如何使用 Homebrew 安裝 .NET Core ?]]></title>
+    <title><![CDATA[如何使用 Homebrew 安裝 .NET Core ?]]></title>
     <link href="http://oomusou.io/netcore/mac-homebrew/"/>
     <id>http://oomusou.io/netcore/mac-homebrew/</id>
     <published>2018-02-07T12:23:43.000Z</published>
-    <updated>2018-02-07T02:54:51.468Z</updated>
+    <updated>2018-02-07T02:57:37.504Z</updated>
     <content type="html"><![CDATA[<p>Microsoft 雖然提供了 <code>pkg</code> 安裝檔安裝 .NET Core SDK，也提供了 uninstall script 移除，但在 macOS 世界裡，我們有更好用的 Homebrew，是否能用 Homebrew 來管理 .NET Core 呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
