@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-07T14:06:48.562Z</updated>
+  <updated>2018-02-07T14:10:54.875Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,14 +19,14 @@
     <link href="http://oomusou.io/powershell/mac-homebrew/"/>
     <id>http://oomusou.io/powershell/mac-homebrew/</id>
     <published>2018-02-08T12:23:43.000Z</published>
-    <updated>2018-02-07T14:06:48.562Z</updated>
+    <updated>2018-02-07T14:10:54.875Z</updated>
     <content type="html"><![CDATA[<p>隨著 .NET Core 跨平台後，PowerShell 也開始跨平台，事實上 PowerShell 底層跑的就是 .NET Core，有了 PowerShell Core 之後，macOS 與 Linux 的自動化又有了新的選擇。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
 <p>macOS High Sierra 10.13.3<br>PowerShell 6.0.1</p>
 <h2 id="安裝_PowerShell_Core">安裝 PowerShell Core</h2><hr>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~ $ brew update</span><br><span class="line">~ $ brew cask install powershell</span><br></pre></td></tr></table></figure>
-<p><img src="/images/angular/powershell/mac-homebrew/mac000.png" alt="mac000"></p>
+<p><img src="/images/powershell/mac-homebrew/mac000.png" alt="mac000"></p>
 <ol>
 <li>使用 <code>brew cask install</code> 安裝 <code>powershell</code></li>
 <li>PowerShell 安裝完成</li>
