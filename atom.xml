@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-09T16:17:52.828Z</updated>
+  <updated>2018-02-09T16:27:05.792Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,176 +19,139 @@
     <link href="http://oomusou.io/macos/myapp/"/>
     <id>http://oomusou.io/macos/myapp/</id>
     <published>2018-02-10T12:23:43.000Z</published>
-    <updated>2018-02-09T16:17:52.828Z</updated>
+    <updated>2018-02-09T16:27:05.792Z</updated>
     <content type="html"><![CDATA[<p>Macbook Pro 15 一直是我很推薦的 <code>工作神器</code>， 雖然很貴，但卻是最值得投資的部分。我不敢說我 Mac 用的多好，但使用了 3 年的 macOS，多少累積了一些經驗，試過不少 app，目前還會繼續用的，基本上都是工作用起來很順的 app，在此分享給大家。</p>
 <a id="more"></a>
 <h2 id="檔案管理">檔案管理</h2><hr>
 <ul>
-<li><p>Finder (內建)</p>
-<p>內建的 Finder 就已經很好用了</p>
-</li>
+<li><strong>Finder (內建)</strong> : 內建的 Finder 就已經很好用了</li>
 </ul>
 <h2 id="瀏覽器">瀏覽器</h2><hr>
 <ul>
-<li>Safari (內建)</li>
+<li><p><strong>Safari (內建)</strong> : 我自己看網站，會使用 Safari，與 macOS 整合較好，也比較省電</p>
+</li>
+<li><p><strong>Chrome (free)</strong> : 測試程式會使用 Chrome</p>
+</li>
 </ul>
-<p>我自己看網站，會使用 Safari，與 macOS 整合較好，也比較省電</p>
-<ul>
-<li>Chrome (free)</li>
-</ul>
-<p>測試程式會使用 Chrome</p>
 <h2 id="虛擬機器">虛擬機器</h2><hr>
 <ul>
-<li>Parallel Desktop (paid)</li>
+<li><p><strong>Parallel Desktop (paid)</strong> : macOS 的 VM 第一品牌，速度最快，尤其整合 Windows 10 部分非常好，還可以在 Parallel Dekstop 跑一個虛擬 macOS，方便測試用</p>
+</li>
+<li><p><strong>Docker for Mac (free)</strong> : 若要在 macOS 使用 docker，可使用原廠的 Docker for mac，不用搭配其他 VM</p>
+</li>
 </ul>
-<p>macOS 的 VM 第一品牌，速度最快，尤其整合 Windows 10 部分非常好，還可以在 Parallel Dekstop 跑一個虛擬 macOS，方便測試用</p>
-<ul>
-<li>Docker for Mac (free)</li>
-</ul>
-<p>若要在 macOS 使用 docker，可使用原廠的 Docker for mac，不用搭配其他 VM</p>
 <h2 id="通訊軟體">通訊軟體</h2><hr>
 <ul>
-<li>Zoom (free)</li>
+<li><strong>Zoom (free)</strong> : 視訊最流暢的通訊軟體</li>
 </ul>
-<p>視訊最流暢的通訊軟體</p>
 <ul>
-<li>Telegram (free)</li>
+<li><strong>Telegram (free)</strong> : 適合文字模式傳訊息</li>
 </ul>
-<p>適合文字模式傳訊息</p>
 <ul>
-<li>Slack (free)</li>
+<li><strong>Slack (free)</strong> : 適合接受 CI server 所傳送的訊息</li>
 </ul>
-<p>適合接受 CI server 所傳送的訊息</p>
 <h2 id="截圖與影像處理">截圖與影像處理</h2><hr>
 <ul>
-<li>Snagit (paid)</li>
+<li><strong>Snagit (paid)</strong> : 截圖第一品牌，也可以做簡單的影像處理，基本上我部落格的圖片都是靠 Snagit 處理</li>
 </ul>
-<p>截圖第一品牌，也可以做簡單的影像處理，基本上我部落格的圖片都是靠 Snagit 處理</p>
 <h2 id="字典">字典</h2><hr>
 <ul>
-<li>Oxford Advanced Learner’s Dictionary (paid)</li>
+<li><strong>Oxford Advanced Learner’s Dictionary (paid)</strong> : macOS 最好的英英字典</li>
 </ul>
-<p>macOS 最好的英英字典</p>
 <ul>
-<li>Dictionary (內建) </li>
+<li><strong>Dictionary (內建)</strong> : macOS 有內建英漢字典，但可惜是簡體中文</li>
 </ul>
-<p>macOS 有內建英漢字典，但可惜是簡體中文</p>
 <h2 id="RSS">RSS</h2><hr>
 <ul>
-<li>Reeder (paid)</li>
+<li><strong>Reeder (paid)</strong> : 訂閱大神的 RSS，算中規中矩</li>
 </ul>
-<p>訂閱大神的 RSS，算中規中矩</p>
 <h2 id="密碼管理">密碼管理</h2><hr>
 <ul>
-<li>1Password (paid)</li>
+<li><strong>1Password (paid)</strong> : 儲存密碼，在 iphone 也能讀取</li>
 </ul>
-<p>儲存密碼，在 iphone 也能讀取</p>
 <h2 id="音樂管理">音樂管理</h2><hr>
 <ul>
-<li>iTunes (內建)</li>
+<li><strong>iTunes (內建)</strong> : 若你願意去編輯 MP3 tag，則 iTunes 非常好用，也與 iPhone 整合良好</li>
 </ul>
-<p>若你願意去編輯 MP3 tag，則 iTunes 非常好用，也與 iPhone 整合良好</p>
 <h2 id="程式開發">程式開發</h2><hr>
 <ul>
-<li>Visual Studio Code (free)</li>
+<li><strong>Visual Studio Code (free)</strong> : 可以開發 .NET Core、Angular、Bash Script、PowerShell、Docker … 等等</li>
 </ul>
-<p>可以開發 .NET Core、Angular、Bash Script、PowerShell、Docker … 等等</p>
 <ul>
-<li>JetBrains WebStorm (paid)</li>
+<li><strong>JetBrains WebStorm (paid)</strong> : Angular 開發神器，尤其 refactoring 非常強悍</li>
 </ul>
-<p>Angular 開發神器，尤其 refactoring 非常強悍</p>
 <ul>
-<li>JetBrains Rider (paid)</li>
+<li><strong>JetBrains Rider (paid)</strong> : .NET Core 開發神器，尤其 refactoring 非常強悍</li>
 </ul>
-<p>.NET Core 開發神器，尤其 refactoring 非常強悍</p>
 <ul>
-<li>JetBrains DataGrip (paid)</li>
+<li><strong>JetBrains DataGrip (paid)</strong> : 連接各種資料庫，只要這一套都能搞定</li>
 </ul>
-<p>連接各種資料庫，只要這一套都能搞定</p>
 <ul>
-<li>Postman (free/paid)</li>
+<li><strong>Postman (free/paid)</strong> : 測試 API 標準工具，若要更強功能可付費</li>
 </ul>
-<p>測試 API 標準工具，若要更強功能可付費</p>
 <h2 id="文字編輯器">文字編輯器</h2><hr>
 <ul>
-<li>Sublime Text (free)</li>
+<li><strong>Sublime Text (free)</strong> : 我沒用很多，只有在修改 blog 內文時，才會使用</li>
 </ul>
-<p>我沒用很多，只有在修改 blog 內文時，才會使用</p>
 <h2 id="Markdown_編輯器">Markdown 編輯器</h2><hr>
 <ul>
-<li>Typora (free)</li>
+<li><strong>Typora (free)</strong> : 編輯 markdown 神器，所見即所得的方式編輯 markdown，天天使用</li>
 </ul>
-<p>編輯 markdown 神器，所見即所得的方式編輯 markdown，天天使用</p>
-<h2 id="文字_Terminal">文字 Terminal</h2><hr>
+<h2 id="文字_Terminal">文字 Terminal</h2><p>–</p>
 <ul>
-<li>iTerm 2 (free)</li>
+<li><strong>iTerm 2 (free)</strong> : macOS 內建的 terminal 很難用，一定要裝 iTerm 2 才能發揮 macOS 的 terminal 威力</li>
 </ul>
-<p>macOS 內建的 terminal 很難用，一定要裝 iTerm 2 才能發揮 macOS 的 terminal 威力</p>
 <h2 id="檔案格式瀏覽">檔案格式瀏覽</h2><hr>
 <ul>
-<li>Preview (內建)</li>
+<li><strong>Preview (內建)</strong> : 支援各種格式，如 pdf 格式完全不用安裝其他軟體，內建的 Preview 就很方便</li>
 </ul>
-<p>支援各種格式，如 pdf 格式完全不用安裝其他軟體，內建的 Preview 就很方便</p>
 <h2 id="移除_App">移除 App</h2><hr>
 <ul>
-<li>AppCleaner (free)</li>
+<li><strong>AppCleaner (free)</strong> : 雖然 macOS 的 app 號稱可以直接丟 <code>垃圾桶</code> 刪除，但透過 AppCleaner 可以找到 app 自己用的暫存檔與記錄檔，會刪除的更乾淨</li>
 </ul>
-<p>雖然 macOS 的 app 號稱可以直接丟 <code>垃圾桶</code> 刪除，但透過 AppCleaner 可以找到 app 自己用的暫存檔與記錄檔，會刪除的更乾淨</p>
 <h2 id="Git_管理">Git 管理</h2><hr>
 <ul>
-<li>SourceTree (free)</li>
+<li><strong>SourceTree (free)</strong> : Bitbucket 所出的圖形化 git 管理軟體，功能強大，但有點複雜</li>
 </ul>
-<p>Bitbucket 所出的圖形化 git 管理軟體，功能強大，但有點複雜</p>
 <h2 id="Trackpad_管理">Trackpad 管理</h2><hr>
 <ul>
-<li>BetterTouchTool (paid)</li>
+<li><strong>BetterTouchTool (paid)</strong> : Macbook 的 trackpad 是有名的好用，macOS 內建已經使用很多手勢，不過這還沒完全榨出 trackpad 淺能，BetterTouchTool 讓我們可以自訂更多的手勢，甚至還可以自訂 touch bar，若你是 Trackpad 重度使用者，強烈推薦此神器</li>
 </ul>
-<p>Macbook 的 trackpad 是有名的好用，macOS 內建已經使用很多手勢，不過這還沒完全榨出 trackpad 淺能，BetterTouchTool 讓我們可以自訂更多的手勢，甚至還可以自訂 touch bar，若你是 Trackpad 重度使用者，強烈推薦此神器</p>
 <h2 id="系統清理">系統清理</h2><hr>
 <ul>
-<li>Dr.Cleaner Pro (paid)</li>
+<li><strong>Dr.Cleaner Pro (free/paid)</strong> : 趨勢科技產品，幫你刪除沒用的暫存檔</li>
 </ul>
-<p>趨勢科技產品，幫你刪除沒用的暫存檔</p>
 <h2 id="解壓縮工具">解壓縮工具</h2><hr>
 <ul>
-<li>The Unarchiver (free)</li>
+<li><strong>The Unarchiver (free)</strong> : 任何壓縮格式檔案都能解開</li>
 </ul>
-<p>任何壓縮格式檔案都能解開</p>
 <h2 id="備份工具">備份工具</h2><hr>
 <ul>
-<li>Time Machine (內建)</li>
+<li><strong>Time Machine (內建)</strong> : 簡單又強悍的備份工具，天天使用</li>
 </ul>
-<p>簡單又強悍的備份工具，天天使用</p>
 <h2 id="套件管理工具">套件管理工具</h2><hr>
 <ul>
-<li>Homebrew (free)</li>
+<li><strong>Homebrew (free)</strong> : open source 的套件管理，相當於 Ubuntu 的 <code>apt-get</code></li>
 </ul>
-<p>對於 open source 的套件管理，相當於 Ubuntu 的 <code>apt-get</code></p>
 <h2 id="輔助工具">輔助工具</h2><hr>
 <ul>
-<li>Parallels Toolbox (paid)</li>
+<li><strong>Parallels Toolbox (paid)</strong> : Parallel Desktop 所送的小工具，如 <code>Do Not Sleep</code> 與 <code>Do Not Disturb</code>，可以在你在簡報時，避免 Macbook 休眠或通訊軟體干擾</li>
 </ul>
-<p>Parallel Desktop 所送的小工具，如 <code>Do Not Sleep</code> 與 <code>Do Not Disturb</code>，可以在你在簡報時，避免 Macbook 休眠或通訊軟體干擾</p>
 <ul>
-<li>iStat Menus (paid)</li>
+<li><strong>iStat Menus (paid)</strong> : 在 menu 顯示 CPU / 記憶體 / 網路 / SSD …等使用量</li>
 </ul>
-<p>在 menu 顯示 CPU / 記憶體 / 網路 / SSD …等使用量</p>
 <ul>
-<li>Bartender (paid)</li>
+<li><strong>Bartender (paid)</strong> : 將 menu 的 icon 加以隱藏，僅留下你想要的 icon</li>
 </ul>
-<p>將 menu 的 icon 加以隱藏，僅留下你想要的 icon</p>
 <ul>
-<li>JetBrains Toolbox (paid)</li>
+<li><strong>JetBrains Toolbox (paid)</strong> : 快速使用 JetBrains 工具開啟專案，且負責更新 JetBrains 工具</li>
 </ul>
-<p>快速使用 JetBrains 工具開啟專案，且負責更新 JetBrains 工具</p>
 <ul>
-<li>Alfred (free/paid)</li>
+<li><strong>Alfred (free/paid)</strong> : 超強取代內建 Spotlight 工具，強烈推薦</li>
 </ul>
-<p>超強取代內建 Spotlight 工具，強烈推薦</p>
 <ul>
-<li>Dropbox</li>
+<li><strong>Dropbox</strong> : 有名的網路硬碟，與 macOS 整合良好</li>
 </ul>
-<p>有名的網路硬碟，與 macOS 整合良好</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
 <li>我用的 macOS 工具不算多，也還在持續優化自己的工作流程，以上是我們目前幾乎天天會用到的 app</li>
