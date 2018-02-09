@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-09T16:27:05.792Z</updated>
+  <updated>2018-02-09T16:33:56.626Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/macos/myapp/"/>
     <id>http://oomusou.io/macos/myapp/</id>
     <published>2018-02-10T12:23:43.000Z</published>
-    <updated>2018-02-09T16:27:05.792Z</updated>
+    <updated>2018-02-09T16:33:56.626Z</updated>
     <content type="html"><![CDATA[<p>Macbook Pro 15 一直是我很推薦的 <code>工作神器</code>， 雖然很貴，但卻是最值得投資的部分。我不敢說我 Mac 用的多好，但使用了 3 年的 macOS，多少累積了一些經驗，試過不少 app，目前還會繼續用的，基本上都是工作用起來很順的 app，在此分享給大家。</p>
 <a id="more"></a>
 <h2 id="檔案管理">檔案管理</h2><hr>
@@ -97,7 +97,7 @@
 <ul>
 <li><strong>Typora (free)</strong> : 編輯 markdown 神器，所見即所得的方式編輯 markdown，天天使用</li>
 </ul>
-<h2 id="文字_Terminal">文字 Terminal</h2><p>–</p>
+<h2 id="文字_Terminal">文字 Terminal</h2><hr>
 <ul>
 <li><strong>iTerm 2 (free)</strong> : macOS 內建的 terminal 很難用，一定要裝 iTerm 2 才能發揮 macOS 的 terminal 威力</li>
 </ul>
