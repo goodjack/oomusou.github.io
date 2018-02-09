@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-07T14:18:16.809Z</updated>
+  <updated>2018-02-09T16:17:52.828Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,200 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[我所使用的 macOS App 分享]]></title>
+    <link href="http://oomusou.io/macos/myapp/"/>
+    <id>http://oomusou.io/macos/myapp/</id>
+    <published>2018-02-10T12:23:43.000Z</published>
+    <updated>2018-02-09T16:17:52.828Z</updated>
+    <content type="html"><![CDATA[<p>Macbook Pro 15 一直是我很推薦的 <code>工作神器</code>， 雖然很貴，但卻是最值得投資的部分。我不敢說我 Mac 用的多好，但使用了 3 年的 macOS，多少累積了一些經驗，試過不少 app，目前還會繼續用的，基本上都是工作用起來很順的 app，在此分享給大家。</p>
+<a id="more"></a>
+<h2 id="檔案管理">檔案管理</h2><hr>
+<ul>
+<li><p>Finder (內建)</p>
+<p>內建的 Finder 就已經很好用了</p>
+</li>
+</ul>
+<h2 id="瀏覽器">瀏覽器</h2><hr>
+<ul>
+<li>Safari (內建)</li>
+</ul>
+<p>我自己看網站，會使用 Safari，與 macOS 整合較好，也比較省電</p>
+<ul>
+<li>Chrome (free)</li>
+</ul>
+<p>測試程式會使用 Chrome</p>
+<h2 id="虛擬機器">虛擬機器</h2><hr>
+<ul>
+<li>Parallel Desktop (paid)</li>
+</ul>
+<p>macOS 的 VM 第一品牌，速度最快，尤其整合 Windows 10 部分非常好，還可以在 Parallel Dekstop 跑一個虛擬 macOS，方便測試用</p>
+<ul>
+<li>Docker for Mac (free)</li>
+</ul>
+<p>若要在 macOS 使用 docker，可使用原廠的 Docker for mac，不用搭配其他 VM</p>
+<h2 id="通訊軟體">通訊軟體</h2><hr>
+<ul>
+<li>Zoom (free)</li>
+</ul>
+<p>視訊最流暢的通訊軟體</p>
+<ul>
+<li>Telegram (free)</li>
+</ul>
+<p>適合文字模式傳訊息</p>
+<ul>
+<li>Slack (free)</li>
+</ul>
+<p>適合接受 CI server 所傳送的訊息</p>
+<h2 id="截圖與影像處理">截圖與影像處理</h2><hr>
+<ul>
+<li>Snagit (paid)</li>
+</ul>
+<p>截圖第一品牌，也可以做簡單的影像處理，基本上我部落格的圖片都是靠 Snagit 處理</p>
+<h2 id="字典">字典</h2><hr>
+<ul>
+<li>Oxford Advanced Learner’s Dictionary (paid)</li>
+</ul>
+<p>macOS 最好的英英字典</p>
+<ul>
+<li>Dictionary (內建) </li>
+</ul>
+<p>macOS 有內建英漢字典，但可惜是簡體中文</p>
+<h2 id="RSS">RSS</h2><hr>
+<ul>
+<li>Reeder (paid)</li>
+</ul>
+<p>訂閱大神的 RSS，算中規中矩</p>
+<h2 id="密碼管理">密碼管理</h2><hr>
+<ul>
+<li>1Password (paid)</li>
+</ul>
+<p>儲存密碼，在 iphone 也能讀取</p>
+<h2 id="音樂管理">音樂管理</h2><hr>
+<ul>
+<li>iTunes (內建)</li>
+</ul>
+<p>若你願意去編輯 MP3 tag，則 iTunes 非常好用，也與 iPhone 整合良好</p>
+<h2 id="程式開發">程式開發</h2><hr>
+<ul>
+<li>Visual Studio Code (free)</li>
+</ul>
+<p>可以開發 .NET Core、Angular、Bash Script、PowerShell、Docker … 等等</p>
+<ul>
+<li>JetBrains WebStorm (paid)</li>
+</ul>
+<p>Angular 開發神器，尤其 refactoring 非常強悍</p>
+<ul>
+<li>JetBrains Rider (paid)</li>
+</ul>
+<p>.NET Core 開發神器，尤其 refactoring 非常強悍</p>
+<ul>
+<li>JetBrains DataGrip (paid)</li>
+</ul>
+<p>連接各種資料庫，只要這一套都能搞定</p>
+<ul>
+<li>Postman (free/paid)</li>
+</ul>
+<p>測試 API 標準工具，若要更強功能可付費</p>
+<h2 id="文字編輯器">文字編輯器</h2><hr>
+<ul>
+<li>Sublime Text (free)</li>
+</ul>
+<p>我沒用很多，只有在修改 blog 內文時，才會使用</p>
+<h2 id="Markdown_編輯器">Markdown 編輯器</h2><hr>
+<ul>
+<li>Typora (free)</li>
+</ul>
+<p>編輯 markdown 神器，所見即所得的方式編輯 markdown，天天使用</p>
+<h2 id="文字_Terminal">文字 Terminal</h2><hr>
+<ul>
+<li>iTerm 2 (free)</li>
+</ul>
+<p>macOS 內建的 terminal 很難用，一定要裝 iTerm 2 才能發揮 macOS 的 terminal 威力</p>
+<h2 id="檔案格式瀏覽">檔案格式瀏覽</h2><hr>
+<ul>
+<li>Preview (內建)</li>
+</ul>
+<p>支援各種格式，如 pdf 格式完全不用安裝其他軟體，內建的 Preview 就很方便</p>
+<h2 id="移除_App">移除 App</h2><hr>
+<ul>
+<li>AppCleaner (free)</li>
+</ul>
+<p>雖然 macOS 的 app 號稱可以直接丟 <code>垃圾桶</code> 刪除，但透過 AppCleaner 可以找到 app 自己用的暫存檔與記錄檔，會刪除的更乾淨</p>
+<h2 id="Git_管理">Git 管理</h2><hr>
+<ul>
+<li>SourceTree (free)</li>
+</ul>
+<p>Bitbucket 所出的圖形化 git 管理軟體，功能強大，但有點複雜</p>
+<h2 id="Trackpad_管理">Trackpad 管理</h2><hr>
+<ul>
+<li>BetterTouchTool (paid)</li>
+</ul>
+<p>Macbook 的 trackpad 是有名的好用，macOS 內建已經使用很多手勢，不過這還沒完全榨出 trackpad 淺能，BetterTouchTool 讓我們可以自訂更多的手勢，甚至還可以自訂 touch bar，若你是 Trackpad 重度使用者，強烈推薦此神器</p>
+<h2 id="系統清理">系統清理</h2><hr>
+<ul>
+<li>Dr.Cleaner Pro (paid)</li>
+</ul>
+<p>趨勢科技產品，幫你刪除沒用的暫存檔</p>
+<h2 id="解壓縮工具">解壓縮工具</h2><hr>
+<ul>
+<li>The Unarchiver (free)</li>
+</ul>
+<p>任何壓縮格式檔案都能解開</p>
+<h2 id="備份工具">備份工具</h2><hr>
+<ul>
+<li>Time Machine (內建)</li>
+</ul>
+<p>簡單又強悍的備份工具，天天使用</p>
+<h2 id="套件管理工具">套件管理工具</h2><hr>
+<ul>
+<li>Homebrew (free)</li>
+</ul>
+<p>對於 open source 的套件管理，相當於 Ubuntu 的 <code>apt-get</code></p>
+<h2 id="輔助工具">輔助工具</h2><hr>
+<ul>
+<li>Parallels Toolbox (paid)</li>
+</ul>
+<p>Parallel Desktop 所送的小工具，如 <code>Do Not Sleep</code> 與 <code>Do Not Disturb</code>，可以在你在簡報時，避免 Macbook 休眠或通訊軟體干擾</p>
+<ul>
+<li>iStat Menus (paid)</li>
+</ul>
+<p>在 menu 顯示 CPU / 記憶體 / 網路 / SSD …等使用量</p>
+<ul>
+<li>Bartender (paid)</li>
+</ul>
+<p>將 menu 的 icon 加以隱藏，僅留下你想要的 icon</p>
+<ul>
+<li>JetBrains Toolbox (paid)</li>
+</ul>
+<p>快速使用 JetBrains 工具開啟專案，且負責更新 JetBrains 工具</p>
+<ul>
+<li>Alfred (free/paid)</li>
+</ul>
+<p>超強取代內建 Spotlight 工具，強烈推薦</p>
+<ul>
+<li>Dropbox</li>
+</ul>
+<p>有名的網路硬碟，與 macOS 整合良好</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>我用的 macOS 工具不算多，也還在持續優化自己的工作流程，以上是我們目前幾乎天天會用到的 app</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[野人獻曝一下自己用的 App]]>
+    
+    </summary>
+    
+      <category term="macOS" scheme="http://oomusou.io/tags/macOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何在 macOS 安裝 PowerShell ?]]></title>
     <link href="http://oomusou.io/powershell/mac-homebrew/"/>
     <id>http://oomusou.io/powershell/mac-homebrew/</id>
     <published>2018-02-08T12:23:43.000Z</published>
-    <updated>2018-02-07T14:18:16.809Z</updated>
+    <updated>2018-02-07T14:18:16.000Z</updated>
     <content type="html"><![CDATA[<p>隨著 .NET Core 跨平台後，PowerShell 也開始跨平台，事實上 PowerShell 底層跑的就是 .NET Core，有了 PowerShell 之後，macOS 與 Linux 的自動化又有了新的選擇。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -70,7 +259,7 @@
     <link href="http://oomusou.io/netcore/mac-homebrew/"/>
     <id>http://oomusou.io/netcore/mac-homebrew/</id>
     <published>2018-02-07T12:23:43.000Z</published>
-    <updated>2018-02-07T08:52:49.227Z</updated>
+    <updated>2018-02-07T08:52:49.000Z</updated>
     <content type="html"><![CDATA[<p>Microsoft 雖然提供了 <code>pkg</code> 安裝檔安裝 .NET Core SDK，也提供了 uninstall script 移除，但在 macOS 世界裡，我們有更好用的 Homebrew，是否能用 Homebrew 來管理 .NET Core 呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -125,7 +314,7 @@
     <link href="http://oomusou.io/netcore/mac-uninstall/"/>
     <id>http://oomusou.io/netcore/mac-uninstall/</id>
     <published>2018-02-06T12:23:43.000Z</published>
-    <updated>2018-02-05T14:57:13.539Z</updated>
+    <updated>2018-02-05T14:57:13.000Z</updated>
     <content type="html"><![CDATA[<p>由於 Microsoft 所提供的 .NET Core SDK 安裝檔是 <code>pkg</code> 格式，優點是安裝很方便，只要下一步下一步就好，但缺點是移除時比較麻煩。</p>
 <a id="more"></a>
 <h2 id="Vervion">Vervion</h2><hr>
@@ -187,7 +376,7 @@
     <link href="http://oomusou.io/netcore/mac-install/"/>
     <id>http://oomusou.io/netcore/mac-install/</id>
     <published>2018-02-05T12:23:43.000Z</published>
-    <updated>2018-02-05T05:41:59.986Z</updated>
+    <updated>2018-02-05T05:41:59.000Z</updated>
     <content type="html"><![CDATA[<p>.NET Core 為 Microsoft 的跨平台解決方案，只要在 macOS 裝上 .NET Core SDK，就可在 macOS 執行與開發 .NET Core App。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -264,7 +453,7 @@
     <link href="http://oomusou.io/angular/pubsub/"/>
     <id>http://oomusou.io/angular/pubsub/</id>
     <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T05:32:03.697Z</updated>
+    <updated>2018-02-03T05:32:03.000Z</updated>
     <content type="html"><![CDATA[<p>Pub/Sub Pattern 是 OOP 中著名的 Design Pattern，尤其應付 <code>多對多</code> 的場景特別有效。在本文中，我們將以 Angular 與 TypeScript 實現。</p>
 <p>Pub/Sub Pattern 與 Observer Pattern 非常接近，將特別探討與 Observer Pattern 之間的差異。</p>
 <a id="more"></a>
@@ -472,7 +661,7 @@
     <link href="http://oomusou.io/vscode/run-by-command/"/>
     <id>http://oomusou.io/vscode/run-by-command/</id>
     <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T12:22:28.535Z</updated>
+    <updated>2018-02-03T12:22:28.000Z</updated>
     <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -509,46 +698,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/webstorm/run-by-command/"/>
-    <id>http://oomusou.io/webstorm/run-by-command/</id>
-    <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T12:19:01.941Z</updated>
-    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
-<blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
-</blockquote>
-<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[更快速的啟動方式]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何刪除陣列中的物件 ?]]></title>
     <link href="http://oomusou.io/javascript/remove-object-array/"/>
     <id>http://oomusou.io/javascript/remove-object-array/</id>
     <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-01T15:46:43.864Z</updated>
+    <updated>2018-02-01T15:46:43.000Z</updated>
     <content type="html"><![CDATA[<p>JavaScript 並沒有內建刪除陣列元素的 operator，必須使用一些技巧才能刪除，若陣列內放的是 object，則狀況將更加詭異，這也是 JavaScript 初學者一定會踩到的雷。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -593,11 +747,46 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T12:19:01.000Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[更快速的啟動方式]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何對 Route 單元測試 ?]]></title>
     <link href="http://oomusou.io/angular/route-unit-test/"/>
     <id>http://oomusou.io/angular/route-unit-test/</id>
     <published>2018-02-02T12:23:43.000Z</published>
-    <updated>2018-02-05T08:09:24.841Z</updated>
+    <updated>2018-02-05T08:09:24.000Z</updated>
     <content type="html"><![CDATA[<p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -678,7 +867,7 @@
     <link href="http://oomusou.io/angular/javascript-package/"/>
     <id>http://oomusou.io/angular/javascript-package/</id>
     <published>2018-02-01T12:23:43.000Z</published>
-    <updated>2018-02-02T03:13:38.327Z</updated>
+    <updated>2018-02-02T03:13:38.000Z</updated>
     <content type="html"><![CDATA[<p>Lodash 是 JavaScript 很有名的 package，尤其對於處理 array 很有一套，Angular 該如何使用 <code>lodash</code> 呢 ? 這也可以視為在 Angular 使用傳統 JavaScript package 的 SOP。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -731,7 +920,7 @@
     <link href="http://oomusou.io/angular/service-unit-test/"/>
     <id>http://oomusou.io/angular/service-unit-test/</id>
     <published>2018-01-28T12:23:43.000Z</published>
-    <updated>2018-02-05T05:30:19.491Z</updated>
+    <updated>2018-02-05T05:30:19.000Z</updated>
     <content type="html"><![CDATA[<p>凡與顯示相關邏輯，我們會寫在 component；凡與資料相關邏輯，我們會寫在 service。而 service 最常見的應用，就是透過 <code>HttpClient</code> 存取 API。</p>
 <p>對於 service 單元測試而言，我們必須對 <code>HttpClient</code> 加以隔離；而對 component 單元測試而言，我們必須對 <code>service</code> 加以隔離，我們該如何對 service 與 component 進行單元測試呢 ?</p>
 <a id="more"></a>
@@ -1072,7 +1261,7 @@
     <link href="http://oomusou.io/angular/observer/"/>
     <id>http://oomusou.io/angular/observer/</id>
     <published>2018-01-17T12:23:43.000Z</published>
-    <updated>2018-02-03T05:29:31.722Z</updated>
+    <updated>2018-02-03T05:29:31.000Z</updated>
     <content type="html"><![CDATA[<p>Observer Pattern 是 OOP 中著名的 Design Pattern，尤其在應付 <code>一對多</code> 的場景特別有效，在本文中，我們將以 Angular 與  TypeScript 實現。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1890,171 +2079,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[使用 Observable Data Service 儲存 Component 間共用變數]]></title>
-    <link href="http://oomusou.io/angular/observable-data-service-counter/"/>
-    <id>http://oomusou.io/angular/observable-data-service-counter/</id>
-    <published>2018-01-07T12:23:43.000Z</published>
-    <updated>2018-01-14T07:16:30.000Z</updated>
-    <content type="html"><![CDATA[<p>Component 間共用的資料有兩類，一類是來自 API 的資料，將來還會寫回 server，另一類是 component 間自己的狀態資料，不必寫回 server；事實上這種不必寫回 server 的共用資料，也可以使用 Observable Data Service 實作。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.1.2<br>RxJS 5.5.2</p>
-<h2 id="User_Story">User Story</h2><hr>
-<p><img src="/images/angular/observable-data-service-counter/counter000.png" alt="counter000"></p>
-<ul>
-<li>共用 counter 初始值為 <code>0</code></li>
-<li>無論按哪個 <code>+</code>，或哪個 <code>-</code>，最後都是同一個 counter 作用</li>
-</ul>
-<h2 id="Task">Task</h2><hr>
-<p><img src="/images/angular/observable-data-service-counter/counter001.png" alt="counter001"></p>
-<ul>
-<li>原來該有的功能必須保留，但拆成 2 個 component</li>
-<li>但 2 個 component 會共用一份資料，且互相影響</li>
-</ul>
-<h2 id="Architecture">Architecture</h2><hr>
-<p><img src="/images/angular/observable-data-service-counter/counter003.svg" alt="counter003"></p>
-<blockquote>
-<p>Observable Data Service vs. 普通 Service</p>
-</blockquote>
-<p>相同點 :</p>
-<ul>
-<li>兩者本質上都是 service</li>
-<li>都使用 <code>@Injectable</code> decorator</li>
-<li>都是回傳 <code>Observable</code></li>
-</ul>
-<p>相異點 :</p>
-<ul>
-<li>Observable data service 內部會使用 <code>BehaviorSubject</code> 儲存一份資料；而普通 service 不會</li>
-</ul>
-<p><img src="/images/angular/observable-data-service-counter/counter002.svg" alt="counter002"></p>
-<ul>
-<li>原本只有 <code>AppComponent</code>，現在分成 <code>ChangeCounterComponent</code> 與 <code>ShowCounterComponent</code> 2 個 component</li>
-<li>Component 依然注入 <code>CounterService</code>，不過此時不是普通 service，而是 Observable Data Service，為 2 個 component 共用的資料</li>
-<li>根據 <code>依賴反轉原則</code>，component 不直接相依於 <code>CounterService</code>，而是兩者相依於 interface；根據 <code>介面隔離原則</code>，component 只相依於它所需要的 interface，因此訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code> 2 個以 component 為需求的 interface，而 <code>CounterService</code> 必須實踐此 2 個 interface。如此 component 與 service 將徹底解耦合</li>
-<li><code>ShowCounterComponent</code> 只負責 subscribe <code>CounterService</code>；當資料改變時，<code>CounterService</code> 會自動更新 <code>ShowCounterComponent</code></li>
-</ul>
-<h2 id="Implementation">Implementation</h2><hr>
-<h3 id="AppComponent">AppComponent</h3><p><strong>app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">app-change-value</span>&gt;</span><span class="tag">&lt;/<span class="title">app-change-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-change-value</span>&gt;</span><span class="tag">&lt;/<span class="title">app-change-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-show-value</span>&gt;</span><span class="tag">&lt;/<span class="title">app-show-value</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="ChangeCounterComponent">ChangeCounterComponent</h3><p><img src="/images/angular/observable-data-service-counter/counter004.svg" alt="counter004"></p>
-<p><strong>change-counter.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onIncrementClick()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onDecrementClick()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>只負責 <code>增加</code> 與 <code>減少</code> counter 的 component，因此只有兩個 <code>&lt;button&gt;</code>。</p>
-<p><strong>change-counter.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-change-value'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./change-counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./change-counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ChangeCounterComponent &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: ChangeCounterInterface) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">  onIncrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onDecrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>13 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onIncrementClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>CounterService</code> 提供的 <code>addOne()</code> 將 <code>counter</code> + 1。</p>
-<p>17 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onDecrementClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>CounterService</code> 提供的 <code>minusOne()</code> 將 <code>counter</code> - 1;</p>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: ChangeCounterInterface) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>onIncrementClick()</code> 與 <code>onDecrementClick()</code> 都使用了 <code>CounterService</code>，因此需要 DI 注入 <code>CounterService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>CounterService</code>，而應該相依於根據 <code>ChangeCounterComponent</code> 需求所定義出的 <code>ChangeCounterInterface</code>。</p>
-<p><strong>change-counter.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> ChangeCounterInterface &#123;</span><br><span class="line">  abstract addOne(): <span class="built_in">void</span>;</span><br><span class="line">  abstract minusOne(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>ChangeCounterComponent</code> 只使用了  <code>addOne()</code> 與 <code>minusOne()</code>，因此 <code>ChangeCounterInterface</code> 也應該只有 <code>addOne()</code> 與 <code>minusOne()</code>。</p>
-<h3 id="ShowCounterComponent">ShowCounterComponent</h3><p><img src="/images/angular/observable-data-service-counter/counter005.svg" alt="counter005"></p>
-<p><strong>show-counter.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; counter$|async &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>只負責顯示 <code>counter$</code> 的 component。</p>
-<p><strong>show-counter.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCounterInterface &#125; from <span class="string">'../../interface/show-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-show-value'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./show-counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./show-counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ShowValueComponent &#123;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: ShowCounterInterface) </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br></pre></td></tr></table></figure>
-<p><code>counter$</code> 為 <code>Observable</code>，只接使用 <code>CounterService.counter$</code> property。</p>
-<p>13 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: ShowCounterInterface) </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>因為 <code>ShowCounterComponent</code> 只用了 <code>CounterService</code>，因此需要 DI 注入 <code>CounterService</code>。</p>
-<p>根據 <code>依賴反轉原則</code>，我們不應該直接相依於 <code>CounterService</code>，而應該相依於根據 <code>ShowCounterComponent</code> 需求所定義出的 <code>ShowCounterInterface</code>。</p>
-<p><strong>show-counter.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> ShowCounterInterface &#123;</span><br><span class="line">  abstract counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，因為 <code>ShowCounterComponent</code> 只使用了  <code>counter$</code> property，因此 <code>ShowCounterInterface</code> 也應該只有 <code>counter$</code> property。</p>
-<h3 id="CounterService">CounterService</h3><p><img src="/images/angular/observable-data-service-counter/counter006.svg" alt="counter006"></p>
-<p><strong>counter.service.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCounterInterface &#125; from <span class="string">'../../interface/show-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BehaviorSubject &#125; from <span class="string">'rxjs/BehaviorSubject'</span>;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface &#123;</span><br><span class="line">  <span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.store$;</span><br><span class="line"></span><br><span class="line">  addOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第 8 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterService <span class="keyword">implements</span> ChangeCounterInterface, ShowCounterInterface</span><br></pre></td></tr></table></figure>
-<p>根據 <code>介面隔離原則</code>，我們依照 component 需求訂出 <code>ChangeCounterInterface</code> 與 <code>ShowCounterInterface</code>，因此 <code>CounterService</code> 必須概括承受實現這些 interface。</p>
-<p>第 9 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> store$: BehaviorSubject&lt;<span class="built_in">number</span>&gt; = <span class="keyword">new</span> BehaviorSubject&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<p>本文關鍵在此，使用 <code>BehaviorSubject</code> 當作 <code>CounterService</code> 內部的資料庫，儲存共用的 <code>counter</code>。</p>
-<p>Observable Data Service  關鍵就在於使用 <code>BehaviorSubject</code>。</p>
-<blockquote>
-<p>Q : 什麼是 BehaviorSubject ?</p>
-</blockquote>
-<p>根據 RxJS 的 source code</p>
-<p><strong>BehaviorSubject.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> BehaviorSubject&lt;T&gt; extends Subject&lt;T&gt;</span><br></pre></td></tr></table></figure>
-<p><code>BehaviorSubject</code> 繼承於 <code>Subject</code>。</p>
-<p><strong>Subject.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Subject&lt;T&gt; extends Observable&lt;T&gt; <span class="keyword">implements</span> ISubscription</span><br></pre></td></tr></table></figure>
-<p>而 <code>Subject</code> 繼承於 <code>Observable</code>。</p>
-<p><img src="/images/angular/observable-data-service-counter/counter007.svg" alt="ods009"></p>
-<p>因此 <code>Observable</code> 所有的特性，<code>Subject</code> 與 <code>BehaviorSubject</code> 都有，如被 <code>subscribe()</code>。</p>
-<blockquote>
-<p><code>Subject</code> 與 <code>BehaviorSubject</code> 算是一種特殊的 <code>Observable</code>，提供一些原本 <code>Observable</code> 沒有的功能</p>
-<p>Q : Observable 與 Subject  有何差別 ?</p>
-</blockquote>
-<ul>
-<li><code>Observable</code> 只能從 <code>HttpClient</code> 或 array、event 提供資料，無法自行新增</li>
-<li><code>Subject</code> 可以透過 <code>next()</code> 手動新增資料至 Observable</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject: Subject = <span class="keyword">new</span> Subject();</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line">subject.next(<span class="string">'Hello World'</span>);</span><br><span class="line"><span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure>
-<p>若你要手動將資料推進 <code>Observable</code>，就使用 <code>Subject</code></p>
-<blockquote>
-<p>Q : Subject 與 BehaviorSubject 有何差別 ?</p>
-</blockquote>
-<ul>
-<li><code>Subject</code> 不能提供初始值，但 <code>BehaviorSubject</code> 可提供初始值</li>
-<li><code>Subject</code> 在被 <code>subscribe()</code> 後，必續再 <code>next()</code> 才能收到變動資料；<code>BehaviorSubject</code> 只要被 <code>subscribe()</code> 後，就可收到之前最後一筆資料，不用再等 <code>next()</code></li>
-<li><code>BehaviorSubject</code> 提供了 <code>getValue()</code>，能獲得目前 <code>BehaviorSubject</code> 最新一筆資料；而 <code>Subject</code> 無法</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subject: BehaviorSubject = <span class="keyword">new</span> BehaviorSubject(<span class="string">'Hello World'</span>);</span><br><span class="line">subject.subscribe((value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Subscription got '</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// Hello World</span></span><br><span class="line">subject.next(<span class="string">'Hello Taiwan'</span>)</span><br><span class="line"><span class="comment">// Hello Taiwan</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Q : 為什麼 Observable Data Service 要使用 BehaviorSubject ?</p>
-</blockquote>
-<p>因為 HTML 的 <code>async</code> pipe，每個 HTML template 執行 <code>subscribe()</code> 的時間不一致，有快有慢，若 <code>subscribe()</code> 早於 <code>next()</code>，則可收到變動資料；若晚於 <code>next()</code>，則可能收不到資料，必須等下一次 <code>next()</code>。</p>
-<p>若使用 <code>BehaviorSubject</code>，無論 <code>subscribe()</code> 早於 <code>next()</code> 或晚於 <code>next()</code>，<code>async</code> pipe 都會獲得最新一筆 <code>next()</code>，因此 Observable Data Service 必須使用 <code>BehaviorSubject</code>。</p>
-<p>12 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>this.store$.getValue()</code> 獲得目前 <code>store$</code> 最新一筆資料，也就是目前的 counter 值，然後 <code>+1</code>。</p>
-<p>最後使用 <code>this.store$.next()</code> 將最新的 counter 寫入 <code>BehaviorSubject</code>。</p>
-<p>16 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">minusOne(): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.store$.next(<span class="keyword">this</span>.store$.getValue() - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>this.store$.getValue()</code> 獲得目前 <code>store$</code> 最新一筆資料，也就是目前的 counter 值，然後 <code>-1</code>。</p>
-<p>最後使用 <code>this.store$.next()</code> 將最新的 counter 寫入 <code>BehaviorSubject</code>。</p>
-<p>10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.store$;</span><br></pre></td></tr></table></figure>
-<p>已經都自己維護一份 <code>BehaviorSubject</code> 的 <code>store$</code>，我們希望當 <code>BehaviorSubject</code> 使用 <code>next()</code> 改變資料時，能通知所有 <code>subscribe()</code> 的 component 都能自動更新，這也是我們使用 Observable Data Service 的初衷。</p>
-<p>既然 <code>BehaviorSubject</code> 繼承於 <code>Observable</code>，理論上我們也可直接將 <code>store$</code> 設定為 <code>public</code>，直接被 component <code>subscribe()</code>，但因為 <code>BehaviorSubject</code> 提供 <code>next()</code>，因此也可能被 component 誤用 <code>next()</code> 而新增資料，因此我們改用真的 <code>Observable</code> 給 component 訂閱，確保 <code>store$</code> 不會被 component 新增資料。</p>
-<p>由於 <code>store$</code> 也是一種 <code>Observable</code>，根據 <code>里式替換原則</code>，父類別可被子類別取代，因此不需要特別傳型。</p>
-<h3 id="AppModule">AppModule</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterComponent &#125; from <span class="string">'./component/change-counter/change-counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowValueComponent &#125; from <span class="string">'./component/show-counter/show-counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/counter/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ShowCounterInterface &#125; from <span class="string">'./interface/show-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    ChangeCounterComponent,</span><br><span class="line">    ShowValueComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;,</span><br><span class="line">    &#123;provide: ShowCounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>由於我們 component 與 service 都是基於 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code> 所設計，因此必須藉由 DI container 幫我們將相對應的 service 注入。</p>
-<p>19 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">providers: [</span><br><span class="line">  CounterService,</span><br><span class="line">  &#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;,</span><br><span class="line">  &#123;provide: ShowCounterInterface, useExisting: CounterService&#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-<p>一般我們使用普通 service 時，都是每個 component 注入新的 service，但使用 Observable Data Service 時不可如此，因為我們就是希望各 component 共用一份資料，只要在 provider 使用 <code>useExisting</code>，Angular DI container 就會以 Singleton 方式建立 service，各 component 才能共用同一份 <code>store$</code> 的 counter。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>只要是 component 間有共用資料，且彼此會根據資料互動，就可以使用 Observable Data Service</li>
-<li>Observable Data Service 同時使用了 DI 與 RxJS，讓 component 與 service 解耦合，只要 service 的資料更新，所有 component 的資料解會隨之更新</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/NG51StateManagement" target="_blank" rel="external">GitHub</a>上找到</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Observable Data Service 也能用來儲存不寫回 server 的資料]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="RxJS" scheme="http://oomusou.io/tags/RxJS/"/>
     
   </entry>
   
