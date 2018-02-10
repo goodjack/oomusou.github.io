@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-10T02:00:46.574Z</updated>
+  <updated>2018-02-10T02:07:15.330Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/macos/install-app/"/>
     <id>http://oomusou.io/macos/install-app/</id>
     <published>2018-02-12T12:23:43.000Z</published>
-    <updated>2018-02-10T02:00:46.574Z</updated>
+    <updated>2018-02-10T02:07:15.330Z</updated>
     <content type="html"><![CDATA[<p>macOS 雖然很好用，但在安裝/反安裝 app 的方式與 Windows 不太一樣，這是剛從 Windows 跳到 macOS 時一定會疑惑的地方。</p>
 <a id="more"></a>
 <h2 id="App_安裝">App 安裝</h2><hr>
@@ -55,7 +55,7 @@
 </li>
 <li><p><strong>使用 Homebrew Uninstall</strong></p>
 <p>Homebrew 除了會幫你管理安裝外，還會幫你管理反安裝，只要透過 Homebrew 反安裝，就能刪除的很乾淨。</p>
-<p>有些 pkg 格式也能找到 Homebrew 安裝方式，如 <code>.NET Core SDK</code>，推薦就改用 Homebew 幫我們管理即可。</p>
+<p>有些 pkg 格式也能找到 Homebrew 安裝方式，如 <code>.NET Core SDK</code>，推薦就改用 Homebrew 幫我們管理即可。</p>
 </li>
 <li><p><strong>使用 Time Machine 還原</strong></p>
 <p>以上這些工具都有他的極限，若你要求絕對乾淨，就是在安裝 app 前先用 Time Machine 備份，最後在開機時按住 ⌘ + r，由 Time Machine 還原，這樣保證絕對乾淨。</p>
