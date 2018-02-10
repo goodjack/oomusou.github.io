@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>淺談 macOS 的 App 安裝與反安裝 | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="一些 app 安裝與反安裝的心得分享">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="一些 app 安裝與反安裝的心得分享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="淺談 macOS 的 App 安裝與反安裝">
+<meta property="og:url" content="http://oomusou.io/macos/install-app/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="一些 app 安裝與反安裝的心得分享">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-10T02:00:46.574Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="淺談 macOS 的 App 安裝與反安裝">
+<meta name="twitter:description" content="一些 app 安裝與反安裝的心得分享">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 淺談 macOS 的 App 安裝與反安裝</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 一些 app 安裝與反安裝的心得分享			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#App_安裝"><span class="toc-article-text">App 安裝</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#App_反安裝"><span class="toc-article-text">App 反安裝</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試_App"><span class="toc-article-text">測試 App</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>macOS 雖然很好用，但在安裝/反安裝 app 的方式與 Windows 不太一樣，這是剛從 Windows 跳到 macOS 時一定會疑惑的地方。</p>
+<a id="more"></a>
+<h2 id="App_安裝">App 安裝</h2><hr>
+<p>macOS 一共有 4 種安裝 app 方式 :</p>
+<ol>
+<li><p><strong>從 App Store 下載</strong></p>
+<p>這是最安全的方式，不用擔心安裝到惡意程式，也是 Apple 推薦的方式，將來 app 有任何更新，App Store 會通知你，使用體驗與 iOS 相同。</p>
+</li>
+<li><p><strong>下載 dmg 格式</strong></p>
+<p>有的 app 並不想透過 App Store 審核機制，而是自行在網站上提供下載 dmg 檔案。dmg 本質是一個光碟映像檔，你只要將 app 拖曳到你自己的 <code>Applications</code> 目錄下就算安裝完成。</p>
+<p>這種方式理論上可能安裝到惡意程式，須自行承擔風險。</p>
+</li>
+<li><p><strong>下載 pkg 格式</strong></p>
+<p>這種格式較少見，提供類似 Windows <code>下一步下一步</code> 的安裝方式，但 Microsoft 非常喜歡使用這種方式，如 <code>.NET Core SDK</code>、<code>Office for Mac</code>、<code>Visual Studio for Mac</code> … 等。</p>
+</li>
+<li><p><strong>使用 Homebrew 安裝</strong></p>
+<p>有一類工具是由 Linux open source 移植到 macOS，如 Git、NVM，這類工具就需要如 Ubuntu 的  <code>apt-get</code> 方式安裝，而 Homebrew 就是 macOS 的 <code>apt-get</code>。</p>
+</li>
+</ol>
+<h2 id="App_反安裝">App 反安裝</h2><hr>
+<p>macOS 一共有 5 種反安裝 app 方式 :</p>
+<ol>
+<li><p><strong>直接刪除</strong></p>
+<p>Apple 建議刪除 app 就如同 iOS 一樣，只要將 icon 刪除即可，因為每個在 <code>Applications</code> 下的 app，事實上是一個子目錄，所有的程式都在該目錄下，因此可以直接刪除。</p>
+<p>但這種刪除方式事實上並不乾淨，因為 app 還是會將一些紀錄檔與暫存檔存在其他目錄，雖然這些檔案不大，留著也不會影響操作，畢竟不是程式，但仍然不是最乾淨的反安裝方式。</p>
+</li>
+<li><p><strong>使用 AppCleaner 刪除</strong></p>
+<p>開啟 <a href="https://freemacsoft.net/appcleaner/" target="_blank" rel="external">AppCleaner</a>，將 app icon 拖曳到 AppCleaner，他會幫你分析該 app 的紀錄檔與暫存檔所在，除了將 app 目錄刪除外，還會連帶將紀錄檔與暫存檔刪除，這是較為建議的 app 反安裝方式。</p>
+</li>
+<li><p><strong>使用 Uninstall Script</strong></p>
+<p>Pkg 格式雖然安裝很方便，都是 <code>下一步下一步</code>，但反安裝就頭大了，macOS 並沒有對 pkg  提供反安裝，而且 pkg 可能將程式安裝在多個不同目錄下，因此只將 icon 刪除，是絕對無法刪除乾淨。</p>
+<p>Pkg 格式就需要原廠提供反安裝 app、或者 uninstall script，才能徹底移除乾淨，畢竟只有原廠才知道安裝了哪些檔案，以及安裝到哪些目錄下。</p>
+</li>
+<li><p><strong>使用 Homebrew Uninstall</strong></p>
+<p>Homebrew 除了會幫你管理安裝外，還會幫你管理反安裝，只要透過 Homebrew 反安裝，就能刪除的很乾淨。</p>
+<p>有些 pkg 格式也能找到 Homebrew 安裝方式，如 <code>.NET Core SDK</code>，推薦就改用 Homebew 幫我們管理即可。</p>
+</li>
+<li><p><strong>使用 Time Machine 還原</strong></p>
+<p>以上這些工具都有他的極限，若你要求絕對乾淨，就是在安裝 app 前先用 Time Machine 備份，最後在開機時按住 ⌘ + r，由 Time Machine 還原，這樣保證絕對乾淨。</p>
+</li>
+</ol>
+<h2 id="測試_App">測試 App</h2><hr>
+<p>若有些 app 只是測試用，隨時可能刪除，建議可用 <a href="https://www.parallels.com/products/desktop/" target="_blank" rel="external">Parallel Desktop</a> 安裝一個 macOS VM，反正 VM 隨時可以刪除重建，也不會影響到外層真正的 macOS。</p>
+<p>要如何找 macOS 的安裝 image 呢？別忘了我們有個隱藏磁區專門放 macOS 的 image，Parallel Desktop 會自動讀取這個隱藏磁區安裝 macOS VM。</p>
+<blockquote>
+<p>macOS 貼心的地方是每次 OS 更新，都會幫你更新隱藏磁區的 image，因此你每次建立 VM 時，都會是最新版的 macOS</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>macOS 一般來說使用者體驗都很好，可以讓你專注在自己的工作上，不用花太多心思在 OS 本身，但唯獨安裝與反安裝 app 這塊，因為有太多方式，且各有各的配套方案，因此需要特別提出來給初學者參考</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/macos/myapp/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-12 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/macOS/">macOS<span>10</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-10T01:03:51.040Z</updated>
+  <updated>2018-02-10T02:00:46.574Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,73 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[淺談 macOS 的 App 安裝與反安裝]]></title>
+    <link href="http://oomusou.io/macos/install-app/"/>
+    <id>http://oomusou.io/macos/install-app/</id>
+    <published>2018-02-12T12:23:43.000Z</published>
+    <updated>2018-02-10T02:00:46.574Z</updated>
+    <content type="html"><![CDATA[<p>macOS 雖然很好用，但在安裝/反安裝 app 的方式與 Windows 不太一樣，這是剛從 Windows 跳到 macOS 時一定會疑惑的地方。</p>
+<a id="more"></a>
+<h2 id="App_安裝">App 安裝</h2><hr>
+<p>macOS 一共有 4 種安裝 app 方式 :</p>
+<ol>
+<li><p><strong>從 App Store 下載</strong></p>
+<p>這是最安全的方式，不用擔心安裝到惡意程式，也是 Apple 推薦的方式，將來 app 有任何更新，App Store 會通知你，使用體驗與 iOS 相同。</p>
+</li>
+<li><p><strong>下載 dmg 格式</strong></p>
+<p>有的 app 並不想透過 App Store 審核機制，而是自行在網站上提供下載 dmg 檔案。dmg 本質是一個光碟映像檔，你只要將 app 拖曳到你自己的 <code>Applications</code> 目錄下就算安裝完成。</p>
+<p>這種方式理論上可能安裝到惡意程式，須自行承擔風險。</p>
+</li>
+<li><p><strong>下載 pkg 格式</strong></p>
+<p>這種格式較少見，提供類似 Windows <code>下一步下一步</code> 的安裝方式，但 Microsoft 非常喜歡使用這種方式，如 <code>.NET Core SDK</code>、<code>Office for Mac</code>、<code>Visual Studio for Mac</code> … 等。</p>
+</li>
+<li><p><strong>使用 Homebrew 安裝</strong></p>
+<p>有一類工具是由 Linux open source 移植到 macOS，如 Git、NVM，這類工具就需要如 Ubuntu 的  <code>apt-get</code> 方式安裝，而 Homebrew 就是 macOS 的 <code>apt-get</code>。</p>
+</li>
+</ol>
+<h2 id="App_反安裝">App 反安裝</h2><hr>
+<p>macOS 一共有 5 種反安裝 app 方式 :</p>
+<ol>
+<li><p><strong>直接刪除</strong></p>
+<p>Apple 建議刪除 app 就如同 iOS 一樣，只要將 icon 刪除即可，因為每個在 <code>Applications</code> 下的 app，事實上是一個子目錄，所有的程式都在該目錄下，因此可以直接刪除。</p>
+<p>但這種刪除方式事實上並不乾淨，因為 app 還是會將一些紀錄檔與暫存檔存在其他目錄，雖然這些檔案不大，留著也不會影響操作，畢竟不是程式，但仍然不是最乾淨的反安裝方式。</p>
+</li>
+<li><p><strong>使用 AppCleaner 刪除</strong></p>
+<p>開啟 <a href="https://freemacsoft.net/appcleaner/" target="_blank" rel="external">AppCleaner</a>，將 app icon 拖曳到 AppCleaner，他會幫你分析該 app 的紀錄檔與暫存檔所在，除了將 app 目錄刪除外，還會連帶將紀錄檔與暫存檔刪除，這是較為建議的 app 反安裝方式。</p>
+</li>
+<li><p><strong>使用 Uninstall Script</strong></p>
+<p>Pkg 格式雖然安裝很方便，都是 <code>下一步下一步</code>，但反安裝就頭大了，macOS 並沒有對 pkg  提供反安裝，而且 pkg 可能將程式安裝在多個不同目錄下，因此只將 icon 刪除，是絕對無法刪除乾淨。</p>
+<p>Pkg 格式就需要原廠提供反安裝 app、或者 uninstall script，才能徹底移除乾淨，畢竟只有原廠才知道安裝了哪些檔案，以及安裝到哪些目錄下。</p>
+</li>
+<li><p><strong>使用 Homebrew Uninstall</strong></p>
+<p>Homebrew 除了會幫你管理安裝外，還會幫你管理反安裝，只要透過 Homebrew 反安裝，就能刪除的很乾淨。</p>
+<p>有些 pkg 格式也能找到 Homebrew 安裝方式，如 <code>.NET Core SDK</code>，推薦就改用 Homebew 幫我們管理即可。</p>
+</li>
+<li><p><strong>使用 Time Machine 還原</strong></p>
+<p>以上這些工具都有他的極限，若你要求絕對乾淨，就是在安裝 app 前先用 Time Machine 備份，最後在開機時按住 ⌘ + r，由 Time Machine 還原，這樣保證絕對乾淨。</p>
+</li>
+</ol>
+<h2 id="測試_App">測試 App</h2><hr>
+<p>若有些 app 只是測試用，隨時可能刪除，建議可用 <a href="https://www.parallels.com/products/desktop/" target="_blank" rel="external">Parallel Desktop</a> 安裝一個 macOS VM，反正 VM 隨時可以刪除重建，也不會影響到外層真正的 macOS。</p>
+<p>要如何找 macOS 的安裝 image 呢？別忘了我們有個隱藏磁區專門放 macOS 的 image，Parallel Desktop 會自動讀取這個隱藏磁區安裝 macOS VM。</p>
+<blockquote>
+<p>macOS 貼心的地方是每次 OS 更新，都會幫你更新隱藏磁區的 image，因此你每次建立 VM 時，都會是最新版的 macOS</p>
+</blockquote>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>macOS 一般來說使用者體驗都很好，可以讓你專注在自己的工作上，不用花太多心思在 OS 本身，但唯獨安裝與反安裝 app 這塊，因為有太多方式，且各有各的配套方案，因此需要特別提出來給初學者參考</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[一些 app 安裝與反安裝的心得分享]]>
+    
+    </summary>
+    
+      <category term="macOS" scheme="http://oomusou.io/tags/macOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[我所使用的 macOS App 分享]]></title>
@@ -416,6 +483,47 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/vscode/run-by-command/"/>
+    <id>http://oomusou.io/vscode/run-by-command/</id>
+    <published>2018-02-04T12:23:43.000Z</published>
+    <updated>2018-02-03T12:22:28.000Z</updated>
+    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
+<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
+<p>熱鍵執行 Command Pallette </p>
+<ol>
+<li>輸入 <code>shell</code></li>
+<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
+</ol>
+<blockquote>
+<p>Command Pallete 熱鍵 </p>
+<p>Windows : Ctrl + Shift + P</p>
+<p>macOS : ⌘ + ⇧ + P</p>
+</blockquote>
+<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
+<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
+<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
+<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
+    
+    </summary>
+    
+      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何使用 Angular 實現 Pub/Sub Pattern ?]]></title>
     <link href="http://oomusou.io/angular/pubsub/"/>
     <id>http://oomusou.io/angular/pubsub/</id>
@@ -624,43 +732,37 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/vscode/run-by-command/"/>
-    <id>http://oomusou.io/vscode/run-by-command/</id>
-    <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T12:22:28.000Z</updated>
-    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T12:19:01.000Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
-<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
-<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
-<p>熱鍵執行 Command Pallette </p>
-<ol>
-<li>輸入 <code>shell</code></li>
-<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
-</ol>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
 <blockquote>
-<p>Command Pallete 熱鍵 </p>
-<p>Windows : Ctrl + Shift + P</p>
-<p>macOS : ⌘ + ⇧ + P</p>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
 </blockquote>
-<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
-<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
-<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
-<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
+<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
+    <![CDATA[更快速的啟動方式]]>
     
     </summary>
     
-      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -710,41 +812,6 @@
     </summary>
     
       <category term="JavaScript" scheme="http://oomusou.io/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/webstorm/run-by-command/"/>
-    <id>http://oomusou.io/webstorm/run-by-command/</id>
-    <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T12:19:01.000Z</updated>
-    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
-<blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
-</blockquote>
-<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[更快速的啟動方式]]>
-    
-    </summary>
-    
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1900,152 +1967,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="Angular CLI" scheme="http://oomusou.io/tags/Angular-CLI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何在 Angular 由 Interface 注入 Object ?]]></title>
-    <link href="http://oomusou.io/angular/diways/"/>
-    <id>http://oomusou.io/angular/diways/</id>
-    <published>2018-01-09T12:23:43.000Z</published>
-    <updated>2018-01-09T15:35:42.000Z</updated>
-    <content type="html"><![CDATA[<p>根據 <code>依賴反轉原則</code> ，component 與 service，或 service 與 service 的相依，引僅限於 interface，而不該直接相依於另一個 service。但真正在 Angular 使用 interface 解耦合後，又會發現因為 JavaScript 天生沒有 interface，因此 TypeScript 與 Angular DI 必須在實務上妥協，本文整理出 3 種 Angular 官方認可 interface 注入 Object 方式。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.1.2</p>
-<h2 id="User_Story">User Story</h2><hr>
-<p><img src="/images/angular/diways/di001.png" alt="di001"></p>
-<ul>
-<li><code>counter</code> 初始值為 <code>2</code></li>
-<li>按 <code>+</code> 則 <code>counter</code> + 1，按 <code>-</code> 則 <code>counter</code> -1</li>
-</ul>
-<h2 id="Task">Task</h2><hr>
-<p><img src="/images/angular/diways/di002.png" alt="di002"></p>
-<ul>
-<li>將 <code>+</code> 與 <code>-</code> 放在 <code>CounterComponent</code></li>
-<li><code>counter</code> 顯示仍在 <code>AppComponent</code></li>
-</ul>
-<h2 id="Architecture">Architecture</h2><hr>
-<p><img src="/images/angular/diways/di000.svg" alt="di000"></p>
-<ul>
-<li><code>CounterComponent</code> 負責 <code>+</code> 與 <code>-</code> 的 button；而 <code>CounterService</code> 負責計算 <code>counter</code> 與保存共用的 counter，為一 <code>BehaviorSubject</code></li>
-<li>根據 <code>依賴反轉原則</code>，<code>CounterComponent</code> 不應該直接相依於 <code>CounterService</code>，而是兩者相依於 interface</li>
-<li>根據 <code>介面隔離原則</code>，<code>ConterComponent</code> 只相依於它所需要的 interface，因此以 <code>CounterComponent</code> 的角度訂出 <code>ChangeCounterInterface</code>，且 <code>CounterSerive</code> 必須實踐此 interface</li>
-<li>因為 <code>CounterComponent</code> 與 <code>CounterService</code> 都相依於 <code>ChangeCounterInterface</code>，兩者都只知道 <code>ChangeCounterInterface</code> 而已，而不知道彼此，因此 <code>CounterComponent</code> 與 <code>CounterService</code> 徹底解耦合</li>
-<li>透過 DI container 將實作 <code>ChangeCounterInterface</code> 的 <code>CounterService</code> 注入進 <code>CounterComponent</code></li>
-</ul>
-<h2 id="Implementation">Implementation</h2><hr>
-<p><strong>change-counter.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="interface"><span class="keyword">interface</span> ChangeCounterInterface </span>&#123;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">  setInitialCount(initialValue: <span class="built_in">number</span>);</span><br><span class="line">  addOne(): <span class="built_in">void</span>;</span><br><span class="line">  minusOne(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根據 <code>依賴反轉原則</code> 與 <code>介面隔離原則</code>，我們訂出了 <code>ChangeCounterInterface</code>。</p>
-<p><strong>app.module.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>在 <code>AppModule</code> 需定義 interface 與 class 的對應關係。</p>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: ChangeCounterInterface, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
-<p>當使用 <code>ChangeCounterInterface</code> 時，請 DI container 幫我們注入 <code>CounterService</code>。</p>
-<p>其中 <code>provide</code> 為 token，DI container 會以此 token 為識別。</p>
-<p><img src="/images/angular/diways/di003.png" alt="di003"></p>
-<p>以一般使用 DI 的經驗，如此的設定完全合乎邏輯，但 Language Service 已經提出警告。</p>
-<ol>
-<li>開啟 <code>app.module.ts</code></li>
-<li><code>provide</code> 使用的是 <code>ChangeCounterInterface</code></li>
-<li>Language Service 已經提出警告，表示 <code>ChangeCounterInterface</code> 是個 value，而不是 type 型別</li>
-</ol>
-<p><code>interface</code> 在 TypeScript 的認知與傳統強型別語言不同，因為 JavaScript 沒有 interface，因此 TypeScript 的 interface 只拿來當 <code>編譯檢查</code> 用，不算是一個 type，而 <code>provide</code> 要求的是一個 type，如 class，interface 在此只當成 value 看待。</p>
-<blockquote>
-<p>我們無法在 Angular DI 直接使用 interface 當 token，觀念上仍是 interface，但作法上必須有所妥協</p>
-</blockquote>
-<h3 id="String_Token">String Token</h3><p>Angular DI 雖然不允許我們用 interface 當 token，卻允許我們使用 string 當 token。</p>
-<p><strong>app.module.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: <span class="string">'ChangeCounterInterface'</span>, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: <span class="string">'ChangeCounterInterface'</span>, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
-<p>將 <code>provide</code> 的 token 改成 <code>ChangeCounterInterface</code> 字串。</p>
-<p><strong>app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeCounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  initialCount = <span class="number">2</span>;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(@Inject('ChangeCounterInterface') private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(@Inject('ChangeCounterInterface') private counterService: ChangeCounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>原本的 <code>private counterService: ChangeCounterInterface</code> 前面加上 <code>@Inject()</code> decorator，並傳入剛剛定義的 <code>ChangeCounterInterface</code> 字串。</p>
-<p>原本 DI container 是以 constructor 參數的型別作為 DI 注入的依歸，但若加上 <code>@Inject()</code> decorator 後，會接管所有的 DI 型別，也就是改用 <code>@Inject()</code> 的參數作為 token。</p>
-<p>剛剛在 <code>AppModule</code> 定義 <code>ChangeCounterInterface</code> string token，其對應的 class 為 <code>CounterService</code>，因此在 <code>CounterComponent</code> 會將 <code>CounterService</code> 注入。</p>
-<p><strong>優點</strong></p>
-<ol>
-<li>仍然可使用 <code>interface</code></li>
-</ol>
-<p><strong>缺點</strong></p>
-<ol>
-<li>String token 可能重複，尤其若跟 Angular 或 3rd Party 使用相同 string token 時，將會後蓋前</li>
-<li>在 constructor 內必須加上 <code>@Inject()</code> decorator，程式碼比較冗長</li>
-</ol>
-<h3 id="Injection_Token">Injection Token</h3><p><code>change-counter.interface.ts</code> 仍然保持不變，也就是仍然使用 interface。</p>
-<p><strong>injection-token.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; InjectionToken &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'./change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CounterInterfaceToken = <span class="keyword">new</span> InjectionToken&lt;CounterInterface&gt;(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
-<p>第 4 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CounterInterfaceToken = <span class="keyword">new</span> InjectionToken&lt;CounterInterface&gt;(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
-<p>有鑑於 string token 可能重複，因此 Angular 4 提出 <code>InjectToken</code>，簡單的說，就是由 <code>string</code> 換成 <code>InjectionToken</code> 物件，由於每次 <code>new</code> 的物件都不會重複，因此儘管 token 名稱相同，但實質上仍然是不同的物件。</p>
-<p><code>InjectionToken</code> 可帶泛型，也就是我們原本的 interface，初始值可帶一字串當 description，傳入空字串即可。</p>
-<p><strong>app.module.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterfaceToken &#125; from <span class="string">'./interface/interface-token'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: CounterInterfaceToken, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>18 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: CounterInterfaceToken, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
-<p><code>provide</code> 由 string token 改成剛剛所建立的 <code>InjectionToken</code>。</p>
-<p><strong>counter.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Inject, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterfaceToken &#125; from <span class="string">'../../interface/interface-token'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCount;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(@Inject(CounterInterfaceToken) private counterService: CounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.setInitialCount(<span class="keyword">this</span>.initialCount);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onIncrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onDecrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>15 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(@Inject(CounterInterfaceToken) private counterService: CounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一樣使用 <code>@Inject()</code> decorator，只是帶入改換成 <code>CounterInterfaceToken</code>，不再是字串，而是個 <code>InjectionToken</code> 物件。</p>
-<p><strong>優點</strong></p>
-<ol>
-<li>仍然可使用 <code>interface</code></li>
-<li>每個 <code>InjectionToken</code> 都獨一無二，不再會有後蓋前的問題</li>
-</ol>
-<p><strong>缺點</strong></p>
-<ol>
-<li>在 constructor 內必須加上 <code>@Inject()</code> decorator，程式碼比較冗長</li>
-</ol>
-<h3 id="Abstract_Class">Abstract Class</h3><p><strong>change-counter.interface.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> abstract <span class="keyword">class</span> CounterInterface &#123;</span><br><span class="line">  abstract counter$: Observable&lt;<span class="built_in">number</span>&gt;;</span><br><span class="line">  abstract setInitialCount(initialValue: <span class="built_in">number</span>);</span><br><span class="line">  abstract addOne(): <span class="built_in">void</span>;</span><br><span class="line">  abstract minusOne(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>將原本的 interface 寫法，全部改用 abstract class 寫法。</p>
-<p>Interface 與 abstract class，在 OOP 的觀念上，皆屬於 <code>抽象</code>，兩者地位幾乎一樣；但在 TypeScript，interface 僅用於 <code>編譯檢查</code> 用，並不會實際編譯成 JavaScript，而 <code>abstract class</code> 卻會編譯成對應的 JavaScript。</p>
-<p>另外在 TypeScript，class 也可以被 <code>implement</code> ，稱為 <code>class interface</code>，這也是 TypeScript 與傳統 OOP 語言不同之處，因此我們可以借用 <code>abstract class</code> 當成 interface 被 service 拿去 <code>implement</code>。</p>
-<blockquote>
-<p>可自行到 TypeScript Playground 實際貼上 interface 與 abstract class 寫法，就會發現兩者的 JavaScript 是不一樣的</p>
-</blockquote>
-<p><strong>app.module.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./component/counter/counter.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterService &#125; from <span class="string">'./service/count/counter.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'./interface/change-counter.interface'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent,</span><br><span class="line">    CounterComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [</span><br><span class="line">    CounterService,</span><br><span class="line">    &#123;provide: CounterInterface, useExisting: CounterService&#125;</span><br><span class="line">  ],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>20 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;provide: CounterInterface, useExisting: CounterService&#125;</span><br></pre></td></tr></table></figure>
-<p>因為改用 <code>abstract class</code> 後，此時已是個 type，可光明正大在 <code>provide</code> 當 token 使用。</p>
-<p><strong>counter.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input, OnInit &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterInterface &#125; from <span class="string">'../../interface/change-counter.interface'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; from <span class="string">'rxjs/Observable'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent <span class="keyword">implements</span> OnInit &#123;</span><br><span class="line">  @Input() initialCount;</span><br><span class="line">  counter$: Observable&lt;<span class="built_in">number</span>&gt; = <span class="keyword">this</span>.counterService.counter$;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private counterService: CounterInterface) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.setInitialCount(<span class="keyword">this</span>.initialCount);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onIncrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onDecrementClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterService.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor"><span class="keyword">constructor</span>(private counterService: CounterInterface) </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不必使用 <code>@Inject()</code> decorator，DI container 會自動使用參數的型別作為 DI 注入的依據，這也於其他 OOP 語言的經驗一樣。</p>
-<p><strong>優點</strong></p>
-<ol>
-<li>不必使用 <code>InjectionToken</code></li>
-<li>不必使用 <code>@Inject()</code> decorator，用法與一般 OOP 寫法一樣</li>
-</ol>
-<p><strong>缺點</strong></p>
-<ol>
-<li>必須由 <code>interface</code> 改用 <code>abstract class</code></li>
-<li><code>abstract class</code> 可以被 <code>implement</code>，與一般 OOP 的觀念不一樣</li>
-</ol>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>3 種寫法都在 Angular 官網出現過，都屬官方寫法</li>
-<li>基於程式碼的精簡，個人偏好第三種寫法，也就是將 <code>interface</code> 改成 <code>abstract class</code>，而不必使用 string token 或 <code>InjectionToken</code></li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在 <a href="https://github.com/oomusou/NG51InputOutputDecorator" target="_blank" rel="external">GitHub</a>上找到</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[3 種方式都屬 Angular 官方作法]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
   </entry>
   
