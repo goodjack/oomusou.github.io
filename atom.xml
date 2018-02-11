@@ -221,9 +221,11 @@
     <link href="http://oomusou.io/macos/myapp/"/>
     <id>http://oomusou.io/macos/myapp/</id>
     <published>2018-02-10T12:23:43.000Z</published>
-    <updated>2018-02-10T04:06:42.081Z</updated>
+    <updated>2018-02-11T16:06:56.339Z</updated>
     <content type="html"><![CDATA[<p>Macbook Pro 15 一直是我很推薦的 <code>工作神器</code>， 雖然很貴，但卻很值得投資。我不敢說我 Mac 用的多好，但使用了 3 年的 macOS，多少累積了一些經驗，試過不少 app，目前還會繼續用的，基本上都是工作用起來很順的 app，在此分享給大家。</p>
 <a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3</p>
 <h2 id="檔案管理">檔案管理</h2><hr>
 <ul>
 <li><strong>Finder (內建)</strong> : 內建的 Finder 就已經很好用了</li>
