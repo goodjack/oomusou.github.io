@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-10T02:07:15.330Z</updated>
+  <updated>2018-02-11T14:31:25.212Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,13 +15,148 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[如何建立 Route ?]]></title>
+    <link href="http://oomusou.io/simple-route/"/>
+    <id>http://oomusou.io/simple-route/</id>
+    <published>2018-02-13T12:23:43.000Z</published>
+    <updated>2018-02-11T14:31:25.212Z</updated>
+    <content type="html"><![CDATA[<p>傳統以後端為主的 MVC 寫法，route 會寫在後端；前後端分離的 SPA 寫法，前後端有各自的 route，前端的 route 負責切換 component，而後端的 route 則負責 API。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>Node.js 8.9.4<br>Angular CLI 1.6.7<br>Angular 5.2.4</p>
+<h2 id="建立_Route">建立 Route</h2><hr>
+<h3 id="建立專案時一併建立_Route">建立專案時一併建立 Route</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng new MyProject --routing</span><br></pre></td></tr></table></figure>
+<p>新建專案時，加上 <code>--routing</code> 參數。</p>
+<p><img src="/images/angular/simple-route/route000.png" alt="route000"></p>
+<ol>
+<li>Angular CLI 會替我們在 <code>src/app</code> 目錄下新增 <code>app-routing.module.ts</code> 檔案</li>
+<li>class 名稱為 <code>AppRoutingModule</code></li>
+<li><code>routes</code> 陣列即位自訂 route 之處</li>
+</ol>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imports: [RouterModule.forRoot(routes)],</span><br></pre></td></tr></table></figure>
+<p>一般來說，<code>imports</code> 要的都是單純 module，如 <code>BrowserModule</code>，但這裡用的卻是 <code>RouterModule.forRoot()</code>。</p>
+<ul>
+<li><code>forRoot()</code> 為 <code>RouterModule</code> 的 factory method，為 <code>static</code>， 傳入 <code>routes</code> 後，回傳給 <code>AppModule</code> 所使用的 <code>RouterModule</code></li>
+<li><code>forChild()</code> 亦為 <code>RouterModule</code> 的 factory method，為 <code>static</code>，傳入 <code>routes</code> 後，回傳其他 module 所使用的 <code>RouterModule</code></li>
+</ul>
+<blockquote>
+<p>之所以要特別用 <code>forRoot()</code> 與  <code>forChild()</code>，因為當 <code>AppModule</code>  與其他 module 都 import <code>RouterModule</code> 時，由於其他 module 都有自己的 DI injector，會屏蔽 <code>AppModule</code> 的 <code>Router</code>，有就是說 <code>Router</code> 將不再整個 app 共用，而是各 module 有自己的 <code>Router</code>，因此 <code>RouterModule</code> 特別不提供 provider，而是改由 <code>forRoot()</code> 與 <code>forChild()</code> 提供，如此整個 app 將只會有一份 <code>Router</code></p>
+</blockquote>
+<p><img src="/images/angular/simple-route/route001.png" alt="route001"></p>
+<ol>
+<li>Angular CLI 還替我們修改了 <code>app.module.ts</code></li>
+<li>自動將 <code>AppRoutingModule</code> import 進來</li>
+</ol>
+<blockquote>
+<p>理論上  <code>app.module.ts</code> 與 <code>app-routing.module.ts</code> 可以合一，但因為 <code>app.module.ts</code> 有他原本的職責，如 <code>declarations</code>、<code>imports</code>  、 <code>providers</code> 與 <code>bootstrap</code>，且簡單的 app 也可能也沒使用 route，因此特別將 route 部分特別獨立為 <code>app-routing.module.ts</code>，再 import 進 <code>app.module.ts</code> 即可</p>
+</blockquote>
+<h3 id="建立專案後事後加上_Route">建立專案後事後加上 Route</h3><p>假如一開始建立專案時沒加上 <code>--routing</code> ，也可事後再建立 route。</p>
+<blockquote>
+<p>Angular CLI 並沒有提供單獨建立 route 的指令，只能在建立 module 時，順便加上 <code>--routing</code> 參數建立 route</p>
+</blockquote>
+<p><strong> 將 app.module.ts 暫時改名 </strong></p>
+<p><img src="/images/angular/simple-route/route002.png" alt="route002"></p>
+<ol>
+<li>將 <code>app.module.ts</code> 暫時改名為 <code>app.module.ts.bak</code></li>
+</ol>
+<blockquote>
+<p>因為我們即將重建 <code>app.module.ts</code>，所以先將目前的 <code>app.module.ts</code> 改名避開</p>
+</blockquote>
+<p><strong> 重新建立有 Route 的 AppModule </strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
+<p><code>m</code> : module 的縮寫</p>
+<p><code>--flat</code> : 不要將 <code>AppRouting</code> 建立在目前目錄下，而是建立在 <code>src/app</code> 目錄下</p>
+<p><code>--routing</code> : 一併建立 <code>AppRoutingModule</code></p>
+<p><img src="/images/angular/simple-route/route003.png" alt="route003"></p>
+<ol>
+<li>在專案目錄下執行 <code>ng g m App --flat —routing</code></li>
+<li>Angular CLI 會替我們建立 <code>app.module.ts</code> 與 <code>app-routing.module.ts</code> 兩個檔案</li>
+<li>在 <code>AppModule</code> 中，會自動幫我們 import <code>AppRoutingModule</code></li>
+</ol>
+<p><strong> 刪除 app.module.ts </strong></p>
+<p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
+<blockquote>
+<p>因為我們目的是要 Angular CLI 幫我們建立 <code>app-routing.module.ts</code>，<code>app.module.ts</code> 沒有利用價值需刪除</p>
+</blockquote>
+<p><strong> 將 app.module.ts.bak 改為 app.module.ts </strong></p>
+<p><img src="/images/angular/simple-route/route004.png" alt="route004"></p>
+<ol>
+<li>將 <code>app.module.ts</code> 刪除，再將 <code>app.module.ts.bak</code> 重新命名為 <code>app.module.ts</code></li>
+</ol>
+<blockquote>
+<p><code>app.module.ts.bak</code> 才是我們原本的 <code>app.module.ts</code></p>
+</blockquote>
+<p><strong> 修改 AppModule </strong></p>
+<p><img src="/images/angular/simple-route/route005.png" alt="route005"></p>
+<ol>
+<li>選擇 <code>app.module.ts</code></li>
+<li>在 <code>imports</code> 加上剛剛建立的 <code>AppRoutingModule</code></li>
+</ol>
+<p><strong> 修改 AppRoutingModule </strong> </p>
+<p><img src="/images/angular/simple-route/route006.png" alt="route006"></p>
+<ol>
+<li>選擇 <code>app-routing.module.ts</code></li>
+<li>將 <code>forChild()</code> 改成 <code>forRoot()</code><blockquote>
+<p>如此無論是一開始建立專案就加上 <code>--routing</code> 參數，或者先建立專案，事後再補建立 route，目前 <code>AppModule</code> 都有相同的 <code>AppRoutingModule</code></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="設定_Route">設定 Route</h2><h3 id="建立_Login_與_Post_Component">建立 Login 與  Post Component</h3><p>使用一般建立 component 的方式建立 <code>LoginComponent</code> 與 <code>PostComponent</code> (略)</p>
+<h3 id="設定_routes">設定 routes</h3><p><strong>app-routing.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule, Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Routes, RouterModule &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; LoginComponent &#125; from <span class="string">'./login/login.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post/post.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">'login'</span>, component: LoginComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'post'</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">''</span>, redirectTo: <span class="string">''</span>, pathMatch: <span class="string">'full'</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forRoot(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">'login'</span>, component: LoginComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">'post'</span>, component: PostComponent &#125;,</span><br><span class="line">  &#123; path: <span class="string">''</span>, redirectTo: <span class="string">''</span>, pathMatch: <span class="string">'full'</span>&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><code>Routes</code> 為 Angular 定義的 <code>Route</code> 陣列，用來設定 user 自己的 route 定義。</p>
+<p>第  7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">'login'</span>, component: LoginComponent &#125;,</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>path</code> : 設定 route 路徑</li>
+<li><code>component</code> : 當符合 <code>path</code> 定義時，該顯示的 component</li>
+</ul>
+<p>當 URI 為 <code>login</code> 時，顯示 <code>LoginComponent</code></p>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">'post'</span>, component: PostComponent &#125;,</span><br></pre></td></tr></table></figure>
+<p>當 URI 為 <code>post</code> 時，顯示 <code>PostComponent</code></p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">''</span>, redirectTo: <span class="string">''</span>, pathMatch: <span class="string">'full'</span> &#125;,</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>redirectTo</code> : redirect 到其他 URI 路徑</li>
+<li><code>pathMatch</code> : 與 <code>path</code> 的匹配方式</li>
+</ul>
+<p>當  URI 為 <code>空字串</code>，redirect 到 <code>&#39;&#39;</code>，且必須完全符合 <code>path</code> 定義</p>
+<h2 id="使用_router-outlet_與_routerLink">使用 router-outlet 與 routerLink</h2><p><strong>app.component.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Welcome to &#123;&#123; title &#125;&#125;!</span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">routerLink</span>=<span class="value">"login"</span>&gt;</span>Login<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">routerLink</span>=<span class="value">"post"</span>&gt;</span>Post<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">routerLink</span>=<span class="value">""</span>&gt;</span>Home<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="title">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第 6 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="title">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>當在 <code>AppRoutingModule</code> 的 <code>routes</code> 設定 <code>component</code> 時，會顯示在哪呢 ? 就是顯示在 HTML template 的 <code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code> 內。</p>
+<p>第 2 行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">routerLink</span>=<span class="value">"login"</span>&gt;</span>Login<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>原本的 <code>&lt;a&gt;</code> 會使用 <code>href</code>，但這會導致 Angular 使用後端的 route，也就是整個網頁會重新載入；若使用 <code>routerLink</code>，則 Angular 會使用前端的 route，也就是將 <code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code> 換成其他 component，使用者體驗較好。</p>
+<h2 id="Conclusion">Conclusion</h2><ul>
+<li>Angular 也有自己的 route，傳統頁面跳轉的 route 必須改設定在 Angular</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><p>完整的範例可以在 <a href="https://github.com/oomusou/NG52Route" target="_blank" rel="external">GitHub</a> 上找到</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[Angular 已經內建 Route，可直接使用]]>
+    
+    </summary>
+    
+      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[淺談 macOS 的 App 安裝與反安裝]]></title>
     <link href="http://oomusou.io/macos/install-app/"/>
     <id>http://oomusou.io/macos/install-app/</id>
     <published>2018-02-12T12:23:43.000Z</published>
-    <updated>2018-02-10T02:07:15.330Z</updated>
+    <updated>2018-02-11T14:31:20.030Z</updated>
     <content type="html"><![CDATA[<p>macOS 雖然很好用，但在安裝/反安裝 app 的方式與 Windows 不太一樣，這是剛從 Windows 跳到 macOS 時一定會疑惑的地方。</p>
 <a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3</p>
 <h2 id="App_安裝">App 安裝</h2><hr>
 <p>macOS 一共有 4 種安裝 app 方式 :</p>
 <ol>
@@ -483,47 +618,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/vscode/run-by-command/"/>
-    <id>http://oomusou.io/vscode/run-by-command/</id>
-    <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T12:22:28.000Z</updated>
-    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
-<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
-<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
-<p>熱鍵執行 Command Pallette </p>
-<ol>
-<li>輸入 <code>shell</code></li>
-<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
-</ol>
-<blockquote>
-<p>Command Pallete 熱鍵 </p>
-<p>Windows : Ctrl + Shift + P</p>
-<p>macOS : ⌘ + ⇧ + P</p>
-</blockquote>
-<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
-<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
-<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
-<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
-    
-    </summary>
-    
-      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何使用 Angular 實現 Pub/Sub Pattern ?]]></title>
     <link href="http://oomusou.io/angular/pubsub/"/>
     <id>http://oomusou.io/angular/pubsub/</id>
@@ -732,37 +826,43 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/webstorm/run-by-command/"/>
-    <id>http://oomusou.io/webstorm/run-by-command/</id>
-    <published>2018-02-03T12:23:43.000Z</published>
-    <updated>2018-02-03T12:19:01.000Z</updated>
-    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/vscode/run-by-command/"/>
+    <id>http://oomusou.io/vscode/run-by-command/</id>
+    <published>2018-02-04T12:23:43.000Z</published>
+    <updated>2018-02-03T12:22:28.000Z</updated>
+    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
+<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
+<p>熱鍵執行 Command Pallette </p>
+<ol>
+<li>輸入 <code>shell</code></li>
+<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
+</ol>
 <blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+<p>Command Pallete 熱鍵 </p>
+<p>Windows : Ctrl + Shift + P</p>
+<p>macOS : ⌘ + ⇧ + P</p>
 </blockquote>
-<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
+<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
+<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
+<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[更快速的啟動方式]]>
+    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
     
     </summary>
     
-      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
+      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
     
   </entry>
   
@@ -812,6 +912,41 @@
     </summary>
     
       <category term="JavaScript" scheme="http://oomusou.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何以 Command 方式執行 WebStorm 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/webstorm/run-by-command/"/>
+    <id>http://oomusou.io/webstorm/run-by-command/</id>
+    <published>2018-02-03T12:23:43.000Z</published>
+    <updated>2018-02-03T12:19:01.000Z</updated>
+    <content type="html"><![CDATA[<p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
+<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
+<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
+<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
+<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<blockquote>
+<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+</blockquote>
+<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
+<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[更快速的啟動方式]]>
+    
+    </summary>
+    
+      <category term="WebStorm" scheme="http://oomusou.io/tags/WebStorm/"/>
     
   </entry>
   
@@ -1867,106 +2002,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何使用 Angular CLI 建立 Route ?]]></title>
-    <link href="http://oomusou.io/angular/route101/"/>
-    <id>http://oomusou.io/angular/route101/</id>
-    <published>2018-01-12T12:23:43.000Z</published>
-    <updated>2018-01-15T13:25:16.000Z</updated>
-    <content type="html"><![CDATA[<p>傳統以後端為主的 MVC 寫法，route 會寫在後端；前後端分離的 SPA 寫法，前後端 有各自的 route，前端的 route 負責切換 component，而後端的 route 則負責 API。</p>
-<p>Angular CLI 無法單獨建立 route，而是將 route 視為 module，透過建立 module 來建立 route。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.1.2</p>
-<h2 id="建立專案時一併建立_Route">建立專案時一併建立 Route</h2><hr>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ng <span class="built_in">new</span> MyProject <span class="comment">--routing</span></span><br></pre></td></tr></table></figure>
-<p>新建專案時，加上 <code>--routing</code> 參數。</p>
-<p><img src="/images/angular/route101/route000.png" alt="route000"></p>
-<ol>
-<li>Angular CLI 會替我們在 <code>src/app</code> 目錄下新增 <code>app-routing.module.ts</code> 檔案</li>
-<li>class 名稱為 <code>AppRoutingModule</code></li>
-<li><code>routes</code> 陣列即位自訂 route 之處</li>
-</ol>
-<p>第 7 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imports: [RouterModule.forRoot(routes)],</span><br></pre></td></tr></table></figure>
-<p>一般來說，<code>imports</code> 要的都是單純 module，如 <code>BrowserModule</code>，但這裡用的卻是 <code>RouterModule.forRoot()</code>。</p>
-<ul>
-<li><code>forRoot()</code> 為 <code>RouterModule</code> 的 factory method，為 <code>static</code>， 傳入 <code>routes</code> 後，回傳給 <code>AppModule</code> 所使用的 <code>RouterModule</code></li>
-<li><code>forChild()</code> 亦為 <code>RouterModule</code> 的 factory method，為 <code>static</code>，傳入 <code>routes</code> 後，回傳其他 module 所使用的 <code>RouterModule</code></li>
-</ul>
-<p><img src="/images/angular/route101/route001.png" alt="route001"></p>
-<ol>
-<li>Angular CLI 還替我們修改了 <code>app.module.ts</code></li>
-<li>自動將 <code>AppRoutingModule</code> import 進來</li>
-</ol>
-<blockquote>
-<p>Route 在 Angular 是以 module 的型態存在，也就是 <code>AppRoutingModule</code> 是個獨立 module，且 <code>AppModule</code> 必須將 <code>AppRoutingModule</code> 給 <code>import</code> 進來才能使用</p>
-</blockquote>
-<h2 id="建立專案後事後加上_Route">建立專案後事後加上 Route</h2><hr>
-<p>假如一開始建立專案時沒加上 <code>--routing</code> ，也可事後再建立 route。</p>
-<blockquote>
-<p>Angular CLI 並沒有提供單獨建立 route 的指令，只能在建立 module 時，順便加上 <code>--routing</code> 參數建立 route</p>
-</blockquote>
-<h3 id="將_app-module-ts_暫時改名">將 app.module.ts 暫時改名</h3><p><img src="/images/angular/route101/route002.png" alt="route002"></p>
-<ol>
-<li>將 <code>app.module.ts</code> 暫時改名為 <code>app.module.ts.bak</code></li>
-</ol>
-<blockquote>
-<p>因為我們即將重建 <code>app.module.ts</code>，所以先將目前的 <code>app.module.ts</code> 改名避開</p>
-</blockquote>
-<h3 id="重新建立有_Route_的_AppModule">重新建立有 Route 的 AppModule</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/MyProject $ ng <span class="keyword">g</span> <span class="keyword">m</span> <span class="keyword">App</span> --flat --routing</span><br></pre></td></tr></table></figure>
-<p><code>m</code> : module 的縮寫</p>
-<p><code>--flat</code> : 不要將 <code>AppRouting</code> 建立在目前目錄下，而是建立在 <code>src/app</code> 目錄下</p>
-<p><code>--routing</code> : 一併建立 <code>AppRoutingModule</code></p>
-<p><img src="/images/angular/route101/route003.png" alt="route003"></p>
-<ol>
-<li>在專案目錄下重新建立 <code>AppModule</code>，一併建立 <code>AppRoutingModule</code></li>
-<li>Angular CLI 會替我們建立 <code>app.module.ts</code> 與 <code>app-routing.module.ts</code> 兩個檔案</li>
-<li>在 <code>AppModule</code> 中，會自動幫我們 <code>import</code> <code>AppRoutingModule</code></li>
-</ol>
-<h3 id="刪除_app-module-ts">刪除 app.module.ts</h3><p>Angular CLI 剛剛幫我們建立了全新的 <code>app.module.ts</code>，手動將此檔刪除</p>
-<blockquote>
-<p>因為我們目的是要 Angular CLI 幫我們建立 <code>app-routing.module.ts</code>，<code>app.module.ts</code> 沒有利用價值需刪除</p>
-</blockquote>
-<h3 id="將_app-module-ts-bak_改為_app-module-ts">將 app.module.ts.bak 改為 app.module.ts</h3><p><img src="/images/angular/route101/route004.png" alt="route004"></p>
-<ol>
-<li>將 <code>app.module.ts</code> 刪除，再將 <code>app.module.ts.bak</code> 重新命名為 <code>app.module.ts</code></li>
-</ol>
-<blockquote>
-<p><code>app.module.ts.bak</code> 才是我們原本的 <code>app.module.ts</code></p>
-</blockquote>
-<h3 id="修改_AppModule">修改 AppModule</h3><p><img src="/images/angular/route101/route005.png" alt="route005"></p>
-<ol>
-<li>選擇 <code>app.module.ts</code></li>
-<li>在 <code>imports</code> 加上剛剛建立的 <code>AppRoutingModule</code></li>
-</ol>
-<h3 id="修改_AppRoutingModule">修改 AppRoutingModule</h3><p><img src="/images/angular/route101/route006.png" alt="route006"></p>
-<ol>
-<li>選擇 <code>app-routing.module.ts</code></li>
-<li>將 <code>forChild()</code> 改成 <code>forRoot()</code><blockquote>
-<p>如此無論是一開始建立專案就加上 <code>--routing</code> 參數，或者先建立專案，事後再補建立 route，目前 <code>AppModule</code> 都有相同的 <code>AppRoutingModule</code></p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>Angular 也有自己的 route，傳統頁面跳轉的 route 必須改設定在 Angular</li>
-<li>Angular CLI 無法單獨建立 route，必須透過建立 module 來建立 route</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在 <a href="https://github.com/oomusou/NG51Clean" target="_blank" rel="external">GitHub</a> 上找到</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[以最基本的方式建立 Route]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Angular CLI" scheme="http://oomusou.io/tags/Angular-CLI/"/>
     
   </entry>
   
