@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何以 Command 方式執行 WebStorm 並開啟專案 ? | 點燈坊</title>
+  <title>如何在 VS Code 快速切換 Editor 與 Terminal ? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="更快速的啟動方式">
+  <meta name="description" content="VS Code 尚未內建此 shortcut">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="更快速的啟動方式">
+ <meta name="description" content="VS Code 尚未內建此 shortcut">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何以 Command 方式執行 WebStorm 並開啟專案 ?">
-<meta property="og:url" content="http://oomusou.io/webstorm/run-by-command/index.html">
+<meta property="og:title" content="如何在 VS Code 快速切換 Editor 與 Terminal ?">
+<meta property="og:url" content="http://oomusou.io/vscode/toggle-terminal/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="更快速的啟動方式">
+<meta property="og:description" content="VS Code 尚未內建此 shortcut">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-03T12:19:01.000Z">
+<meta property="og:updated_time" content="2018-02-12T05:33:09.419Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何以 Command 方式執行 WebStorm 並開啟專案 ?">
-<meta name="twitter:description" content="更快速的啟動方式">
+<meta name="twitter:title" content="如何在 VS Code 快速切換 Editor 與 Terminal ?">
+<meta name="twitter:description" content="VS Code 尚未內建此 shortcut">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 如何以 Command 方式執行 WebStorm 並開啟專案 ?</h1>
+			<h1> 如何在 VS Code 快速切換 Editor 與 Terminal ?</h1>
 		</div>		
 	
 
@@ -95,36 +95,43 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> 更快速的啟動方式			
+			<i class="fa fa-info-circle"></i> VS Code 尚未內建此 shortcut			
 		</div> <!-- alert -->
 		
 
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立啟動_Script"><span class="toc-article-text">建立啟動 Script</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#在_Terminal_執行_WebStorm"><span class="toc-article-text">在 Terminal 執行 WebStorm</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#新增_Shortcut"><span class="toc-article-text">新增 Shortcut</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>我們看到 Visual Studio Code 可以在 terminal 下 command 開啟目前目錄的專案，WebStorm 是否也能以這種方式啟動呢 ?</p>
+	    <p>由於 VS Code 內建 terminal，因此我們可以直接在 VS Code 內直接下 command，也因此我們需要一個 shortcut，讓 cursor 可以快速在 editor 與 terminal 間切換。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>WebStorm 2017.3.4</p>
-<h2 id="建立啟動_Script">建立啟動 Script</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd000.png" alt="cmd000"></p>
-<p><strong><em>Tools -&gt; Create Command-line Launcher…</em></strong></p>
-<p><img src="/images/webstorm/run-by-command/cmd002.png" alt="cmd002"></p>
-<p>WebStorm 預設會將 script 建立在 <code>/usr/local/bin/</code>，將來將以 <code>webstorm</code> command 啟動。</p>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="新增_Shortcut">新增 Shortcut</h2><hr>
+<p>VS Code 並沒有內建切換 editor 與 terminal 的 shortcut，必須自行新增。</p>
 <blockquote>
-<p>為了少打點字，你也可以自行命名，如 <code>/usr/local/bin/ws</code></p>
+<p>對於 toggle terminal，VS Code 已經內建 ctrl + `，因此自行建立一個類似的 ⌘ + 1，也方便單手即可操作切換 editor 與 terminal</p>
 </blockquote>
-<h2 id="在_Terminal_執行_WebStorm">在 Terminal 執行 WebStorm</h2><hr>
-<p><img src="/images/webstorm/run-by-command/cmd001.png" alt="cmd001"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>webstorm .</code> ，WebStorm 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<p><img src="/images/vscode/toggle-terminal/terminal000.png" alt="terminal000"></p>
+<ol>
+<li>⌘ + ⇧ + p 啟動 Command Palette，輸入 shortcut</li>
+<li>選擇 <code>Preferences: Open keyboard Shortcuts File</code></li>
+</ol>
+<p><img src="/images/vscode/toggle-terminal/terminal001.png" alt="terminal001"></p>
+<p>VS Code 將開啟 <code>Default Keybinds</code> 與  <code>keybindings.json</code> 兩個檔案。</p>
+<p><strong>keybindings.json</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "key": "cmd+1",</span><br><span class="line">  "command": "workbench.action.terminal.focus",</span><br><span class="line">  "when": "editorTextFocus"</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  "key": "cmd+1",</span><br><span class="line">  "command": "workbench.action.focusActiveEditorGroup",</span><br><span class="line">  "when": "terminalFocus"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>將 <code>⌘ + 1</code> 兩個設定貼入 <code>keybindings.json</code>。</p>
+<p>第一個設定為當目前 cursor 在 editor 時，<code>⌘ + 1</code> 將 cursor 切換到 terminal。</p>
+<p>第二個設定為當目前 cursor 在 terminal 時，<code>⌘ + 1</code> 將 cursor 切換到 editor。</p>
 <h2 id="Conclusion">Conclusion</h2><hr>
 <ul>
-<li>WebStorm 除了使用 <code>JetBrains ToolBox</code> 開啟專案外，也可以使用 command 方式在直接開啟</li>
+<li>ctrl + `： toggle 是否顯示 terminal</li>
+<li>⌘ + 1：將  cursor 在 editor 與 terminal 間切換</li>
 </ul>
 	  
 	</div>
@@ -134,14 +141,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/vscode/run-by-command/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/javascript/remove-object-array/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/simple-route/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -162,7 +169,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2018-02-03 
+	2018-02-14 
 	</div>
 	
 
@@ -172,7 +179,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/WebStorm/">WebStorm<span>14</span></a></li>
+  <li><a href="/tags/VS-Code/">VS Code<span>3</span></a></li>
     </ul>
 	</div>
 		
