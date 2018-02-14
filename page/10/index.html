@@ -99,6 +99,40 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			
+			<div class="article-title"><a href="/dp/dp-nullobject/" title="使用 Null Object 模式將符合 Tell, don&#39;t Ask 原則">如何使用 Null Object 模式?</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-4">
+	  <div class="thumbnail">
+	    <a href="/dp/dp-nullobject/"><img src="/images/feature/refactor.png" alt="如何使用 Null Object 模式?"  class="nofancybox"></a>
+	  </div>
+	</div>
+  
+  
+	<div class="col-md-8">
+  
+  
+	<p>當我們透過 Eloquent 對資料庫抓資料時，由於 <code>where()</code> 的條件可能撈不到資料，導致 <code>first()</code> 傳會 <code>null</code>，若再對 <code>null</code> 物件的欄位屬性做存取，會出現 <code>Trying to get property of non-object</code> 的錯誤訊息，當然有各種方法避開這個錯誤，但比較理想的方式是引入 <code>Null Object</code> 模式。</p>
+  	
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+	  <a type="button" href="/dp/dp-nullobject/#more" class="btn btn-default more">Read More</a>
+    </div>
+  </div>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			
 			<div class="article-title"><a href="/tdd/tdd-collection-assertion/" title="介紹兩種方法對 Collection 做 Assertion">如何對 Collection 做 Assertion?</a></div>						
 		</h3>
 	
@@ -395,40 +429,6 @@
     <div class="col-md-10"></div>
     <div class="col-md-2">
 	  <a type="button" href="/javascript/variable-property/#more" class="btn btn-default more">Read More</a>
-    </div>
-  </div>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			
-			<div class="article-title"><a href="/tdd/tdd-factory-ocp/" title="將邏輯改用 LUT 表示，可將 LUT 改放到 app.php 設定檔">如何對工廠模式開放封閉?</a></div>						
-		</h3>
-	
-
-
-			<div class="entry">
-  <div class="row">
-  
-	<div class="col-md-4">
-	  <div class="thumbnail">
-	    <a href="/tdd/tdd-factory-ocp/"><img src="/images/feature/dp.png" alt="如何對工廠模式開放封閉?"  class="nofancybox"></a>
-	  </div>
-	</div>
-  
-  
-	<div class="col-md-8">
-  
-  
-	<p>將建構物件的邏輯封裝在工廠模式，已經達到 90% 的開放封閉，最少其他 class 都已經開放封閉，將來所有的邏輯修改只剩下工廠模式，若能將工廠模式也開放封閉，那就太好了。</p>
-  	
-    </div>
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-	  <a type="button" href="/tdd/tdd-factory-ocp/#more" class="btn btn-default more">Read More</a>
     </div>
   </div>
 </div>
