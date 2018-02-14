@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何建立 Lazy Loading Module ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="避免所有 component 都在同一個 module">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="避免所有 component 都在同一個 module">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何建立 Lazy Loading Module ?">
+<meta property="og:url" content="http://oomusou.io/angular/lazy-loading-module/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="避免所有 component 都在同一個 module">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-14T03:22:51.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何建立 Lazy Loading Module ?">
+<meta name="twitter:description" content="避免所有 component 都在同一個 module">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何建立 Lazy Loading Module ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 避免所有 component 都在同一個 module			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#User_Story"><span class="toc-article-text">User Story</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Task"><span class="toc-article-text">Task</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Architecture"><span class="toc-article-text">Architecture</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Implementation"><span class="toc-article-text">Implementation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#建立新_Module"><span class="toc-article-text">建立新 Module</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定新_Module"><span class="toc-article-text">設定新 Module</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_AppModule"><span class="toc-article-text">設定 AppModule</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Experiment"><span class="toc-article-text">Experiment</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#觀察_ng_build_—prod"><span class="toc-article-text">觀察 ng build —prod</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#觀察_Chrome"><span class="toc-article-text">觀察 Chrome</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>隨著 app 開發越來越大，若將所有的 route 都寫在 <code>AppModule</code>，除了難以維護外，還必須在一開始就載入全部 component，使得 Angular 載入時間變久；比較好的方式是將 component 切成 module，並有自己的 route，當 user 點入該 route 時，才去下載該 module，這就是 lazy loading。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>Node.js 8.9.4<br>Angular CLI 1.6.7<br>Angular 5.2.4</p>
+<h2 id="User_Story">User Story</h2><hr>
+<p><img src="/images/angular/lazy-loading-module/lazy012.png" alt="lazy012"></p>
+<p>原本只有一個 <code>AppModule</code>：</p>
+<ul>
+<li>按下 <code>Login</code> 會載入 <code>LoginComponent</code></li>
+<li>按下 <code>Post</code> 會載入 <code>PostComponent</code></li>
+<li>按下 <code>Home</code> 會載入 <code>AppComponent</code></li>
+</ul>
+<h2 id="Task">Task</h2><hr>
+<p>拆成多個 module，並採用 lazy loading。</p>
+<h2 id="Architecture">Architecture</h2><hr>
+<p><img src="/images/angular/lazy-loading-module/lazy013.svg" alt="lazy013"></p>
+<p>除了一定要有的 <code>AppModule</code> 外</p>
+<ul>
+<li>將  <code>LoginComponent</code> 獨立成 <code>LoginModule</code></li>
+<li>將 <code>PostComponent</code> 獨立成 <code>PostModule</code></li>
+</ul>
+<p>並且對 <code>LoginModule</code> 與 <code>PostModule</code> 使用 lazy loading。</p>
+<h2 id="Implementation">Implementation</h2><hr>
+<h3 id="建立新_Module">建立新 Module</h3><p><strong>建立 LoginModule</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/ MyProject $ <span class="built_in">cd</span> src/app</span><br><span class="line">~/ MyProject/src/app $ ng g m Login --routing</span><br></pre></td></tr></table></figure>
+<p>原本 <code>LoginComponent</code> 是建立在 <code>src/app/login</code> 目錄下，目前想將 <code>LoginComponent</code> 變成 module，由於 Angular CLI 建立 module 時，會建立子目錄，因此先將目錄切到 <code>src/app</code> ，建立 <code>LoginModule</code> 在 <code>src/app/login</code> 目錄下。</p>
+<ul>
+<li><code>g</code> : generate 的縮寫</li>
+<li><code>m</code> : module 的縮寫</li>
+<li><code>—-routing</code> : 建立 module 時，順便建立 <code>RoutingModule</code></li>
+</ul>
+<p><img src="/images/angular/lazy-loading-module/lazy000.png" alt="lazy000"></p>
+<ol>
+<li>將目錄切到 <code>src/app</code> 下，使用 <code>ng g m [module name] —-routing</code> 建立 module 與 routing module</li>
+<li>Angular CLI 將會建立 <code>login.module.ts</code> 與 <code>login-routing.module.ts</code> 兩個檔案</li>
+<li>將原本在 <code>src/app/login</code> 目錄下的  <code>LoginComponent</code> 重構到 <code>src/app/login/login</code> 目錄下</li>
+</ol>
+<blockquote>
+<p>目前 <code>src/app/login/login</code> 看起來很彆扭，事實上 <code>src/app/login</code> 為 module 目錄，而 <code>src/app/login/login</code> 為 component 目錄，將來會有更多 component，因此特別將原本在 <code>src/app/login</code> 的 <code>LoginComponent</code> 重構到 <code>src/app/login/login</code>，目前只是因為 <code>LoginModule</code> 與  <code>LoginComponent</code> 同名，所以看起來很怪</p>
+</blockquote>
+<p><strong>建立 PostModule</strong></p>
+<p><img src="/images/angular/lazy-loading-module/lazy001.png" alt="lazy001"></p>
+<ol>
+<li>將目錄切到 <code>src/app</code> 下，使用 <code>ng g m [module name] —-routing</code> 建立 module 與 routing module</li>
+<li>Angular CLI 將會建立 <code>post.module.ts</code> 與 <code>post-routing.module.ts</code> 兩個檔案</li>
+<li>將原本在 <code>src/app/login</code> 目錄下的  <code>PostComponent</code> 重構到 <code>src/app/post/post</code> 目錄下</li>
+</ol>
+<blockquote>
+<p>目前 <code>src/app/post/post</code> 看起來很彆扭，事實上 <code>src/app/post</code> 為 module 目錄，而 <code>src/app/post/post</code> 為 component 目錄，將來會有更多 component，因此特別將原本在 <code>src/app/post</code> 的 <code>PostComponent</code> 重構到 <code>src/app/post/post</code>，目前只是因為 <code>PostModule</code> 與  <code>PostComponent</code> 同名，所以看起來很怪</p>
+</blockquote>
+<h3 id="設定新_Module">設定新 Module</h3><p><strong>login-routing.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; LoginComponent &#125; from <span class="string">'./login/login.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Routes, RouterModule &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: LoginComponent &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forChild(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LoginRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">''</span>, component: LoginComponent &#125;,</span><br></pre></td></tr></table></figure>
+<p>將原本在 <code>AppRoutingModule</code> 的 route </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">'login'</span>, component: LoginComponent &#125;,</span><br></pre></td></tr></table></figure>
+<p>重構到 <code>LoginRoutingModule</code> 內，因為已經在 <code>LoginRoutingModule</code> 內，所以 <code>path</code> 為 <code>&#39;&#39;</code>  即可。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy002.png" alt="lazy002"></p>
+<ol>
+<li>編輯 <code>login-routing.module.ts</code></li>
+<li>將原本在 <code>app-routing.module.ts</code> 的 login route 重構到 <code>login-routing.module.ts</code></li>
+</ol>
+<p><strong>login.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommonModule &#125; from <span class="string">'@angular/common'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; LoginComponent &#125; from <span class="string">'./login/login.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; LoginRoutingModule &#125; from <span class="string">'./login-routing.module'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    LoginRoutingModule</span><br><span class="line">  ],</span><br><span class="line">  declarations: [</span><br><span class="line">    LoginComponent</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> LoginModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declarations: [</span><br><span class="line">  LoginComponent</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>因為 <code>LoginRoutingModule</code> 已經使用到 <code>LoginComponent</code>，因此在 <code>LoginModule</code> 需要加以宣告。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy004.png" alt="lazy004"></p>
+<ol>
+<li>編輯  <code>login.module.ts</code></li>
+<li>在 <code>declarations</code> 加上 <code>LoginComponent</code></li>
+</ol>
+<p><strong>post-routing.module.ts</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Routes, RouterModule &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post/post.component'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forChild(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">''</span>, component: PostComponent &#125;,</span><br></pre></td></tr></table></figure>
+<p>將原本在 <code>AppRoutingModule</code> 的 route </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">'post'</span>, component: PostComponent &#125;,</span><br></pre></td></tr></table></figure>
+<p>重構到 <code>PostRoutingModule</code> 內，因為已經在 <code>PostRoutingModule</code> 內，所以 <code>path</code> 為 <code>&#39;&#39;</code>  即可。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy003.png" alt="lazy003"></p>
+<ol>
+<li>編輯 <code>post-routing.module.ts</code></li>
+<li>將原本在 <code>app-routing.module.ts</code> 的 post route 重構到 <code>post-routing.module.ts</code></li>
+</ol>
+<p><strong>post.module.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CommonModule &#125; from <span class="string">'@angular/common'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostComponent &#125; from <span class="string">'./post/post.component'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; PostRoutingModule &#125; from <span class="string">'./post-routing.module'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    PostRoutingModule</span><br><span class="line">  ],</span><br><span class="line">  declarations: [</span><br><span class="line">    PostComponent</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> PostModule &#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>11 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declarations: [</span><br><span class="line">  PostComponent</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>因為 <code>PostRoutingModule</code> 已經使用到 <code>PostComponent</code>，因此在 <code>PostModule</code> 需要加以宣告。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy005.png" alt="lazy005"></p>
+<ol>
+<li>編輯  <code>post.module.ts</code></li>
+<li>在 <code>declarations</code> 加上 <code>PostComponent</code></li>
+</ol>
+<h3 id="設定_AppModule">設定 AppModule</h3><p><strong>app-routing.module.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Routes, RouterModule &#125; from <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; path: <span class="string">'login'</span>, loadChildren: <span class="string">'app/login/login.module#LoginModule'</span> &#125;,</span><br><span class="line">  &#123; path: <span class="string">'post'</span>, loadChildren: <span class="string">'app/post/post.module#PostModule'</span> &#125;,</span><br><span class="line">  &#123; path: <span class="string">''</span>, redirectTo: <span class="string">''</span>, pathMatch: <span class="string">'full'</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forRoot(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; path: <span class="string">'login'</span>, loadChildren: <span class="string">'app/login/login.module#LoginModule'</span> &#125;,</span><br></pre></td></tr></table></figure>
+<p>若要使用 lazy loading module，必須從 <code>component</code> 改成 <code>loadChildren</code>，後間接的是字串，為 <code>login.module.ts</code> 的路徑，但不用加上 <code>.ts</code>。</p>
+<p>最後以 <code>#</code> 加上 <code>LoginModule</code>，為 module 名稱。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy006.png" alt="lazy006"></p>
+<p><strong>app.module.ts</strong><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BrowserModule &#125; from <span class="string">'@angular/platform-browser'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppRoutingModule &#125; from <span class="string">'./app-routing.module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppComponent &#125; from <span class="string">'./app.component'</span>;</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  declarations: [</span><br><span class="line">    AppComponent</span><br><span class="line">  ],</span><br><span class="line">  imports: [</span><br><span class="line">    BrowserModule,</span><br><span class="line">    AppRoutingModule</span><br><span class="line">  ],</span><br><span class="line">  providers: [],</span><br><span class="line">  bootstrap: [AppComponent]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declarations: [</span><br><span class="line">  AppComponent</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>若只有 <code>AppModule</code>，則 <code>declarations</code> 必須包含全部 component，但因為目前已經切出 <code>LoginModule</code> 與 <code>PostModule</code>，而 <code>LoginComponent</code> 與 <code>PostComponent</code> 已經在 <code>LoginModule</code> 與 <code>PostModule</code> 宣告過，所以 <code>AppModule</code> 只需宣告 <code>AppComponent</code> 即可。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy007.png" alt="lazy007"></p>
+<h2 id="Experiment">Experiment</h2><hr>
+<p>理論上使用了 lazy loading module，應該會看到兩個效果 :</p>
+<ol>
+<li>出現 <code>0.xxx.chunck.js</code>、<code>1.xxx.chunk.js</code></li>
+<li>當 route 執行到才會下載 <code>0.xxx.chunck.js</code>、<code>1.xxx.chunk.js</code></li>
+</ol>
+<h3 id="觀察_ng_build_—prod">觀察 ng build —prod</h3><p><img src="/images/angular/lazy-loading-module/lazy008.png" alt="lazy008"></p>
+<p>當沒有使用 lazy loading module 時，全部的 JavaScript 都在 <code>main.xxx.bundle.js</code>。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy009.png" alt="lazy009"></p>
+<p>當使用 lazy loading modules 後，多出了 <code>0.xxx.chunk.js</code> 與 <code>1.xxx.chunk.js</code>，這就是 <code>LoginModule</code> 與 <code>PostModule</code> 編譯之後的 chunk。</p>
+<h3 id="觀察_Chrome">觀察 Chrome</h3><p><img src="/images/angular/lazy-loading-module/lazy010.png" alt="lazy010"></p>
+<p>當沒有使用 lazy loading module 時，儘管點了 <code>Login</code> 與 <code>Post</code>，但都沒有任何 request，因為全部都在 <code>main.xxx.bundle.js</code> 中了。</p>
+<p><img src="/images/angular/lazy-loading-module/lazy011.png" alt="lazy011"></p>
+<p>點了 <code>Login</code> 才會下載 <code>login.module.chunk.js</code>；點了 <code>Post</code> 才會下載 <code>post.module.chunk.js</code>，證明 lazy loading module 是有作用的。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>在這個小小範例中，我們可能看不到 lazy loading module 的威力，但若頁面夠複雜，component 夠多時，若不拆 module，則 <code>main.xxx.bundle.js</code> 可能會好幾 MB，此時就必須將 component 拆成 module，配合 lazy loading，只有在 route 被執行時，才會載入該 chunk 的 JavaScript，這樣使用者體驗才會好。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在 <a href="https://github.com/oomusou/NG52Route" target="_blank" rel="external">GitHub</a> 上找到</p>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://angular.io/" target="_blank" rel="external">Angular</a>, <a href="https://angular.io/guide/lazy-loading-ngmodules" target="_blank" rel="external">Lazy Loading Feature Modules</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/vscode/toggle-terminal/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-15 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Angular/">Angular<span>41</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
