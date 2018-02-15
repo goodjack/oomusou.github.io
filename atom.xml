@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-14T09:46:29.782Z</updated>
+  <updated>2018-02-15T02:02:36.474Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[如何解決 Angular 被瀏覽器 cache ?]]></title>
+    <title><![CDATA[如何避免 Angular 被瀏覽器 cache ?]]></title>
     <link href="http://oomusou.io/angular/browser-cache/"/>
     <id>http://oomusou.io/angular/browser-cache/</id>
     <published>2018-02-17T12:23:43.000Z</published>
-    <updated>2018-02-14T09:46:29.782Z</updated>
+    <updated>2018-02-15T02:02:36.474Z</updated>
     <content type="html"><![CDATA[<p>瀏覽器為了效能，會對 HTML、JavaScript 與 CSS 做 cache，其本意是好的，但對於 developer 來說，卻擔心更新到 production server 後，user 仍然是執行到被瀏覽器 cache 的 HTML、JavaScript 與 CSS，Angular 該如何解決這個問題呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
