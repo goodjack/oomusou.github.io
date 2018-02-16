@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-15T02:02:36.474Z</updated>
+  <updated>2018-02-16T03:12:52.334Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -13,6 +13,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何在 macOS 徹底刪除 App 所留下的設定檔 ?]]></title>
+    <link href="http://oomusou.io/macos/uninstall-folder/"/>
+    <id>http://oomusou.io/macos/uninstall-folder/</id>
+    <published>2018-02-18T12:23:43.000Z</published>
+    <updated>2018-02-16T03:12:52.334Z</updated>
+    <content type="html"><![CDATA[<p>關於 macOS 的原生 app，雖然可以透過 <code>AppCleaner</code> 或原廠提供了 <code>Uninstall App</code> 移除，但實務上仍會發現一些 app 自己的 <code>設定檔</code> 或 <code>暫存檔</code>，無法百分之百的從系統移除，需手動加以處理。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3</p>
+<h2 id="Directory">Directory</h2><hr>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">Library</span></span><br><span class="line">~/<span class="keyword">Library</span></span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/Application Support</span><br><span class="line">~/<span class="keyword">Library</span>/Application Support</span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/Preferences</span><br><span class="line">~/<span class="keyword">Library</span>/Preferences</span><br><span class="line"></span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
+<p>這幾個目錄，是 app 常見的 <code>設定檔</code> 與 <code>暫存檔</code> 使用目錄，除了依賴 <code>AppCleaner</code> 外，這幾個目錄最好手動檢查一下，是否有尚未移除檔案。</p>
+<h2 id="Concluson">Concluson</h2><hr>
+<ul>
+<li>目前在 macOS 尚未有完美的 <code>反安裝 App</code> 解決方案時，手動檢查這幾個目錄是必要的。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[幾個需要手動刪除檔案的目錄]]>
+    
+    </summary>
+    
+      <category term="macOS" scheme="http://oomusou.io/tags/macOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何避免 Angular 被瀏覽器 cache ?]]></title>
@@ -1024,6 +1051,47 @@
   </entry>
   
   <entry>
+    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
+    <link href="http://oomusou.io/vscode/run-by-command/"/>
+    <id>http://oomusou.io/vscode/run-by-command/</id>
+    <published>2018-02-04T12:23:43.000Z</published>
+    <updated>2018-02-03T12:22:28.000Z</updated>
+    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
+<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
+<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
+<p>熱鍵執行 Command Pallette </p>
+<ol>
+<li>輸入 <code>shell</code></li>
+<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
+</ol>
+<blockquote>
+<p>Command Pallete 熱鍵 </p>
+<p>Windows : Ctrl + Shift + P</p>
+<p>macOS : ⌘ + ⇧ + P</p>
+</blockquote>
+<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
+<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
+<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
+<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
+<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
+    
+    </summary>
+    
+      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[如何使用 Angular 實現 Pub/Sub Pattern ?]]></title>
     <link href="http://oomusou.io/angular/pubsub/"/>
     <id>http://oomusou.io/angular/pubsub/</id>
@@ -1228,47 +1296,6 @@
       <category term="Design Pattern" scheme="http://oomusou.io/tags/Design-Pattern/"/>
     
       <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[如何以 Command 方式執行 VS Code 並開啟專案 ?]]></title>
-    <link href="http://oomusou.io/vscode/run-by-command/"/>
-    <id>http://oomusou.io/vscode/run-by-command/</id>
-    <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T12:22:28.000Z</updated>
-    <content type="html"><![CDATA[<p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
-<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
-<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
-<p>熱鍵執行 Command Pallette </p>
-<ol>
-<li>輸入 <code>shell</code></li>
-<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
-</ol>
-<blockquote>
-<p>Command Pallete 熱鍵 </p>
-<p>Windows : Ctrl + Shift + P</p>
-<p>macOS : ⌘ + ⇧ + P</p>
-</blockquote>
-<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
-<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
-<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
-<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[macOS 版的 VS Code 需手動另外建立 Symbolic Link]]>
-    
-    </summary>
-    
-      <category term="VS Code" scheme="http://oomusou.io/tags/VS-Code/"/>
     
   </entry>
   
@@ -1722,112 +1749,6 @@
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
       <category term="JSON Server" scheme="http://oomusou.io/tags/JSON-Server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[ViewChild() Decorator 的使用方法]]></title>
-    <link href="http://oomusou.io/angular/viewchild/"/>
-    <id>http://oomusou.io/angular/viewchild/</id>
-    <published>2018-01-18T12:23:43.000Z</published>
-    <updated>2018-01-19T02:24:54.000Z</updated>
-    <content type="html"><![CDATA[<p><code>@ViewChild()</code> decorator 一開始是在存取 child component 時學到的，事實上 <code>@ViewChild()</code> 還有其他使用方法。</p>
-<a id="more"></a>
-<h2 id="Version">Version</h2><hr>
-<p>Node.js 8.9.3<br>Angular CLI 1.6.2<br>Angular 5.2</p>
-<h2 id="Component">Component</h2><hr>
-<p>使用 <code>@ViewChild()</code> 存取 child component。</p>
-<p><img src="/images/angular/viewchild/viewchild000.png" alt="viewchild000"></p>
-<ul>
-<li><code>counter</code> 初始值為 <code>2</code></li>
-<li>按 <code>+</code> 則 <code>counter</code> + 1，按 <code>-</code> 則 <code>counter</code> -1</li>
-</ul>
-<h3 id="Architecture">Architecture</h3><p><img src="/images/angular/viewchild/viewchild001.svg" alt="viewchild001"></p>
-<ul>
-<li><code>AppComponent</code> 負責處理 <code>&lt;button/&gt;</code>；<code>CounterComponent</code> 負責顯示 <code>counter</code></li>
-<li><code>AppComponent</code> 相當於 parent component，<code>CounterComponent</code> 相當於 child component</li>
-<li><code>AppComponent</code> 直接呼叫 <code>CounterComponent</code> 的 method 改變 <code>counter</code>；<code>AppComponent</code> 也可直接讀取 <code>CounterComponent</code> 的 property</li>
-</ul>
-<h3 id="Implementation">Implementation</h3><p><strong>AppComponent</strong></p>
-<p><img src="/images/angular/viewchild/viewchild002.svg" alt="viewchild002"></p>
-<p><strong>app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onAddOneClick()"</span>&gt;</span>+<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onMinusOneClick()"</span>&gt;</span>-<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">app-counter</span>&gt;</span><span class="tag">&lt;/<span class="title">app-counter</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>將 2 個 <code>&lt;button/&gt;</code> 留在 <code>AppComponent</code> 內。</p>
-<p><code>counter</code> 的顯示由 <code>&lt;app-counter/&gt;</code> 負責。</p>
-<p><strong>app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AfterViewInit, Component, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CounterComponent &#125; from <span class="string">'./counter/counter.component'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  @ViewChild(CounterComponent)</span><br><span class="line">  <span class="keyword">private</span> counterComponent: CounterComponent;</span><br><span class="line"></span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onAddOneClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.addOne();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMinusOneClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counterComponent.minusOne();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(CounterComponent)</span><br><span class="line"><span class="keyword">private</span> counterComponent: CounterComponent;</span><br></pre></td></tr></table></figure>
-<p>Angular 允許我們在 parent component 透過 <code>@ViewChild()</code> decorator 宣告 child component，藉此存取 child component 的 public field 與 method。</p>
-<p><code>@ViewChild()</code> 第一個參數傳入 child component 的型別。</p>
-<p>第 9 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.counterComponent.counter);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public field，則必須在 <code>ngAfterViewInit()</code> lifecycle hook 才可抓的到，不可以在 <code>ngOnInit()</code>。</p>
-<p>17 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onAddOneClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.counterComponent.addOne();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若要透過 <code>@ViewChild()</code> 存取 child component 的 public method，則無此限制。</p>
-<p><strong>CounterComponent</strong></p>
-<p><img src="/images/angular/viewchild/viewchild003.svg" alt="viewchild003"></p>
-<p><strong>counter.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; counter &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>負責顯示 <code>counter</code>。</p>
-<p><strong>counter.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-counter'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./counter.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./counter.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CounterComponent &#123;</span><br><span class="line">  counter = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  addOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  minusOne() &#123;</span><br><span class="line">    <span class="keyword">this</span>.counter--;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>沒有特別的部分需要講解。</p>
-<p><img src="/images/angular/viewchild/viewchild004.svg" alt="viewchild004"></p>
-<p>當 parent component 要存取 child component 時，使用 <code>@ViewChild()</code> 宣告 child decorator，public field 可在 <code>ngAfterViewInit()</code> 存取，public method 則無此限制</p>
-<h2 id="Directive">Directive</h2><p>當使用 directive 套用在 HTML 上時，可以藉由 <code>@ViewChild()</code> 取得 directive 的物件實體，藉此控制 directive。</p>
-<h3 id="Implementation-1">Implementation</h3><p><strong>ChangeColorDirective</strong></p>
-<p><strong>change-color.directive.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; AfterViewInit, Directive, ElementRef &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Directive(&#123;</span><br><span class="line">  selector: <span class="string">'[appChangeColor]'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ChangeColorDirective <span class="keyword">implements</span> AfterViewInit &#123;</span><br><span class="line"></span><br><span class="line">  <span class="constructor"><span class="keyword">constructor</span>(private elementRef: ElementRef) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngAfterViewInit(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.elementRef.nativeElement.style.color = <span class="string">'red'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  change(changedColor: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.elementRef.nativeElement.style.color = changedColor;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 Angular CLI 的 <code>ng g d ChangeColor</code> 建立 <code>ChangeColor</code> directive。</p>
-<p>15 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">change(changedColor: <span class="built_in">string</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.elementRef.nativeElement.style.color = changedColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>ChangeColor</code> directive 提供了 <code>change()</code> 修改 <code>color</code>。</p>
-<p><strong>AppComponent</strong></p>
-<p><strong>app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">appChangeColor</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onChangeColorClick()"</span>&gt;</span>Change Color<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;p&gt;</code> 套用了 <code>ChangeColor</code> directive。</p>
-<p><strong>app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ChangeColorDirective &#125; from <span class="string">'./change-color.directive'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  @ViewChild(ChangeColorDirective)</span><br><span class="line">  <span class="keyword">private</span> changeColorDirective: ChangeColorDirective;</span><br><span class="line">  title = <span class="string">'app'</span>;</span><br><span class="line"></span><br><span class="line">  onChangeColorClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.changeColorDirective.change(<span class="string">'green'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>10 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(ChangeColorDirective)</span><br><span class="line"><span class="keyword">private</span> changeColorDirective: ChangeColorDirective;</span><br></pre></td></tr></table></figure>
-<p>為了使用 <code>ChangeColor</code> directive 的 <code>change()</code>，特別使用 <code>@ViewChild()</code> 取得 <code>ChangeColor</code> directive 的物件實體，如此就能使用 <code>change()</code>。</p>
-<h2 id="DOM_Element">DOM Element</h2><hr>
-<p>最後一個常用的 <code>@ViewChild()</code> 方式，是藉由 template reference varibale 存取 DOM element。</p>
-<h3 id="Implementation-2">Implementation</h3><p><strong>AppComponent</strong></p>
-<p><strong>app.component.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> #<span class="attribute">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> (<span class="attribute">click</span>)=<span class="value">"onSubmitClick()"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">&#123;&#123; yourName &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>若要在 JavaScript 存取 HTML，傳統會使用 <code>id</code> 或 CSS selector，在 Angular 提出新的方法，我們可以為 HTML 加上 <code>#</code> 開頭的 template reference variable。</p>
-<p><strong>app.component.ts</strong></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ElementRef, ViewChild &#125; from <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./app.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./app.component.css'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  yourName: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  @ViewChild(<span class="string">'name'</span>)</span><br><span class="line">  <span class="keyword">private</span> name: ElementRef;</span><br><span class="line"></span><br><span class="line">  onSubmitClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.yourName = <span class="keyword">this</span>.name.nativeElement.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>11 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ViewChild(<span class="string">'name'</span>)</span><br><span class="line"><span class="keyword">private</span> name: ElementRef;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>@ViewChild()</code> 取得 DOM element 的物件實體，參數以字串傳入 template reference variable 的字串名稱。</p>
-<p>注意其型別為 <code>ElementRef</code>。</p>
-<p>14 行</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">onSubmitClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.yourName = <span class="keyword">this</span>.name.nativeElement.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如此就能在 TypeScript 藉由 <code>@ViewChild()</code> 所宣告的變數，存取 DOM element 物件。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
-<ul>
-<li>傳統都只將 <code>@ViewChild()</code> 用在存取 child component，事實上 <code>@ViewChild()</code> 還可以用在存取 directive 與 DOM element。</li>
-</ul>
-<h2 id="Sample_Code">Sample Code</h2><hr>
-<p>完整的範例可以在我的 <a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a> 上找到</p>
-<ul>
-<li><a href="https://github.com/oomusou/NG52ViewChildComponent" target="_blank" rel="external">@ViewChild with Componet</a></li>
-<li><a href="https://github.com/oomusou/NG52ViewChildDirective" target="_blank" rel="external">@ViewChild with Directive</a></li>
-<li><a href="https://github.com/oomusou/NG52ViewChildDOMElement" target="_blank" rel="external">@ViewChild() with DOM Element</a></li>
-</ul>
-<h2 id="Reference">Reference</h2><hr>
-<p><a href="https://www.facebook.com/concretepage" target="_blank" rel="external">Arvind Rai</a>, <a href="https://www.concretepage.com/angular-2/angular-2-viewchild-example" target="_blank" rel="external">Angular 2 @ViewChild() Example</a> </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[ViewChild 共 3 種使用方式]]>
-    
-    </summary>
-    
-      <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
   </entry>
   

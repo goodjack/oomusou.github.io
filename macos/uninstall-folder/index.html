@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何以 Command 方式執行 VS Code 並開啟專案 ? | 點燈坊</title>
+  <title>如何在 macOS 徹底刪除 App 所留下的設定檔 ? | 點燈坊</title>
   <meta name="author" content="真 OO無双">
   
-  <meta name="description" content="macOS 版的 VS Code 需手動另外建立 Symbolic Link">
+  <meta name="description" content="幾個需要手動刪除檔案的目錄">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
- <meta name="description" content="macOS 版的 VS Code 需手動另外建立 Symbolic Link">
+ <meta name="description" content="幾個需要手動刪除檔案的目錄">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何以 Command 方式執行 VS Code 並開啟專案 ?">
-<meta property="og:url" content="http://oomusou.io/vscode/run-by-command/index.html">
+<meta property="og:title" content="如何在 macOS 徹底刪除 App 所留下的設定檔 ?">
+<meta property="og:url" content="http://oomusou.io/macos/uninstall-folder/index.html">
 <meta property="og:site_name" content="點燈坊">
-<meta property="og:description" content="macOS 版的 VS Code 需手動另外建立 Symbolic Link">
+<meta property="og:description" content="幾個需要手動刪除檔案的目錄">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-03T12:22:28.000Z">
+<meta property="og:updated_time" content="2018-02-16T03:12:52.334Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何以 Command 方式執行 VS Code 並開啟專案 ?">
-<meta name="twitter:description" content="macOS 版的 VS Code 需手動另外建立 Symbolic Link">
+<meta name="twitter:title" content="如何在 macOS 徹底刪除 App 所留下的設定檔 ?">
+<meta name="twitter:description" content="幾個需要手動刪除檔案的目錄">
  
 
   
@@ -81,7 +81,7 @@
     	 
 	
 		<div class="page-header">		
-			<h1> 如何以 Command 方式執行 VS Code 並開啟專案 ?</h1>
+			<h1> 如何在 macOS 徹底刪除 App 所留下的設定檔 ?</h1>
 		</div>		
 	
 
@@ -95,42 +95,28 @@
 
 	
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> macOS 版的 VS Code 需手動另外建立 Symbolic Link			
+			<i class="fa fa-info-circle"></i> 幾個需要手動刪除檔案的目錄			
 		</div> <!-- alert -->
 		
 
 	<!-- toc -->
 	<div id="postTOC">
 		<span class="tocHeading">Contents</span>
-		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#建立_Symbolic_Link"><span class="toc-article-text">建立 Symbolic Link</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#在_Terminal_執行_VS_Code"><span class="toc-article-text">在 Terminal 執行 VS Code</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Directory"><span class="toc-article-text">Directory</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Concluson"><span class="toc-article-text">Concluson</span></a></li></ol>
     </div>
 
 	<!-- content -->
 	<div class="mypage">		
-	    <p>Windows 版的 VS Code 在安裝時就會自動建立 <code>code</code>  指令，讓我們可以在 terminal 以 command 方式執行 VS Code 並開啟專案，不過在 macOS 版本預設並沒有建立 symbolic link，必須自行另外透過 Command Pallette 建立。</p>
+	    <p>關於 macOS 的原生 app，雖然可以透過 <code>AppCleaner</code> 或原廠提供了 <code>Uninstall App</code> 移除，但實務上仍會發現一些 app 自己的 <code>設定檔</code> 或 <code>暫存檔</code>，無法百分之百的從系統移除，需手動加以處理。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
-<p>macOS High Sierra 10.13.3<br>VS Code 1.19.3</p>
-<h2 id="建立_Symbolic_Link">建立 Symbolic Link</h2><hr>
-<p><img src="/images/vscode/run-by-command/code000.png" alt="code000"></p>
-<p>熱鍵執行 Command Pallette </p>
-<ol>
-<li>輸入 <code>shell</code></li>
-<li>選擇 <code>Shell Command : Install &#39;code&#39; command in PATH</code></li>
-</ol>
-<blockquote>
-<p>Command Pallete 熱鍵 </p>
-<p>Windows : Ctrl + Shift + P</p>
-<p>macOS : ⌘ + ⇧ + P</p>
-</blockquote>
-<p><img src="/images/vscode/run-by-command/code001.png" alt="code001"></p>
-<p>VS Code 會自動在 <code>usr/local/bin</code> 下建立 <code>code</code> ，自動指向實際的 VS Code。</p>
-<h2 id="在_Terminal_執行_VS_Code">在 Terminal 執行 VS Code</h2><hr>
-<p><img src="/images/vscode/run-by-command/code002.png" alt="code002"></p>
-<p>在 terminal 下進入專案目錄，輸入 <code>code .</code> ，VS Code 會自動執行，並且開啟 <code>NG52MergeMap</code> 專案。</p>
-<h2 id="Conclusion">Conclusion</h2><hr>
+<p>macOS High Sierra 10.13.3</p>
+<h2 id="Directory">Directory</h2><hr>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">Library</span></span><br><span class="line">~/<span class="keyword">Library</span></span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/Application Support</span><br><span class="line">~/<span class="keyword">Library</span>/Application Support</span><br><span class="line"></span><br><span class="line">/<span class="keyword">Library</span>/Preferences</span><br><span class="line">~/<span class="keyword">Library</span>/Preferences</span><br><span class="line"></span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
+<p>這幾個目錄，是 app 常見的 <code>設定檔</code> 與 <code>暫存檔</code> 使用目錄，除了依賴 <code>AppCleaner</code> 外，這幾個目錄最好手動檢查一下，是否有尚未移除檔案。</p>
+<h2 id="Concluson">Concluson</h2><hr>
 <ul>
-<li>除了在 VS Code 內開啟專案外，也可以使用 command 方式直接開啟</li>
+<li>目前在 macOS 尚未有完美的 <code>反安裝 App</code> 解決方案時，手動檢查這幾個目錄是必要的。</li>
 </ul>
 	  
 	</div>
@@ -140,14 +126,14 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/netcore/mac-install/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/angular/pubsub/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/angular/browser-cache/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -168,7 +154,7 @@
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2018-02-04 
+	2018-02-18 
 	</div>
 	
 
@@ -178,7 +164,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/VS-Code/">VS Code<span>3</span></a></li>
+  <li><a href="/tags/macOS/">macOS<span>11</span></a></li>
     </ul>
 	</div>
 		

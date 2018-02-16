@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/macos/uninstall-folder/</loc>
+    <lastmod>2018-02-16T03:12:52.334Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/angular/browser-cache/</loc>
     <lastmod>2018-02-15T02:02:36.474Z</lastmod>
   </url>
@@ -452,12 +457,12 @@
   </url>
   
   <url>
-    <loc>http://oomusou.io/azure/azure-phpstorm-deploy/</loc>
+    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://oomusou.io/dp/dp-nullobject/</loc>
+    <loc>http://oomusou.io/azure/azure-phpstorm-deploy/</loc>
     <lastmod>2016-10-18T06:13:35.000Z</lastmod>
   </url>
   
