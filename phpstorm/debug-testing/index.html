@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 PhpStorm 測試與除錯? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="設定過後的 PhpStorm 將可媲美 Visual Studio">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="設定過後的 PhpStorm 將可媲美 Visual Studio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 PhpStorm 測試與除錯?">
+<meta property="og:url" content="http://oomusou.io/phpstorm/debug-testing/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="設定過後的 PhpStorm 將可媲美 Visual Studio">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2016-06-12T02:14:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 PhpStorm 測試與除錯?">
+<meta name="twitter:description" content="設定過後的 PhpStorm 將可媲美 Visual Studio">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 PhpStorm 測試與除錯?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 設定過後的 PhpStorm 將可媲美 Visual Studio			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Xdebug"><span class="toc-article-text">設定 Xdebug</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_Interpreter"><span class="toc-article-text">設定 Interpreter</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#設定_PHPUnit"><span class="toc-article-text">設定 PHPUnit</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_PHPUnit_測試"><span class="toc-article-text">使用 PHPUnit 測試</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一方法"><span class="toc-article-text">對單一方法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一類別"><span class="toc-article-text">對單一類別</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#全部測試"><span class="toc-article-text">全部測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用_Xdebug_除錯"><span class="toc-article-text">使用 Xdebug 除錯</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一方法-1"><span class="toc-article-text">對單一方法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一類別-1"><span class="toc-article-text">對單一類別</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#全部除錯"><span class="toc-article-text">全部除錯</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#含_Coverage_測試"><span class="toc-article-text">含 Coverage 測試</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一方法-2"><span class="toc-article-text">對單一方法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#對單一類別-2"><span class="toc-article-text">對單一類別</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#全部測試-1"><span class="toc-article-text">全部測試</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>很羨慕 Visual Studio 測試與除錯功能嗎？剛安裝好的 PhpStorm 只能算是一個文字編輯器，一旦設定了 <strong>PHP Interpreter</strong>、<strong>Xdebug</strong> 與 <strong>PHPUnit</strong> 之後，PhpStorm 就搖身一變成為全功能的 IDE，功能足以媲美 Visual Studio。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 5.6.10<br>PhpStorm 10.0.1<br>MAMP PRO 3.4</p>
+<h2 id="設定_Xdebug">設定 Xdebug</h2><hr>
+<p>MAMP PRO 預設已經有安裝 Xdebug，只是在 <code>php.ini</code> 並沒有啟動，必須手動啟動後，再加上一些設定。</p>
+<figure class="highlight php"><figcaption><span>/Applications/MAMP/bin/php/php5.6.10/conf/php.ini</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[xdebug]</span><br><span class="line">zend_extension=<span class="string">"/Applications/MAMP/bin/php/php5.6.10/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so"</span></span><br><span class="line">xdebug.remote_enable=<span class="number">1</span></span><br><span class="line">xdebug.remote_host=localhost</span><br><span class="line">xdebug.remote_port=<span class="number">9000</span></span><br><span class="line">xdebug.remote_autostart=<span class="number">1</span></span><br><span class="line">xdebug.profiler_enable=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">xdebug.profiler_output_dir=<span class="string">"/Applications/MAMP/tmp"</span></span><br><span class="line">xdebug.idekey=PHPSTORM</span><br></pre></td></tr></table></figure>
+<p>MAMP PRO 預設將 PHP 安裝在<code>/Applications/MAMP/bin/php/phpX.X.XX/conf/php.ini</code>，選擇版本加以修改<code>php.ini</code>。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若不知道該改哪一個<code>php.ini</code>，可下<code>php --ini</code>指令，看看目前系統正在使用哪一個<code>php.ini</code>。</span></span></span></p>
+<p>其中 <code>[xdebug]</code> 位於 <code>php.ini</code> 的最後一行，預設使用 <code>;</code> 註解，將 <code>;</code> 拿掉，並加上以上的 Xdebug 設定。</p>
+<p>存檔後須重新啟動MAMP。</p>
+<h2 id="設定_Interpreter">設定 Interpreter</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env000.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Language &amp; Frameworks -&gt; PHP</em></strong><br>預設 Interpreter 還沒設定，按 <code>...</code> 設定PHP interpreter。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>PHP Interpreter每個專案都要重新設定一遍。</span></span></span></p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env001.png" alt=""></p>
+<p>選擇 <code>PHP 5.6.10</code> 的路徑 : <code>/Applications/MAMP/bin/php/php5.6.10/bin/php</code>。</p>
+<p>若路徑正確，PhpStorm 會抓到 PHP 與 Xdebug 的版本。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env002.png" alt=""></p>
+<p>從原本的 <code>&lt;no interpreter&gt;</code> 變成明確的 <code>PHP (5.6.10)</code>。</p>
+<h2 id="設定_PHPUnit">設定 PHPUnit</h2><hr>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env003.png" alt=""></p>
+<p><strong><em>PhpStorm -&gt; Preferences -&gt; Languages &amp; Frameworks -&gt; PHP -&gt; PHPUnit</em></strong></p>
+<ol>
+<li><strong>設定auloloader</strong> : 選擇 <code>Use custom autoloader</code>，下方選擇專案路徑下的 <code>vendor/autoload.php</code>。</li>
+<li><strong>設定phpunit.xml</strong> : 在每個 Laravel 專案根目錄下都有一個 <code>phpunit.xml</code>，這是 Laravel 幫我們客製化過的 <code>phpunit.xml</code>。</li>
+</ol>
+<h2 id="使用_PHPUnit_測試">使用 PHPUnit 測試</h2><hr>
+<h3 id="對單一方法">對單一方法</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env004.png" alt=""></p>
+<p>在想要執行的 test method 內，按滑鼠右鍵選擇 <code>Run XXX.XXX...</code>，或按熱鍵 &#8963; + &#8679; + R，可單獨測試某一個test method。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>除了可在 PhpStorm 執行測試外，使用 Laravel Elixir 自動跑測試也是不錯的方式，詳細請參考<a href="/laravel/elixir/elixir-phpunit/">如何在 Homestead 自動執行測試?</a></span></span></span></p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env014.png" alt=""></p>
+<p>若測試成功，會在下方左側顯示 <span class="label label-success">綠燈</span>，失敗則 <span class="label label-danger">紅燈</span>，下方右側則顯示 PHPUnit 所傳回的訊息。我們發現僅通過了 1 個測試。</p>
+<h3 id="對單一類別">對單一類別</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env007.png" alt=""></p>
+<p>在任意 test method 外，按滑鼠右鍵選擇 <code>Run XXX...</code>，或按熱鍵 &#8963; + &#8679; + R，可單獨測試某一個 test class。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env015.png" alt=""></p>
+<p>若測試成功，會在下方左側顯示 <span class="label label-success">綠燈</span>，失敗則 <span class="label label-danger">紅燈</span>，下方右側則顯示 PHPUnit 所傳回的訊息。我們發現通過了該 test class 全部的 2 個測試。</p>
+<h3 id="全部測試">全部測試</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env010.png" alt=""></p>
+<p><strong><em>Run -&gt; Run…</em></strong> 或按熱鍵 &#8963; + &#8997; + R。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env011.png" alt=""></p>
+<p>選擇 <strong><em>tests-&gt;Run</em></strong>，<code>tests</code> 這是 Laravel 預設的測試目錄。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env016.png" alt=""></p>
+<p>我們可以發現通過了整個範例的 5 個測試。</p>
+<h2 id="使用_Xdebug_除錯">使用 Xdebug 除錯</h2><hr>
+<h3 id="對單一方法-1">對單一方法</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env005.png" alt=""></p>
+<p>在想要 debug 的 test method 內，按滑鼠右鍵選擇 <code>Debug XXX...</code>，或按熱鍵 &#8963; + &#8679; + D，可單獨 debug 某一個 test method，只要執行過程中遇到中斷點就會停止。</p>
+<h3 id="對單一類別-1">對單一類別</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env008.png" alt=""></p>
+<p>在任意 test method 外，按滑鼠右鍵選擇 <code>Debug XXX...</code>，或按熱鍵 &#8963; + &#8679; + D，可單獨 debug 某一個 test class，只要執行過程中遇到中斷點就會停止。</p>
+<h3 id="全部除錯">全部除錯</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env010.png" alt=""></p>
+<p><strong><em>Run -&gt; Run…</em></strong> 或按熱鍵 &#8963; + &#8997; + D。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env012.png" alt=""></p>
+<p>選擇<strong><em>tests-&gt;Debug</em></strong>，<code>tests</code> 這是 Laravel 預設的測試目錄。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env016.png" alt=""></p>
+<p>程式會停在設定中斷點的地方。</p>
+<h2 id="含_Coverage_測試">含 Coverage 測試</h2><hr>
+<h3 id="對單一方法-2">對單一方法</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env006.png" alt=""></p>
+<p>在想要計算 coverage 的 test method 內，按滑鼠右鍵選擇 <code>Run XXX.XXX... with Coverage</code>，可單獨測試某一個 test method 並計算 coverage。</p>
+<h3 id="對單一類別-2">對單一類別</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env009.png" alt=""></p>
+<p>在任意 test method 外，按滑鼠右鍵選擇 <code>Run XXX.XXX... with Coverage</code>，可單獨測試某一個 test class 並計算 coverage。</p>
+<h3 id="全部測試-1">全部測試</h3><p><img src="/images/phpstorm/phpstorm-debug-testing/env010.png" alt=""></p>
+<p><strong><em>Run -&gt; Run…</em></strong> 或按熱鍵 &#8963; + &#8997; + R。</p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env013.png" alt=""></p>
+<p>選擇 <strong><em>tests-&gt;Cover</em></strong>，<code>tests</code> 這是 Laravel 預設的測試目錄。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>計算coverage非常耗時。</span></span></span></p>
+<p><img src="/images/phpstorm/phpstorm-debug-testing/env018.png" alt=""></p>
+<p>最後會在右方顯示整個專案的coverage。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>由於 PHP 是 script 的特性，很多人開發 PHP 都是使用 <code>echo()</code>、<code>var_dump()</code>、<code>dd()</code>來 debug，事實上 PhpStorm 搭配 Xdebug 之後，PHP 也能像 Java 與 C# 一樣，使用<strong>中斷點</strong>與 <strong>step by step</strong> 的方式來 debug。</li>
+<li>PhpStorm 直接支援 PHPUnit，讓我們可以直接在 IDE 內執行測試，不用再透過 iTerm2 執行 PHPUnit，且可直接在 IDE 內顯示 coverage，非常方便。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/git/git-remove-stage/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/hexo/hexo-template/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-12-05 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/MAMP/">MAMP<span>4</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>15</span></a></li> <li><a href="/tags/PhpStorm/">PhpStorm<span>38</span></a></li> <li><a href="/tags/TDD/">TDD<span>23</span></a></li> <li><a href="/tags/Xdebug/">Xdebug<span>4</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

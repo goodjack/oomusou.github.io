@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 Homestead 自動執行測試 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="只要在Mac存檔，就可以在Homestead自動執行TDD，並顯示結果在Mac上">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="只要在Mac存檔，就可以在Homestead自動執行TDD，並顯示結果在Mac上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Homestead 自動執行測試 ?">
+<meta property="og:url" content="http://oomusou.io/laravel/elixir-phpunit/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="只要在Mac存檔，就可以在Homestead自動執行TDD，並顯示結果在Mac上">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T11:07:12.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 Homestead 自動執行測試 ?">
+<meta name="twitter:description" content="只要在Mac存檔，就可以在Homestead自動執行TDD，並顯示結果在Mac上">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 Homestead 自動執行測試 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 只要在Mac存檔，就可以在Homestead自動執行TDD，並顯示結果在Mac上			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Prerequisite"><span class="toc-article-text">Prerequisite</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝Laravel_Elixir"><span class="toc-article-text">安裝Laravel Elixir</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試Laravel_Elixir"><span class="toc-article-text">測試Laravel Elixir</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#修改gulpfile-js"><span class="toc-article-text">修改gulpfile.js</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Gulp自動執行TDD"><span class="toc-article-text">Gulp自動執行TDD</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#測試PHPUnit"><span class="toc-article-text">測試PHPUnit</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>在<a href="http://jaceju.net" target="_blank" rel="external">大澤木小鐵</a>在PHP社群掀起一陣<code>測試重構</code>風潮後，已經有越來越多人開始在PHP寫測試。以Laravel而言，我們會在本機寫code，環境則搭配Homestead，由於TDD需要頻繁的測試與重構，若我們能在每次存檔的同時，PHPUnit就自動幫我們在背景執行測試，並將結果直接顯示在本機上，我們就能立即得知測試成功或失敗，如此將大幅提高工作效率。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>OS X 10.11<br>Laravel 5.1.19<br>Homestead 0.3.0<br>Laravel Elixir 3.3<br>Node.js 0.12.7<br>npm 2.11.3<br>gulp 3.9.0</p>
+<h2 id="Prerequisite">Prerequisite</h2><hr>
+<ul>
+<li>在Mac已經成功安裝好Homestead。</li>
+<li>在Mac已經成功安裝Node.js、npm與gulp。</li>
+</ul>
+<p>如下圖所示，每次只要在Mac存檔，PHPUnit就會自動執行測試，並顯示測試是否通過，這樣的開發方式是不是很誘人呢？<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>除了可在Laravel Elixir自動跑測試外，使用PhpStorm執行測試也是不錯的方式，詳細請參考<a href="/phpstorm/debug-testing/">如何使用PhpStorm測試與除錯?</a></span></span></span><br><img src="/images/laravel/elixir/elixir-phpunit/tdd000.png" alt=""> </p>
+<p><img src="/images/laravel/elixir/elixir-phpunit/tdd001.png" alt=""></p>
+<h2 id="安裝Laravel_Elixir">安裝Laravel Elixir</h2><hr>
+<p>Gulp可以幫我們做一些前端的自動化工作，如自動編譯Less與Saas，Babel自動編譯JavaScript ES6，自動執行PHPUnit…等。</p>
+<p>Laravel Elixir是Laravel對gulp的再次封裝，讓我們可以更簡單地在Laravel使用gulp。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>詳細請參考 <a href="http://laravel.com/docs/master/elixir" target="_blank" rel="external">Laravel Elixir</a></span></span></span></p>
+<p>在使用Composer建立Laravel專案時，會自動安裝<code>後端</code>的<code>composer.json</code>內的PHP package，但卻沒有自動安裝<code>前端</code>的<code>package.json</code>內的Node package，需自行手動安裝。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ npm install</span><br></pre></td></tr></table></figure>
+<p>使用composer建立Laravel專案後，在專案目錄下安裝Laravel Elixir。</p>
+<h2 id="測試Laravel_Elixir">測試Laravel Elixir</h2><hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ gulp</span><br></pre></td></tr></table></figure>
+<p>若能看到以下畫面，表示Laravel Elixer已經正常執行，順利編譯Saas。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[12:54:34] Using gulpfile ~/MyProject/gulpfile.js&#10;[12:54:34] Starting &#39;default&#39;...&#10;[12:54:34] Starting &#39;sass&#39;...&#10;&#10;Fetching Sass Source Files...&#10;   - resources/assets/sass/app.scss&#10;&#10;&#10;Saving To...&#10;   - public/css/app.css&#10;&#10;[12:54:36] Finished &#39;default&#39; after 1.38 s&#10;[12:54:36] gulp-notify: [Laravel Elixir] Sass Compiled!&#10;[12:54:36] Finished &#39;sass&#39; after 1.45 s</span><br></pre></td></tr></table></figure>
+<h2 id="修改gulpfile-js">修改gulpfile.js</h2><hr>
+<figure class="highlight javascript"><figcaption><span>gulpfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> elixir = <span class="built_in">require</span>(<span class="string">'laravel-elixir'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> |--------------------------------------------------------------------------</span><br><span class="line"> | Elixir Asset Management</span><br><span class="line"> |--------------------------------------------------------------------------</span><br><span class="line"> |</span><br><span class="line"> | Elixir provides a clean, fluent API for defining some basic Gulp tasks</span><br><span class="line"> | for your Laravel application. By default, we are compiling the Sass</span><br><span class="line"> | file for our application, as well as publishing vendor resources.</span><br><span class="line"> |</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">elixir(<span class="function"><span class="keyword">function</span>(<span class="params">mix</span>) </span>&#123;</span><br><span class="line">    mix.sass(<span class="string">'app.scss'</span>)</span><br><span class="line">        .phpUnit();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> 
+<p>16行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.phpUnit();</span><br></pre></td></tr></table></figure></p>
+<p>增加<code>.phpUnit();</code>，表示gulp在執行時會自動執行PHPUnit。</p>
+<h2 id="Gulp自動執行TDD">Gulp自動執行TDD</h2><hr>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ gulp tdd</span><br></pre></td></tr></table></figure>
+<p>啟動gulp，並自動監視檔案是否修改，若有修改就自動執行PHPUnit。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[13:50:24] Using gulpfile ~/MyProject/gulpfile.js&#10;[13:50:24] Starting &#39;tdd&#39;...&#10;Watching for tests...&#10;[13:50:24] Finished &#39;tdd&#39; after 61 ms</span><br></pre></td></tr></table></figure></p>
+<h2 id="測試PHPUnit">測試PHPUnit</h2><hr>
+<figure class="highlight html"><figcaption><span>resources/views/welcome.blade.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>Laravel<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"https://fonts.googleapis.com/css?family=Lato:100"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">            <span class="tag">html</span>, <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> table</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> <span class="number">100</span></span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">font-family</span>:<span class="value"> <span class="string">'Lato'</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.container</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> table-cell</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">vertical-align</span>:<span class="value"> middle</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.content</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">                <span class="rule"><span class="attribute">display</span>:<span class="value"> inline-block</span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="class">.title</span> <span class="rules">&#123;</span><br><span class="line">                <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">96px</span></span></span>;</span><br><span class="line">            &#125;</span></span><br><span class="line">        </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>Laravel 5<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將<code>resources/views/welcome.blade.php</code>的41行的<code>Laravel 5</code>改成<code>Laravel 4</code>，只要一存檔，就可以看到Mac右上角出現訊息視窗，顯示PHPUnit測試失敗。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>可以在Mac使用任何你喜歡的編輯器或IDE，無論是Sublime Text或PhpStorm都可以。</span></span></span><br><img src="/images/laravel/elixir/elixir-phpunit/tdd001.png" alt=""></p>
+<p>只要修改成<code>Laravel 5</code>再一存檔，就會顯示PHPUnit測試成功。<br><img src="/images/laravel/elixir/elixir-phpunit/tdd000.png" alt=""></p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  為什麼改成Laravel 4會測試失敗呢？</div>
+<p>因為在<code>tests/ExampleTest.php</code>中，Laravel預設已經幫我們寫了一個測試如下 :<br><figure class="highlight php"><figcaption><span>tests/ExampleTest.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Testing</span>\<span class="title">WithoutMiddleware</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Testing</span>\<span class="title">DatabaseMigrations</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Testing</span>\<span class="title">DatabaseTransactions</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * A basic functional test example.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testBasicExample</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;visit(<span class="string">'/'</span>)</span><br><span class="line">             -&gt;see(<span class="string">'Laravel 5'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>這個測試將驗證<code>welcome.blade.php</code>是否有<code>Laravel 5</code>字串，若有則測試成功，若沒有則測試失敗，所以我們可以直接藉由修改<code>welcome.blade.php</code>才測試整個自動化環境是否設定成功。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span>詳細請參考 <a href="http://laravel.com/docs/master/testing" target="_blank" rel="external">Laravel Testing</a></span></span></span></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>之前曾<code>完全在Homestead</code>執行Laravel Elixir，然後經過4層轉發 : Homestead的<code>notify-send</code> -&gt; Vagrant的<code>vagrant-notify</code> -&gt; Mac的<code>notify-send</code> -&gt; Mac的<code>terminal-notifier</code>，最後才到OS X的notification center，在Macbook Pro 15” Retina (Mid 2014) 測試，其速度尚可接受，約每次存檔後的一秒內可看到測試結果，不過總是沒<code>直接在Mac</code>執行Laravel Elixir<code>快</code>。</li>
+<li>這種方法會使用到Mac端的PHP、Node.js、npm與gulp，是直接在Mac執行Laravel Elixir，速度非常快，但缺點是在Mac端的要先安裝好Node.js等相關工具，對初學者稍有門檻，所幸這些在Mac安裝都很簡單。</li>
+<li>這種方式在Windows也可以使用，不侷限在Mac，不過在Windows安裝Node.js、npm與gulp稍有難度。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的<a href="https://github.com/oomusou/ElixirPHPUnit_demo" target="_blank" rel="external">GitHub</a>上找到。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/php/bindTo/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/php/php-psr2/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-09-27 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Homestead/">Homestead<span>4</span></a></li> <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li> <li><a href="/tags/PHPUnit/">PHPUnit<span>15</span></a></li> <li><a href="/tags/TDD/">TDD<span>23</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

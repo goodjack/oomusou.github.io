@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何依各種語言顯示不同日期格式 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="示範3種日期格式轉換的寫法">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="示範3種日期格式轉換的寫法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何依各種語言顯示不同日期格式 ?">
+<meta property="og:url" content="http://oomusou.io/laravel/present-dateformat/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="示範3種日期格式轉換的寫法">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T10:19:24.732Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何依各種語言顯示不同日期格式 ?">
+<meta name="twitter:description" content="示範3種日期格式轉換的寫法">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何依各種語言顯示不同日期格式 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 示範3種日期格式轉換的寫法			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#日期格式"><span class="toc-article-text">日期格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Blade"><span class="toc-article-text">Blade</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Mutator"><span class="toc-article-text">Mutator</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Presenter"><span class="toc-article-text">Presenter</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Presenter_Interface"><span class="toc-article-text">Presenter Interface</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Presenter-1"><span class="toc-article-text">Presenter</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Presenter_Factory"><span class="toc-article-text">Presenter Factory</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Controller"><span class="toc-article-text">Controller</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#View"><span class="toc-article-text">View</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>由於多國語言的需求，不只有<strong>語言</strong>部分必須翻譯，連<strong>日期格式</strong>也必須符合當地習慣，最典型的如美國習慣<code>Dec 25, 2015</code>，而英國卻習慣<code>25 Dec, 2015</code>，台灣則習慣<code>2015/12/25</code>，不過在資料庫存的卻是同一份日期，只是因為<strong>顯示邏輯</strong>的不同，在view必須用不一樣的格式呈現。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.0<br>Laravel 5.1.22</p>
+<h2 id="日期格式">日期格式</h2><hr>
+<p>PHP談到日期格式，就一定要想到<code>Carbon</code>，Laravel已經內建Carbon，且只要資料庫是<code>date</code>、<code>datetime</code>或<code>timestamp</code>型態，model的該欄位已經自動轉成Carbon物件，也就是說，可以直接使用Carbon的<code>format()</code>去做任何日期格式的轉換。</p>
+<p>雖然Carbon可以幫我們轉換日期格式，但該在哪裡使用<code>format()</code>呢？本文提供3種寫法，並深入討論3種寫法的優缺點 : </p>
+<ol>
+<li><strong>Blade</strong></li>
+<li><strong>Mutator</strong></li>
+<li><strong>Presenter</strong></li>
+</ol>
+<h2 id="Blade">Blade</h2><hr>
+<p>由於<strong>日期格式</strong>為<strong>顯示邏輯</strong>，最直覺的寫法就是在blade透過Carbon去轉換日期格式。</p>
+<p><img src="/images/laravel/laravel-present-dateformat/format000.png" alt="blade很難維護"></p>
+<p>由於Laravel已經將<code>created_at</code>欄位轉成Carbon物件，所以自帶<code>format()</code>，我們可以透過<code>format()</code>得到我們要的日期格式。</p>
+<p>使用blade寫法的優缺點如下 : </p>
+<ul>
+<li><p><strong>優點</strong> : </p>
+<ol>
+<li>將<strong>顯示邏輯</strong>寫在blade，非常直覺。</li>
+</ol>
+</li>
+<li><p><strong>缺點</strong> : </p>
+<ol>
+<li><code>@if</code>、<code>@elseif</code>與<code>@ednif</code>與HTML夾雜，不易維護。</li>
+<li>由於直接寫在blade，無法對顯示邏輯做<strong>重構</strong>與<strong>物件導向</strong>。</li>
+<li>違反<strong>SOLID</strong>的<strong>開放封閉原則</strong> : 將來若有新的語言，只能不斷的加上<code>@elseif</code>判斷。</li>
+</ol>
+</li>
+</ul>
+<h2 id="Mutator">Mutator</h2><hr>
+<p>Laravel為model欄位提供了<code>mutator</code>與<code>accessor</code>，簡單的說，就是model欄位的<code>getter</code>與<code>setter</code>，因為欲顯示的<strong>日期格式</strong>與資料庫存的<strong>日期格式</strong>不同，所以我們只要在<code>mutator</code>使用Carbon的<code>format()</code>，就可以得到我們要的日期格式。</p>
+<figure class="highlight php"><figcaption><span>app/MyBlog/User.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">Authenticatable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">Passwords</span>\<span class="title">CanResetPassword</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">Access</span>\<span class="title">Authorizable</span> <span class="title">as</span> <span class="title">AuthorizableContract</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">Authenticatable</span> <span class="title">as</span> <span class="title">AuthenticatableContract</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">CanResetPassword</span> <span class="title">as</span> <span class="title">CanResetPasswordContract</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">Access</span>\<span class="title">Authorizable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Model</span> <span class="keyword">implements</span> <span class="title">AuthenticatableContract</span>,</span><br><span class="line">    <span class="title">AuthorizableContract</span>,</span><br><span class="line">    <span class="title">CanResetPasswordContract</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Authenticatable</span>, <span class="title">Authorizable</span>, <span class="title">CanResetPassword</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The database table used by the model.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$table</span> = <span class="string">'users'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes that are mass assignable.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> array</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$fillable</span> = [<span class="string">'name'</span>, <span class="string">'email'</span>, <span class="string">'password'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes excluded from the model's JSON form.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$hidden</span> = [<span class="string">'password'</span>, <span class="string">'remember_token'</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * [created_at]的mutator</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> $value</span><br><span class="line">     * <span class="doctag">@return</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getCreatedAtAttribute</span><span class="params">(<span class="variable">$value</span>)</span>: <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$locale</span> = App::getLocale();</span><br><span class="line"></span><br><span class="line">        <span class="variable">$date</span> = <span class="variable">$this</span>-&gt;asDateTime(<span class="variable">$value</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$locale</span> === <span class="string">'uk'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'d M, Y'</span>);</span><br><span class="line">        &#125; <span class="keyword">elseif</span> (<span class="variable">$locale</span> === <span class="string">'tw'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'Y/m/d'</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'M d, Y'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>40行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * [created_at]的mutator</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> $value</span><br><span class="line"> * <span class="doctag">@return</span> string</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getCreatedAtAttribute</span><span class="params">(<span class="variable">$value</span>)</span>: <span class="title">string</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$locale</span> = App::getLocale();</span><br><span class="line"></span><br><span class="line">    <span class="variable">$date</span> = <span class="variable">$this</span>-&gt;asDateTime(<span class="variable">$value</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$locale</span> === <span class="string">'uk'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'d M, Y'</span>);</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (<span class="variable">$locale</span> === <span class="string">'tw'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'Y/m/d'</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'M d, Y'</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在model加上<code>getCreatedAtAttribute()</code>，其中<code>get</code>為規定的prefix，而<code>Attribute</code>為規定的postfix，中間為為欄位名稱<code>created_at</code>，改用CamelCase表示。</p>
+<p><code>App::getLocale()</code>會傳回由controller所設定的語系，如<code>us</code>、<code>tw</code>、<code>uk</code>…等。</p>
+<p><code>$value</code>為mutator所傳進的資料，其中model的<code>asDateTime()</code>可將mutator的<code>$value</code>轉成Carbon物件。</p>
+<p>依Carbon的<code>format()</code>轉成各國所慣用的日期格式。</p>
+<p>使用mutator寫法的優缺點如下 : </p>
+<ul>
+<li><p><strong>優點</strong> : </p>
+<ol>
+<li>將邏輯寫在PHP，沒有寫在blade，程式較容易維護，且可以<strong>重構</strong>與<strong>物件導向</strong>。</li>
+<li>只要在model寫一次，就可以套用在所有的view。</li>
+</ol>
+</li>
+<li><p><strong>缺點</strong> : </p>
+<ol>
+<li>將<strong>顯示邏輯</strong>寫在model，違反<strong>SOLID</strong>的<strong>單一職責原則</strong>，model就算要寫，也應該寫<strong>資料庫邏輯</strong>，而不適合寫顯示邏輯。</li>
+<li>若不是每個view都套用此顯示邏輯，使用mutator會對其他view產生side effect。</li>
+<li>若要對mutator做unit test，需要碰到資料庫。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>雖然可以使用<strong>SQLite In-Memory Database</strong>使測試速度加快，但還是會比使用<strong>Presenter</strong>沒碰資料庫慢很多。</span></span></span></li>
+</ol>
+</li>
+</ul>
+<h2 id="Presenter">Presenter</h2><hr>
+<p>由於有多國語言的需求，我們直接建立presenter interface，各語言可實作此interface，使用<code>@inject</code>將presenter注入到view，並透過<code>App::bind()</code>去切換物件，相當於切換語言。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>實務上並不是一開始就會去開presenter interface，而是先建立presenter物件，然後透過重構的方式產生interface，在此是因為講解的原因，所以從interface開始講起。</span></span></span></p>
+<h3 id="Presenter_Interface">Presenter Interface</h3><figure class="highlight php"><figcaption><span>app/MyBlog/Presenters/DateFormatPresenterInterface.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Carbon</span>\<span class="title">Carbon</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">DateFormatPresenterInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示日期格式</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> Carbon $date</span><br><span class="line">     * <span class="doctag">@return</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showDateFormat</span><span class="params">(Carbon <span class="variable">$date</span>)</span> : <span class="title">string</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義了<code>showDateFormat()</code>，各語言必須在<code>showDateFormat()</code>使用Carbon的<code>format()</code>去轉換日期格式。</p>
+<h3 id="Presenter-1">Presenter</h3><figure class="highlight php"><figcaption><span>app/MyBlog/Presenters/DateFormatPresenter_uk.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Carbon</span>\<span class="title">Carbon</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DateFormatPresenter_uk</span> <span class="keyword">implements</span> <span class="title">DateFormatPresenterInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示日期格式</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> Carbon $date</span><br><span class="line">     * <span class="doctag">@return</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showDateFormat</span><span class="params">(Carbon <span class="variable">$date</span>)</span> : <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'d M, Y'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>DateFormatPresenter_uk</code>實現了<code>DateFormatPresenterInterface</code>，並將轉換成<code>英國</code>日期格式的Carbon的<code>format()</code>寫在<code>showDateFormat()</code>內。</p>
+<figure class="highlight php"><figcaption><span>app/MyBlog/Presenters/DateFormatPresenter_tw.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Carbon</span>\<span class="title">Carbon</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DateFormatPresenter_tw</span> <span class="keyword">implements</span> <span class="title">DateFormatPresenterInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示日期格式</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> Carbon $date</span><br><span class="line">     * <span class="doctag">@return</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showDateFormat</span><span class="params">(Carbon <span class="variable">$date</span>)</span> : <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'Y/m/d'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>DateFormatPresenter_tw</code>實現了<code>DateFormatPresenterInterface</code>，並將轉換成<code>台灣</code>日期格式的Carbon的<code>format()</code>寫在<code>showDateFormat()</code>內。</p>
+<figure class="highlight php"><figcaption><span>app/MyBlog/Presenters/DateFormatPresenter_us.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Carbon</span>\<span class="title">Carbon</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DateFormatPresenter_us</span> <span class="keyword">implements</span> <span class="title">DateFormatPresenterInterface</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 顯示日期格式</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> Carbon $date</span><br><span class="line">     * <span class="doctag">@return</span> string</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showDateFormat</span><span class="params">(Carbon <span class="variable">$date</span>)</span> : <span class="title">string</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$date</span>-&gt;format(<span class="string">'M d, Y'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>DateFormatPresenter_us</code>實現了<code>DateFormatPresenterInterface</code>，並將轉換成<code>美國</code>日期格式的Carbon的<code>format()</code>寫在<code>showDateFormat()</code>內。</p>
+<h3 id="Presenter_Factory">Presenter Factory</h3><p>由於每個語言的日期格式都是一個presenter物件，那勢必遇到一個最基本的問題 : <code>我們必須根據不同的語言去new不同的presenter物件</code>，直覺我們可能會在controller去new presenter。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">(Request <span class="variable">$request</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$users</span> = <span class="variable">$this</span>-&gt;userRepository-&gt;getAgeLargerThan(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$locale</span> = <span class="variable">$request</span>[<span class="string">'lang'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$locale</span> === <span class="string">'uk'</span>) &#123;</span><br><span class="line">        <span class="variable">$presenter</span> = <span class="keyword">new</span> DateFormatPresenter_uk();</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (<span class="variable">$locale</span> === <span class="string">'tw'</span>) &#123;</span><br><span class="line">        <span class="variable">$presenter</span> = <span class="keyword">new</span> DateFormatPresenter_tw();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$presenter</span> = <span class="keyword">new</span> DateFormatPresenter_us();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'users.index'</span>, compact(<span class="string">'users'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這種寫法雖然可行，但有幾個問題 : </p>
+<ol>
+<li>違反<strong>SOLID</strong>的<strong>開放封閉原則</strong> : 若將來有新的語言需求，只能不斷去修改<code>index()</code>，然後不斷的新增<code>elseif</code>，就算改用<code>switch</code>也是一樣。</li>
+<li>違反<strong>SOLID</strong>的<strong>依賴反轉原則</strong> : controller直接根據語言去new相對應的class，高層直接相依於低層，直接將實作寫死在程式中。</li>
+<li>無法做unit test : 由於presenter直接new在controller，因此要測試時，無法對presenter做mock。</li>
+</ol>
+<p>比較好的方式是使用<strong>Factory Pattern</strong>。<br><figure class="highlight php"><figcaption><span>app/MyBlog/Presenters/DateFormatPresenterFactory.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DateFormatPresenterFactory</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> string $locale</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">create</span><span class="params">(string <span class="variable">$locale</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        App::bind(DateFormatPresenterInterface::class,</span><br><span class="line">            <span class="string">'MyBlog\Presenters\DateFormatPresenter_'</span> . <span class="variable">$locale</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用<code>Presenter Factory</code>的<code>create()</code>去取代new建立物件。</p>
+<p>這裡當然可以在<code>create()</code>去寫<code>if...elseif</code>去建立presenter物件，不過這樣會違反<strong>SOLID</strong>的<strong>開放封閉原則</strong>，比較好的方式是改用<code>App::bind()</code>，直接根據<code>$locale</code>去binding相對應的class，這樣無論在怎麼新增<strong>語言</strong>與<strong>日期格式</strong>，controller與Presenter Factory都不用做任何修改，完全符合<strong>開放封閉原則</strong>。</p>
+<h3 id="Controller">Controller</h3><figure class="highlight php"><figcaption><span>app/Http/Controllers/UserController.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Requests</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">App</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">MyBlog</span>\<span class="title">Presenters</span>\<span class="title">DateFormatPresenterFactory</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">MyBlog</span>\<span class="title">Repositories</span>\<span class="title">UserRepository</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span>  UserRepository 注入的UserRepository */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$userRepository</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * UserController constructor.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> UserRepository $userRepository</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(UserRepository <span class="variable">$userRepository</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$this</span>-&gt;userRepository = <span class="variable">$userRepository</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Display a listing of the resource.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> Request $request</span><br><span class="line">     * <span class="doctag">@param</span> DateFormatPresenterFactory $dateFormatPresenterFactory</span><br><span class="line">     * <span class="doctag">@return</span> \Illuminate\Http\Response</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">(Request <span class="variable">$request</span>, </span><br><span class="line">        DateFormatPresenterFactory <span class="variable">$dateFormatPresenterFactory</span>)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="variable">$users</span> = <span class="variable">$this</span>-&gt;userRepository-&gt;getAgeLargerThan(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$locale</span> = (<span class="variable">$request</span>[<span class="string">'lang'</span>]) ? <span class="variable">$request</span>[<span class="string">'lang'</span>] : <span class="string">'us'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$dateFormatPresenterFactory</span>-&gt;create(<span class="variable">$locale</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'users.index'</span>, compact(<span class="string">'users'</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@var</span>  UserRepository 注入的UserRepository */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$userRepository</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * UserController constructor.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> UserRepository $userRepository</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(UserRepository <span class="variable">$userRepository</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$this</span>-&gt;userRepository = <span class="variable">$userRepository</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>將相依的<code>UserRepository</code>注入到<code>UserController</code>。</p>
+<p>24行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Display a listing of the resource.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> Request $request</span><br><span class="line"> * <span class="doctag">@param</span> DateFormatPresenterFactory $dateFormatPresenterFactory</span><br><span class="line"> * <span class="doctag">@return</span> \Illuminate\Http\Response</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">(Request <span class="variable">$request</span>,</span><br><span class="line">    DateFormatPresenterFactory <span class="variable">$dateFormatPresenterFactory</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$users</span> = <span class="variable">$this</span>-&gt;userRepository-&gt;getAgeLargerThan(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$locale</span> = (<span class="variable">$request</span>[<span class="string">'lang'</span>]) ? <span class="variable">$request</span>[<span class="string">'lang'</span>] : <span class="string">'us'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$dateFormatPresenterFactory</span>-&gt;create(<span class="variable">$locale</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'users.index'</span>, compact(<span class="string">'users'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>index()</code>會相依於<code>DateFormatPresenterFactory</code>，當然也可以在constructor一併將<code>DateFormatPresenterFactory</code>注入，但是考慮到<code>DateFormatPresenterFactory</code>只有<code>index()</code>使用，因此改用<strong>Method Injection</strong>的方式，只將<code>DateFormatPresenterFactory</code>注入到<code>index()</code>即可，這樣可以減輕constructor的壓力，不必所有相依物件都寫在constructor。</p>
+<div class="alert alert-success"><i class="fa fa-lightbulb-o"></i>  使用factory pattern之後，controller有了以下的優點 :</div>
+<ol>
+<li>符合<strong>SOLID</strong>的<strong>開放封閉原則</strong> : 若將來有新的語言需求，controller完全不用做任何修改。</li>
+<li>符合<strong>SOLID</strong>的<strong>依賴反轉原則</strong> : controller不再直接相依於presenter，而是改由factory去建立presenter。</li>
+<li>可以做unit test : 由於將factory依賴注入進controller，因此要測試時，只要將要mock的presenter factory注入進controller即可。</li>
+</ol>
+<div class="alert alert-info"><i class="fa fa-info"></i>  何時該使用<strong>Constructor Injection</strong>或<strong>Method Injection</strong>呢?</div>
+<ol>
+<li>若該相依物件，有很多method要使用，可考慮使用<strong>Constructor Injection</strong>，如repository、service。</li>
+<li>若該相依物件，只有單個method自己使用，可考慮使用<strong>Method Injection</strong>，如factory。</li>
+</ol>
+<h3 id="View">View</h3><p><img src="/images/laravel/laravel-present-dateformat/format001.png" alt="blade很乾淨"></p>
+<p>使用<code>@inject</code>注入presenter，讓view也可以如controller一樣使用注入的物件。</p>
+<p>使用presenter的<code>showDateFormat()</code>將日期轉成想要的格式。</p>
+<div class="alert alert-success"><i class="fa fa-lightbulb-o"></i>  View搭配presenter之後，有以下優點 :</div>
+<ol>
+<li>Blade非常乾淨，完全沒有<code>@if</code>、<code>@elseif</code>與<code>@endif</code>。</li>
+<li>由於邏輯都寫在PHP中，將來可以繼續對顯示邏輯做<strong>重構</strong>與<strong>物件導向</strong>。</li>
+<li>Presenter只會影響目前的view，不像mutator會有side effect。</li>
+<li>符合<strong>SOLID</strong>的<strong>單一職責原則</strong> : <strong>顯示邏輯</strong>被封裝在presenter內，不像mutor將<strong>顯示邏輯</strong>寫在model內。</li>
+<li>符合<strong>SOLID</strong>的<strong>開放封閉原則</strong> : 將來若有新的語言，對於擴展是開放的 : 只要新增class實踐<code>DateFormatPresenterInterface</code>即可；對於修改是封閉的 : controller、factory interface、factory與view都不用做任何修改。</li>
+<li>可單獨對presenter的<strong>顯示邏輯</strong>做unit test。</li>
+</ol>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li><strong>Blade</strong> : 最直覺，但與HTML夾雜，不適合寫太複雜的邏輯，且違反<strong>SOLID</strong>原則。</li>
+<li><strong>Mutator</strong> : 很方便，但要小心對其他view或controller的side effect，unit test會直接碰到資料庫，速度較慢。</li>
+<li><strong>Presenter</strong> : 較複雜，適合複雜的邏輯，容易維護，符合<strong>SOLID</strong>原則，unit test不會碰到資料庫，速度非常快。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的<a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a>上找到。</p>
+<ol>
+<li><a href="https://github.com/oomusou/Laravel51Blade_demo" target="_blank" rel="external">Blade</a></li>
+<li><a href="https://github.com/oomusou/Laravel51Mutator_demo" target="_blank" rel="external">Mutator</a></li>
+<li><a href="https://github.com/oomusou/Laravel51Presenter_demo" target="_blank" rel="external">Presenter</a></li>
+</ol>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/laravel/laravel42/laravel-42-presenter/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/laravel/presenter/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-12-22 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

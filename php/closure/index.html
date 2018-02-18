@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 Closure? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="深入探討 PHP 5.3 的 Closure 觀念與用法">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="深入探討 PHP 5.3 的 Closure 觀念與用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 Closure?">
+<meta property="og:url" content="http://oomusou.io/php/closure/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="深入探討 PHP 5.3 的 Closure 觀念與用法">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T11:39:51.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 Closure?">
+<meta name="twitter:description" content="深入探討 PHP 5.3 的 Closure 觀念與用法">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 Closure?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 深入探討 PHP 5.3 的 Closure 觀念與用法			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Callback"><span class="toc-article-text">Callback</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Anonymous_Function"><span class="toc-article-text">Anonymous Function</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Closure"><span class="toc-article-text">Closure</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Callable"><span class="toc-article-text">Callable</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#與其他程式語言比較"><span class="toc-article-text">與其他程式語言比較</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>在 PHP 4 最早稱 <code>callback</code>，PHP 5.3 引入 <code>closure</code> 與 <code>anonymous function</code> ，PHP 5.4 則新增 <code>callable</code> type hint。</p>
+<p>所以在 PHP 中，<code>callback</code>、<code>closure</code>、<code>anonymous function</code>，與 <code>callable</code>，事實上指的是同一件事情，但因為底層用的都是 <code>Closure</code> 物件，通常統稱為 closure。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 4 callback<br>PHP 5.3 closure / anonymous function<br>PHP 5.4 callable</p>
+<h2 id="Callback">Callback</h2><hr>
+<p>將函式名稱以字串方式傳入，透過 <code>call_user_func()</code> 或 <code>call_user_func_array()</code> 去執行該字串為名稱的函式，類似 C 語言以 function pointer 實現 callback。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>本文強調 closure 基本語法，關於實務上運用，詳細請參考<a href="/php/closure-practice/">實務上如何活用 Closure?</a></span></span></span></p>
+<p><strong>最簡單的Callback</strong><br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> myCallback() </span><br><span class="line">&#123;</span><br><span class="line">    echo <span class="string">'World'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> sayHello(<span class="variable">$callback</span>) </span><br><span class="line">&#123;</span><br><span class="line">    echo <span class="string">'Hello '</span>;</span><br><span class="line">    call_user_func(<span class="variable">$callback</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sayHello(<span class="string">'myCallback'</span>);</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// Hello World</span><br></pre></td></tr></table></figure></p>
+<p>第1行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myCallback</span><span class="params">()</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'World'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我們自己寫的 callback，只是一個普通的函式。</p>
+<p>第6行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span><span class="params">(<span class="variable">$callback</span>)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Hello '</span>;</span><br><span class="line">    call_user_func(<span class="variable">$callback</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我們傳入一個 callback 函式，<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>由於PHP是弱型別語言，只看到傳入<code>$closure</code>很難讓我們知道到底傳入的是普通變數，或者真的是一個 callback，所以在 PHP 5.4 才有了 <code>callable</code> type hint。</span></span></span>希望在執行 <code>echo &#39;Hello&#39;</code> 之後，能執行我們傳入的 <code>$callback</code>，這時會用到 PHP 內建的 <code>call_user_func()</code> 來呼叫我們的傳入的 callback 函式。</p>
+<p>12行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sayHello(<span class="string">'myCallback'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>呼叫 <code>sayHello()</code>，並傳入 <code>myCallback</code>，注意這裏傳的是 callback 函式名稱的字串。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>這個字串很容易讓我們誤解是普通字串，或者是真的是一個 callback 函式，所以在 PHP 5.3 讓我們可以直接傳入一個 anonymous function。</span></span></span></p>
+<h2 id="Anonymous_Function">Anonymous Function</h2><hr>
+<p>沒有名稱的函式，可被指定到變數，如同物件般傳遞到其他函式，通常使用在只使用一次的 callback，讓我們不必再為了只使用一次的 callback 定義函式。</p>
+<p><strong> 最簡單的 Anonymous Function </strong></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$anonyFunc</span> = <span class="keyword">function</span> (<span class="variable">$name</span>) &#123;</span><br><span class="line">    return <span class="string">'Hello '</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">echo <span class="variable">$anonyFunc</span>(<span class="string">"Josh"</span>);</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// Hello Josh</span><br></pre></td></tr></table></figure>
+<p>第1行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$anonyFunc</span> = <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$name</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello '</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>建立了 <code>Closure</code> 物件，並且指定給 <code>$anoy_func</code>變數，它看起來像函式，卻是個物件，與函式相同語法，可接受參數，也可回傳參數，然而它卻沒有函式名稱。</p>
+<p><strong> Anonymous Function 內部實作 </strong><br>當我們使用 <code>$anony_func</code> 時，<code>$anony_func</code> 變數是一個 <code>Closure</code> 物件，它實作了 <code>__invoke()</code> magic method，當物件加上 <code>()</code> 後，PHP就會呼叫其 <code>__invoke()</code> magic method 執行 anonymous function。</p>
+<p>以上的範例，也可以改用 <code>__invoke()</code> 方式執行。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$anonyFunc</span> = <span class="keyword">function</span> (<span class="variable">$name</span>) &#123;</span><br><span class="line">    return return <span class="string">'Hello '</span> . <span class="variable">$name</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">echo <span class="variable">$anonyFunc-</span>&gt;__invoke(<span class="string">"Josh"</span>);</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// Hello Josh</span><br></pre></td></tr></table></figure>
+<p><strong> 將 Anonymous Function 用於 Callback </strong><br>許多 PHP 內建的函式都需要傳入 callback，如 <code>array_map()</code>。在沒有 anonymous function 之前，我們只能這樣子使用 <code>array_map()</code>。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Named callback implementation</span><br><span class="line"><span class="keyword">function</span> incrementNumber (<span class="variable">$number</span>) </span><br><span class="line">&#123;</span><br><span class="line">    return <span class="variable">$number</span> + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Named callback usage</span><br><span class="line"><span class="variable">$numbersPlusOne</span> = array_map(<span class="string">'incrementNumber'</span>, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line">echo(<span class="variable">$numbersPlusOne</span>);</span><br></pre></td></tr></table></figure>
+<p><code>array_map()</code> 函式的第 1 個參數要求我們傳進一個 callback， 在 PHP 還沒有 anonymous function 之前，只能事先寫好一個函式，然後將函式名稱以字串的方式傳進 <code>array_map()</code> 第 1 個參數來實現 callback。<span class="margin-note-marker"><sup>4</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">4</span><code>incrementNumber</code> 是以字串的方式傳入，很容易誤會到底是字串還是 callback 函式，因此才有 PHP 5.3 的 anonymous function與 PHP 5.4 的 callable type hint。</span></span></span></p>
+<p>這樣雖然可行，但通常 callback 只會用一次，為了這種只會用一次的函式另外獨立出一個函式似乎不妥，比較好的方式是改用 anonymous function。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$numbersPlusOne</span> = array_map(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$number</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$number</span> + <span class="number">1</span>;</span><br><span class="line">&#125;, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">print_r(<span class="variable">$numbersPlusOne</span>);</span><br></pre></td></tr></table></figure>
+<p>由於 callback 只使用一次，將 anonymous function 直接寫在 <code>array_map()</code> 參數內除了更簡潔外，也解決了 PHP 以字串傳入 callback 的問題，程式可讀性也更高。</p>
+<h2 id="Closure">Closure</h2><hr>
+<p>會將外層變數複製進 closure 函式，儘管函式結束，一樣可以讀取或寫入該外層變數。</p>
+<p><strong> 使用 use 關鍵字 </strong><br><strong> Pass by Reference </strong><br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span><span class="params">(val)</span> </span><br><span class="line">&#123;</span></span><br><span class="line">    var foo = <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">        val++;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    foo<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    return val;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">console.<span class="built_in">log</span><span class="params">(func<span class="params">(<span class="number">0</span>)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result:</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure></p>
+<p>對於 JavaScript 而言，因為 <code>foo</code> 這個 closure 使用到外層的 <code>val</code> 變數，JavaScript 的 closure 會自動將外層的 <code>val</code> 變數以 pass by reference 方式傳進 closure，所以 <code>val++</code> 會直接影響到外變數 <code>val</code>。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> func(<span class="variable">$val</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$foo</span> = function () use (&amp;<span class="variable">$val</span>) &#123;</span><br><span class="line">        <span class="variable">$val</span>++;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$foo</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="variable">$val</span>;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">echo(func(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>對於 PHP 而言，因為 <code>$foo</code> 這個 closure 使用到外層的 <code>$val</code> 變數，PHP 的 closure 不會自動將外層的 <code>$val</code>變數傳進來，必須加上 <code>use</code> 關鍵字，並且將變數前面加上 <code>&amp;</code> 以 pass by reference 方式傳進 closure，所以 <code>$val++</code>才會直接影響到外變數 <code>val</code>。</p>
+<p><strong> Pass by Value </strong><br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span><span class="params">(val)</span> </span><br><span class="line">&#123;</span></span><br><span class="line">    var foo = <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">        val2 = val;</span><br><span class="line">        val2++;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    foo<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    return val;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">print<span class="params">(func<span class="params">(<span class="number">0</span>)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result:</span></span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
+<p>JavaScript 並沒有提供 pass by value 的好方法，所以只能自己使用類似 <code>val2 = val</code> 的蠢方法，避免影響到原來的 <code>val</code>。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> func(<span class="variable">$val</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$foo</span> = function () use (<span class="variable">$val</span>) &#123;</span><br><span class="line">        <span class="variable">$val</span>++;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$foo</span>();</span><br><span class="line"></span><br><span class="line">    return <span class="variable">$val</span>;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">echo(func(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>PHP 因為預設就是 pass by value，所以只要拿掉 <code>&amp;</code>，就是以 pass by value 的方式傳遞。<span class="margin-note-marker"><sup>5</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">5</span>closure 還有一個進階的 <code>bindTo()</code> 用法，詳細請參考<a href="/php/bindTo/">深入探討 bindTo()</a></span></span></span></p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  JavaScript closure 與 PHP closure 的差異</div>
+<ol>
+<li>JavaScript 的 closure 可以直接使用外層變數，而 PHP 必須加上 <code>use</code>，明確指定要使用哪一個變數。</li>
+<li>JavaScript 對於 closure 的外層變數是以 pass by reference 處理，而 PHP 是 pass by value，若要 pass by reference，必須手動加上 <code>&amp;</code>。</li>
+</ol>
+<h2 id="Callable">Callable</h2><hr>
+<p>為了避免因為 PHP 的弱型別本質，讓我們誤會傳入的是一般型別的參數，PHP 特別為傳入的 callback 參數加上 <code>callable</code> type hint，讓我們可以更明確得知要傳入的是 callback。</p>
+<p>如PHP內建的 <code>array_map()</code> 就使用了 <code>callable</code> type hint。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> array_map ( callable <span class="variable">$callback</span> , <span class="keyword">array</span> <span class="variable">$array1</span> [, <span class="keyword">array</span> $... ] )</span><br></pre></td></tr></table></figure>
+<p><strong> 最簡單的Callable </strong><br><figure class="highlight php"><figcaption><span>PHP</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$myCallback</span> = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'World'</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span><span class="params">(callable <span class="variable">$callback</span>)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Hello '</span>;</span><br><span class="line">    call_user_func(<span class="variable">$callback</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sayHello(<span class="variable">$myCallback</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result: </span></span><br><span class="line"><span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure></p>
+<p>與 callback 的範例一樣，只是改寫成 callable。</p>
+<p>第6行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span><span class="params">(callable <span class="variable">$callback</span>)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Hello '</span>;</span><br><span class="line">    call_user_func(<span class="variable">$callback</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 <code>$callback</code> 之前多加了 <code>callable</code> type hint，這樣就能很清楚的了解要傳入的是一個 callback，而不是其他普通參數。</p>
+<h2 id="與其他程式語言比較">與其他程式語言比較</h2><hr>
+<p><strong> JavaScript </strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myClosure</span>(<span class="params">hi</span>) </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hi + <span class="string">" "</span> + name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">var</span> foo = myClosure(<span class="string">"Hello"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="string">"World"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Result:</span></span><br><span class="line"><span class="comment">// Hello World</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>支援一級函式，函式可以指定給變數，函式可以直接傳遞至其他函式，也可以回傳函式。</li>
+<li>自動捕捉外層變數。</li>
+</ul>
+<p><strong> php </strong><br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> myClosure(<span class="variable">$hi</span>) </span><br><span class="line">&#123;</span><br><span class="line">    return function(<span class="variable">$name</span>) use (<span class="variable">$hi</span>) &#123;</span><br><span class="line">      return sprintf(<span class="string">"%s, %s"</span>, <span class="variable">$hi</span>, <span class="variable">$name</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="variable">$foo</span> = myClosure(<span class="string">"Hello"</span>);</span><br><span class="line">echo(<span class="variable">$foo</span>(<span class="string">"World"</span>));</span><br><span class="line"></span><br><span class="line">// Result:</span><br><span class="line">// Hello World</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>支援一級函式，函式可以指定給變數，函式可以直接傳遞至其他函式，也可以回傳函式。</li>
+<li>使用 use 關鍵字捕捉外層變數。 </li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>以上雖然分別以 callback, anonymous funciton，closure 與 callable 說明，但實務上都是一起使用。</li>
+<li>Closure 的出現使的 PHP 原本需要使用 callback 的函式有更精簡的寫法。</li>
+<li>JavaScript 的 closure 不用使用 <code>use</code>，會自動將外層變數以 pass by reference 傳入，但 PHP 需手動使用 <code>use</code> 關鍵字指定欲傳入的外層變數，預設是 pass by value ，若要與 JavaScript 完全一樣，需加上 <code>&amp;</code> 以 pass by reference 傳入。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/php/php-cs/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/php/php-generator/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-09-11 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/PHP/">PHP<span>16</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 Eloquent 建立一個含 or 的 where 條件式 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="不使用 whereRaw() 也可以寫得出來">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="不使用 whereRaw() 也可以寫得出來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Eloquent 建立一個含 or 的 where 條件式 ?">
+<meta property="og:url" content="http://oomusou.io/laravel/where-and-or/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="不使用 whereRaw() 也可以寫得出來">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T11:32:57.794Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 Eloquent 建立一個含 or 的 where 條件式 ?">
+<meta name="twitter:description" content="不使用 whereRaw() 也可以寫得出來">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 Eloquent 建立一個含 or 的 where 條件式 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 不使用 whereRaw() 也可以寫得出來			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Migration"><span class="toc-article-text">Migration</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SQL"><span class="toc-article-text">SQL</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#whereRaw()"><span class="toc-article-text">whereRaw()</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#where()_+_closure"><span class="toc-article-text">where() + closure</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>實務上在 Eloquent 下 where 條件式時，其中可能包含一個 or 條件判斷，這種需求該如何使用 Eloquent 的 query builder 建立呢?</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Laravel 5.2.29</p>
+<h2 id="Migration">Migration</h2><hr>
+<p><strong>create_posts_table.php</strong><span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52WhereAndOr_demo-/commit/da5b80c3c51164b14bfa22d84de6ee2f65dfd918" target="_blank" rel="external">建立 Post model 與 migration</a></span></span></span><br><figure class="highlight php"><figcaption><span>database/migration/2016_04_10_143945_create_posts_table.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreatePostsTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Run the migrations.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'posts'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint <span class="variable">$table</span>)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$table</span>-&gt;increments(<span class="string">'id'</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;string(<span class="string">'description'</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;text(<span class="string">'content'</span>);</span><br><span class="line">            <span class="variable">$table</span>-&gt;tinyInteger(<span class="string">'status'</span>); <span class="comment">// 0: normal, 1:draft, 2:deleted</span></span><br><span class="line">            <span class="variable">$table</span>-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Reverse the migrations.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        Schema::drop(<span class="string">'posts'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>13行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Schema::create(<span class="string">'posts'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint <span class="variable">$table</span>)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$table</span>-&gt;increments(<span class="string">'id'</span>);</span><br><span class="line">    <span class="variable">$table</span>-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">    <span class="variable">$table</span>-&gt;string(<span class="string">'description'</span>);</span><br><span class="line">    <span class="variable">$table</span>-&gt;text(<span class="string">'content'</span>);</span><br><span class="line">    <span class="variable">$table</span>-&gt;tinyInteger(<span class="string">'status'</span>); <span class="comment">// 0: normal, 1:draft, 2:deleted</span></span><br><span class="line">    <span class="variable">$table</span>-&gt;timestamps();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><code>posts</code> table 有 <code>status</code> 欄位，其中 <code>0</code> 為正常文章，<code>1</code> 為草稿文章，<code>2</code> 為已刪除文章。</p>
+<h2 id="SQL">SQL</h2><hr>
+<p>需求為列出所有<strong>正常</strong>與<strong>草稿</strong>文章，若使用 SQL，我們會這樣寫 :<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">SELECT * </span><br><span class="line"><span class="keyword">FROM</span> posts</span><br><span class="line"><span class="keyword">WHERE</span> (<span class="keyword">status</span> = <span class="number">0</span> <span class="keyword">or</span> <span class="keyword">status</span> = <span class="number">1</span>)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="whereRaw()">whereRaw()</h2><hr>
+<p>若使用 Eloquent，我們該怎麼寫呢?很多人會想到 <code>whereRaw()</code> :<br><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52WhereAndOr_demo-/commit/3942ca94b8d806af49d21bb0b3b02fc1acabc904" target="_blank" rel="external">PostRepository.php 使用 whereRaw()</a></span></span></span><br><figure class="highlight php"><figcaption><span>app/Repositories/PostRepository.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Repositories</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">Post</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostRepository</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getUndeletedPosts</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Post::whereRaw(<span class="string">'status = 0 or status = 1'</span>)</span><br><span class="line">            -&gt;get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>這樣寫當然可以，不過 <code>whereRaw()</code> 的程式可讀性較差，畢竟 <code>whereRaw()</code> 裡面是SQL字串。</p>
+<h2 id="where()_+_closure">where() + closure</h2><hr>
+<p><strong>PostRepository.php</strong><span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>GitHub Commit : <a href="https://github.com/oomusou/Laravel52WhereAndOr_demo-/commit/ef961c682976ad4041e8a29b99e42b5b8e6363c9" target="_blank" rel="external">PostRepository.php 使用 where() + closure</a></span></span></span><br><figure class="highlight php"><figcaption><span>app/Repositories/PostRepository.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Repositories</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">Post</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostRepository</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getUndeletedPosts</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Post::where(<span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$query</span>)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$query</span>-&gt;where(<span class="string">'status'</span>, <span class="number">0</span>)</span><br><span class="line">                -&gt;orWhere(<span class="string">'status'</span>, <span class="number">1</span>);</span><br><span class="line">        &#125;)-&gt;get();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>比較好的寫法是將 or 部分，寫成 closure 傳入 <code>where()</code>，這比較符合物件導向與 Eloquent 風格。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>這 3 種寫法所產出的 SQL 都一樣，沒有執行效率問題。</li>
+<li>實務上建議少使用 <code>DB::raw()</code> 或 <code>whereRaw()</code>，可讀性較差，盡量使用 Eloquent 寫法。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的 <a href="https://github.com/oomusou/Laravel52WhereAndOr_demo-" target="_blank" rel="external">GitHub</a> 上找到。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/laravel/laravel-route-pass-parameter-to-controller/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/laravel/laravel-sqlite/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-04-09 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

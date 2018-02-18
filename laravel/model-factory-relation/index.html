@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何使用 Model Factory 建立關聯性資料 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="搭配Relation，只要一行就可建立關聯性資料">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="搭配Relation，只要一行就可建立關聯性資料">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用 Model Factory 建立關聯性資料 ?">
+<meta property="og:url" content="http://oomusou.io/laravel/model-factory-relation/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="搭配Relation，只要一行就可建立關聯性資料">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T11:32:48.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用 Model Factory 建立關聯性資料 ?">
+<meta name="twitter:description" content="搭配Relation，只要一行就可建立關聯性資料">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何使用 Model Factory 建立關聯性資料 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 搭配Relation，只要一行就可建立關聯性資料			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#沒有使用Relation"><span class="toc-article-text">沒有使用Relation</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用Relation"><span class="toc-article-text">使用Relation</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#一對一資料"><span class="toc-article-text">一對一資料</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#一對多資料"><span class="toc-article-text">一對多資料</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Sample_Code"><span class="toc-article-text">Sample Code</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>實務上我們會使用<strong>Seeder</strong> + <strong>Model Factory</strong>來建立測試的假資料，由於關聯性資料的primary key與foreign key必須成對出現，若使用Laravel的<strong>Relation</strong>，則可很方便的建立測試資料。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>PHP 7.0.0<br>Laravel 5.2.6</p>
+<h2 id="沒有使用Relation">沒有使用Relation</h2><hr>
+<p>如經典的<code>users</code>與<code>posts</code> table，一個user可以只有一篇post，所謂<strong>一對一關係</strong>；也可以一個user有多篇post，所謂<strong>一對多關係</strong>，其中primary key為<code>users.id</code>，foreign key為<code>posts.user_id</code>。</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  若不使用relation，該如何對<strong>users</strong>與<strong>posts</strong>建立一對一關連性的假資料呢?</div>
+<figure class="highlight php"><figcaption><span>database/factories/ModelFactory.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Post</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Faker</span>\<span class="title">Generator</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$factory</span>-&gt;define(User::class, <span class="function"><span class="keyword">function</span> <span class="params">(Generator <span class="variable">$faker</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'name'</span>           =&gt; <span class="variable">$faker</span>-&gt;name,</span><br><span class="line">        <span class="string">'email'</span>          =&gt; <span class="variable">$faker</span>-&gt;email,</span><br><span class="line">        <span class="string">'password'</span>       =&gt; bcrypt(str_random(<span class="number">10</span>)),</span><br><span class="line">        <span class="string">'remember_token'</span> =&gt; str_random(<span class="number">10</span>),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable">$factory</span>-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Generator <span class="variable">$faker</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span>   =&gt; <span class="variable">$faker</span>-&gt;sentence,</span><br><span class="line">        <span class="string">'content'</span> =&gt; <span class="variable">$faker</span>-&gt;paragraph,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>第14行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$factory</span>-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Generator <span class="variable">$faker</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span>   =&gt; <span class="variable">$faker</span>-&gt;sentence,</span><br><span class="line">        <span class="string">'content'</span> =&gt; <span class="variable">$faker</span>-&gt;paragraph,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用model factory建立<code>posts</code>的假資料，雖然<code>posts</code>有<code>user_id</code>、<code>title</code>與<code>content</code>三個欄位，但因為<code>user_id</code>為foreign key，必須與<code>users</code>的<code>id</code>連動，所以無法使用faker建立。</p>
+<figure class="highlight php"><figcaption><span>database/seeds/UserTableSeeder.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Run the database seeds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        factory(User::class, <span class="number">10</span>)-&gt;create();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用seeder建立<code>users</code>的假資料，以前我們會在seeder使用faker，現在則在model factory使用faker，因此seeder只要告訴model factory要建立<strong>幾筆</strong>資料即可。</p>
+<figure class="highlight php"><figcaption><span>database/seeds/PostTableSeeder.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Post</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Run the database seeds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        collect(range(<span class="number">1</span>, <span class="number">10</span>))-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(int <span class="variable">$userId</span>)</span> </span>&#123;</span><br><span class="line">            factory(Post::class)-&gt;create([</span><br><span class="line">                <span class="string">'user_id'</span> =&gt; <span class="variable">$userId</span></span><br><span class="line">            ]);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為<code>users</code>與<code>posts</code>為<strong>一對一關係</strong>，所以<code>users</code>建立10筆資料，<code>posts</code>也必須建立10筆資料。</p>
+<p>傳統會使用<code>for迴圈</code>的方式產生<code>$userId</code> :<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="variable">$userId</span> = <span class="number">1</span>; <span class="variable">$userId</span> &lt;= <span class="number">10</span>; <span class="variable">$userId</span>++) &#123;</span><br><span class="line">    factory(Post::class)-&gt;create([</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; <span class="variable">$userId</span>,</span><br><span class="line">    ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>若使用<code>factory()-&gt;create()</code>建立假資料時，若有某些欄位不想透過model factory產生，可以將陣列傳入<code>create()</code>，其中key為<strong>欄位名稱</strong>，而value為<strong>自訂假資料</strong>。</p>
+<p>13行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">collect(range(<span class="number">1</span>, <span class="number">10</span>))-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(int <span class="variable">$userId</span>)</span> </span>&#123;</span><br><span class="line">    factory(Post::class)-&gt;create([</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; <span class="variable">$userId</span></span><br><span class="line">    ]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>這裡改用closure的方式。</p>
+<p>其中<code>collect()</code>為Laravel的helper function，相當於<code>new Collection()</code>。</p>
+<p><code>each()</code>為collection所提供，會<strong>iterate</strong> collection中每個item，效果相當於<code>foreach</code>，並可將collection中的item傳入closure，也就是<code>range(1, 10)</code>的會依序傳入<code>$userId</code>。</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  這種方式雖然可行，但必須另外在<strong>PostTableSeeder</strong>中靠<strong>for迴圈</strong>或<strong>range(1, 10)</strong>產生<strong>user_id</strong>，是否有更快更直覺的方式呢?</div>
+<h2 id="使用Relation">使用Relation</h2><hr>
+<p>Laravel的eloquent提供了<strong>Relation</strong>機制，seeder與model factory可以使用更簡單的方式新增關聯性資料。</p>
+<h3 id="一對一資料">一對一資料</h3><figure class="highlight php"><figcaption><span>app/User.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Relations</span>\<span class="title">HasOne</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">User</span> <span class="title">as</span> <span class="title">Authenticatable</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes that are mass assignable.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> array</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$fillable</span> = [</span><br><span class="line">        <span class="string">'name'</span>, <span class="string">'email'</span>, <span class="string">'password'</span>,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes excluded from the model's JSON form.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> array</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$hidden</span> = [</span><br><span class="line">        <span class="string">'password'</span>, <span class="string">'remember_token'</span>,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 建立users與posts一對一關係</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> HasOne</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">post</span><span class="params">()</span> : <span class="title">HasOne</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasOne(Post::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>26行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 建立users與posts一對一關係</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@return</span> HasOne</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">post</span><span class="params">()</span> : <span class="title">HasOne</span></span><br><span class="line"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasOne(Post::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>新增<code>post()</code>，描述<code>users</code>與<code>posts</code>的<strong>一對一關係</strong>，<code>hasOne()</code>的第一個參數傳入為<strong>一對一關係</strong>的class字串。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若foreign key的命名依照<code>pararent tabel名稱</code> + <code>id</code>的命名方式，Laravel將可自動抓到foreign key與primary key的對應關係，不用特別指定。</span></span></span></p>
+<p>Model factory的寫法不變。</p>
+<figure class="highlight php"><figcaption><span>database/seeds/UserTableSeeder.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Post</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Run the database seeds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        factory(User::class, <span class="number">10</span>)</span><br><span class="line">            -&gt;create()</span><br><span class="line">            -&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(User <span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">                <span class="variable">$user</span>-&gt;post()-&gt;save(factory(Post::class)-&gt;make());</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">factory(User::class, <span class="number">10</span>)</span><br><span class="line">    -&gt;create()</span><br><span class="line">    -&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(User <span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">        <span class="variable">$user</span>-&gt;post()-&gt;save(factory(Post::class)-&gt;make());</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>有了relation之後，<code>UserTableSeeder</code>寫法有了重大的改變。</p>
+<p>關鍵在於model factory的<code>create()</code>除了可新增資料外，還會傳回所新增資料的collection，因此可以使用fluent的寫法，繼續使用collection的<code>each()</code>來新增<code>posts</code>的一對一資料。</p>
+<p>Closure會傳進每一筆<code>User</code> model，也就是<code>$user</code>，然後藉由<code>$user-&gt;post()</code>的relation找到一對一的<code>Post</code> model。</p>
+<p>這裡用到了一個相當漂亮的技巧，使用了<code>factory()-&gt;make()</code>產生了<code>Post</code> model，注意這裡不是使用<code>create()</code>，而是使用<code>make()</code>，因為<code>create()</code>會直接存檔，但是<code>Post</code>的model factory並沒有描述<code>id</code>與<code>user_id</code>，所以只使用<code>make()</code>產生<code>Post</code> model，然後傳給<code>save()</code>去產生<code>id</code>與<code>user_id</code>存檔。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>事實上這個漂亮的寫法並不是我寫出來的，而是出自於Laravel的官方說明文件<a href="https://laravel.com/docs/5.2/seeding#using-model-factories" target="_blank" rel="external">Database: Seeding, Using Model Factory</a></span></span></span></p>
+<p>有了relation之後，也不需要<code>PostTableSeeder</code>了，<code>UserTableSeeder</code>已經把<code>users</code>與<code>posts</code>的假資料都搞定了。</p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  使用<strong>Relation</strong>之後，<strong>一對一關係</strong>的假資料果然可以很漂亮的新增，不過實務上更常見的是<strong>一對多關係</strong>的資料吧?</div>
+<h3 id="一對多資料">一對多資料</h3><figure class="highlight php"><figcaption><span>app/User.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Relations</span>\<span class="title">HasMany</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">User</span> <span class="title">as</span> <span class="title">Authenticatable</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes that are mass assignable.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> array</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$fillable</span> = [</span><br><span class="line">        <span class="string">'name'</span>, <span class="string">'email'</span>, <span class="string">'password'</span>,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The attributes excluded from the model's JSON form.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> array</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$hidden</span> = [</span><br><span class="line">        <span class="string">'password'</span>, <span class="string">'remember_token'</span>,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 建立uses與posts一對多關係</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> HasMany</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span> : <span class="title">HasMany</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasMany(Post::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>27行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 建立uses與posts一對多關係</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@return</span> HasMany</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span> : <span class="title">HasMany</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasMany(Post::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>新增<code>posts()</code>，描述<code>users</code>與<code>posts</code>的<strong>一對多關係</strong>，<code>hasMany()</code>的第一個參數傳入為<strong>一對多關係</strong>的class字串。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>若foreign key的命名依照<code>pararent tabel名稱</code> + <code>id</code>的命名方式，Laravel將可自動抓到foreign key與primary key的對應關係，不用特別指定。</span></span></span></p>
+<p>Model factory的寫法不變。</p>
+<figure class="highlight php"><figcaption><span>database/seeds/UserTableSeeder.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Post</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Run the database seeds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        factory(User::class, <span class="number">10</span>)</span><br><span class="line">            -&gt;create()</span><br><span class="line">            -&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(User <span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">                collect(range(<span class="number">1</span>, <span class="number">3</span>))-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">(<span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">                    <span class="variable">$user</span>-&gt;posts()-&gt;save(factory(Post::class)-&gt;make());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">factory(User::class, <span class="number">10</span>)</span><br><span class="line">    -&gt;create()</span><br><span class="line">    -&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">(User <span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">        collect(range(<span class="number">1</span>, <span class="number">3</span>))-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">(<span class="variable">$user</span>)</span> </span>&#123;</span><br><span class="line">            <span class="variable">$user</span>-&gt;posts()-&gt;save(factory(Post::class)-&gt;make());</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>之前<strong>一對一關係</strong>的寫法中，我們直接在closure內<code>$user-&gt;post-&gt;save()</code>，不過我們現在是<strong>一對多關係</strong>，假設我們現在每一筆<code>user</code>要對應3筆<code>post</code>。</p>
+<p>這裡當然也是可以使用<code>for迴圈</code>的寫法，若使用<code>collection-&gt;each()</code>的風格，我們再引入一個新的closure，由於要使用到<strong>外部變數</strong> : <code>$user</code>，所以必須使用<code>user</code>。<span class="margin-note-marker"><sup>3</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">3</span>關於closure與use的用法，詳細請參考<a href="/php/php-closure/">如何使用Closure?</a></span></span></span></p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>使用relation，在seeder只要一行程式就可以完成<strong>一對多關係</strong>的假資料新增。</li>
+<li><code>Collection-&gt;each()</code>配合closure，其效果相當於<code>for迴圈</code>，但程式更加精簡。</li>
+</ul>
+<h2 id="Sample_Code">Sample Code</h2><hr>
+<p>完整的範例可以在我的<a href="https://github.com/oomusou/" target="_blank" rel="external">GitHub</a>上找到。</p>
+<ol>
+<li><a href="https://github.com/oomusou/Laravel52ModelFactoryNoRelationOneToOne_demo" target="_blank" rel="external">沒有使用Relation的一對一</a></li>
+<li><a href="https://github.com/oomusou/Laravel52ModelFactoryRelationOneToOne_demo" target="_blank" rel="external">使用Relation的一對一</a></li>
+<li><a href="https://github.com/oomusou/Laravel52ModelFactoryRelationOneToMany_demo" target="_blank" rel="external">使用Relation的一對多</a></li>
+</ol>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/phpstorm/phpstorm-git-rm-idea/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/phpstorm/phpstorm-new-laravel-project/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-01-02 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

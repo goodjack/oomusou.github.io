@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 macOS 安裝 Laravel 前端開發環境 ? | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="使用 Laravel Elixir 自動化前端開發">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="使用 Laravel Elixir 自動化前端開發">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 macOS 安裝 Laravel 前端開發環境 ?">
+<meta property="og:url" content="http://oomusou.io/laravel/elixir/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="使用 Laravel Elixir 自動化前端開發">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-18T10:27:29.707Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在 macOS 安裝 Laravel 前端開發環境 ?">
+<meta name="twitter:description" content="使用 Laravel Elixir 自動化前端開發">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 如何在 macOS 安裝 Laravel 前端開發環境 ?</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> 使用 Laravel Elixir 自動化前端開發			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#版本考量"><span class="toc-article-text">版本考量</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Homebrew"><span class="toc-article-text">安裝 Homebrew</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_NVM"><span class="toc-article-text">安裝 NVM</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Node-js_與_NPM"><span class="toc-article-text">安裝 Node.js 與 NPM</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Gulp"><span class="toc-article-text">安裝 Gulp</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安裝_Laravel_Elixir"><span class="toc-article-text">安裝 Laravel Elixir</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Appendix"><span class="toc-article-text">Appendix</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#切換_Node-js版本"><span class="toc-article-text">切換 Node.js版本</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#設定_Node-js_預設版本"><span class="toc-article-text">設定 Node.js 預設版本</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Laravel 雖然為後端 framework，但提供了 Laravel Elixir 整合了很多好用前端工具，其基於 3 個更基本的前端工具 : <strong>Node.js</strong>、<strong>NPM</strong> 與 <strong>Gulp</strong>，這三個必須先搞定後，才能享受 Laravel Elixir 所帶來的便利。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>Laravel 5.2.23<br>Homestead 0.4.2<br>Node.js 5.7<br>NPM 3.6<br>Gulp 3.9.1</p>
+<h2 id="版本考量">版本考量</h2><hr>
+<p>Node.js 版本更新迅速，裝最新版 Node.js 不見得是好事，因為 :</p>
+<ol>
+<li>我們主要目的是使用 Laravel Elixir，而不是開發 Node.js 應用程式。</li>
+<li>Laravel Elixir 整合了很多 Node.js 套件，這些套件或工具的更新速度不見得跟得上最新版的 Node.js 更新速度。</li>
+</ol>
+<p>因此 Laravel Elixir 穩定最重要，一味著更新 Node.js，反而會造成 Laravel Elixir 出現未知的問題。</p>
+<p>實務上有 2 種使用 Laravel Elixir 方式 :</p>
+<ol>
+<li><strong>直接使用 Homestead</strong> : Homestead 已經幫你裝好 Node.js、NPM 與 Gulp，不用擔心版本問題。<span class="margin-note-marker"><sup>1</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">1</span>若想直接在 Homestead 內使用前端工具，詳細請參考<a href="/laravel/homestead/homestead-osx/">如何在 OS X 安裝 Homestead?</a></span></span></span></li>
+<li><strong>參考 Homestead 的版本</strong> : 參考 Homestead 的 Node.js、NPM 與 Gulp 版本，將相同的版本安裝在 OS X。</li>
+</ol>
+<p>本文參考的是 Homestead 0.4.2，其版本為 :</p>
+<ol>
+<li>Node.js 5.7</li>
+<li>NPM 3.6</li>
+<li>Gulp 3.9.1</li>
+</ol>
+<h2 id="安裝_Homebrew">安裝 Homebrew</h2><hr>
+<p>Homebrew 為 OS X 最流行的套件管理工具，我們將使用 Homebrew 安裝 NVM。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ /usr/bin/ruby -e &#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&#34;</span><br></pre></td></tr></table></figure>
+<h2 id="安裝_NVM">安裝 NVM</h2><hr>
+<p>NVM 全名為 Node Version Manager，我們將使用 NVM 安裝 Node.js，並使用 NVM 切換 Node.js 版本。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ brew install nvm</span><br></pre></td></tr></table></figure>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node000.png" alt=""></p>
+<div class="alert alert-info"><i class="fa fa-info"></i>  為什麼需要切換 Node.js 版本呢?</div>
+<p>因為Node.js版本更新快速，你用的套件或工具可能來不及支援新版Node.js，因此實務上有可能必須切換到舊版本的Node.js，才能使用該套件或工具。</p>
+<h2 id="安裝_Node-js_與_NPM">安裝 Node.js 與 NPM</h2><hr>
+<p>目前前端工具大部分都基於 Node.js，其優點是執行速度快，又有跨平台的優勢。</p>
+<p>NPM 全名為 Node Package Manager，為 Node.js 的套件管理工具，類似 PHP 的 Composer  角色。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ nvm install 5.7</span><br></pre></td></tr></table></figure>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node001.png" alt=""></p>
+<p>安裝 Node.js 5.7。</p>
+<p><strong>確認 Node.js 版本</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ node -v</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node002.png" alt=""></p>
+<p><strong>確認 NPM 版本</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm -v</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node003.png" alt=""></p>
+<h2 id="安裝_Gulp">安裝 Gulp</h2><hr>
+<p>Gulp 為前端自動化管理工具，Laravel Elixir 就是 Gulp 的再次封裝。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ npm install -g gulp@3.9.1</span><br></pre></td></tr></table></figure>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node004.png" alt=""></p>
+<p>安裝 Gulp 3.9.1。</p>
+<p><strong> -g </strong> : 因為每個專案都會用到 Gulp，因此將 Gulp 安裝在 global 區。</p>
+<p><strong>確認 Gulp 版本</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ gulp -v</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node005.png" alt=""></p>
+<h2 id="安裝_Laravel_Elixir">安裝 Laravel Elixir</h2><hr>
+<p>Laravel Elixir 整合了眾多前端工具，讓你不用自己寫 Gulp 就可達到前端自動化。</p>
+<p><strong>建立Laravel專案</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ composer create-project laravel/laravel Laravel52Elixir --prefer-dist</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node007.png" alt=""></p>
+<p>使用 Composer 建立 Laravel 專案。</p>
+<p><strong>安裝 Laravel Elixir </strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ npm install</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node008.png" alt=""></p>
+<p>安裝Laravel Elixir與前端工具。</p>
+<p><strong>測試 Laravel Elixir </strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~/MyProject$ gulp</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node011.png" alt=""></p>
+<p>右上角顯示 <code>Saas Compiled</code>，表示 Node.js、NPM、Gulp 與 Laravel Elixir 安裝成功。</p>
+<h2 id="Appendix">Appendix</h2><hr>
+<p>若將來需要切換 Node.js 版本，可參考以下方式 :</p>
+<h3 id="切換_Node-js版本">切換 Node.js版本</h3><p><strong>顯示 Node.js 所有版本</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ nvm list</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node006.png" alt=""></p>
+<p>目前顯示 OS X 除了剛裝的 Node.js 5.7 外，還有 0.12 版，且預設為 0.12。<span class="margin-note-marker"><sup>2</sup></span> <span class="block margin-div-outer"><span class="block margin-div-inner"><span class="block margin-note"><span class="margin-note-marker">2</span>新安裝 Node.js 不會有兩個版本，此為特別示範如何切換 Node.js 版本。</span></span></span></p>
+<p><strong>切換目前 Node.js 版本</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ nvm use 5.7</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node009.png" alt=""></p>
+<p>將目前 Node.js 切換到 5.7。</p>
+<h3 id="設定_Node-js_預設版本">設定 Node.js 預設版本</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oomusou@mac:~$ nvm alias default 5.7</span><br></pre></td></tr></table></figure>
+<p><img src="/images/laravel/elixir/elixir-nodejs/node010.png" alt=""></p>
+<p>以後整個 OS X 的 Node.js 預設版本就是 5.7。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>Laravel Elixir 提供了很多前端開發工具，本文只是 Laravel Elixir 的起手式，將難搞的 Node.js、NPM 與 Gulp 先在 OS X 搞定。</li>
+<li>當 Laravel Elixir 安裝失敗時，可以參考 Homestead的Node.js、NPM 與 Gulp 版本，就算不使用 Homestead 開發，也可以把 Homestead 當成 golden sample 參考。</li>
+<li>若遇到某些套件與工具只能搭配特定 Node.js 版本，別忘了使用 NVM 切換 Node.js 版本。</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/phpstorm/phpstorm-if-switch/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/laravel/homestead/homestead-per-project/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-03-22 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Laravel/">Laravel<span>48</span></a></li> <li><a href="/tags/macOS/">macOS<span>11</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

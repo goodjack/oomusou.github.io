@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-16T03:43:18.911Z</updated>
+  <updated>2018-02-16T03:43:18.000Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/macos/uninstall-folder/"/>
     <id>http://oomusou.io/macos/uninstall-folder/</id>
     <published>2018-02-18T12:23:43.000Z</published>
-    <updated>2018-02-16T03:43:18.911Z</updated>
+    <updated>2018-02-16T03:43:18.000Z</updated>
     <content type="html"><![CDATA[<p>關於 macOS 的原生 app，雖然可以透過 <code>AppCleaner</code> 或原廠提供了 <code>Uninstall App</code> 移除，但實務上仍會發現一些 app 自己的 <code>設定檔</code> 或 <code>暫存檔</code>，無法百分之百的從系統刪除，需手動加以處理。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -46,7 +46,7 @@
     <link href="http://oomusou.io/angular/browser-cache/"/>
     <id>http://oomusou.io/angular/browser-cache/</id>
     <published>2018-02-17T12:23:43.000Z</published>
-    <updated>2018-02-15T02:02:36.474Z</updated>
+    <updated>2018-02-15T02:02:36.000Z</updated>
     <content type="html"><![CDATA[<p>瀏覽器為了效能，會對 HTML、JavaScript 與 CSS 做 cache，其本意是好的，但對於 developer 來說，卻擔心更新到 production server 後，user 仍然是執行到被瀏覽器 cache 的 HTML、JavaScript 與 CSS，Angular 該如何解決這個問題呢 ?</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -109,10 +109,10 @@
   
   <entry>
     <title><![CDATA[如何使用 Docker 安裝 Ubuntu ?]]></title>
-    <link href="http://oomusou.io/Docker/ubuntu/"/>
-    <id>http://oomusou.io/Docker/ubuntu/</id>
+    <link href="http://oomusou.io/docker/ubuntu/"/>
+    <id>http://oomusou.io/docker/ubuntu/</id>
     <published>2018-02-16T12:23:43.000Z</published>
-    <updated>2018-02-14T09:27:39.628Z</updated>
+    <updated>2018-02-14T09:27:39.000Z</updated>
     <content type="html"><![CDATA[<p>以前在 macOS 安裝 Ubuntu 都要先安裝 Parallel Desktop，然後再將 Ubuntu 安裝在 Parallel Desktop 上，安裝了 Docker for Mac 後，只要下載 Ubuntu 的 Docker image，Ubuntu 就能以 container 形式跑在 Docker 上。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -253,11 +253,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何建立 Lazy Loading Module ?]]></title>
+    <title><![CDATA[如何在 Angular 建立 Lazy Loading Module ?]]></title>
     <link href="http://oomusou.io/angular/lazy-loading-module/"/>
     <id>http://oomusou.io/angular/lazy-loading-module/</id>
     <published>2018-02-15T12:23:43.000Z</published>
-    <updated>2018-02-14T03:22:51.023Z</updated>
+    <updated>2018-02-18T10:14:26.134Z</updated>
     <content type="html"><![CDATA[<p>隨著 app 開發越來越大，若將所有的 route 都寫在 <code>AppModule</code>，除了難以維護外，還必須在一開始就載入全部 component，使得 Angular 載入時間變久；比較好的方式是將 component 切成 module，並有自己的 route，當 user 點入該 route 時，才去下載該 module，這就是 lazy loading。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -399,7 +399,7 @@
     <link href="http://oomusou.io/vscode/toggle-terminal/"/>
     <id>http://oomusou.io/vscode/toggle-terminal/</id>
     <published>2018-02-14T12:23:43.000Z</published>
-    <updated>2018-02-14T02:45:05.772Z</updated>
+    <updated>2018-02-14T02:45:05.000Z</updated>
     <content type="html"><![CDATA[<p>由於 VS Code 內建 terminal，因此我們可以直接在 VS Code 內直接下 command，也因此我們需要一個 shortcut，可快速在 editor 與 terminal 間 toggle。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -442,11 +442,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何建立 Route ?]]></title>
+    <title><![CDATA[如何在 Angular 建立 Route ?]]></title>
     <link href="http://oomusou.io/angular/simple-route/"/>
     <id>http://oomusou.io/angular/simple-route/</id>
     <published>2018-02-13T12:23:43.000Z</published>
-    <updated>2018-02-14T03:18:14.593Z</updated>
+    <updated>2018-02-18T10:30:00.363Z</updated>
     <content type="html"><![CDATA[<p>傳統以後端為主的 MVC 寫法，route 會寫在後端；前後端分離的 SPA 寫法，前後端有各自的 route，前端的 route 負責切換 component，而後端的 route 則負責 API。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -581,7 +581,7 @@
     <link href="http://oomusou.io/macos/install-app/"/>
     <id>http://oomusou.io/macos/install-app/</id>
     <published>2018-02-12T12:23:43.000Z</published>
-    <updated>2018-02-11T14:31:20.030Z</updated>
+    <updated>2018-02-11T14:31:20.000Z</updated>
     <content type="html"><![CDATA[<p>macOS 雖然很好用，但在安裝/反安裝 app 的方式與 Windows 不太一樣，這是剛從 Windows 跳到 macOS 時一定會疑惑的地方。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -650,7 +650,7 @@
     <link href="http://oomusou.io/macos/myapp/"/>
     <id>http://oomusou.io/macos/myapp/</id>
     <published>2018-02-10T12:23:43.000Z</published>
-    <updated>2018-02-13T03:09:22.586Z</updated>
+    <updated>2018-02-13T03:09:22.000Z</updated>
     <content type="html"><![CDATA[<p>Macbook Pro 15 一直是我很推薦的 <code>工作神器</code>， 雖然很貴，但卻很值得投資。我不敢說我 Mac 用的多好，但使用了 3 年的 macOS，多少累積了一些經驗，試過不少 app，目前還會繼續用的，基本上都是工作用起來很順的 app，在此分享給大家。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1092,11 +1092,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何使用 Angular 實現 Pub/Sub Pattern ?]]></title>
-    <link href="http://oomusou.io/angular/pubsub/"/>
-    <id>http://oomusou.io/angular/pubsub/</id>
+    <title><![CDATA[如何在 Angular 實現 Pub/Sub Pattern ?]]></title>
+    <link href="http://oomusou.io/design-pattern/pubsub/"/>
+    <id>http://oomusou.io/design-pattern/pubsub/</id>
     <published>2018-02-04T12:23:43.000Z</published>
-    <updated>2018-02-03T05:32:03.000Z</updated>
+    <updated>2018-02-18T10:15:18.689Z</updated>
     <content type="html"><![CDATA[<p>Pub/Sub Pattern 是 OOP 中著名的 Design Pattern，尤其應付 <code>多對多</code> 的場景特別有效。在本文中，我們將以 Angular 與 TypeScript 實現。</p>
 <p>Pub/Sub Pattern 與 Observer Pattern 非常接近，將特別探討與 Observer Pattern 之間的差異。</p>
 <a id="more"></a>
@@ -1295,8 +1295,6 @@
     
       <category term="Design Pattern" scheme="http://oomusou.io/tags/Design-Pattern/"/>
     
-      <category term="TypeScript" scheme="http://oomusou.io/tags/TypeScript/"/>
-    
   </entry>
   
   <entry>
@@ -1384,11 +1382,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何對 Route 單元測試 ?]]></title>
+    <title><![CDATA[如何在 Angular 對 Route 單元測試 ?]]></title>
     <link href="http://oomusou.io/angular/route-unit-test/"/>
     <id>http://oomusou.io/angular/route-unit-test/</id>
     <published>2018-02-02T12:23:43.000Z</published>
-    <updated>2018-02-05T08:09:24.000Z</updated>
+    <updated>2018-02-18T09:58:25.803Z</updated>
     <content type="html"><![CDATA[<p>前後端分離後，Angular 有自己的 route，在 component 也必須處理 route。由於 component 是 DI 注入 <code>Router</code>，因此若要對 route 單元測試，首先必須要解決的就是 <code>Router</code> 注入問題 。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -1460,8 +1458,6 @@
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
     
-      <category term="Angular Testing" scheme="http://oomusou.io/tags/Angular-Testing/"/>
-    
   </entry>
   
   <entry>
@@ -1518,11 +1514,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[如何對 Service 單元測試 ?]]></title>
+    <title><![CDATA[如何在 Angular 對 Service 單元測試 ?]]></title>
     <link href="http://oomusou.io/angular/service-unit-test/"/>
     <id>http://oomusou.io/angular/service-unit-test/</id>
     <published>2018-01-28T12:23:43.000Z</published>
-    <updated>2018-02-05T05:30:19.000Z</updated>
+    <updated>2018-02-18T09:58:50.530Z</updated>
     <content type="html"><![CDATA[<p>凡與顯示相關邏輯，我們會寫在 component；凡與資料相關邏輯，我們會寫在 service。而 service 最常見的應用，就是透過 <code>HttpClient</code> 存取 API。</p>
 <p>對於 service 單元測試而言，我們必須對 <code>HttpClient</code> 加以隔離；而對 component 單元測試而言，我們必須對 <code>service</code> 加以隔離，我們該如何對 service 與 component 進行單元測試呢 ?</p>
 <a id="more"></a>
@@ -1701,8 +1697,6 @@
     </summary>
     
       <category term="Angular" scheme="http://oomusou.io/tags/Angular/"/>
-    
-      <category term="Angular Testing" scheme="http://oomusou.io/tags/Angular-Testing/"/>
     
   </entry>
   
