@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-19T14:13:44.873Z</updated>
+  <updated>2018-02-19T14:24:07.564Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/interface/"/>
     <id>http://oomusou.io/typescript/interface/</id>
     <published>2018-02-19T12:23:43.000Z</published>
-    <updated>2018-02-19T14:13:44.873Z</updated>
+    <updated>2018-02-19T14:24:07.564Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 與 ECMAScript 最大的差別就是 interface，一些 TypeScript 先進的功能，陸續被 ECMAScript 所接受，但由於 ECMAScript 偏向動態弱型別觀念，將來採用 interface 的機會渺茫，interface 也成為 TypeScript 與 ECMAScript 最大的分水嶺。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -56,20 +56,18 @@
 <p>當看到一隻鳥走起來像鴨子、游泳起來像鴨子、叫起來也像鴨子，那麼這隻鳥就可以被稱為鴨子。 </p>
 </blockquote>
 <p>白話 : 物件只要有該型別相同的 property 與 method，就算是該 class 型別。</p>
-<blockquote>
 <p>用於動態弱型別 script。</p>
 <p>執行階段檢查型別是否正確。</p>
 <p>JavaScript 、Ruby 屬於 Duck Typing。</p>
-</blockquote>
 <p><strong>Strong Typing</strong></p>
 <blockquote>
 <p>由母鴨生產的鴨子，才算是鴨子。</p>
 </blockquote>
 <p>白話 : 物件必須透過 class 的 <code>new</code> 建立，物件才算是該 class 型別。</p>
-<blockquote>
 <p>用於強型別編譯語言。</p>
 <p>編譯階段檢查型別是否正確。</p>
 <p>C++、Java、C# 屬於 Strong Typing。</p>
+<blockquote>
 <p>Q : TypeScript 算 strong typing 還是 duck typing ?</p>
 </blockquote>
 <p>TypeScript 因為要相容 JavaScript，且最後也是編譯成 JavaScript，所以 TypeScript 本質是 duck typing，卻在編譯階段檢查型別是否正確，算是融合 strong typing 與 duck typing。</p>
@@ -82,20 +80,6 @@
 <li>interface 描述規格比較好維護</li>
 <li>IDE 的 intellisense</li>
 <li>編譯階段檢查</li>
-</ul>
-<blockquote>
-<p>Q : PHP 算 strong typing 還是 duck typing ?</p>
-</blockquote>
-<p>早期 PHP 屬於 duck typing，參數不用宣告型別，但 PHP 5 與 PHP 7 的 type hint 越來越完整後，參數也可以宣告型別，趨向 strong typing。</p>
-<p>但因為 PHP 不用編譯，所以 strong typing 效益比較不明顯 :</p>
-<p>優點</p>
-<ul>
-<li>interface 描述規格比較好維護</li>
-<li>IDE 的 intellisense</li>
-</ul>
-<p>缺點</p>
-<ul>
-<li>PHP 沒有編譯，還是只能在執行階段檢查</li>
 </ul>
 <blockquote>
 <p>目前程式語言的強型別與弱型別已經漸漸模糊，如 C# 也開始吸取弱型別語言的優點 : <code>var</code>、<code>dynamic</code>，PHP 也開始學習強型別語言的精華 : type hint 與 interface。</p>
