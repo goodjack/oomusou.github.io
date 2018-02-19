@@ -1,0 +1,572 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入探討 TypeScript 之 Interface | 點燈坊</title>
+  <meta name="author" content="真 OO無双">
+  
+  <meta name="description" content="Interface 是 TypeScript 的招牌菜">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta name="description" content="Interface 是 TypeScript 的招牌菜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探討 TypeScript 之 Interface">
+<meta property="og:url" content="http://oomusou.io/typescript/interface/index.html">
+<meta property="og:site_name" content="點燈坊">
+<meta property="og:description" content="Interface 是 TypeScript 的招牌菜">
+<meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
+<meta property="og:updated_time" content="2018-02-19T14:13:44.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探討 TypeScript 之 Interface">
+<meta name="twitter:description" content="Interface 是 TypeScript 的招牌菜">
+ 
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+     <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		<li><a  href="/">點燈坊</a></li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+	
+		<div class="page-header">		
+			<h1> 深入探討 TypeScript 之 Interface</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+	
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> Interface 是 TypeScript 的招牌菜			
+		</div> <!-- alert -->
+		
+
+	<!-- toc -->
+	<div id="postTOC">
+		<span class="tocHeading">Contents</span>
+		<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Version"><span class="toc-article-text">Version</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#TypeScript_Interface"><span class="toc-article-text">TypeScript Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Object_Interface"><span class="toc-article-text">Object Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Index_Interface"><span class="toc-article-text">Index Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Class_Interface"><span class="toc-article-text">Class Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Constructor_Interface"><span class="toc-article-text">Constructor Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Function_Interface"><span class="toc-article-text">Function Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Hybrid_Interface"><span class="toc-article-text">Hybrid Interface</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Inheritance"><span class="toc-article-text">Inheritance</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Conclusion"><span class="toc-article-text">Conclusion</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Reference"><span class="toc-article-text">Reference</span></a></li></ol>
+    </div>
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>TypeScript 與 ECMAScript 最大的差別就是 interface，一些 TypeScript 先進的功能，陸續被 ECMAScript 所接受，但由於 ECMAScript 偏向動態弱型別觀念，將來採用 interface 的機會渺茫，interface 也成為 TypeScript 與 ECMAScript 最大的分水嶺。</p>
+<a id="more"></a>
+<h2 id="Version">Version</h2><hr>
+<p>TypeScript 2.5</p>
+<h2 id="TypeScript_Interface">TypeScript Interface</h2><hr>
+<p>有別於一般強型別語言的 interface，TypeScript 一共提供 6 種 interface</p>
+<ul>
+<li>Object interface</li>
+<li>Index interface</li>
+<li>Class interface</li>
+<li>Constructor interface</li>
+<li>Function interface</li>
+<li>Hybrid interface</li>
+</ul>
+<h2 id="Object_Interface">Object Interface</h2><hr>
+<blockquote>
+<p>定義 object 的 public property</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: &#123; label: <span class="built_in">string</span> &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myObj = &#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;;</span><br><span class="line">printLabel(myObj);</span><br></pre></td></tr></table></figure>
+<p><code>printLabel()</code> 期望傳入的 paremeter 為 <code>{ label: string }</code> 型別的 object，只有一個 <code>label</code> property。</p>
+<p>但實際上傳入的 <code>myObj</code>，除了有 <code>label</code> property 外，還多了 <code>size</code> property，但也通過了 TypeScript 的編譯檢查。</p>
+<p>也就是說，TypeScript 採用的是 duck typing 策略 :</p>
+<blockquote>
+<p>只要傳入的 argument 有 parameter 要求的 property 即可，因此 argument 可以傳入比 parameter 要求更多的 property 的物件。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myObj = &#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;;</span><br><span class="line">printLabel(myObj);</span><br></pre></td></tr></table></figure>
+<p><code>printLabel()</code> 的 parameter 型別，除了直接寫在 function 的參數列外，若這個型別檢查會被重複使用，則建議抽成 <code>LabelledValue</code> interface。</p>
+<p>目前還沒看到有任何重構工具可以將 parameter 的型別抽成 interface，只能手動作。</p>
+<blockquote>
+<p>Q : 什麼是 Duck Typing 與 Strong Typing ?</p>
+</blockquote>
+<p><strong>Duck Typing</strong></p>
+<blockquote>
+<p>當看到一隻鳥走起來像鴨子、游泳起來像鴨子、叫起來也像鴨子，那麼這隻鳥就可以被稱為鴨子。 </p>
+</blockquote>
+<p>白話 : 物件只要有該型別相同的 property 與 method，就算是該 class 型別。</p>
+<blockquote>
+<p>用於動態弱型別 script。</p>
+<p>執行階段檢查型別是否正確。</p>
+<p>JavaScript 、Ruby 屬於 Duck Typing。</p>
+</blockquote>
+<p><strong>Strong Typing</strong></p>
+<blockquote>
+<p>由母鴨生產的鴨子，才算是鴨子。</p>
+</blockquote>
+<p>白話 : 物件必須透過 class 的 <code>new</code> 建立，物件才算是該 class 型別。</p>
+<blockquote>
+<p>用於強型別編譯語言。</p>
+<p>編譯階段檢查型別是否正確。</p>
+<p>C++、Java、C# 屬於 Strong Typing。</p>
+<p>Q : TypeScript 算 strong typing 還是 duck typing ?</p>
+</blockquote>
+<p>TypeScript 因為要相容 JavaScript，且最後也是編譯成 JavaScript，所以 TypeScript 本質是 duck typing，卻在編譯階段檢查型別是否正確，算是融合 strong typing 與 duck typing。</p>
+<p>Duck typing 的靈活 </p>
+<ul>
+<li>不須 <code>new</code> 則可使用</li>
+</ul>
+<p>Strong typing 的嚴謹 </p>
+<ul>
+<li>interface 描述規格比較好維護</li>
+<li>IDE 的 intellisense</li>
+<li>編譯階段檢查</li>
+</ul>
+<blockquote>
+<p>Q : PHP 算 strong typing 還是 duck typing ?</p>
+</blockquote>
+<p>早期 PHP 屬於 duck typing，參數不用宣告型別，但 PHP 5 與 PHP 7 的 type hint 越來越完整後，參數也可以宣告型別，趨向 strong typing。</p>
+<p>但因為 PHP 不用編譯，所以 strong typing 效益比較不明顯 :</p>
+<p>優點</p>
+<ul>
+<li>interface 描述規格比較好維護</li>
+<li>IDE 的 intellisense</li>
+</ul>
+<p>缺點</p>
+<ul>
+<li>PHP 沒有編譯，還是只能在執行階段檢查</li>
+</ul>
+<blockquote>
+<p>目前程式語言的強型別與弱型別已經漸漸模糊，如 C# 也開始吸取弱型別語言的優點 : <code>var</code>、<code>dynamic</code>，PHP 也開始學習強型別語言的精華 : type hint 與 interface。</p>
+</blockquote>
+<p><strong>Optional Property</strong></p>
+<p>實務上有些 property 有預設值，因此在傳入 function 時可以不用提供。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> SquareConfig </span>&#123;</span><br><span class="line">    color?: <span class="built_in">string</span>;</span><br><span class="line">    width?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSquare</span>(<span class="params">config: SquareConfig</span>): </span>&#123;color: <span class="built_in">string</span>; area: <span class="built_in">number</span>&#125; &#123;</span><br><span class="line">    <span class="keyword">let</span> newSquare = &#123;color: <span class="string">"white"</span>, area: <span class="number">100</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span> (config.color) &#123;</span><br><span class="line">        newSquare.color = config.color;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (config.width) &#123;</span><br><span class="line">        newSquare.area = config.width * config.width;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newSquare;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mySquare1 = createSquare(&#123;color:<span class="string">'black'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare1.area); <span class="comment">// 100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mySquare2 = createSquare(&#123;color:<span class="string">'black'</span>, width:<span class="number">20</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare2.area); <span class="comment">// 400</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mySquare3 = createSquare(&#123;&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare3.area); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> SquareConfig </span>&#123;</span><br><span class="line">    color?: <span class="built_in">string</span>;</span><br><span class="line">    width?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>color</code> 與 <code>width</code> 為 <code>SquareConfig</code> 的 property，但因為加上 <code>?</code>，因此也可省略。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySquare1 = createSquare(&#123;color:<span class="string">'black'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare1.area); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+<p>因此可以直提供一個 <code>color</code>  property 即可。</p>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySquare2 = createSquare(&#123;color:<span class="string">'black'</span>, width:<span class="number">20</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare2.area); <span class="comment">// 400</span></span><br></pre></td></tr></table></figure>
+<p>提供完整的兩個 <code>color</code> 與 <code>width</code> property 的 object 當然沒問題。</p>
+<p>23 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySquare3 = createSquare(&#123;&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(mySquare3.area); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+<p>提供一個 empty object，完全沒有 property 亦可。</p>
+<p>第 6 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSquare</span>(<span class="params">config: SquareConfig</span>): </span>&#123;color: <span class="built_in">string</span>; area: <span class="built_in">number</span>&#125; &#123;</span><br><span class="line">    <span class="keyword">let</span> newSquare = &#123;color: <span class="string">"white"</span>, area: <span class="number">100</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span> (config.color) &#123;</span><br><span class="line">        newSquare.color = config.color;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (config.width) &#123;</span><br><span class="line">        newSquare.area = config.width * config.width;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newSquare;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也因為 property 為 optional，所以必須檢查是否有 property，並提供預設值。</p>
+<p><strong>Excess Property Checkes</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printLabel(&#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>在之前我們知道 TypeScript 對於 object 使用 duck typing 檢查型別，但對於 object literal，TypeScript 則採用 strong typing 方式。</p>
+<blockquote>
+<p>Object Literal</p>
+<p>直接使用 <code>{}</code> 方式建立物件</p>
+</blockquote>
+<p><code>labelledObj</code> 型別只有 <code>label</code> property，傳入 <code>{size: 10, label: &quot;Size 10 Object&quot;}</code> 多了 <code>size</code> property，TypeScript 編譯時將產生以下錯誤 :</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error TS23</span><br><span class="line"><span class="number">45</span>: Argument <span class="keyword">of</span> <span class="keyword">type</span> <span class="string">'&#123;size: number; label: string; &#125;'</span> is <span class="keyword">not</span> assign</span><br><span class="line">able <span class="keyword">to</span> parameter <span class="keyword">of</span> <span class="keyword">type</span> <span class="string">'LabelledValue'</span>.</span><br><span class="line"><span class="keyword">Object</span> literal may only specify known properties, <span class="keyword">and</span> <span class="string">'size'</span> does <span class="keyword">not</span> exist <span class="keyword">in</span> <span class="keyword">type</span> <span class="string">'LabelledValue'</span></span><br></pre></td></tr></table></figure>
+<p>若以 duck typing 角度而言，<code>label</code> property  可視為多餘的 property，無傷大雅，但實務上，多出來的 property 很可能是 typo，如 API 已經規定了 JSON 物件 spec，你只會傳遞 spec 定好 property 的 JSON 物件，而不會多傳其他 property，多出來的 property 大概都是 typo。</p>
+<blockquote>
+<p>TypeScript takes the stance that there’s probably a bug in this code. Object literals get special treatment and undergo <em>excess property checking</em> when assigning them to other variables, or passing them as arguments. If an object literal has any properties that the “target type” doesn’t have, you’ll get an error.</p>
+</blockquote>
+<p>根據 TypeScript 官網文件，對於 Excess Property Checkes 做了以下的解釋 : </p>
+<blockquote>
+<p>TypeScript 對於這類程式碼，採取可能有 bug 的態度。當 object literal 指定給其他變數，或者以 argument 方式傳入 function，將採取 excess property check 方式檢查型別，如果 object literal 有 target type 所沒有的 property，將編譯錯誤。</p>
+<p>Q : 若真的要傳入比 interface 還多 property 的 object，我該怎麼做 ?</p>
+</blockquote>
+<ol>
+<li>使用 Object 傳入</li>
+<li>使用 Type Assertion</li>
+<li>使用 String Index Signature</li>
+</ol>
+<p><strong>使用 Object 傳入</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myObj = &#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;;</span><br><span class="line">printLabel(myObj);</span><br></pre></td></tr></table></figure>
+<p>由於 excess property checks 只針對 object literal，因此改傳 object。</p>
+<p>先將 object literal 指定給 <code>myObj</code>，再將 <code>myObj</code> 傳入 <code>printLabel</code>。</p>
+<p><strong>使用 Type Assertion</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printLabel(&lt;LabelledValue&gt;&#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>先使用 type assertion 將 <code>{size: 10, label: &quot;Size 10 Object&quot;}</code> 轉型成 <code>LabelledValue</code> 型別，再傳入 <code>printLabel()</code>。</p>
+<p><strong>使用 String Index Signature</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">    [propName:<span class="built_in">string</span>]: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj[<span class="string">'size'</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printLabel(&#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>以上兩種做法，基本上就是將多餘的 property 視而不見，目的只是為了避開編譯錯誤，若你想將多餘的 parameter 變成一種附加的資訊，可由 user 自行決定是否傳入，且 function 也可順利存取，則建議改變 interface，改用  string index signature 處理多餘的 property。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> LabelledValue </span>&#123;</span><br><span class="line">    label: <span class="built_in">string</span>;</span><br><span class="line">    [propName:<span class="built_in">string</span>]: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 interface 增加 <code>[propName:string]: any</code>，其中 property name 將成為 index name，由於不限制 user 傳入的 property 型別，因此為 <code>any</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printLabel(&#123;size: <span class="number">10</span>, label: <span class="string">"Size 10 Object"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>User 因此可以傳入額外的 <code>size</code> property，TypeScript 也不會報錯。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLabel</span>(<span class="params">labelledObj: LabelledValue</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj.label);</span><br><span class="line">    <span class="built_in">console</span>.log(labelledObj[<span class="string">'size'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>還可使用 <code>labelledObj[&#39;size&#39;]</code> 存取其他 property。</p>
+<p><strong>Readonly Property</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Point </span>&#123;</span><br><span class="line">    readonly x: <span class="built_in">number</span>;</span><br><span class="line">    readonly y: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1: Point = &#123; x: <span class="number">10</span>, y: <span class="number">20</span> &#125;;</span><br><span class="line">p1.x = <span class="number">5</span>; <span class="comment">// error!</span></span><br></pre></td></tr></table></figure>
+<p>當 object 只有在一開始建立時才能設定其 property，之後就不再能修改其 property 時，可在 property 名稱之前加上 <code>readonly</code>。</p>
+<blockquote>
+<p>Q : 該如何分辨 readonly 與 const ?</p>
+</blockquote>
+<ul>
+<li><code>readonly</code> : 用於 property</li>
+<li><code>const</code> : 用於  variable</li>
+</ul>
+<blockquote>
+<p>Q : 實務上哪裡會使用 object interface ?</p>
+</blockquote>
+<ol>
+<li>傳進 API 的 JSON 物件，或從 API 傳回的 JSON 物件，會宣告其 object interface。</li>
+<li>Component 與 service 之間的 method 以物件傳遞時 (DTO : Data Transfer Object)，會宣告其 object interface。</li>
+</ol>
+<h2 id="Index_Interface">Index Interface</h2><hr>
+<blockquote>
+<p>定義物件的 index signature</p>
+</blockquote>
+<p>JavaScript 的 object，也可以使用類似陣列的 <code>[]</code> 方式存取，<code>[]</code> 可為 number 或 string。</p>
+<p><strong>Index 為 Number</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">number</span>]: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;&#125;;</span><br><span class="line">clouds[<span class="number">0</span>] = <span class="string">'aws'</span>;</span><br><span class="line">clouds[<span class="number">1</span>] = <span class="string">'azure'</span>;</span><br><span class="line">clouds[<span class="number">2</span>] = <span class="string">'gcp'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">2</span>]);</span><br><span class="line"><span class="comment">// aws</span></span><br><span class="line"><span class="comment">// azure</span></span><br><span class="line"><span class="comment">// gcp</span></span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">number</span>]: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>[]</code> 內的 index 為 number 型別，而 <code>[]</code> 的回傳值為 string。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;&#125;;</span><br><span class="line">clouds[<span class="number">0</span>] = <span class="string">'aws'</span>;</span><br><span class="line">clouds[<span class="number">1</span>] = <span class="string">'azure'</span>;</span><br><span class="line">clouds[<span class="number">2</span>] = <span class="string">'gcp'</span>;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>clouds</code> 物件為 <code>CloudDictionary</code> index interface 型別。</p>
+<p><code>clouds</code> 的 index  必須為 number，內容必須為 string，否則 TypeScript 會編譯錯誤。</p>
+<p><strong>Index 為 String</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [key: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;&#125;;</span><br><span class="line">clouds[<span class="string">'aws'</span>] = <span class="number">0</span>;</span><br><span class="line">clouds[<span class="string">'azure'</span>] = <span class="number">1</span>;</span><br><span class="line">clouds[<span class="string">'gcp'</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'aws'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'azure'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'gcp'</span>]);</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [key: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Index signature 也可以是 string。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;&#125;;</span><br><span class="line">clouds[<span class="string">'aws'</span>] = <span class="number">0</span>;</span><br><span class="line">clouds[<span class="string">'azure'</span>] = <span class="number">1</span>;</span><br><span class="line">clouds[<span class="string">'gcp'</span>] = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>宣告 <code>clouds</code> 物件為 <code>CloudDictionary</code> index interface 型別。</p>
+<p><code>clouds</code> 的 index  必須為 string，內容必須為 number，否則 TypeScript 會編譯錯誤。</p>
+<p><strong>Index 可為 Number 與 String</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">number</span>]: <span class="built_in">string</span>;</span><br><span class="line">    [index: <span class="built_in">string</span>]: <span class="built_in">number</span> | <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;&#125;;</span><br><span class="line">clouds[<span class="number">0</span>] = <span class="string">'aws'</span>;</span><br><span class="line">clouds[<span class="number">1</span>] = <span class="string">'azure'</span>;</span><br><span class="line">clouds[<span class="number">2</span>] = <span class="string">'gcp'</span>;</span><br><span class="line">clouds[<span class="string">'aws'</span>] = <span class="number">0</span>;</span><br><span class="line">clouds[<span class="string">'azure'</span>] = <span class="number">1</span>;</span><br><span class="line">clouds[<span class="string">'gcp'</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">0</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="number">2</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'aws'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'azure'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'gcp'</span>]);</span><br><span class="line"><span class="comment">// aws</span></span><br><span class="line"><span class="comment">// azure</span></span><br><span class="line"><span class="comment">// gcp</span></span><br><span class="line"><span class="comment">// aws</span></span><br><span class="line"><span class="comment">// azure</span></span><br><span class="line"><span class="comment">// gcp</span></span><br></pre></td></tr></table></figure>
+<p>若希望將前面兩個範例合一，讓 <code>CloudDictionary</code> 同時可接受 number 與 string 的 index。</p>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">number</span>]: <span class="built_in">string</span>;</span><br><span class="line">    [index: <span class="built_in">string</span>]: <span class="built_in">number</span> | <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比較 tricky 的是這一段 :</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[index: <span class="built_in">string</span>]: <span class="built_in">number</span> | <span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
+<p>除了原本的 number，還要加上 string。</p>
+<p>因為 <code>clouds[1]</code>，在 JavaScript 也可以寫成 <code>clouds[&#39;1&#39;]</code>，所以若要寫 string index signature 時，還必須考慮相容於 number index signature，否則 TypeScript 會編譯錯誤。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Animal &#123;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(public name: string) </span>&#123;&#125;    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> Dog extends Animal &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> IZoo </span>&#123;</span><br><span class="line">    [x: <span class="built_in">number</span>]: Dog;</span><br><span class="line">    [x: <span class="built_in">string</span>]: Animal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> zoo: IZoo = &#123;&#125;;</span><br><span class="line">zoo[<span class="number">0</span>] = <span class="keyword">new</span> Dog(<span class="string">'Sam'</span>);</span><br><span class="line">zoo[<span class="string">'Kevin'</span>] = <span class="keyword">new</span> Animal(<span class="string">'Kevin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(zoo[<span class="number">0</span>].name);</span><br><span class="line"><span class="built_in">console</span>.log(zoo[<span class="string">'Kevin'</span>].name);</span><br><span class="line"><span class="comment">// Sam</span></span><br><span class="line"><span class="comment">// Kevin</span></span><br></pre></td></tr></table></figure>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> IZoo </span>&#123;</span><br><span class="line">    [x: <span class="built_in">number</span>]: Dog;</span><br><span class="line">    [x: <span class="built_in">string</span>]: Animal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若 index 的 return type 是 class type，理論上應該寫成 <code>[x: string]: Animal | Dog</code>，但因為 <code>Dog</code> 繼承於 <code>Animal</code>，基於<code>里氏替換原則</code> : <code>父類別可以用子類別代替</code>，簡化成 <code>Animal</code> 即可。 </p>
+<p><strong>Index 搭配 Property</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">    name: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clouds: CloudDictionary = &#123;</span><br><span class="line">    name: <span class="number">10</span></span><br><span class="line">&#125;;</span><br><span class="line">clouds[<span class="string">'aws'</span>] = <span class="number">0</span>;</span><br><span class="line">clouds[<span class="string">'azure'</span>] = <span class="number">1</span>;</span><br><span class="line">clouds[<span class="string">'gcp'</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'aws'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'azure'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds[<span class="string">'gcp'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(clouds.aws);</span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudDictionary </span>&#123;</span><br><span class="line">    [index: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">    name: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Index interface 若包含 property，則 property 的型別必須與 index 的回傳型別相同。</p>
+<p>因為在 JavaScript，<code>obj[&quot;property&quot;]</code> 也可以寫成 <code>obj.property</code>，所以 property 的型別必須與 index 型別一致。 </p>
+<h2 id="Class_Interface">Class Interface</h2><hr>
+<blockquote>
+<p>定義 class 的 public method 與 property</p>
+</blockquote>
+<p>一般物件導向語言 (C#、Java、PHP) 的 interface 都屬於 class interface，要求 class 須具備哪些 public method 與 property 時，會使用 interface 特別定義。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockInterface </span>&#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockInterface &#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ClockInterface</code> 定義了 class 該有 <code>currentTime</code> property，且型別為 <code>Date</code>。</p>
+<p><code>Clock</code> class <code>implements</code> 了 <code>ClockInterface</code> 後，就必須有 <code>currentTime</code> property，且型別為 <code>Date</code>，否則會編譯錯誤。</p>
+<blockquote>
+<p>可在 class type interface 定義 public property。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockInterface </span>&#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">    setTime(d: <span class="built_in">Date</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockInterface &#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">    setTime(d: <span class="built_in">Date</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.currentTime = d;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ClockInterface</code> 定義了 class 該有的 <code>setTime()</code> method，其 signature 為 <code>setTime(d: Date)</code>。</p>
+<p><code>Clock</code> class <code>implements</code> 了 <code>ClockInterface</code> 後，就必須有 <code>setTime()</code> method，且 signature 為 <code>setTime(d: Date)</code>，否則會編譯錯誤。</p>
+<blockquote>
+<p>可在 class interface 定義 public method。</p>
+</blockquote>
+<p>Interface 只能定義 class 的 public 部分，無法定義其 private 與 protected 部分。</p>
+<h2 id="Constructor_Interface">Constructor Interface</h2><hr>
+<blockquote>
+<p>定義 constructor 的 signature</p>
+</blockquote>
+<p>Class interface 不會去定義 constructor 的 signature，但有時候自己寫 constructor function / factory method 建立物件時，基於<code>依賴反轉原則</code>，我們會希望 object 有我們期望的 signature，因此會定義出 constructor interface，要求 class 去實踐，且受 TypeScript 編譯器檢查。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockConstructor </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> (hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockConstructor &#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">&#125; <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockConstructor </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> (hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為 <code>new</code> 會呼叫 constructor，所以使用 <code>new</code> 代表 constructor 描述所期望的 signature。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockConstructor &#123;</span><br><span class="line">    currentTime: <span class="built_in">Date</span>;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">&#125; <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+<p>基於 class interface 的經驗，我們會很直覺的使用 <code>implements</code> 配合 constructor interface，但 TypeScript 編譯後會得到以下錯誤 :</p>
+<blockquote>
+<p>error TS2420: Class ‘Clock’ incorrectly implements interface ‘ClockConstructor’.<br>  Type ‘Clock’ provides no match for the signature ‘new (hour: number, minute: number): any’.</p>
+</blockquote>
+<p>錯誤訊息指出 <code>Clock</code> 找不到符合 <code>new</code> signature 的 method。</p>
+<blockquote>
+<p>Q : 再談物件的 class level 與 object level</p>
+</blockquote>
+<p>我們知道物件的 property 與 method 分 class level 與 object level，如 <code>static</code> 屬於 class level，一般非 <code>static</code> 屬於 object level，所以也稱為 <code>static side</code> 與 <code>instance side</code>。</p>
+<blockquote>
+<p>Q : Constructor 該屬於 class level 還是 object level 呢 ?</p>
+</blockquote>
+<p>Object level 的 property 與 method 要透過 <code>new</code> 之後才能使用，所以 <code>new</code> 不該屬於 object level，只能是 class level。</p>
+<p><code>Clock</code> class <code>implements</code> 了 <code>ClockConstructor</code> interface，TypeScript 嘗試在 object level 去尋找符合 <code>new</code> signature 的 method，但 <code>constructor(h: number, m: number)</code> 屬於 class level，所以 TypeScript 在 object level 找不到符合 <code>new</code> signature 的 method，因而報錯。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockInterface </span>&#123;</span><br><span class="line">    tick();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> ClockConstructor </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> (hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span>): ClockInterface;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockInterface &#123;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">    tick() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"beep beep"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createClock</span>(<span class="params">ctor: ClockConstructor, hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span></span>): <span class="title">ClockInterface</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ctor(hour, minute);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clock = createClock(Clock, <span class="number">12</span>, <span class="number">17</span>);</span><br><span class="line">clock.tick();</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockInterface </span>&#123;</span><br><span class="line">    tick();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ClockInterface</code> 為 class interface，定義 <code>Clock</code> class 該有哪些 object level 的 method。</p>
+<p>第 5 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ClockConstructor </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> (hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span>): ClockInterface;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ClockConstructor</code> 為 construtor interface，定義 <code>Clock</code> class 的 constructor 的 signature。</p>
+<p>第 9 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Clock <span class="keyword">implements</span> ClockInterface &#123;</span><br><span class="line">    <span class="constructor"><span class="keyword">constructor</span>(h: number, m: number) </span>&#123; &#125;</span><br><span class="line">    tick() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"beep beep"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Clock</code> class <code>implments</code> 了 <code>ClockInterface</code>，此為 object level 的 interface，故可以使用 <code>implements</code>。</p>
+<p>但 <code>Clock</code> class 無法 <code>implments</code> <code>ClockConstructor</code> interface，因為此為 class level 的 interface。</p>
+<blockquote>
+<p> Q : 所以 TypeScript 編譯器就無法檢查 <code>ClockConstructor</code> interface 了嗎 ?</p>
+</blockquote>
+<p>16 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createClock</span>(<span class="params">ctor: ClockConstructor, hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span></span>): <span class="title">ClockInterface</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ctor(hour, minute);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createClock</span>(<span class="params">ctor: ClockConstructor, hour: <span class="built_in">number</span>, minute: <span class="built_in">number</span></span>): <span class="title">ClockInterface</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<p><code>createClock()</code> 為 constructor function (OOP 稱為 factory method)，第 1 個參數為 class，其型別為 <code>ClockConstructor</code> interface，之後的參數為 constructor 的 signature。</p>
+<p>當第 1 個參數傳入 class 後，TypeScript 就會在此檢查該 class 是否有實踐 <code>ClockConstructor</code> 所定義的 constructor interface。</p>
+<blockquote>
+<p>Constructor interface 不能直接使用 <code>implements</code>，必須要搭配 constructor function / factory method，在其 parameter 使用 constructor interface，如此 TypeScript 就會在此檢查 class 是否有實踐 constructor interface。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> ctor(hour, minute);</span><br></pre></td></tr></table></figure>
+<p><code>ctor</code> 實踐了 <code>ClockConstructor</code> 這個 constructor interface，因此可以直接 <code>new</code> 來建立 object。</p>
+<p>20 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> clock = createClock(Clock, <span class="number">12</span>, <span class="number">17</span>);</span><br><span class="line">clock.tick();</span><br></pre></td></tr></table></figure>
+<p>在 <code>createClock</code> 第 1 個參數傳入 <code>Clock</code>，注意 <code>Clock</code> 是個 class，不是 object。</p>
+<blockquote>
+<p><code>createClock()</code> 為典型的 constructor function，要使用 OOP 的 <code>ClockFactory.create()</code> 或 FP 的 <code>createClock()</code> ，實務上兩種都可以。</p>
+<p>目前 TypeScript 的 class level 的 interface 只有 constructor interface，並沒有描述 static property 與 static method 的 interface。</p>
+</blockquote>
+<h2 id="Function_Interface">Function Interface</h2><hr>
+<blockquote>
+<p>定義 function 的 signature</p>
+</blockquote>
+<ul>
+<li>在 OOP，我們期望 class 該有哪些 public property 與 method，可使用 class interface 描述。</li>
+<li>在 FP，我們會期望 function 該有哪些 signature，可使用 function interface 描述。</li>
+</ul>
+<p>但傳統 OOP 的 class interface 無法滿足 FP 的需求，因而有了 function interface。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ILogistics </span>&#123;</span><br><span class="line">    (weight: <span class="built_in">number</span>): <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> ShippingService &#123;</span><br><span class="line">    calculateFee(weight: <span class="built_in">number</span>, logistics: ILogistics): <span class="built_in">number</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> logistics(weight);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> shippingService = <span class="keyword">new</span> ShippingService();</span><br><span class="line"><span class="keyword">const</span> fee = shippingService.calculateFee(<span class="number">10</span>, weight =&gt; <span class="number">100</span> * weight + <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fee); <span class="comment">// 1010</span></span><br></pre></td></tr></table></figure>
+<p>第 8 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">calculateFee(weight: <span class="built_in">number</span>, logistics: ILogistics): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> logistics(weight);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>calculateFee()</code> 的第 2 個參數希望傳入一個 arrow function，其 signature 為 <code>number =&gt;number</code>。</p>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> ILogistics </span>&#123;</span><br><span class="line">    (weight: <span class="built_in">number</span>): <span class="built_in">number</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定義 <code>ILogistics</code> function interface，其 signature 為 <code>(weight: number): number</code>。</p>
+<p>12 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fee = shippingService.calculateFee(<span class="number">10</span>, weight =&gt; <span class="number">100</span> * weight + <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<p>Arrow function 為 <code>weight =&gt;100 * weight + 10</code>，TypeScript 編譯器會檢查此 arrow function 是不是符合 <code>ILogistics</code> interface。</p>
+<blockquote>
+<p>JavaScript 與 PHP 目前都無法對 closure / callback / arrow function 的 signature 做檢查，但有了 function interface 之後，就能在編譯階段檢查 function 的 signature。</p>
+</blockquote>
+<h2 id="Hybrid_Interface">Hybrid Interface</h2><hr>
+<p>由於 JavaScript 的動態語言特性，ES5 的 function 可以同時是 function，也是 object，我們可以使用 hybrid interface 來定義。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Counter </span>&#123;</span><br><span class="line">    (start: <span class="built_in">number</span>): <span class="built_in">string</span>;</span><br><span class="line">    interval: <span class="built_in">number</span>;</span><br><span class="line">    reset(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCounter</span>(<span class="params"></span>): <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> counter = &lt;Counter&gt;<span class="function"><span class="keyword">function</span> (<span class="params">start: <span class="built_in">number</span></span>) </span>&#123; &#125;;</span><br><span class="line">    counter.interval = <span class="number">123</span>;</span><br><span class="line">    counter.reset = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; &#125;;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = getCounter();</span><br><span class="line">c(<span class="number">10</span>);</span><br><span class="line">c.reset();</span><br><span class="line">c.interval = <span class="number">5.0</span>;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Counter </span>&#123;</span><br><span class="line">    (start: <span class="built_in">number</span>): <span class="built_in">string</span>;</span><br><span class="line">    interval: <span class="built_in">number</span>;</span><br><span class="line">    reset(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Counter</code> interface 同時具有 function 與 object 特性 :</p>
+<ol>
+<li>Function 的 signature 為 <code>(start: number): string</code></li>
+<li>Object 有 <code>interval</code> property 與 <code>reset()</code> method</li>
+</ol>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCounter</span>(<span class="params"></span>): <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> counter = &lt;Counter&gt;<span class="function"><span class="keyword">function</span> (<span class="params">start: <span class="built_in">number</span></span>) </span>&#123; &#125;;</span><br><span class="line">    counter.interval = <span class="number">123</span>;</span><br><span class="line">    counter.reset = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; &#125;;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同時設定 counter 有 function 與 object 部分。</p>
+<p>14 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = getCounter();</span><br><span class="line">c(<span class="number">10</span>);</span><br><span class="line">c.reset();</span><br><span class="line">c.interval = <span class="number">5.0</span>;</span><br></pre></td></tr></table></figure>
+<p><code>c</code> 可當 function，也可當 object 使用。</p>
+<blockquote>
+<p>Hybrid interface 主要用於相容 ES5 與  3rd-party 套件，新寫的 TypeScript 與 Angular 則不建議使用 hybrid interface。</p>
+</blockquote>
+<h2 id="Inheritance">Inheritance</h2><hr>
+<p><strong>Interface Extending Interface</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Shape </span>&#123;</span><br><span class="line">    color: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> Square <span class="keyword">extends</span> Shape </span>&#123;</span><br><span class="line">    sideLength: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> square = &lt;Square&gt;&#123;&#125;;</span><br><span class="line">square.color = <span class="string">"blue"</span>;</span><br><span class="line">square.sideLength = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p><code>Square</code> interface 繼承了 <code>Shape</code> interface，因此 <code>squre</code> 同時有 <code>color</code> 與 <code>sideLength</code> property。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> Shape </span>&#123;</span><br><span class="line">    color: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> PenStroke </span>&#123;</span><br><span class="line">    penWidth: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> Square <span class="keyword">extends</span> Shape, PenStroke </span>&#123;</span><br><span class="line">    sideLength: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> square = &lt;Square&gt;&#123;&#125;;</span><br><span class="line">square.color = <span class="string">"blue"</span>;</span><br><span class="line">square.sideLength = <span class="number">10</span>;</span><br><span class="line">square.penWidth = <span class="number">5.0</span>;</span><br></pre></td></tr></table></figure>
+<p><code>Square</code> interface 同時多重繼承了 <code>Shape</code> 與 <code>PenStroke</code>，因此 <code>Squre</code> 除了有自己的 <code>sideLength</code> 外，同時也具備了 <code>Shape</code> 的 <code>color</code> 與 <code>PenStroke</code> 的 <code>penWidth</code>。</p>
+<blockquote>
+<p>由於 interface 可以繼承，甚至多重繼承，因此設計 interface 時，可以遵循 <code>介面隔離原則</code> : <code>使用者不該使用用不到 method 的 interface</code> ，將 interface 開的小小的，再根據需求去組合 interface，讓物件與物件之間的耦合達到最小。</p>
+</blockquote>
+<p><strong>Interface Extending Class</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Control &#123;</span><br><span class="line">    <span class="keyword">private</span> state: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> SelectableControl <span class="keyword">extends</span> Control </span>&#123;</span><br><span class="line">    select(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Button extends Control <span class="keyword">implements</span> SelectableControl &#123;</span><br><span class="line">    select() &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> TextBox extends Control &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Error: Property 'state' is missing in type 'Image'.</span></span><br><span class="line"><span class="keyword">class</span> Image <span class="keyword">implements</span> SelectableControl &#123;</span><br><span class="line">    select() &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Location &#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Control &#123;</span><br><span class="line">    <span class="keyword">private</span> state: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="interface"><span class="keyword">interface</span> SelectableControl <span class="keyword">extends</span> Control </span>&#123;</span><br><span class="line">    select(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當 interface 繼承 class 時，有兩個特色 :</p>
+<ol>
+<li>原 Class 原本的實作部分完全捨棄，只繼承 signature 部分</li>
+<li>原 Class 的 private 與 protected 部分也會一併被繼承保留</li>
+</ol>
+<p>所以 <code>SelectableControl</code> interface 除了有 <code>select()</code> 外，也會有 private <code>state</code> property。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Button extends Control <span class="keyword">implements</span> SelectableControl &#123;</span><br><span class="line">    select() &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Button</code> 因為繼承了 <code>Control</code>，所以有 private <code>state</code> property，符合 <code>SelectableControl</code> interface 的要求。</p>
+<p>17 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Error: Property 'state' is missing in type 'Image'.</span></span><br><span class="line"><span class="keyword">class</span> Image <span class="keyword">implements</span> SelectableControl &#123;</span><br><span class="line">    select() &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Image</code> 沒有繼承 <code>Control</code> class，因此沒有 private <code>state</code> property，因此不符合 <code>SeletableControl</code> interface 的要求，TypeScript 編譯會報錯。</p>
+<blockquote>
+<p>Q : 實務上該如何使用 interface 繼承 class ?</p>
+</blockquote>
+<p>一開始就能由 TDD 逼出 interface 是最理想的，這種 interface 來自於需求，所開出的 interface 會最精準，但實務上還是會遇到一開始沒有 interface，事後需要抽 interface 需求，此時可以新增 interface 繼承目前的 class，將來新的 class 再使用 adapter 轉成目前的 interface，則原本的程式碼不用修改，達成<code>開放封閉原則</code>的要求。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AWSSDK &#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一開始只有 <code>AWSSDK</code> 需求，因此 service 直接使用 <code>AWSSDK</code> class。</p>
+<p>因為需求改變，需要使用 <code>AzureSDK</code>，因為 service 已經直接使用 <code>AWSSDK</code>，為了讓原本使用 <code>AWSSDK</code> 的 service 不要改 code，我們會由 <code>AWSSDK</code> class 去抽 interface。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudSDK </span>&#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>);</span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>);</span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AWSSDK <span class="keyword">implements</span> CloudSDK &#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>) &#123;    </span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AzureSDK <span class="keyword">implements</span> CloudSDK &#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>) &#123;    </span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudSDK </span>&#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>);</span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>);</span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>傳統 OOP 會使用重構工具 (WebStorm/PhpStorm/Resharper) 去 <code>extract interface</code>，產生 <code>CloudSDK</code>。</p>
+<p>第 7 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AWSSDK <span class="keyword">implements</span> CloudSDK</span><br><span class="line"><span class="keyword">class</span> AzureSDK <span class="keyword">implements</span> CloudSDK</span><br></pre></td></tr></table></figure>
+<p>然後所有的 class 去 implement interface，配合 DI 與 provider，則 service 不用做任何修改，達成<code>開放封閉原則</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudSDK <span class="keyword">extends</span> AWSSDK </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AWSSDK <span class="keyword">implements</span> CloudSDK &#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>) &#123;    </span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AzureSDK <span class="keyword">implements</span> CloudSDK &#123;</span><br><span class="line">    putObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>, file: <span class="built_in">string</span>) &#123;    </span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    getObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    deleteObject(container: <span class="built_in">string</span>, blob: <span class="built_in">string</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第 1 行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="interface"><span class="keyword">interface</span> CloudSDK <span class="keyword">extends</span> AWSSDK </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CloudSDK</code> interface 直接繼承 <code>AWSSDK</code> class 即可，不必再使用重構工具從 <code>AWSSDK</code> 去抽 interface。</p>
+<p>剩下的程式碼完全一樣。</p>
+<h2 id="Conclusion">Conclusion</h2><hr>
+<ul>
+<li>因為 JavaScript 沒有 interface，TypeScript 為了讓 JavaScript 擁有強型別能力而補上 interface，但 TypeScript 的 interface 的完整度已經超過大部分語言。</li>
+<li>TypeScript 的 object interface，其本質類似弱型別 PHP 的 duck typing 與 C# 4.0 的 <code>dynamic</code>，只是明確地將 property signature 型別化，並且提前在編譯階段進行檢查，但 object literal 是例外，會啟動 excess property checks。</li>
+<li>因為 TypeScript 有 object interface，所以 model 的型別，一般 OOP 會使用 class，但 TypeScript 會使用 interface。</li>
+<li>Constructor interface 為 TypeScript 所獨創，以往 OOP 的 class interface 無法定義constructor，但 constructor interface 則可對 constructor 加以定義，但不能使用 <code>implements</code>，而要改用 constructor function / factory method，在 parameter 使用 constructor interface，如此 TypeScript 編譯器就能對 constructor signature 加以檢查。</li>
+<li>Interface 可直接繼承 class，因此 adapter pattern 會有更精簡的實作方式。</li>
+</ul>
+<h2 id="Reference">Reference</h2><hr>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="external">TypeScript</a>, <a href="https://www.typescriptlang.org/docs/handbook/interfaces.html" target="_blank" rel="external">Handbook : Interfaces</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/tags"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/macos/uninstall-folder/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-02-19 
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/TypeScript/">TypeScript<span>14</span></a></li>
+    </ul>
+	</div>
+		
+
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer>  </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hAXbiVYFC92XF16_EhCh','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
