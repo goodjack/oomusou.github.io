@@ -473,8 +473,8 @@
   
   <entry>
     <title><![CDATA[如何使用 Docker 安裝 Ubuntu ?]]></title>
-    <link href="http://oomusou.io/docker/ubuntu/"/>
-    <id>http://oomusou.io/docker/ubuntu/</id>
+    <link href="http://oomusou.io/docker/ubuntu101/"/>
+    <id>http://oomusou.io/docker/ubuntu101/</id>
     <published>2018-02-16T12:23:43.000Z</published>
     <updated>2018-02-14T09:27:39.000Z</updated>
     <content type="html"><![CDATA[<p>以前在 macOS 安裝 Ubuntu 都要先安裝 Parallel Desktop，然後再將 Ubuntu 安裝在 Parallel Desktop 上，安裝了 Docker for Mac 後，只要下載 Ubuntu 的 Docker image，Ubuntu 就能以 container 形式跑在 Docker 上。</p>
