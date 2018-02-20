@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://oomusou.io/typescript/generator/</loc>
+    <lastmod>2018-02-20T13:32:10.103Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://oomusou.io/typescript/iterator/</loc>
+    <lastmod>2018-02-20T13:31:50.030Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://oomusou.io/typescript/interface/</loc>
     <lastmod>2018-02-20T01:33:57.856Z</lastmod>
   </url>
@@ -19,16 +29,6 @@
   <url>
     <loc>http://oomusou.io/typescript/module/</loc>
     <lastmod>2018-02-19T14:03:32.999Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/typescript/generator/</loc>
-    <lastmod>2018-02-19T14:02:51.121Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://oomusou.io/typescript/iterator/</loc>
-    <lastmod>2018-02-19T14:02:47.249Z</lastmod>
   </url>
   
   <url>
