@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-20T01:31:36.378Z</updated>
+  <updated>2018-02-20T01:33:57.856Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/interface/"/>
     <id>http://oomusou.io/typescript/interface/</id>
     <published>2018-02-19T12:23:43.000Z</published>
-    <updated>2018-02-20T01:31:36.378Z</updated>
+    <updated>2018-02-20T01:33:57.856Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 與 ECMAScript 最大的差別就是 interface，一些 TypeScript 先進的功能，陸續被 ECMAScript 所接受，但由於 ECMAScript 偏向動態弱型別觀念，將來採用 interface 的機會渺茫，interface 也成為 TypeScript 與 ECMAScript 最大的分水嶺。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -294,7 +294,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fee = shippingService.calculateFee(<span class="number">10</span>, weight =&gt; <span class="number">100</span> * weight + <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 <p>Arrow function 為 <code>weight =&gt;100 * weight + 10</code>，TypeScript 編譯器會檢查此 arrow function 是不是符合 <code>ILogistics</code> interface。</p>
 <blockquote>
-<p>JavaScript 與 PHP 目前都無法對 closure / callback / arrow function 的 signature 做檢查，但有了 function interface 之後，就能在編譯階段檢查 function 的 signature。</p>
+<p>JavaScript 目前都無法對 arrow function 的 signature 做檢查，但有了 function interface 之後，就能在編譯階段檢查 function 的 signature。</p>
 </blockquote>
 <h2 id="Hybrid_Interface">Hybrid Interface</h2><hr>
 <p>由於 JavaScript 的動態語言特性，ES5 的 function 可以同時是 function，也是 object，我們可以使用 hybrid interface 來定義。</p>
