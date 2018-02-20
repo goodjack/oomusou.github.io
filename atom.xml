@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://oomusou.io/"/>
-  <updated>2018-02-19T14:24:07.564Z</updated>
+  <updated>2018-02-20T01:31:36.378Z</updated>
   <id>http://oomusou.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://oomusou.io/typescript/interface/"/>
     <id>http://oomusou.io/typescript/interface/</id>
     <published>2018-02-19T12:23:43.000Z</published>
-    <updated>2018-02-19T14:24:07.564Z</updated>
+    <updated>2018-02-20T01:31:36.378Z</updated>
     <content type="html"><![CDATA[<p>TypeScript 與 ECMAScript 最大的差別就是 interface，一些 TypeScript 先進的功能，陸續被 ECMAScript 所接受，但由於 ECMAScript 偏向動態弱型別觀念，將來採用 interface 的機會渺茫，interface 也成為 TypeScript 與 ECMAScript 最大的分水嶺。</p>
 <a id="more"></a>
 <h2 id="Version">Version</h2><hr>
@@ -116,8 +116,8 @@
 <p>TypeScript takes the stance that there’s probably a bug in this code. Object literals get special treatment and undergo <em>excess property checking</em> when assigning them to other variables, or passing them as arguments. If an object literal has any properties that the “target type” doesn’t have, you’ll get an error.</p>
 </blockquote>
 <p>根據 TypeScript 官網文件，對於 Excess Property Checkes 做了以下的解釋 : </p>
-<blockquote>
 <p>TypeScript 對於這類程式碼，採取可能有 bug 的態度。當 object literal 指定給其他變數，或者以 argument 方式傳入 function，將採取 excess property check 方式檢查型別，如果 object literal 有 target type 所沒有的 property，將編譯錯誤。</p>
+<blockquote>
 <p>Q : 若真的要傳入比 interface 還多 property 的 object，我該怎麼做 ?</p>
 </blockquote>
 <ol>

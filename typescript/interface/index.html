@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="點燈坊">
 <meta property="og:description" content="Interface 是 TypeScript 的招牌菜">
 <meta property="og:image" content="http://oomusou.io/images/feature/logo.png">
-<meta property="og:updated_time" content="2018-02-19T14:24:07.564Z">
+<meta property="og:updated_time" content="2018-02-20T01:31:36.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入探討 TypeScript 之 Interface">
 <meta name="twitter:description" content="Interface 是 TypeScript 的招牌菜">
@@ -203,8 +203,8 @@
 <p>TypeScript takes the stance that there’s probably a bug in this code. Object literals get special treatment and undergo <em>excess property checking</em> when assigning them to other variables, or passing them as arguments. If an object literal has any properties that the “target type” doesn’t have, you’ll get an error.</p>
 </blockquote>
 <p>根據 TypeScript 官網文件，對於 Excess Property Checkes 做了以下的解釋 : </p>
-<blockquote>
 <p>TypeScript 對於這類程式碼，採取可能有 bug 的態度。當 object literal 指定給其他變數，或者以 argument 方式傳入 function，將採取 excess property check 方式檢查型別，如果 object literal 有 target type 所沒有的 property，將編譯錯誤。</p>
+<blockquote>
 <p>Q : 若真的要傳入比 interface 還多 property 的 object，我該怎麼做 ?</p>
 </blockquote>
 <ol>
